@@ -66,6 +66,7 @@ export default function BlogClient({ translations, locale, posts }: BlogClientPr
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto text-center">
+          {/* UPDATED: Changed from "From Our Kitchen" to "Traditions, flavours, moments" */}
           <motion.p
             className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-terracotta-light mb-6"
             initial={{ opacity: 0, y: 20 }}
@@ -73,10 +74,11 @@ export default function BlogClient({ translations, locale, posts }: BlogClientPr
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="w-8 h-px bg-terracotta-light" />
-            From Our Kitchen
+            Traditions, flavours, moments
             <span className="w-8 h-px bg-terracotta-light" />
           </motion.p>
 
+          {/* UPDATED: Header now says "Discover" instead of "Blog" */}
           <h1 className="font-display text-5xl md:text-7xl font-light mb-6">
             <span className="block overflow-hidden">
               <motion.span
@@ -85,18 +87,18 @@ export default function BlogClient({ translations, locale, posts }: BlogClientPr
                 animate={{ y: 0 }}
                 transition={{ duration: 1.2, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
               >
-                Stories from <span className="text-terracotta-light italic">Maída</span>
+                Discover
               </motion.span>
             </span>
           </h1>
 
           <motion.p
-            className="text-lg md:text-xl text-sand/80 max-w-xl mx-auto font-light"
+            className="text-lg md:text-xl text-sand/80 max-w-xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            The traditions, flavors, and moments behind everything we do
+            Stories from our kitchen, our roots, and the table
           </motion.p>
         </div>
       </section>
@@ -111,53 +113,51 @@ export default function BlogClient({ translations, locale, posts }: BlogClientPr
               viewport={{ once: true }}
               variants={fadeInUp}
             >
-              <Link 
-                href={`/${locale}/blog/${featuredPost.slug}`}
-                className="group block"
-              >
+              <Link href={`/${locale}/blog/${featuredPost.slug}`} className="group block">
                 <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                   {/* Image */}
-                  <div className="relative aspect-[4/3] rounded-3xl overflow-hidden">
+                  <div className="relative aspect-[4/3] overflow-hidden">
                     <Image
                       src={featuredPost.image}
                       alt={featuredPost.title}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-charcoal/30 to-transparent" />
-                    
-                    {/* Tags */}
-                    <div className="absolute top-4 left-4 flex gap-2">
-                      {featuredPost.tags.slice(0, 2).map((tag, index) => (
-                        <span 
-                          key={index}
-                          className="px-3 py-1 bg-white/90 text-charcoal text-xs rounded-full"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                    <div className="absolute top-4 left-4">
+                      <span className="px-3 py-1 bg-terracotta text-white text-xs uppercase tracking-wider">
+                        Featured
+                      </span>
                     </div>
                   </div>
 
                   {/* Content */}
                   <div>
-                    <p className="text-xs tracking-[0.2em] uppercase text-terracotta mb-4">
-                      Featured
-                    </p>
-                    
-                    <h2 className="font-display text-3xl md:text-4xl text-charcoal mb-4 group-hover:text-terracotta transition-colors">
+                    {/* Tags */}
+                    <div className="flex gap-2 mb-4">
+                      {featuredPost.tags.slice(0, 2).map((tag, index) => (
+                        <span 
+                          key={index}
+                          className="text-xs text-terracotta uppercase tracking-wider"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <h2 className="font-display text-3xl md:text-4xl text-charcoal group-hover:text-terracotta transition-colors mb-4">
                       {featuredPost.title}
                     </h2>
-                    
-                    <p className="text-lg text-terracotta italic mb-4">
+
+                    <p className="text-lg text-terracotta-light italic mb-4">
                       {featuredPost.subtitle}
                     </p>
-                    
-                    <p className="text-stone mb-6 leading-relaxed">
+
+                    <p className="text-stone mb-6 line-clamp-3">
                       {featuredPost.excerpt}
                     </p>
-                    
-                    <div className="flex items-center gap-6 text-sm text-stone mb-6">
+
+                    {/* Meta */}
+                    <div className="flex items-center gap-6 text-sm text-stone">
                       <span className="flex items-center gap-2">
                         <Calendar className="w-4 h-4" />
                         {formatDate(featuredPost.date)}
@@ -167,11 +167,6 @@ export default function BlogClient({ translations, locale, posts }: BlogClientPr
                         {featuredPost.readTime}
                       </span>
                     </div>
-
-                    <span className="inline-flex items-center gap-2 text-terracotta font-medium group-hover:gap-4 transition-all">
-                      Read Article
-                      <ArrowRight className="w-4 h-4" />
-                    </span>
                   </div>
                 </div>
               </Link>
@@ -180,34 +175,53 @@ export default function BlogClient({ translations, locale, posts }: BlogClientPr
         </section>
       )}
 
-      {/* Other Posts Grid */}
+      {/* Divider with emblem */}
+      <div className="max-w-xs mx-auto flex items-center gap-4 px-6">
+        <span className="flex-1 h-px bg-stone/20" />
+        <Image
+          src="/images/brand/emblem.svg"
+          alt=""
+          width={24}
+          height={24}
+          className="opacity-60"
+        />
+        <span className="flex-1 h-px bg-stone/20" />
+      </div>
+
+      {/* Other Posts - UPDATED: Single column layout instead of grid */}
       {otherPosts.length > 0 && (
-        <section className="py-16 md:py-24 px-6 bg-sand/30">
-          <div className="max-w-6xl mx-auto">
-            <motion.h2 
-              className="font-display text-3xl text-charcoal mb-12"
+        <section className="py-16 md:py-24 px-6">
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              className="mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              More Stories
-            </motion.h2>
+              <h2 className="font-display text-2xl text-charcoal">More stories</h2>
+            </motion.div>
 
-            <motion.div 
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+            {/* UPDATED: Changed from grid to single column (flex-col) */}
+            <motion.div
+              className="flex flex-col gap-8"
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: '-50px' }}
+              viewport={{ once: true }}
               variants={staggerContainer}
             >
               {otherPosts.map((post) => (
-                <motion.div key={post.id} variants={fadeInUp}>
+                <motion.article
+                  key={post.id}
+                  variants={fadeInUp}
+                  className="group"
+                >
+                  {/* UPDATED: Horizontal card layout for single column */}
                   <Link 
                     href={`/${locale}/blog/${post.slug}`}
-                    className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                    className="flex flex-col md:flex-row gap-6 p-6 bg-warm-white hover:shadow-lg transition-shadow"
                   >
                     {/* Image */}
-                    <div className="relative aspect-[16/10] overflow-hidden">
+                    <div className="relative w-full md:w-1/3 aspect-[16/9] md:aspect-square overflow-hidden flex-shrink-0">
                       <Image
                         src={post.image}
                         alt={post.title}
@@ -217,76 +231,70 @@ export default function BlogClient({ translations, locale, posts }: BlogClientPr
                     </div>
 
                     {/* Content */}
-                    <div className="p-6">
+                    <div className="flex-1 flex flex-col justify-center">
                       {/* Tags */}
-                      <div className="flex gap-2 mb-3">
+                      <div className="flex gap-2 mb-2">
                         {post.tags.slice(0, 2).map((tag, index) => (
                           <span 
                             key={index}
-                            className="px-2 py-0.5 bg-sand/50 text-stone text-xs rounded"
+                            className="text-xs text-terracotta uppercase tracking-wider"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
 
-                      <h3 className="font-display text-xl text-charcoal mb-2 group-hover:text-terracotta transition-colors">
+                      <h3 className="font-display text-xl md:text-2xl text-charcoal group-hover:text-terracotta transition-colors mb-2">
                         {post.title}
                       </h3>
 
-                      <p className="text-sm text-stone mb-4 line-clamp-2">
+                      <p className="text-stone text-sm mb-4 line-clamp-2">
                         {post.excerpt}
                       </p>
 
+                      {/* Meta */}
                       <div className="flex items-center gap-4 text-xs text-stone">
-                        <span>{formatDate(post.date)}</span>
-                        <span>·</span>
-                        <span>{post.readTime}</span>
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {formatDate(post.date)}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {post.readTime}
+                        </span>
                       </div>
                     </div>
+
+                    {/* Arrow */}
+                    <div className="hidden md:flex items-center">
+                      <ArrowRight className="w-5 h-5 text-stone group-hover:text-terracotta group-hover:translate-x-1 transition-all" />
+                    </div>
                   </Link>
-                </motion.div>
+                </motion.article>
               ))}
             </motion.div>
           </div>
         </section>
       )}
 
-      {/* Coming Soon */}
-      <section className="py-16 md:py-24 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.h2 
-              className="font-display text-3xl md:text-4xl text-charcoal mb-4"
-              variants={fadeInUp}
-            >
-              More stories coming soon
-            </motion.h2>
-
-            <motion.p 
-              className="text-stone mb-8"
-              variants={fadeInUp}
-            >
-              Follow us for the latest from Maída
-            </motion.p>
-
-            <motion.div className="flex justify-center gap-4" variants={fadeInUp}>
-              <a
-                href="https://instagram.com/maida.lisboa"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 bg-charcoal text-white rounded hover:bg-terracotta transition-colors"
-              >
-                Follow on Instagram
-              </a>
-            </motion.div>
-          </motion.div>
-        </div>
+      {/* CTA Section */}
+      <section className="py-16 md:py-24 px-6 bg-charcoal text-white text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="font-display text-3xl md:text-4xl mb-4">
+            Taste the stories
+          </h2>
+          <p className="text-sand/70 mb-8">
+            #MeetMeAt<span className="italic text-terracotta-light">Maída</span>
+          </p>
+          <Link href={`/${locale}/menu`} className="btn btn-light">
+            View our menu
+          </Link>
+        </motion.div>
       </section>
     </div>
   );

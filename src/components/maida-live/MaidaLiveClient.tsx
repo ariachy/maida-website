@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Music, Calendar, PartyPopper, X, Send, CheckCircle, Loader2 } from 'lucide-react';
 import { Locale } from '@/lib/i18n';
 
@@ -46,6 +47,11 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
     }
   };
 
+  // Handle reserve for specific day
+  const handleReserve = (day: string) => {
+    handleReserveClick();
+  };
+
   // Animation variants
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
@@ -65,8 +71,8 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
   };
 
   return (
-    <div className="bg-charcoal text-white min-h-screen">
-      {/* Hero Section */}
+    <div className="bg-charcoal/95 text-white min-h-screen">
+      {/* Hero Section - UPDATED: Removed subtitle */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
@@ -97,7 +103,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             <span className="w-8 h-px bg-terracotta-light" />
           </motion.p>
 
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-light mb-6">
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-medium mb-6">
             <span className="block overflow-hidden">
               <motion.span
                 className="block"
@@ -105,24 +111,15 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                 animate={{ y: 0 }}
                 transition={{ duration: 1.2, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
               >
-                Maída <span className="text-terracotta italic">Live</span>
+                <span className="italic text-terracotta">Maída</span> Live
               </motion.span>
             </span>
           </h1>
-
-          <motion.p
-            className="text-lg md:text-xl text-sand/80 max-w-xl mx-auto font-light"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            Where dinner becomes an experience
-          </motion.p>
+          {/* REMOVED: Subtitle under "Maída Live" */}
         </div>
-
       </section>
 
-      {/* The Concept Section */}
+      {/* The Concept Section - UPDATED: Simplified text */}
       <section className="pt-12 pb-16 md:pt-16 md:pb-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
@@ -132,27 +129,26 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             variants={staggerContainer}
           >
             <motion.h2 
-              className="font-display text-3xl md:text-5xl font-light mb-8"
+              className="font-display text-3xl md:text-5xl font-medium mb-8"
               variants={fadeInUp}
             >
               More than music.<br />
               <span className="text-terracotta italic">It's curated culture.</span>
             </motion.h2>
 
+            {/* UPDATED: Simplified intro paragraph */}
             <motion.p 
               className="text-lg text-sand/70 max-w-2xl mx-auto leading-relaxed"
               variants={fadeInUp}
             >
-              Three nights, three vibes. From themed cultural evenings to late-night dancing, 
-              Maída Live transforms your dinner into something you'll remember. 
-              The food stays exceptional. The atmosphere evolves.
+              The dining experience. The atmosphere evolves.
             </motion.p>
           </motion.div>
         </div>
       </section>
 
-      {/* The Nights Section */}
-      <section className="pt-12 pb-16 md:pt-16 md:pb-24 px-6 bg-gradient-to-b from-charcoal to-charcoal/95">
+      {/* The Nights Section - UPDATED: "Our weekly program" title */}
+      <section className="pt-12 pb-16 md:pt-16 md:pb-24 px-6 bg-warm-white">
         <div className="max-w-6xl mx-auto">
           <motion.div
             className="text-center mb-16"
@@ -161,13 +157,14 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             viewport={{ once: true }}
             variants={fadeInUp}
           >
-            <h2 className="font-display text-3xl md:text-5xl font-light mb-4">
-              Choose Your Night
+            {/* UPDATED: Changed from "Choose Your Night" to "Our weekly program" */}
+            <h2 className="font-display text-3xl md:text-5xl font-medium mb-4 text-charcoal">
+              Our weekly program
             </h2>
-            <p className="text-sand/60">Click to explore each experience</p>
+            <p className="text-stone">Click to explore each experience</p>
           </motion.div>
 
-          {/* Cards - Vertical stack that expands in place */}
+          {/* Cards - UPDATED: Square edges (removed rounded-3xl) */}
           <motion.div 
             className="flex flex-col gap-6"
             initial="hidden"
@@ -177,22 +174,23 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
           >
             {/* Row 1: Thursday and Friday side by side on desktop */}
             <div className="grid md:grid-cols-2 gap-6">
-              {/* Thursday Card - Sand/Stone tones */}
+              {/* Thursday Card - UPDATED: Pluralized, square edges */}
               <motion.div
-                className="group relative rounded-3xl overflow-hidden cursor-pointer"
+                className="group relative overflow-hidden cursor-pointer"
                 variants={fadeInUp}
                 onClick={() => setActiveNight(activeNight === 'thursday' ? null : 'thursday')}
               >
-                <div className="relative bg-gradient-to-br from-stone/40 to-charcoal p-8 flex flex-col min-h-[280px]">
+                <div className="relative bg-gradient-to-br from-sand/60 to-sand/30 p-8 flex flex-col min-h-[280px]">
                   {/* Icon */}
-                  <div className="w-14 h-14 rounded-full bg-sand/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <Calendar className="w-7 h-7 text-sand" />
+                  <div className="w-14 h-14 rounded-full bg-charcoal/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <Calendar className="w-7 h-7 text-charcoal" />
                   </div>
 
-                  <h3 className="font-display text-3xl mb-2">Thursday</h3>
-                  <p className="text-sand text-lg mb-4">Cultural Rotation</p>
+                  {/* UPDATED: Pluralized to "Thursdays" */}
+                  <h3 className="font-display text-3xl mb-2 text-charcoal">Thursdays</h3>
+                  <p className="text-charcoal/80 text-lg mb-4">Cultural Rotation</p>
                   
-                  <p className="text-sand/70 mb-6">
+                  <p className="text-charcoal/60 mb-6">
                     Every Thursday brings a different flavour. Not just music — a cultural journey through sound.
                   </p>
 
@@ -206,16 +204,16 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <p className="text-xs uppercase tracking-widest text-sand mb-4">Monthly Rotation</p>
+                        <p className="text-xs uppercase tracking-widest text-charcoal/60 mb-4">Monthly Rotation</p>
                         <div className="grid grid-cols-2 gap-3">
                           {thursdayThemes.map((item, index) => (
                             <div 
                               key={index}
-                              className="bg-white/5 rounded-xl p-4 hover:bg-white/10 transition-colors"
+                              className="bg-charcoal/5 p-4 hover:bg-charcoal/10 transition-colors"
                             >
-                              <p className="text-sand text-sm font-medium">{item.week} Week</p>
-                              <p className="text-white font-display text-lg">{item.theme}</p>
-                              <p className="text-sand/60 text-sm">{item.description}</p>
+                              <p className="text-charcoal/60 text-sm font-medium">{item.week} Week</p>
+                              <p className="text-charcoal font-display text-lg">{item.theme}</p>
+                              <p className="text-charcoal/50 text-sm">{item.description}</p>
                             </div>
                           ))}
                         </div>
@@ -224,32 +222,33 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                   </AnimatePresence>
 
                   {/* Click hint */}
-                  <p className="mt-auto pt-4 text-xs text-sand/40">
+                  <p className="mt-auto pt-4 text-xs text-charcoal/40">
                     {activeNight === 'thursday' ? 'Click to collapse' : 'Click to see schedule'}
                   </p>
                 </div>
               </motion.div>
 
-              {/* Friday Card - Sage tones */}
+              {/* Friday Card - UPDATED: Pluralized, square edges */}
               <motion.div
-                className="group relative rounded-3xl overflow-hidden cursor-pointer"
+                className="group relative overflow-hidden cursor-pointer"
                 variants={fadeInUp}
                 onClick={() => setActiveNight(activeNight === 'friday' ? null : 'friday')}
               >
-                <div className="relative bg-gradient-to-br from-sage/30 to-charcoal p-8 flex flex-col min-h-[280px]">
+                <div className="relative bg-gradient-to-br from-sage/40 to-sage/20 p-8 flex flex-col min-h-[280px]">
                   {/* Icon */}
-                  <div className="w-14 h-14 rounded-full bg-sage/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <Music className="w-7 h-7 text-sage-light" />
+                  <div className="w-14 h-14 rounded-full bg-charcoal/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <Music className="w-7 h-7 text-charcoal" />
                   </div>
 
-                  <h3 className="font-display text-3xl mb-2">Friday</h3>
-                  <p className="text-sage-light text-lg mb-4">DJ Dinner</p>
+                  {/* UPDATED: Pluralized to "Fridays" */}
+                  <h3 className="font-display text-3xl mb-2 text-charcoal">Fridays</h3>
+                  <p className="text-charcoal/80 text-lg mb-4">DJ Dinner</p>
                   
-                  <p className="text-sand/70 mb-6">
+                  <p className="text-charcoal/60 mb-6">
                     The weekend begins. Live DJ sets create the perfect backdrop for dinner and drinks.
                   </p>
 
-                  {/* Expanded content */}
+                  {/* Expanded content - UPDATED: Square edges on inner elements */}
                   <AnimatePresence>
                     {activeNight === 'friday' && (
                       <motion.div
@@ -259,21 +258,21 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden space-y-4"
                       >
-                        <div className="bg-white/5 rounded-xl p-6">
-                          <p className="text-sage-light font-display text-xl mb-2">The Vibe</p>
-                          <p className="text-sand/70">
+                        <div className="bg-charcoal/5 p-6">
+                          <p className="text-charcoal font-display text-xl mb-2">The Vibe</p>
+                          <p className="text-charcoal/60">
                             Not a party — an elevated dinner experience. The music complements your meal, 
                             the energy builds naturally, and the night unfolds at your pace.
                           </p>
                         </div>
                         <div className="flex gap-4">
-                          <div className="bg-white/5 rounded-xl p-4 flex-1">
-                            <p className="text-sage-light text-sm">Hours</p>
-                            <p className="text-white font-display text-lg">12:30 - 00:00</p>
+                          <div className="bg-charcoal/5 p-4 flex-1">
+                            <p className="text-charcoal/60 text-sm">Hours</p>
+                            <p className="text-charcoal font-display text-lg">12:30 - 00:00</p>
                           </div>
-                          <div className="bg-white/5 rounded-xl p-4 flex-1">
-                            <p className="text-sage-light text-sm">DJ Sets from</p>
-                            <p className="text-white font-display text-lg">21:00</p>
+                          <div className="bg-charcoal/5 p-4 flex-1">
+                            <p className="text-charcoal/60 text-sm">DJ Sets from</p>
+                            <p className="text-charcoal font-display text-lg">21:00</p>
                           </div>
                         </div>
                       </motion.div>
@@ -281,33 +280,35 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                   </AnimatePresence>
 
                   {/* Click hint */}
-                  <p className="mt-auto pt-4 text-xs text-sand/40">
+                  <p className="mt-auto pt-4 text-xs text-charcoal/40">
                     {activeNight === 'friday' ? 'Click to collapse' : 'Click to learn more'}
                   </p>
                 </div>
               </motion.div>
             </div>
 
-            {/* Row 2: Saturday full width */}
+            {/* Row 2: Saturday full width - UPDATED: Pluralized, simplified, square edges */}
             <motion.div
-              className="group relative rounded-3xl overflow-hidden cursor-pointer"
+              className="group relative overflow-hidden cursor-pointer"
               variants={fadeInUp}
               onClick={() => setActiveNight(activeNight === 'saturday' ? null : 'saturday')}
             >
-              <div className="relative bg-gradient-to-br from-terracotta/30 to-charcoal p-8 flex flex-col min-h-[280px]">
+              <div className="relative bg-gradient-to-br from-terracotta/40 to-terracotta/20 p-8 flex flex-col min-h-[280px]">
                 {/* Icon */}
-                <div className="w-14 h-14 rounded-full bg-terracotta/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <PartyPopper className="w-7 h-7 text-terracotta-light" />
+                <div className="w-14 h-14 rounded-full bg-charcoal/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <PartyPopper className="w-7 h-7 text-charcoal" />
                 </div>
 
-                <h3 className="font-display text-3xl mb-2">Saturday</h3>
-                <p className="text-terracotta-light text-lg mb-4">The Full Journey</p>
+                {/* UPDATED: Pluralized to "Saturdays" */}
+                <h3 className="font-display text-3xl mb-2 text-charcoal">Saturdays</h3>
+                <p className="text-charcoal/80 text-lg mb-4">The Full Journey</p>
                 
-                <p className="text-sand/70 mb-6">
-                  Dinner transforms into dancing. The night builds until 2am. This is what you came for.
+                {/* UPDATED: Simplified description */}
+                <p className="text-charcoal/60 mb-6">
+                  The full journey — dinner, drinks, and dancing until 02:00.
                 </p>
 
-                {/* Expanded content */}
+                {/* Expanded content - UPDATED: Square edges */}
                 <AnimatePresence>
                   {activeNight === 'saturday' && (
                     <motion.div
@@ -318,31 +319,23 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                       className="overflow-hidden space-y-4"
                     >
                       <div className="grid md:grid-cols-2 gap-4">
-                        <div className="bg-white/5 rounded-xl p-6">
-                          <p className="text-terracotta-light font-display text-xl mb-2">The Journey</p>
-                          <p className="text-sand/70">
+                        <div className="bg-charcoal/5 p-6">
+                          <p className="text-charcoal font-display text-xl mb-2">The Journey</p>
+                          <p className="text-charcoal/60">
                             Start with dinner, stay for the party. Our Saturday nights are legendary — 
-                            the food, the drinks, the music, all building to a peak that keeps you dancing.
+                            the food, the drinks, the music, all building to a peak.
                           </p>
                         </div>
                         <div className="space-y-4">
                           <div className="flex gap-4">
-                            <div className="bg-white/5 rounded-xl p-4 flex-1">
-                              <p className="text-terracotta-light text-sm">Hours</p>
-                              <p className="text-white font-display text-lg">12:30 - 02:00</p>
+                            <div className="bg-charcoal/5 p-4 flex-1">
+                              <p className="text-charcoal/60 text-sm">Hours</p>
+                              <p className="text-charcoal font-display text-lg">12:30 - 02:00</p>
                             </div>
-                            <div className="bg-white/5 rounded-xl p-4 flex-1">
-                              <p className="text-terracotta-light text-sm">Party Mode</p>
-                              <p className="text-white font-display text-lg">From 23:00</p>
+                            <div className="bg-charcoal/5 p-4 flex-1">
+                              <p className="text-charcoal/60 text-sm">Party Mode</p>
+                              <p className="text-charcoal font-display text-lg">From 23:00</p>
                             </div>
-                          </div>
-                          {/* Brunch mention */}
-                          <div className="bg-terracotta/10 border border-terracotta/30 rounded-xl p-4">
-                            <p className="text-terracotta-light text-sm">✨ Special Events</p>
-                            <p className="text-sand/80 text-sm">
-                              Occasionally, we flip the script with a <strong className="text-white">Maída Live Brunch</strong>. 
-                              Follow us for announcements.
-                            </p>
                           </div>
                         </div>
                       </div>
@@ -351,7 +344,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                 </AnimatePresence>
 
                 {/* Click hint */}
-                <p className="mt-auto pt-4 text-xs text-sand/40">
+                <p className="mt-auto pt-4 text-xs text-charcoal/40">
                   {activeNight === 'saturday' ? 'Click to collapse' : 'Click to learn more'}
                 </p>
               </div>
@@ -360,7 +353,32 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
         </div>
       </section>
 
-      {/* DJ Application CTA */}
+      {/* Private Events Section - UPDATED: Moved BEFORE DJ section, new title */}
+      <section className="py-16 md:py-24 px-6">
+        <motion.div
+          className="text-center max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          {/* UPDATED: New title structure */}
+          <h2 className="font-display text-3xl md:text-4xl font-medium text-white mb-4">
+            Enjoying <span className="italic text-terracotta">Maída</span> Live?
+          </h2>
+          <p className="text-xl text-sand/80 mb-4">
+            Make it private.
+          </p>
+          <p className="text-sand/60 mb-8">
+            Host your next celebration, corporate event, or private gathering with us.
+          </p>
+          <Link href={`/${locale}/contact`} className="inline-block bg-terracotta text-warm-white px-8 py-3 text-base font-medium hover:bg-terracotta/90 transition-colors">
+            Learn more
+          </Link>
+        </motion.div>
+      </section>
+
+      {/* DJ Application CTA - Now AFTER Private Events */}
       <section className="pt-12 pb-16 md:pt-16 md:pb-20 px-6 bg-gradient-to-b from-charcoal/95 to-charcoal">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
@@ -377,7 +395,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             </motion.div>
 
             <motion.h2 
-              className="font-display text-3xl md:text-5xl font-light mb-6"
+              className="font-display text-3xl md:text-5xl font-medium mb-6"
               variants={fadeInUp}
             >
               Are you a DJ?
@@ -393,91 +411,33 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
 
             <motion.button
               onClick={() => setIsDJModalOpen(true)}
-              className="inline-flex items-center justify-center gap-2 px-10 py-4 text-lg bg-terracotta text-white rounded hover:bg-terracotta-light transition-colors"
+              className="bg-terracotta text-warm-white px-10 py-4 text-lg font-medium hover:bg-terracotta/90 transition-colors"
               variants={fadeInUp}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
             >
-              Apply to Play
+              Apply to play
             </motion.button>
           </motion.div>
         </div>
       </section>
 
-      {/* Private Events */}
-      <section className="py-20 px-6 border-t border-white/10">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.h3 
-              className="font-display text-2xl md:text-3xl font-light mb-4"
-              variants={fadeInUp}
-            >
-              Host Your Event at Maída
-            </motion.h3>
-
-            <motion.p 
-              className="text-sand/70 mb-8"
-              variants={fadeInUp}
-            >
-              Birthdays, celebrations, private gatherings — let's make it special.
-            </motion.p>
-
-            <motion.a
-              href="mailto:info@maida.pt?subject=Private Event Inquiry"
-              className="btn btn-ghost border-sand/30 text-sand hover:border-terracotta hover:text-terracotta"
-              variants={fadeInUp}
-              whileHover={{ scale: 1.02 }}
-            >
-              Inquire About Private Events
-            </motion.a>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-12 md:py-16 px-6 bg-terracotta">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.h2 
-              className="font-display text-3xl md:text-4xl font-light mb-4 text-white"
-              variants={fadeInUp}
-            >
-              See you this weekend
-            </motion.h2>
-
-            <motion.p 
-              className="text-white/80 text-base mb-8"
-              variants={fadeInUp}
-            >
-              #MeetMeAtMaida
-            </motion.p>
-
-            <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" variants={fadeInUp}>
-              <button
-                onClick={handleReserveClick}
-                className="btn bg-white text-charcoal hover:bg-sand px-8 py-3"
-              >
-                Reserve for Friday
-              </button>
-              <button
-                onClick={handleReserveClick}
-                className="btn bg-charcoal text-white hover:bg-charcoal/80 px-8 py-3"
-              >
-                Reserve for Saturday
-              </button>
-            </motion.div>
-          </motion.div>
-        </div>
+      {/* Final CTA - UPDATED: "Meet me at Maída" */}
+      <section className="py-20 md:py-32 px-6 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          {/* UPDATED: Changed from "See you this weekend" to "Meet me at Maída" */}
+          <h2 className="font-display text-4xl md:text-6xl font-medium text-white mb-8">
+            Meet me at <span className="italic text-terracotta">Maída</span>
+          </h2>
+          <button onClick={handleReserveClick} className="bg-terracotta text-warm-white px-10 py-4 text-lg font-medium hover:bg-terracotta/90 transition-colors">
+            Reserve now
+          </button>
+        </motion.div>
       </section>
 
       {/* DJ Application Modal */}
@@ -603,9 +563,9 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
             onClick={onClose}
           />
 
-          {/* Modal */}
+          {/* Modal - UPDATED: Square edges */}
           <motion.div
-            className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-2xl md:max-h-[90vh] bg-charcoal rounded-2xl z-[101] overflow-hidden flex flex-col"
+            className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-2xl md:max-h-[90vh] bg-charcoal z-[101] overflow-hidden flex flex-col"
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -615,7 +575,7 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
             <div className="flex items-center justify-between p-6 border-b border-white/10">
               <div>
                 <h3 className="font-display text-2xl text-white">DJ Application</h3>
-                <p className="text-sand/60 text-sm">Join the Maída Live rotation</p>
+                <p className="text-sand/60 text-sm">Join the <span className="italic text-terracotta">Maída</span> Live rotation</p>
               </div>
               <button
                 onClick={onClose}
@@ -636,7 +596,7 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                   <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
                     <CheckCircle className="w-10 h-10 text-green-400" />
                   </div>
-                  <h4 className="font-display text-2xl text-white mb-3">Application Sent!</h4>
+                  <h4 className="font-display text-2xl text-white mb-3">Application sent!</h4>
                   <p className="text-sand/70 mb-8">
                     Thanks for your interest! We'll review your application and get back to you if there's a fit.
                   </p>
@@ -651,12 +611,12 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Name */}
                   <div>
-                    <label className="block text-sm text-sand/80 mb-2">Full Name *</label>
+                    <label className="block text-sm text-sand/80 mb-2">Full name *</label>
                     <input
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors"
                       placeholder="Your name or DJ name"
                       required
                     />
@@ -670,7 +630,7 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                         type="email"
                         value={formData.email}
                         onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors"
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors"
                         placeholder="your@email.com"
                         required
                       />
@@ -681,7 +641,7 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                         type="tel"
                         value={formData.phone}
                         onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors"
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors"
                         placeholder="+351 XXX XXX XXX"
                         required
                       />
@@ -690,14 +650,14 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
 
                   {/* Genres */}
                   <div>
-                    <label className="block text-sm text-sand/80 mb-3">Genres You Play *</label>
+                    <label className="block text-sm text-sand/80 mb-3">Genres you play *</label>
                     <div className="flex flex-wrap gap-2">
                       {genreOptions.map((genre) => (
                         <button
                           key={genre}
                           type="button"
                           onClick={() => handleGenreToggle(genre)}
-                          className={`px-4 py-2 rounded-full text-sm transition-all ${
+                          className={`px-4 py-2 text-sm transition-all ${
                             formData.genres.includes(genre)
                               ? 'bg-terracotta text-white'
                               : 'bg-white/5 text-sand/70 hover:bg-white/10'
@@ -712,19 +672,19 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                       type="text"
                       value={formData.otherGenre}
                       onChange={(e) => setFormData(prev => ({ ...prev, otherGenre: e.target.value }))}
-                      className="mt-3 w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors"
+                      className="mt-3 w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors"
                       placeholder="Other genres (optional)"
                     />
                   </div>
 
                   {/* Music Link */}
                   <div>
-                    <label className="block text-sm text-sand/80 mb-2">Music Link (optional)</label>
+                    <label className="block text-sm text-sand/80 mb-2">Music link (optional)</label>
                     <input
                       type="url"
                       value={formData.musicLink}
                       onChange={(e) => setFormData(prev => ({ ...prev, musicLink: e.target.value }))}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors"
                       placeholder="SoundCloud, Mixcloud, Spotify, etc."
                     />
                     <p className="text-xs text-sand/40 mt-1">Share a link to your mixes or music</p>
@@ -737,14 +697,14 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                       value={formData.message}
                       onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
                       rows={3}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors resize-none"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors resize-none"
                       placeholder="Brief bio, experience, why Maída..."
                     />
                   </div>
 
                   {/* Error message */}
                   {status === 'error' && (
-                    <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm">
+                    <div className="p-4 bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
                       {errorMessage}
                     </div>
                   )}
@@ -763,14 +723,14 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                     ) : (
                       <>
                         <Send className="w-5 h-5" />
-                        Submit Application
+                        Submit application
                       </>
                     )}
                   </button>
 
                   {/* Privacy note */}
                   <p className="text-xs text-sand/40 text-center">
-                    By submitting, you agree to be contacted about DJ opportunities at Maída.
+                    By submitting, you agree to be contacted about DJ opportunities at <span className="italic text-terracotta">Maída</span>.
                   </p>
                 </form>
               )}

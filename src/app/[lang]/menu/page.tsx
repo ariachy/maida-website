@@ -4,24 +4,10 @@ import { isValidLocale, loadTranslations } from '@/lib/i18n';
 import MenuClient from '@/components/menu/MenuClient';
 import menuData from '@/data/menu.json';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { lang: string };
-}): Promise<Metadata> {
-  const locale = params.lang;
-  
-  if (!isValidLocale(locale)) {
-    return {};
-  }
-  
-  const translations = await loadTranslations(locale);
-  
-  return {
-    title: translations.menu?.title || 'Menu',
-    description: `Explore the menu at maída - Mediterranean cuisine with Lebanese soul. ${translations.menu?.subtitle}`,
-  };
-}
+export const metadata: Metadata = {
+  title: 'Maída - Mediterranean Flavours, Lebanese Soul | Menu',
+  description: 'Explore our Mediterranean menu with Lebanese soul. Mezze, main courses, grilled dishes, signature cocktails and more.',
+};
 
 export default async function MenuPage({
   params,

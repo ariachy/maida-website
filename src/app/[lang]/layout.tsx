@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { locales, Locale, isValidLocale, loadTranslations } from '@/lib/i18n';
@@ -6,6 +7,7 @@ import Footer from '@/components/layout/Footer';
 import CustomCursor from '@/components/layout/CustomCursor';
 import ScrollProgress from '@/components/layout/ScrollProgress';
 import PageLoader from '@/components/layout/PageLoader';
+import NavigationLoader from '@/components/layout/NavigationLoader';
 
 // Generate static params for all locales
 export function generateStaticParams() {
@@ -27,6 +29,12 @@ export async function generateMetadata({
   const translations = await loadTranslations(locale);
   
   return {
+    // SEO Title Template - all pages will use this format
+    title: {
+      template: 'Maída - Mediterranean Flavours, Lebanese Soul | %s',
+      default: 'Maída - Mediterranean Flavours, Lebanese Soul',
+    },
+    description: 'A gathering place for shared plates, natural wines, and evenings that linger. Restaurant-bar in Cais do Sodré, Lisboa.',
     alternates: {
       canonical: `https://maida.pt/${locale}`,
       languages: {
@@ -59,6 +67,11 @@ export default async function LocaleLayout({
   
   return (
     <>
+      {/* Navigation loading indicator - shows progress bar when changing pages */}
+      <Suspense fallback={null}>
+        <NavigationLoader />
+      </Suspense>
+      
       {/* Page loader */}
       <PageLoader />
       

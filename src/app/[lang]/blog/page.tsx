@@ -2,13 +2,12 @@ import { notFound } from 'next/navigation';
 import { isValidLocale, loadTranslations, Locale } from '@/lib/i18n';
 import BlogClient from '@/components/blog/BlogClient';
 import blogData from '@/data/blog.json';
+import { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: { lang: string } }) {
-  return {
-    title: 'Blog | Stories from Maída',
-    description: 'The traditions, flavors, music, and moments behind everything we do at Maída. Discover the stories of Lebanese cuisine and Mediterranean culture.',
-  };
-}
+export const metadata: Metadata = {
+  title: 'Maída - Mediterranean Flavours, Lebanese Soul | Discover',
+  description: 'Stories from our kitchen, our roots, and the table. Traditions, flavours, and moments.',
+};
 
 export default async function BlogPage({
   params,
@@ -25,3 +24,5 @@ export default async function BlogPage({
   
   return <BlogClient translations={translations} locale={locale} posts={blogData.posts} />;
 }
+
+

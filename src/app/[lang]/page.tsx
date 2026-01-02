@@ -5,6 +5,12 @@ import Story from '@/components/sections/Story';
 import MenuHighlights from '@/components/sections/MenuHighlights';
 import Visit from '@/components/sections/Visit';
 import CTASection from '@/components/sections/CTASection';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Maída - Mediterranean Flavours, Lebanese Soul',
+  description: 'A gathering place for shared plates, natural wines, and evenings that linger. Restaurant-bar in Cais do Sodré, Lisboa.',
+};
 
 export default async function HomePage({
   params,

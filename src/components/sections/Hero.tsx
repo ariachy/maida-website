@@ -36,20 +36,25 @@ export default function Hero({ translations, locale }: HeroProps) {
       
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20">
-        {/* Location */}
-        <motion.p
-          className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-terracotta mb-8"
+        {/* Location Badge - Two lines */}
+        <motion.div
+          className="mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <span className="w-8 h-px bg-terracotta" />
-          {hero.location}
-          <span className="w-8 h-px bg-terracotta" />
-        </motion.p>
+          <p className="text-sm md:text-base tracking-[0.2em] uppercase text-stone mb-1">
+            Restaurant-bar
+          </p>
+          <p className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-terracotta">
+            <span className="w-8 h-px bg-terracotta" />
+            Cais do Sodré, Lisboa
+            <span className="w-8 h-px bg-terracotta" />
+          </p>
+        </motion.div>
         
         {/* Title */}
-        <h1 className="font-display text-fluid-5xl font-light leading-[1.1] mb-6">
+        <h1 className="font-display text-fluid-5xl font-light leading-[1.1] mb-10">
           <span className="block overflow-hidden">
             <motion.span
               className="block"
@@ -57,7 +62,7 @@ export default function Hero({ translations, locale }: HeroProps) {
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1.2, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
             >
-              {hero.title1}
+              {hero.title1 || 'Mediterranean Flavours.'}
             </motion.span>
           </span>
           <span className="block overflow-hidden">
@@ -67,33 +72,23 @@ export default function Hero({ translations, locale }: HeroProps) {
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1.2, delay: 0.45, ease: [0.19, 1, 0.22, 1] }}
             >
-              {hero.title2}
+              {hero.title2 || 'Lebanese Soul.'}
             </motion.span>
           </span>
         </h1>
         
-        {/* Subtitle */}
-        <motion.p
-          className="text-lg md:text-xl text-stone max-w-lg mx-auto mb-10 font-light"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          {hero.subtitle}
-        </motion.p>
-        
-        {/* CTAs */}
+        {/* CTAs - moved up since definition box is removed */}
         <motion.div
           className="flex flex-col sm:flex-row gap-4 justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
         >
           <button onClick={handleReserveClick} className="btn btn-primary">
-            {hero.cta}
+            {hero.cta || 'Reserve a table'}
           </button>
           <Link href={`/${locale}/menu`} className="btn btn-ghost">
-            {hero.viewMenu}
+            {hero.viewMenu || 'View menu'}
           </Link>
         </motion.div>
       </div>

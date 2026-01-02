@@ -47,7 +47,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
 
   return (
     <div ref={containerRef} className="bg-cream">
-      {/* Hero Section */}
+      {/* Hero Section - UPDATED: Changed label */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
@@ -61,15 +61,9 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
           <div className="absolute inset-0 bg-charcoal/60" />
         </div>
 
-        {/* Arabic Watermark */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <span className="font-display text-[20vw] md:text-[15vw] text-white/10 select-none arabic-text">
-            مائدة
-          </span>
-        </div>
-
         {/* Content */}
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+          {/* UPDATED: Changed from "Our Story" label to "What brought us here" */}
           <motion.p
             className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-sand mb-6"
             initial={{ opacity: 0, y: 20 }}
@@ -77,7 +71,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="w-8 h-px bg-sand" />
-            #FromOurRoots
+            What brought us here
             <span className="w-8 h-px bg-sand" />
           </motion.p>
 
@@ -109,7 +103,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
       <section className="py-24 md:py-32 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-            {/* Arabic Card */}
+            {/* Arabic Card - UPDATED: Using emblem pattern instead of stars */}
             <motion.div
               className="relative"
               initial="hidden"
@@ -117,40 +111,52 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
               viewport={{ once: true, margin: '-100px' }}
               variants={fadeInUp}
             >
-              <div className="aspect-square bg-terracotta/10 rounded-3xl flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-terracotta/5 to-transparent" />
-                <div className="text-center relative z-10">
-                  <span className="font-display text-8xl md:text-9xl text-terracotta block mb-4 arabic-text">
+              <div 
+                className="aspect-square bg-gradient-to-br from-terracotta to-rust flex flex-col items-center justify-center relative overflow-hidden"
+                style={{
+                  backgroundImage: `url('/images/brand/emblem.svg')`,
+                  backgroundSize: '60px',
+                  backgroundRepeat: 'repeat',
+                  backgroundBlendMode: 'soft-light',
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-terracotta to-rust opacity-90" />
+                <div className="relative z-10 text-center p-8">
+                  <span className="font-display text-8xl md:text-9xl text-warm-white/90 arabic-text block mb-4">
                     مائدة
                   </span>
-                  <p className="text-sm tracking-[0.2em] uppercase text-stone">
+                  <span className="text-sm tracking-[0.3em] uppercase text-warm-white/70">
                     ma'ida
-                  </p>
+                  </span>
                 </div>
-                {/* Decorative corner */}
-                <div className="absolute top-0 right-0 w-24 h-24 border-t-2 border-r-2 border-terracotta/20 rounded-tr-3xl" />
-                <div className="absolute bottom-0 left-0 w-24 h-24 border-b-2 border-l-2 border-terracotta/20 rounded-bl-3xl" />
               </div>
             </motion.div>
 
-            {/* Content */}
+            {/* Text */}
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-100px' }}
               variants={staggerContainer}
             >
+              <motion.p 
+                className="text-xs tracking-[0.3em] uppercase text-terracotta mb-4"
+                variants={fadeInUp}
+              >
+                The meaning
+              </motion.p>
+
               <motion.h2 
                 className="font-display text-4xl md:text-5xl font-light mb-8 text-charcoal"
                 variants={fadeInUp}
               >
-                The meaning of{' '}
-                <span className="text-terracotta font-display arabic-text">مائدة</span>
+                More than<br />
+                <span className="text-terracotta italic">a word</span>
               </motion.h2>
 
               <motion.div className="space-y-6 text-stone text-lg leading-relaxed" variants={fadeInUp}>
                 <p>
-                  <strong className="text-charcoal">Maída</strong> means "the table" in Arabic — but not just any table.
+                  In Arabic, <span className="text-terracotta font-medium">المائدة</span> (al-māʾidah) doesn't just mean "table."
                 </p>
                 <p>
                   It's the gathering table. Where family and friends come together, where stories are shared over plates passed hand to hand, where no one leaves hungry.
@@ -164,14 +170,20 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
         </div>
       </section>
 
-      {/* Divider */}
+      {/* Divider - UPDATED: Using emblem instead of star */}
       <div className="max-w-xs mx-auto flex items-center gap-4">
         <span className="flex-1 h-px bg-stone/20" />
-        <span className="text-terracotta text-2xl">✦</span>
+        <Image
+          src="/images/brand/emblem.svg"
+          alt=""
+          width={24}
+          height={24}
+          className="opacity-60"
+        />
         <span className="flex-1 h-px bg-stone/20" />
       </div>
 
-      {/* From Beirut to Lisboa */}
+      {/* From Beirut to Lisboa - UPDATED: Added "From our roots" title */}
       <section className="py-24 md:py-32 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
@@ -183,11 +195,12 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
               viewport={{ once: true, margin: '-100px' }}
               variants={staggerContainer}
             >
+              {/* UPDATED: Added "From our roots" as title above */}
               <motion.p 
                 className="text-xs tracking-[0.3em] uppercase text-terracotta mb-4"
                 variants={fadeInUp}
               >
-                #FromOurRoots
+                From our roots
               </motion.p>
 
               <motion.h2 
@@ -220,7 +233,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
               variants={staggerContainer}
             >
               <motion.div className="space-y-4" variants={fadeInUp}>
-                <div className="aspect-[3/4] relative rounded-2xl overflow-hidden">
+                <div className="aspect-[3/4] relative overflow-hidden">
                   <Image
                     src="/images/food/shawarma.webp"
                     alt="Signature Shawarma"
@@ -228,7 +241,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                     className="object-cover"
                   />
                 </div>
-                <div className="aspect-square relative rounded-2xl overflow-hidden">
+                <div className="aspect-square relative overflow-hidden">
                   <Image
                     src="/images/drinks/tea-topview.webp"
                     alt="Traditional tea"
@@ -238,7 +251,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 </div>
               </motion.div>
               <motion.div className="space-y-4 pt-8" variants={fadeInUp}>
-                <div className="aspect-square relative rounded-2xl overflow-hidden">
+                <div className="aspect-square relative overflow-hidden">
                   <Image
                     src="/images/food/feta-brulee.webp"
                     alt="Feta Brûlée"
@@ -246,7 +259,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                     className="object-cover"
                   />
                 </div>
-                <div className="aspect-[3/4] relative rounded-2xl overflow-hidden">
+                <div className="aspect-[3/4] relative overflow-hidden">
                   <Image
                     src="/images/drinks/cocktail-making.webp"
                     alt="Cocktail preparation"
@@ -260,75 +273,84 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
         </div>
       </section>
 
-      {/* What We Believe - Full Width Cards */}
+      {/* ============================================
+          WHO WE ARE Section (Replaces "What We Believe")
+          UPDATED: Complete replacement with Anna & Anthony story
+          ============================================ */}
       <section className="py-24 md:py-32 px-6 bg-charcoal text-white">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            className="text-center mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-          >
-            <h2 className="font-display text-4xl md:text-5xl font-light mb-4">
-              What we believe
-            </h2>
-            <p className="text-sand/70 text-lg">Three pillars that guide everything we do</p>
-          </motion.div>
-
-          <motion.div 
-            className="grid md:grid-cols-3 gap-8"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-50px' }}
-            variants={staggerContainer}
-          >
-            {/* Pillar 1 */}
-            <motion.div 
-              className="group p-8 rounded-3xl bg-white/5 hover:bg-white/10 transition-colors duration-500"
-              variants={fadeInUp}
+          <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+            
+            {/* Photo Placeholder - UPDATED: Portrait ratio */}
+            <motion.div
+              className="relative aspect-[3/4] bg-stone/20 overflow-hidden"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
             >
-              <div className="w-16 h-16 rounded-full bg-terracotta/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                <span className="text-3xl">🍽</span>
+              {/* Placeholder for Anna & Anthony photo */}
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-stone/30 to-stone/10">
+                <div className="text-center">
+                  <Image
+                    src="/images/brand/emblem.svg"
+                    alt=""
+                    width={60}
+                    height={60}
+                    className="mx-auto mb-4 opacity-30"
+                  />
+                  <p className="text-sand/50 text-sm">Anna & Anthony</p>
+                  <p className="text-sand/30 text-xs mt-1">Photo coming soon</p>
+                </div>
               </div>
-              <h3 className="font-display text-2xl mb-4">Mediterranean Soul</h3>
-              <p className="text-sand/70 leading-relaxed">
-                Our SAJ bread is baked fresh on a traditional griddle. Our hummus is made daily. Our portions are generous because that's how family feeds family.
-              </p>
+              {/* 
+              When you have the photo, replace with:
+              <Image
+                src="/images/about/anna-anthony.webp"
+                alt="Anna and Anthony, founders of Maída"
+                fill
+                className="object-cover"
+              />
+              */}
             </motion.div>
 
-            {/* Pillar 2 */}
-            <motion.div 
-              className="group p-8 rounded-3xl bg-white/5 hover:bg-white/10 transition-colors duration-500"
-              variants={fadeInUp}
+            {/* Content */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="w-16 h-16 rounded-full bg-terracotta/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                <span className="text-3xl">👥</span>
-              </div>
-              <h3 className="font-display text-2xl mb-4">Gathering Place</h3>
-              <p className="text-sand/70 leading-relaxed">
-                Our communal table isn't just furniture — it's an invitation. First visit, you're curious. Week two, you return for that Lavender Coffee. Month three, you bring friends to "your place."
+              <p className="text-xs tracking-[0.3em] uppercase text-terracotta-light mb-4">
+                Who we are
               </p>
-            </motion.div>
-
-            {/* Pillar 3 */}
-            <motion.div 
-              className="group p-8 rounded-3xl bg-white/5 hover:bg-white/10 transition-colors duration-500"
-              variants={fadeInUp}
-            >
-              <div className="w-16 h-16 rounded-full bg-terracotta/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                <span className="text-3xl">🎵</span>
+              
+              <h2 className="font-display text-3xl md:text-4xl font-light mb-8">
+                Anna & Anthony
+              </h2>
+              
+              <div className="space-y-6 text-sand/90 text-lg leading-relaxed">
+                <p>
+                  <span className="italic text-terracotta-light">Maída</span> was born from a shared dream between Anna and Anthony — 
+                  to bring the warmth of Lebanese hospitality to the heart of Lisbon.
+                </p>
+                <p>
+                  {/* Placeholder - replace with actual story */}
+                  With roots stretching from the mountains of Lebanon to the vibrant streets of Lisbon, 
+                  they found common ground in their love for food that brings people together, 
+                  conversations that linger, and evenings that become memories.
+                </p>
+                <p>
+                  Today, you'll find them both where they belong: at the table, 
+                  making sure no glass stays empty and no guest leaves hungry.
+                </p>
               </div>
-              <h3 className="font-display text-2xl mb-4">Living Atmosphere</h3>
-              <p className="text-sand/70 leading-relaxed">
-                Lunchtime: Bright light, gentle music, espresso humming. Evening: Candles flickering, cocktails shaking, beats building. Same address, different worlds.
-              </p>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Final CTA */}
+      {/* Final CTA - UPDATED: Removed "Come" from the beginning */}
       <section className="py-24 md:py-32 px-6 text-center">
         <motion.div
           className="max-w-2xl mx-auto"
@@ -341,7 +363,8 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
             className="font-display text-4xl md:text-5xl lg:text-6xl font-light mb-6 text-charcoal"
             variants={fadeInUp}
           >
-            Come find your place
+            {/* UPDATED: Changed "Come find your place" to "Find your place" */}
+            Find your place
             <br />
             <span className="text-terracotta italic">at the table</span>
           </motion.h2>
@@ -350,7 +373,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
             className="text-stone text-lg mb-10"
             variants={fadeInUp}
           >
-            #MeetMeAtMaida
+            #MeetMeAtMaída
           </motion.p>
 
           <motion.button
@@ -360,7 +383,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
-            Reserve a Table
+            Reserve a table
           </motion.button>
         </motion.div>
       </section>

@@ -1,15 +1,12 @@
 import { notFound } from 'next/navigation';
 import { isValidLocale, loadTranslations, Locale } from '@/lib/i18n';
 import MaidaLiveClient from '@/components/maida-live/MaidaLiveClient';
+import { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: { lang: string } }) {
-  const locale = params.lang as Locale;
-  
-  return {
-    title: 'Maída Live - Events & DJ Nights | Maída',
-    description: 'Experience Maída Live — Thursday cultural nights, Friday DJ dinners, and Saturday parties until 2am. Where dinner becomes an experience.',
-  };
-}
+export const metadata: Metadata = {
+  title: 'Maída - Mediterranean Flavours, Lebanese Soul | Maída Live',
+  description: 'Experience Maída Live - our weekly program of music, culture, and atmosphere. Thursdays, Fridays, and Saturdays.',
+};
 
 export default async function MaidaLivePage({
   params,

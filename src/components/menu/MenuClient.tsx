@@ -79,18 +79,13 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   };
   
   return (
-    <div className="min-h-screen pt-24 md:pt-32 pb-16">
-      {/* Header */}
-      <div className="text-center px-6 mb-10">
-        <h1 className="font-display text-fluid-4xl font-light text-charcoal mb-2">
-          {menu.title}
-        </h1>
-        <p className="text-stone">{menu.subtitle}</p>
-      </div>
+    <div className="min-h-screen pt-24 md:pt-28 pb-16">
+      {/* FIX 4: REMOVED "The Menu" header and "Explore our offerings" subtitle */}
       
-      {/* Category Carousel */}
+      {/* Category Carousel - starts immediately */}
       <div className="relative mb-12 px-4">
-        <div className="max-w-6xl mx-auto relative">
+        {/* FIX 5: Wider container - changed from max-w-6xl to max-w-7xl */}
+        <div className="max-w-7xl mx-auto relative">
           {/* Left Arrow */}
           <AnimatePresence>
             {showLeftArrow && (
@@ -99,7 +94,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={scrollLeft}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-warm-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center text-charcoal hover:bg-terracotta hover:text-warm-white transition-colors"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-warm-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center text-charcoal hover:bg-terracotta hover:text-warm-white transition-colors"
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -132,7 +127,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={scrollRight}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-warm-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center text-charcoal hover:bg-terracotta hover:text-warm-white transition-colors"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-warm-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center text-charcoal hover:bg-terracotta hover:text-warm-white transition-colors"
                 aria-label="Scroll right"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -142,8 +137,8 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         </div>
       </div>
       
-      {/* Menu Items */}
-      <div className="max-w-3xl mx-auto px-6">
+      {/* Menu Items - FIX 5: Wider container - changed from max-w-3xl to max-w-4xl */}
+      <div className="max-w-4xl mx-auto px-6">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
