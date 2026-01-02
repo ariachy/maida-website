@@ -1,0 +1,295 @@
+{
+  "locale": "pt",
+  "nav": {
+    "story": "História",
+    "menu": "Menu",
+    "about": "Sobre",
+    "contact": "Contacto",
+    "reserve": "Reservar"
+  },
+  "hero": {
+    "location": "Cais do Sodré, Lisboa",
+    "title1": "Sabores Mediterrânicos.",
+    "title2": "Alma Libanesa.",
+    "subtitle": "Um lugar de encontro para pratos partilhados, vinhos naturais e noites que se prolongam.",
+    "cta": "Reservar Mesa",
+    "viewMenu": "Ver Menu",
+    "scroll": "Scroll"
+  },
+  "story": {
+    "label": "A Nossa História",
+    "title": "Onde cada refeição sabe a",
+    "titleHighlight": "casa",
+    "text1": "O Maída é mais do que um restaurante—é um convite para abrandar, reunir à volta da mesa e partilhar algo significativo.",
+    "text2": "Enraizado na tradição libanesa e inspirado pelo calor mediterrânico, criamos comida feita para ser partilhada. Cada prato conta uma história. Cada noite sabe a casa.",
+    "cta": "Explorar o Menu",
+    "arabicWord": "مائدة",
+    "arabicMeaning": "A Mesa de Reunião"
+  },
+  "philosophy": {
+    "label": "O Que Acreditamos",
+    "title": "Três pilares de",
+    "titleHighlight": "hospitalidade",
+    "pillars": [
+      {
+        "title": "Pratos para Partilhar",
+        "description": "O nosso menu foi pensado para a mesa, não para o indivíduo. Pratos feitos para passar, provar e desfrutar em conjunto."
+      },
+      {
+        "title": "Vinhos Naturais",
+        "description": "Pequenos produtores, vinhas orgânicas, terroir mediterrânico. Cada garrafa conta a sua própria história."
+      },
+      {
+        "title": "Demorar Mais",
+        "description": "Um espaço para ficar—não para apressar. Para o segundo copo, o mezze extra, a história que não podia esperar."
+      }
+    ]
+  },
+  "menu": {
+    "title": "O Menu",
+    "subtitle": "Explore as nossas ofertas",
+    "viewFull": "Ver Menu Completo",
+    "categories": {
+      "mezze": {
+        "name": "Mezze & Entradas",
+        "description": "Pequenos pratos para partilhar e saborear"
+      },
+      "mains": {
+        "name": "Pratos Principais",
+        "description": "Pratos reconfortantes da nossa cozinha"
+      },
+      "grilled": {
+        "name": "Grelhados",
+        "description": "Grelhados na perfeição"
+      },
+      "saj": {
+        "name": "Pão Saj",
+        "description": "Pão achatado tradicional libanês"
+      },
+      "desserts": {
+        "name": "Sobremesas",
+        "description": "Doces tradicionais"
+      },
+      "cocktails": {
+        "name": "Cocktails de Assinatura",
+        "description": "Bebidas com alma libanesa"
+      },
+      "wine": {
+        "name": "Seleção de Vinhos",
+        "description": "Vinhos mediterrânicos & naturais"
+      },
+      "coffee": {
+        "name": "Café",
+        "description": "Especialidade & tradicional"
+      },
+      "soft-drinks": {
+        "name": "Bebidas",
+        "description": "Chás, sumos & mais"
+      }
+    },
+    "items": {
+      "hummus-beiruti": {
+        "name": "Hummus Beiruti",
+        "description": "Grão-de-bico quente, azeite, pinhões"
+      },
+      "kibbeh-nayeh": {
+        "name": "Kibbeh Nayeh",
+        "description": "Tártaro de borrego cru, bulgur, hortelã fresca"
+      },
+      "batata-harra": {
+        "name": "Batata Harra",
+        "description": "Batatas crocantes, alho, coentros, malagueta"
+      },
+      "fattoush": {
+        "name": "Fattoush",
+        "description": "Pita crocante, romã, sumac, vegetais frescos"
+      },
+      "baba-ganoush": {
+        "name": "Baba Ganoush",
+        "description": "Beringela fumada, tahini, romã"
+      },
+      "labneh": {
+        "name": "Labneh",
+        "description": "Iogurte coado, za'atar, azeite"
+      },
+      "feta-brulee": {
+        "name": "Feta Brûlée",
+        "description": "Feta caramelizado, mel, sésamo"
+      },
+      "halloumi-honey": {
+        "name": "Halloumi com Mel",
+        "description": "Halloumi grelhado, mel, pinhões"
+      },
+      "chicken-shawarma": {
+        "name": "Shawarma de Frango",
+        "description": "Frango marinado, molho de alho, pickles"
+      },
+      "lamb-kofta": {
+        "name": "Kofta de Borrego",
+        "description": "Espetadas de borrego especiado, tahini, ervas frescas"
+      },
+      "grilled-chicken": {
+        "name": "Peito de Frango Grelhado",
+        "description": "Especiarias mediterrânicas, limão, ervas"
+      },
+      "mixed-grill": {
+        "name": "Grelhada Mista",
+        "description": "Seleção de carnes grelhadas, arroz, salada"
+      },
+      "lamb-chops": {
+        "name": "Costeletas de Borrego",
+        "description": "Grelhadas, ervas, alho"
+      },
+      "saj-zaatar": {
+        "name": "Saj Zaatar",
+        "description": "Za'atar tradicional, azeite"
+      },
+      "saj-cheese": {
+        "name": "Saj Queijo",
+        "description": "Queijo branco derretido, hortelã fresca"
+      },
+      "saj-labneh": {
+        "name": "Saj Labneh",
+        "description": "Iogurte coado, pepino, tomate"
+      },
+      "kunafa": {
+        "name": "Kunafa",
+        "description": "Massa desfiada, queijo doce, calda de rosa"
+      },
+      "baklava": {
+        "name": "Baklava",
+        "description": "Camadas de filo, pistácios, mel"
+      },
+      "warda": {
+        "name": "Warda",
+        "description": "Geleia de rosa, bourbon, lima, cardamomo"
+      },
+      "beirut-sour": {
+        "name": "Beirut Sour",
+        "description": "Arak, flor de laranjeira, citrinos, clara de ovo"
+      },
+      "cedar-old-fashioned": {
+        "name": "Cedar Old Fashioned",
+        "description": "Whiskey, cedro, laranja, bitters"
+      },
+      "fattouch-on-ice": {
+        "name": "Fattouch on Ice",
+        "description": "Bourbon, romã, sumac, hortelã"
+      },
+      "house-red": {
+        "name": "Tinto da Casa",
+        "description": "Seleção portuguesa, copo ou garrafa"
+      },
+      "house-white": {
+        "name": "Branco da Casa",
+        "description": "Seleção portuguesa, copo ou garrafa"
+      },
+      "cortado": {
+        "name": "Cortado",
+        "description": "Espresso, leite vaporizado"
+      },
+      "lebanese-coffee": {
+        "name": "Café Libanês",
+        "description": "Café tradicional com cardamomo"
+      },
+      "mint-tea": {
+        "name": "Chá de Hortelã Fresco",
+        "description": "Folhas de hortelã frescas, mel"
+      },
+      "lemonade": {
+        "name": "Limonada da Casa",
+        "description": "Espremida na hora, hortelã, água de rosas"
+      }
+    },
+    "tags": {
+      "vegetarian": "V",
+      "vegan": "VG",
+      "gluten-free": "SG"
+    },
+    "glass": "copo",
+    "bottle": "garrafa"
+  },
+  "drinks": {
+    "label": "Das Nossas Raízes",
+    "title": "Cocktails com",
+    "titleHighlight": "alma libanesa",
+    "tagline": "8 bebidas. 8 histórias. Caminhos diferentes que nos trouxeram aqui.",
+    "text": "O nosso bar conta a mesma história que a nossa cozinha. Cada cocktail vem de casa: água de rosas, flor de laranjeira, sumac, arak.",
+    "cta": "Ver Menu de Bebidas"
+  },
+  "visit": {
+    "label": "Encontre-nos",
+    "title": "A sua mesa no",
+    "titleHighlight": "Cais do Sodré",
+    "address": {
+      "label": "Morada",
+      "value": "Rua da Boavista 66, 1200-066 Lisboa"
+    },
+    "hours": {
+      "label": "Horário",
+      "value": "Ter – Sáb: 19:00 – 00:00"
+    },
+    "contact": {
+      "label": "Contacto",
+      "value": "hello@maida.pt"
+    },
+    "directions": "Como Chegar"
+  },
+  "cta": {
+    "title": "A sua mesa está à espera",
+    "subtitle": "Junte-se a nós para calor mediterrânico e alma libanesa.",
+    "button": "Reservar Agora"
+  },
+  "footer": {
+    "tagline": "Sabores Mediterrânicos. Alma Libanesa.",
+    "navigate": "Navegação",
+    "hours": "Horário",
+    "hoursValue": "Ter – Sáb: 19h – 00h",
+    "closed": "Dom – Seg: Fechado",
+    "contact": "Contacto",
+    "reservations": "Reservas",
+    "giftCards": "Cartões Oferta",
+    "copyright": "© 2026 maída",
+    "location": "Cais do Sodré, Lisboa"
+  },
+  "about": {
+    "heroTitle": "A Nossa História",
+    "heroSubtitle": "Uma mesa de reunião no coração de Lisboa",
+    "section1Title": "O significado de",
+    "section1Highlight": "مائدة",
+    "section1Text": "Maída (مائدة) significa 'a mesa' em árabe—mas não qualquer mesa. É a mesa de reunião, onde família e amigos se juntam, onde histórias são partilhadas, e onde ninguém sai com fome.",
+    "section2Title": "De Beirute a",
+    "section2Highlight": "Lisboa",
+    "section2Text": "A nossa jornada começou com memórias de jantares de família libaneses—mesas transbordando de mezze, conversas que duravam horas, e o calor de refeições partilhadas. Trouxemos esse espírito para o Cais do Sodré.",
+    "philosophyTitle": "O que nos move"
+  },
+  "contact": {
+    "title": "Entre em Contacto",
+    "subtitle": "Adoraríamos ouvir de si",
+    "form": {
+      "name": "O Seu Nome",
+      "email": "Email",
+      "message": "A Sua Mensagem",
+      "send": "Enviar Mensagem"
+    },
+    "info": {
+      "title": "Visite-nos",
+      "address": "Rua da Boavista 66",
+      "city": "1200-066 Lisboa, Portugal",
+      "phone": "+351 XXX XXX XXX",
+      "email": "hello@maida.pt"
+    },
+    "hours": {
+      "title": "Horário de Funcionamento",
+      "weekdays": "Terça - Sábado",
+      "weekdaysTime": "19:00 - 00:00",
+      "weekend": "Domingo - Segunda",
+      "weekendTime": "Fechado"
+    }
+  },
+  "common": {
+    "loading": "A carregar...",
+    "error": "Algo correu mal",
+    "backToHome": "Voltar ao Início"
+  }
+}

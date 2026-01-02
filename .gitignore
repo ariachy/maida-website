@@ -1,0 +1,74 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js build output
+.next/
+out/
+
+# ===========================================
+# ENVIRONMENT FILES - NEVER COMMIT THESE!
+# ===========================================
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+*.env
+
+# ===========================================
+# SENSITIVE FILES
+# ===========================================
+# PHP backend configs that might have passwords
+backend/*.log
+*.log
+
+# ===========================================
+# IDE / Editor
+# ===========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===========================================
+# Operating System
+# ===========================================
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ===========================================
+# Debug / Logs
+# ===========================================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ===========================================
+# Testing
+# ===========================================
+coverage/
+.nyc_output/
+
+# ===========================================
+# Misc
+# ===========================================
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+
+# ===========================================
+# Temporary files
+# ===========================================
+*.tmp
+*.temp
+.cache/

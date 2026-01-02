@@ -1,0 +1,84 @@
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { locales, Locale, isValidLocale, loadTranslations } from '@/lib/i18n';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import CustomCursor from '@/components/layout/CustomCursor';
+import ScrollProgress from '@/components/layout/ScrollProgress';
+import PageLoader from '@/components/layout/PageLoader';
+
+// Generate static params for all locales
+export function generateStaticParams() {
+  return locales.map((locale) => ({ lang: locale }));
+}
+
+// Generate metadata for SEO
+export async function generateMetadata({ 
+  params 
+}: { 
+  params: { lang: string } 
+}): Promise<Metadata> {
+  const locale = params.lang;
+  
+  if (!isValidLocale(locale)) {
+    return {};
+  }
+  
+  const translations = await loadTranslations(locale);
+  
+  return {
+    alternates: {
+      canonical: `https://maida.pt/${locale}`,
+      languages: {
+        'en': '/en',
+        'pt': '/pt',
+        'de': '/de',
+        'it': '/it',
+        'es': '/es',
+      },
+    },
+  };
+}
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { lang: string };
+}) {
+  const locale = params.lang;
+  
+  // Validate locale
+  if (!isValidLocale(locale)) {
+    notFound();
+  }
+  
+  // Load translations
+  const translations = await loadTranslations(locale);
+  
+  return (
+    <>
+      {/* Page loader */}
+      <PageLoader />
+      
+      {/* Noise texture overlay */}
+      <div className="noise-overlay" aria-hidden="true" />
+      
+      {/* Custom cursor (desktop only) */}
+      <CustomCursor />
+      
+      {/* Scroll progress bar */}
+      <ScrollProgress />
+      
+      {/* Navigation */}
+      <Navbar translations={translations} locale={locale} />
+      
+      {/* Main content */}
+      <main>{children}</main>
+      
+      {/* Footer */}
+      <Footer translations={translations} locale={locale} />
+    </>
+  );
+}

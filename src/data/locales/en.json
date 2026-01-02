@@ -1,0 +1,296 @@
+{
+  "locale": "en",
+  "nav": {
+    "story": "Story",
+    "menu": "Menu",
+    "events": "Events",
+    "blog": "Blog",
+    "contact": "Contact",
+    "reserve": "Reserve a Table"
+  },
+  "hero": {
+    "location": "Cais do Sodré, Lisboa",
+    "title1": "Mediterranean Flavours.",
+    "title2": "Lebanese Soul.",
+    "subtitle": "A gathering place for shared plates, natural wines, and evenings that linger.",
+    "cta": "Reserve a Table",
+    "viewMenu": "View Menu",
+    "scroll": "Scroll"
+  },
+  "story": {
+    "label": "#FromOurRoots",
+    "title": "Where every meal is",
+    "titleHighlight": "an invitation",
+    "text1": "Maída is more than a restaurant - it's an invitation. To slow down. To gather around the table. To share something meaningful.",
+    "text2": "The word مائدة (ma'ida) means \"the gathering table\" in Arabic - where family and friends come together, stories are shared, and no one leaves hungry. That's the spirit we brought from Beirut to Cais do Sodré.",
+    "cta": "Read Our Story",
+    "arabicWord": "مائدة",
+    "arabicMeaning": "The Gathering Table"
+  },
+  "philosophy": {
+    "label": "What We Believe",
+    "title": "Three pillars of",
+    "titleHighlight": "hospitality",
+    "pillars": [
+      {
+        "title": "Shareable Plates",
+        "description": "Our menu is designed for the table, not the individual. Dishes meant to be passed, tasted, and enjoyed together."
+      },
+      {
+        "title": "Natural Wines",
+        "description": "Small producers, organic vineyards, Mediterranean terroir. Each bottle tells its own story."
+      },
+      {
+        "title": "Linger Longer",
+        "description": "A space for staying—not rushing. For the second glass, the extra mezze, the story that couldn't wait."
+      }
+    ]
+  },
+  "menu": {
+    "title": "The Menu",
+    "subtitle": "Explore our offerings",
+    "viewFull": "View Full Menu",
+    "categories": {
+      "mezze": {
+        "name": "Mezze & Starters",
+        "description": "Small plates to share and savor"
+      },
+      "mains": {
+        "name": "Main Courses",
+        "description": "Hearty dishes from our kitchen"
+      },
+      "grilled": {
+        "name": "From the Grill",
+        "description": "Char-grilled to perfection"
+      },
+      "saj": {
+        "name": "Saj Bread",
+        "description": "Traditional Lebanese flatbread"
+      },
+      "desserts": {
+        "name": "Sweet Endings",
+        "description": "Traditional desserts"
+      },
+      "cocktails": {
+        "name": "Signature Cocktails",
+        "description": "Drinks with Lebanese soul"
+      },
+      "wine": {
+        "name": "Wine Selection",
+        "description": "Mediterranean & natural wines"
+      },
+      "coffee": {
+        "name": "Coffee",
+        "description": "Specialty & traditional"
+      },
+      "soft-drinks": {
+        "name": "Refreshments",
+        "description": "Teas, juices & more"
+      }
+    },
+    "items": {
+      "hummus-beiruti": {
+        "name": "Hummus Beiruti",
+        "description": "Warm chickpeas, olive oil, pine nuts"
+      },
+      "kibbeh-nayeh": {
+        "name": "Kibbeh Nayeh",
+        "description": "Raw lamb tartare, bulgur, fresh mint"
+      },
+      "batata-harra": {
+        "name": "Batata Harra",
+        "description": "Crispy potatoes, garlic, coriander, chili"
+      },
+      "fattoush": {
+        "name": "Fattoush",
+        "description": "Crispy pita, pomegranate, sumac, fresh vegetables"
+      },
+      "baba-ganoush": {
+        "name": "Baba Ganoush",
+        "description": "Smoky eggplant, tahini, pomegranate"
+      },
+      "labneh": {
+        "name": "Labneh",
+        "description": "Strained yogurt, za'atar, olive oil"
+      },
+      "feta-brulee": {
+        "name": "Feta Brûlée",
+        "description": "Caramelized feta, honey, sesame"
+      },
+      "halloumi-honey": {
+        "name": "Honey Roasted Halloumi",
+        "description": "Grilled halloumi, honey, pine nuts"
+      },
+      "chicken-shawarma": {
+        "name": "Chicken Shawarma",
+        "description": "Marinated chicken, garlic sauce, pickles"
+      },
+      "lamb-kofta": {
+        "name": "Lamb Kofta",
+        "description": "Spiced lamb skewers, tahini, fresh herbs"
+      },
+      "grilled-chicken": {
+        "name": "Grilled Chicken Breast",
+        "description": "Mediterranean spices, lemon, herbs"
+      },
+      "mixed-grill": {
+        "name": "Mixed Grill",
+        "description": "Selection of grilled meats, rice, salad"
+      },
+      "lamb-chops": {
+        "name": "Lamb Chops",
+        "description": "Char-grilled, herbs, garlic"
+      },
+      "saj-zaatar": {
+        "name": "Saj Zaatar",
+        "description": "Traditional za'atar, olive oil"
+      },
+      "saj-cheese": {
+        "name": "Saj Cheese",
+        "description": "Melted white cheese, fresh mint"
+      },
+      "saj-labneh": {
+        "name": "Saj Labneh",
+        "description": "Strained yogurt, cucumber, tomato"
+      },
+      "kunafa": {
+        "name": "Kunafa",
+        "description": "Shredded pastry, sweet cheese, rose syrup"
+      },
+      "baklava": {
+        "name": "Baklava",
+        "description": "Layers of filo, pistachios, honey"
+      },
+      "warda": {
+        "name": "Warda",
+        "description": "Rose jam, bourbon, lime, cardamom"
+      },
+      "beirut-sour": {
+        "name": "Beirut Sour",
+        "description": "Arak, orange blossom, citrus, egg white"
+      },
+      "cedar-old-fashioned": {
+        "name": "Cedar Old Fashioned",
+        "description": "Whiskey, cedar, orange, bitters"
+      },
+      "fattouch-on-ice": {
+        "name": "Fattouch on Ice",
+        "description": "Bourbon, pomegranate, sumac, mint"
+      },
+      "house-red": {
+        "name": "House Red",
+        "description": "Portuguese selection, glass or bottle"
+      },
+      "house-white": {
+        "name": "House White",
+        "description": "Portuguese selection, glass or bottle"
+      },
+      "cortado": {
+        "name": "Cortado",
+        "description": "Espresso, steamed milk"
+      },
+      "lebanese-coffee": {
+        "name": "Lebanese Coffee",
+        "description": "Traditional cardamom coffee"
+      },
+      "mint-tea": {
+        "name": "Fresh Mint Tea",
+        "description": "Fresh mint leaves, honey"
+      },
+      "lemonade": {
+        "name": "House Lemonade",
+        "description": "Fresh squeezed, mint, rose water"
+      }
+    },
+    "tags": {
+      "vegetarian": "V",
+      "vegan": "VG",
+      "gluten-free": "GF"
+    },
+    "glass": "glass",
+    "bottle": "bottle"
+  },
+  "drinks": {
+    "label": "From Our Roots",
+    "title": "Cocktails with",
+    "titleHighlight": "Lebanese soul",
+    "tagline": "8 drinks. 8 stories. Different roads that led us here.",
+    "text": "Our bar tells the same story as our kitchen. Each cocktail draws from home: rose water, orange blossom, sumac, arak.",
+    "cta": "See Drinks Menu"
+  },
+  "visit": {
+    "label": "Find Us",
+    "title": "Your table in",
+    "titleHighlight": "Cais do Sodré",
+    "address": {
+      "label": "Address",
+      "value": "Rua da Boavista 66, 1200-066 Lisboa"
+    },
+    "hours": {
+      "label": "Hours",
+      "value": "Tue – Sat: 19:00 – 00:00"
+    },
+    "contact": {
+      "label": "Contact",
+      "value": "hello@maida.pt"
+    },
+    "directions": "Get Directions"
+  },
+  "cta": {
+    "title": "Your table is waiting",
+    "subtitle": "#MeetMeAtMaida",
+    "button": "Reserve a Table"
+  },
+  "footer": {
+    "tagline": "Mediterranean Flavours. Lebanese Soul.",
+    "navigate": "Navigate",
+    "hours": "Hours",
+    "hoursValue": "Tue – Sat: 19h – 00h",
+    "closed": "Sun – Mon: Closed",
+    "contact": "Contact",
+    "reservations": "Reservations",
+    "giftCards": "Gift Cards",
+    "copyright": "© 2026 maída",
+    "location": "Cais do Sodré, Lisboa"
+  },
+  "about": {
+    "heroTitle": "Our Story",
+    "heroSubtitle": "A gathering table in the heart of Lisbon",
+    "section1Title": "The meaning of",
+    "section1Highlight": "مائدة",
+    "section1Text": "Maída (مائدة) means 'the table' in Arabic—but not just any table. It's the gathering table, the one where family and friends come together, where stories are shared, and where no one leaves hungry.",
+    "section2Title": "From Beirut to",
+    "section2Highlight": "Lisboa",
+    "section2Text": "Our journey began with memories of Lebanese family dinners—tables overflowing with mezze, conversations that lasted hours, and the warmth of shared meals. We brought that spirit to Cais do Sodré.",
+    "philosophyTitle": "What drives us"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "We'd love to hear from you",
+    "form": {
+      "name": "Your Name",
+      "email": "Email Address",
+      "message": "Your Message",
+      "send": "Send Message"
+    },
+    "info": {
+      "title": "Visit Us",
+      "address": "Rua da Boavista 66",
+      "city": "1200-066 Lisboa, Portugal",
+      "phone": "+351 XXX XXX XXX",
+      "email": "hello@maida.pt"
+    },
+    "hours": {
+      "title": "Opening Hours",
+      "weekdays": "Tuesday - Saturday",
+      "weekdaysTime": "19:00 - 00:00",
+      "weekend": "Sunday - Monday",
+      "weekendTime": "Closed"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "backToHome": "Back to Home"
+  }
+}
