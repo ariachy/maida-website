@@ -1,64 +1,52 @@
 {
   "categories": [
     {
-      "id": "mezze",
-      "slug": "mezze",
-      "image": "/images/food/halloumi.webp",
+      "id": "to-start",
+      "slug": "to-start",
+      "image": "",
       "sortOrder": 1
     },
     {
-      "id": "mains",
-      "slug": "mains",
-      "image": "/images/food/chicken-breast.webp",
+      "id": "later",
+      "slug": "later",
+      "image": "",
       "sortOrder": 2
     },
     {
-      "id": "grilled",
-      "slug": "grilled",
-      "image": "/images/food/shawarma.webp",
+      "id": "to-end",
+      "slug": "to-end",
+      "image": "",
       "sortOrder": 3
     },
     {
-      "id": "saj",
-      "slug": "saj",
-      "image": "/images/food/dough-ball.webp",
+      "id": "non-alcoholic",
+      "slug": "non-alcoholic",
+      "image": "",
       "sortOrder": 4
     },
     {
-      "id": "desserts",
-      "slug": "desserts",
-      "image": "/images/food/feta-brulee.webp",
+      "id": "alcoholic",
+      "slug": "alcoholic",
+      "image": "",
       "sortOrder": 5
     },
     {
-      "id": "cocktails",
-      "slug": "cocktails",
-      "image": "/images/drinks/cocktail-making.webp",
+      "id": "teas-coffees",
+      "slug": "teas-coffees",
+      "image": "",
       "sortOrder": 6
     },
     {
       "id": "wine",
       "slug": "wine",
-      "image": "/images/drinks/bartender.webp",
+      "image": "",
       "sortOrder": 7
-    },
-    {
-      "id": "coffee",
-      "slug": "coffee",
-      "image": "/images/drinks/coffee-cortado.webp",
-      "sortOrder": 8
-    },
-    {
-      "id": "soft-drinks",
-      "slug": "soft-drinks",
-      "image": "/images/drinks/tea-topview.webp",
-      "sortOrder": 9
     }
   ],
   "items": [
     {
       "id": "hummus-beiruti",
-      "categoryId": "mezze",
+      "categoryId": "to-start",
       "price": 8,
       "image": "/images/catering/hummus-muhamara.webp",
       "tags": ["vegetarian", "vegan", "gluten-free"],
@@ -66,7 +54,7 @@
     },
     {
       "id": "kibbeh-nayeh",
-      "categoryId": "mezze",
+      "categoryId": "to-start",
       "price": 14,
       "image": null,
       "tags": [],
@@ -74,7 +62,7 @@
     },
     {
       "id": "batata-harra",
-      "categoryId": "mezze",
+      "categoryId": "to-start",
       "price": 7,
       "image": null,
       "tags": ["vegetarian", "vegan"],
@@ -82,7 +70,7 @@
     },
     {
       "id": "fattoush",
-      "categoryId": "mezze",
+      "categoryId": "to-start",
       "price": 9,
       "image": "/images/catering/fattouch.webp",
       "tags": ["vegetarian", "vegan"],
@@ -90,7 +78,7 @@
     },
     {
       "id": "baba-ganoush",
-      "categoryId": "mezze",
+      "categoryId": "to-start",
       "price": 9,
       "image": null,
       "tags": ["vegetarian", "vegan", "gluten-free"],
@@ -98,7 +86,7 @@
     },
     {
       "id": "labneh",
-      "categoryId": "mezze",
+      "categoryId": "to-start",
       "price": 7,
       "image": null,
       "tags": ["vegetarian", "gluten-free"],
@@ -106,7 +94,7 @@
     },
     {
       "id": "feta-brulee",
-      "categoryId": "mezze",
+      "categoryId": "to-start",
       "price": 10,
       "image": "/images/food/feta-brulee.webp",
       "tags": ["vegetarian"],
@@ -114,15 +102,39 @@
     },
     {
       "id": "halloumi-honey",
-      "categoryId": "mezze",
+      "categoryId": "to-start",
       "price": 11,
       "image": "/images/food/halloumi.webp",
       "tags": ["vegetarian", "gluten-free"],
       "sortOrder": 8
     },
     {
+      "id": "saj-zaatar",
+      "categoryId": "to-start",
+      "price": 6,
+      "image": "/images/food/dough-ball.webp",
+      "tags": ["vegetarian", "vegan"],
+      "sortOrder": 9
+    },
+    {
+      "id": "saj-cheese",
+      "categoryId": "to-start",
+      "price": 7,
+      "image": null,
+      "tags": ["vegetarian"],
+      "sortOrder": 10
+    },
+    {
+      "id": "saj-labneh",
+      "categoryId": "to-start",
+      "price": 7,
+      "image": null,
+      "tags": ["vegetarian"],
+      "sortOrder": 11
+    },
+    {
       "id": "chicken-shawarma",
-      "categoryId": "mains",
+      "categoryId": "later",
       "price": 16,
       "image": "/images/food/shawarma.webp",
       "tags": [],
@@ -130,7 +142,7 @@
     },
     {
       "id": "lamb-kofta",
-      "categoryId": "mains",
+      "categoryId": "later",
       "price": 18,
       "image": null,
       "tags": ["gluten-free"],
@@ -138,7 +150,7 @@
     },
     {
       "id": "grilled-chicken",
-      "categoryId": "mains",
+      "categoryId": "later",
       "price": 17,
       "image": "/images/food/chicken-breast.webp",
       "tags": ["gluten-free"],
@@ -146,47 +158,23 @@
     },
     {
       "id": "mixed-grill",
-      "categoryId": "grilled",
+      "categoryId": "later",
       "price": 24,
       "image": null,
       "tags": [],
-      "sortOrder": 1
+      "sortOrder": 4
     },
     {
       "id": "lamb-chops",
-      "categoryId": "grilled",
+      "categoryId": "later",
       "price": 26,
       "image": null,
       "tags": ["gluten-free"],
-      "sortOrder": 2
-    },
-    {
-      "id": "saj-zaatar",
-      "categoryId": "saj",
-      "price": 6,
-      "image": "/images/food/dough-ball.webp",
-      "tags": ["vegetarian", "vegan"],
-      "sortOrder": 1
-    },
-    {
-      "id": "saj-cheese",
-      "categoryId": "saj",
-      "price": 7,
-      "image": null,
-      "tags": ["vegetarian"],
-      "sortOrder": 2
-    },
-    {
-      "id": "saj-labneh",
-      "categoryId": "saj",
-      "price": 7,
-      "image": null,
-      "tags": ["vegetarian"],
-      "sortOrder": 3
+      "sortOrder": 5
     },
     {
       "id": "kunafa",
-      "categoryId": "desserts",
+      "categoryId": "to-end",
       "price": 8,
       "image": null,
       "tags": ["vegetarian"],
@@ -194,15 +182,23 @@
     },
     {
       "id": "baklava",
-      "categoryId": "desserts",
+      "categoryId": "to-end",
       "price": 6,
       "image": null,
       "tags": ["vegetarian"],
       "sortOrder": 2
     },
     {
+      "id": "lemonade",
+      "categoryId": "non-alcoholic",
+      "price": 4,
+      "image": null,
+      "tags": [],
+      "sortOrder": 1
+    },
+    {
       "id": "warda",
-      "categoryId": "cocktails",
+      "categoryId": "alcoholic",
       "price": 12,
       "image": "/images/drinks/cocktail-making.webp",
       "tags": [],
@@ -210,7 +206,7 @@
     },
     {
       "id": "beirut-sour",
-      "categoryId": "cocktails",
+      "categoryId": "alcoholic",
       "price": 11,
       "image": null,
       "tags": [],
@@ -218,7 +214,7 @@
     },
     {
       "id": "cedar-old-fashioned",
-      "categoryId": "cocktails",
+      "categoryId": "alcoholic",
       "price": 13,
       "image": null,
       "tags": [],
@@ -226,11 +222,35 @@
     },
     {
       "id": "fattouch-on-ice",
-      "categoryId": "cocktails",
+      "categoryId": "alcoholic",
       "price": 12,
       "image": null,
       "tags": [],
       "sortOrder": 4
+    },
+    {
+      "id": "cortado",
+      "categoryId": "teas-coffees",
+      "price": 2.5,
+      "image": "/images/drinks/coffee-cortado.webp",
+      "tags": [],
+      "sortOrder": 1
+    },
+    {
+      "id": "lebanese-coffee",
+      "categoryId": "teas-coffees",
+      "price": 3,
+      "image": null,
+      "tags": [],
+      "sortOrder": 2
+    },
+    {
+      "id": "mint-tea",
+      "categoryId": "teas-coffees",
+      "price": 4,
+      "image": "/images/drinks/tea-topview.webp",
+      "tags": [],
+      "sortOrder": 3
     },
     {
       "id": "house-red",
@@ -246,38 +266,6 @@
       "categoryId": "wine",
       "price": 6,
       "priceBottle": 24,
-      "image": null,
-      "tags": [],
-      "sortOrder": 2
-    },
-    {
-      "id": "cortado",
-      "categoryId": "coffee",
-      "price": 2.5,
-      "image": "/images/drinks/coffee-cortado.webp",
-      "tags": [],
-      "sortOrder": 1
-    },
-    {
-      "id": "lebanese-coffee",
-      "categoryId": "coffee",
-      "price": 3,
-      "image": null,
-      "tags": [],
-      "sortOrder": 2
-    },
-    {
-      "id": "mint-tea",
-      "categoryId": "soft-drinks",
-      "price": 4,
-      "image": "/images/drinks/tea-topview.webp",
-      "tags": [],
-      "sortOrder": 1
-    },
-    {
-      "id": "lemonade",
-      "categoryId": "soft-drinks",
-      "price": 4,
       "image": null,
       "tags": [],
       "sortOrder": 2

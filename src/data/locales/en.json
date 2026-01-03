@@ -47,45 +47,34 @@
     ]
   },
   "menu": {
+    "heroTagline": "Made for sharing",
+    "heroTitle": "Our Menu",
     "title": "The Menu",
     "subtitle": "Explore our offerings",
     "viewFull": "View Full Menu",
+    "disclaimer": "Prices in Euros. Prices include VAT.",
+    "emptyCategory": "No items in this category yet.",
     "categories": {
-      "mezze": {
-        "name": "Mezze & Starters",
-        "description": "Small plates to share and savor"
+      "to-start": {
+        "name": "To Start"
       },
-      "mains": {
-        "name": "Main Courses",
-        "description": "Hearty dishes from our kitchen"
+      "later": {
+        "name": "Later"
       },
-      "grilled": {
-        "name": "From the Grill",
-        "description": "Char-grilled to perfection"
+      "to-end": {
+        "name": "To End"
       },
-      "saj": {
-        "name": "Saj Bread",
-        "description": "Traditional Lebanese flatbread"
+      "non-alcoholic": {
+        "name": "To Drink (Non-Alcoholic)"
       },
-      "desserts": {
-        "name": "Sweet Endings",
-        "description": "Traditional desserts"
+      "alcoholic": {
+        "name": "To Drink (Alcoholic)"
       },
-      "cocktails": {
-        "name": "Signature Cocktails",
-        "description": "Drinks with Lebanese soul"
+      "teas-coffees": {
+        "name": "Teas & Coffees"
       },
       "wine": {
-        "name": "Wine Selection",
-        "description": "Mediterranean & natural wines"
-      },
-      "coffee": {
-        "name": "Coffee",
-        "description": "Specialty & traditional"
-      },
-      "soft-drinks": {
-        "name": "Refreshments",
-        "description": "Teas, juices & more"
+        "name": "Wine Selection"
       }
     },
     "items": {
@@ -179,11 +168,11 @@
       },
       "house-red": {
         "name": "House Red",
-        "description": "Portuguese selection, glass or bottle"
+        "description": "Portuguese selection"
       },
       "house-white": {
         "name": "House White",
-        "description": "Portuguese selection, glass or bottle"
+        "description": "Portuguese selection"
       },
       "cortado": {
         "name": "Cortado",
@@ -206,6 +195,11 @@
       "vegetarian": "V",
       "vegan": "VG",
       "gluten-free": "GF"
+    },
+    "legend": {
+      "vegetarian": "Vegetarian",
+      "vegan": "Vegan",
+      "glutenFree": "Gluten-Free"
     },
     "glass": "glass",
     "bottle": "bottle"
