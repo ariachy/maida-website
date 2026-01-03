@@ -57,8 +57,6 @@ export default function Story({ translations, locale }: StoryProps) {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
           >
-            {/* Static accent box top-right - NO animation, NO emblem */}
-            <div className="absolute -top-5 -right-5 w-24 h-24 bg-rust z-10" />
             
             {/* Main visual card with definition inside - SHORTER */}
             <div className="relative aspect-[4/3] bg-gradient-to-br from-terracotta-light to-terracotta overflow-hidden group">
@@ -95,9 +93,6 @@ export default function Story({ translations, locale }: StoryProps) {
               {/* Hover effect */}
               <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/10 transition-colors duration-500" />
             </div>
-            
-            {/* Sage box bottom-left - overlapping the card */}
-            <div className="absolute -bottom-6 -left-6 w-32 h-44 bg-sage z-20" />
           </motion.div>
         </div>
       </div>

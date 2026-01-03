@@ -70,6 +70,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
   
   // Main navigation links
   const navLinks = [
+    { href: `/${locale}`, label: 'Home', segment: '' },
     { href: `/${locale}/story`, label: nav.story || 'Story', segment: 'story' },
     { href: `/${locale}/menu`, label: nav.menu || 'Menu', segment: 'menu' },
     { href: `/${locale}/maida-live`, label: 'Maída Live', segment: 'maida-live' },
@@ -120,7 +121,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
               alt="maída"
               width={140}
               height={56}
-              className="h-10 md:h-12 w-auto"
+              className="h-12 md:h-14 w-auto"
               priority
             />
           </Link>
@@ -155,8 +156,6 @@ export default function Navbar({ translations, locale }: NavbarProps) {
             <li 
               ref={discoverRef}
               className="relative"
-              onMouseEnter={() => setIsDiscoverOpen(true)}
-              onMouseLeave={() => setIsDiscoverOpen(false)}
             >
               <button
                 onClick={() => setIsDiscoverOpen(!isDiscoverOpen)}

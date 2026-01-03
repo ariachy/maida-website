@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import { locales, Locale, isValidLocale, loadTranslations } from '@/lib/i18n';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import CustomCursor from '@/components/layout/CustomCursor';
 import ScrollProgress from '@/components/layout/ScrollProgress';
 import PageLoader from '@/components/layout/PageLoader';
 import NavigationLoader from '@/components/layout/NavigationLoader';
@@ -77,9 +76,6 @@ export default async function LocaleLayout({
       
       {/* Noise texture overlay */}
       <div className="noise-overlay" aria-hidden="true" />
-      
-      {/* Custom cursor (desktop only) */}
-      <CustomCursor />
       
       {/* Scroll progress bar */}
       <ScrollProgress />

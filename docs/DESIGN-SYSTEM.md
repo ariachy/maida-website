@@ -59,6 +59,9 @@ text-fluid-5xl  /* 3rem → 6rem */
 - **Body text:** `text-base text-charcoal`
 - **Labels:** `text-xs tracking-[0.25em] uppercase text-terracotta`
 
+### v0.6.0 Typography Updates
+- **Hero title:** Use `leading-[0.9]` for tighter line-height between "Mediterranean" and "Flavours"
+
 ---
 
 ## 📐 Spacing
@@ -73,6 +76,15 @@ text-fluid-5xl  /* 3rem → 6rem */
 ```css
 .container-custom /* max-w-7xl mx-auto */
 ```
+
+### v0.6.0 Spacing Updates
+| Section | Before | After |
+|---------|--------|-------|
+| Menu Highlights | `py-20 md:py-28` | `pt-16 md:pt-20 pb-12 md:pb-16` |
+| Visit | `py-20 md:py-28` | `pt-8 md:pt-12 pb-20 md:pb-28` |
+| CTA | `py-24 md:py-32` | `py-16 md:py-20` |
+| Footer | `py-16 md:py-24` | `py-12 md:py-16` |
+| Footer links | `space-y-3` | `space-y-2` |
 
 ---
 
@@ -104,6 +116,15 @@ text-fluid-5xl  /* 3rem → 6rem */
 - Text: charcoal
 - Hover: terracotta background
 
+#### Terracotta Button (v0.6.0)
+```html
+<button class="bg-terracotta text-warm-white px-8 py-4 hover:bg-terracotta/90">
+  View full menu
+</button>
+```
+- Use for prominent CTAs on light backgrounds
+- More visible than charcoal buttons
+
 ### Cards
 
 #### Category Card
@@ -116,6 +137,26 @@ text-fluid-5xl  /* 3rem → 6rem */
   </div>
 </div>
 ```
+
+#### Definition Card (v0.6.0)
+```html
+<div class="relative aspect-[4/5] bg-gradient-to-br from-terracotta-light to-terracotta">
+  <!-- Emblem pattern overlay -->
+  <div 
+    class="absolute inset-0 opacity-20"
+    style="background-image: url('/images/brand/emblem.svg'); background-size: 80px; background-repeat: repeat;"
+  />
+  <!-- Content -->
+  <div class="absolute inset-0 flex flex-col items-center justify-center text-warm-white">
+    <span class="font-display text-7xl arabic-text">مائدة</span>
+    <span class="text-xs tracking-[0.25em] uppercase">Ma'ida</span>
+    <p class="text-sm text-center max-w-sm">Definition text...</p>
+  </div>
+</div>
+```
+- **No decorative boxes** (removed sage and rust boxes)
+- **Emblem pattern** at 20% opacity
+- **Aspect ratio:** 4/5
 
 ### Menu Items
 ```html
@@ -170,6 +211,10 @@ transition={{ staggerChildren: 0.1 }}
 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
 ```
 
+### v0.6.0 Animation Notes
+- **DON'T animate** decorative boxes (they've been removed)
+- Keep animations subtle and purposeful
+
 ---
 
 ## 🖱️ Interactive States
@@ -221,6 +266,10 @@ For dark background sections (menu, footer):
 - Accent: `text-terracotta-light`
 - Borders: `border-white/10`
 
+### Dark Background Buttons
+- Use **solid terracotta** buttons (not ghost) for visibility
+- Example: DJ application button on Maída Live page
+
 ---
 
 ## 🖼️ Image Guidelines
@@ -229,6 +278,7 @@ For dark background sections (menu, footer):
 - **Photos:** WebP (25-35% smaller than JPEG)
 - **Logos:** PNG with transparency, or SVG
 - **Icons:** Lucide React (consistent style)
+- **Patterns:** SVG (emblem.svg for card backgrounds)
 
 ### Sizes
 - **Hero:** Max 200KB, 1920px width
@@ -256,3 +306,30 @@ For dark background sections (menu, footer):
 - axe DevTools
 - Lighthouse accessibility audit
 - Manual keyboard navigation test
+
+---
+
+## 🏷️ Brand Name Styling
+
+When displaying "Maída" or "maída":
+- Always use **italic** styling
+- Use **terracotta** color when appropriate
+- Examples: `<em className="text-terracotta">Maída</em>`
+
+---
+
+## 📋 v0.6.0 Quick Reference
+
+| Element | Change |
+|---------|--------|
+| Hero title | `leading-[0.9]` |
+| Story card | No decorative boxes |
+| Story card | Emblem pattern 20% opacity |
+| View menu button | Terracotta (not charcoal) |
+| Menu section margin | Reduced bottom |
+| Visit section margin | Reduced top |
+| Visit section | No Reserve button |
+| CTA section | `py-16 md:py-20` |
+| Footer | `py-12 md:py-16` |
+| Footer links | `space-y-2` |
+| Navbar | "Home" as first link |

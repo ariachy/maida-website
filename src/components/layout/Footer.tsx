@@ -36,7 +36,7 @@ export default function Footer({ translations, locale }: FooterProps) {
   
   return (
     <footer className="bg-charcoal text-warm-white">
-      <div className="max-w-7xl mx-auto px-6 md:px-8 py-16 md:py-20">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 pt-12 md:pt-16 pb-6 md:pb-8">
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 md:gap-8 pb-12 border-b border-white/10">
           {/* Brand */}
@@ -80,7 +80,15 @@ export default function Footer({ translations, locale }: FooterProps) {
             <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-6">
               {footer.navigate || 'Navigate'}
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  href={`/${locale}`}
+                  className="text-stone text-sm hover:text-warm-white transition-colors"
+                >
+                  Home
+                </Link>
+              </li>
               <li>
                 <Link
                   href={`/${locale}/story`}
@@ -210,7 +218,7 @@ export default function Footer({ translations, locale }: FooterProps) {
         </div>
         
         {/* Bottom Section */}
-        <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-stone">
             {footer.copyright || '© 2026 maída · Cais do Sodré, Lisboa'}
           </p>

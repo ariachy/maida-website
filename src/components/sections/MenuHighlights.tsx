@@ -108,7 +108,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
   };
 
   return (
-    <section className="py-20 md:py-28 bg-warm-white">
+    <section className="pt-16 md:pt-20 pb-12 md:pb-16 bg-warm-white">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* ============================================
@@ -300,7 +300,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <Link href={`/${locale}/menu`} className="btn btn-primary">
+          <Link href={`/${locale}/menu`} className="bg-terracotta text-warm-white px-8 py-4 text-sm font-medium hover:bg-terracotta/90 transition-colors">
             View full menu
           </Link>
         </motion.div>

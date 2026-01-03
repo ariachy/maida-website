@@ -2,7 +2,26 @@
 
 Quick reference for pending tasks. See ROADMAP.md for full details.
 
-**Last Updated:** 2026-01-02
+**Last Updated:** 2026-01-03
+
+---
+
+## 🔴 High Priority (Current Sprint)
+
+### Homepage Design Updates (v0.6.0)
+- [ ] Hero: Reduce line-height between "Mediterranean" and "Flavours" (`leading-[0.9]`)
+- [ ] Story Card: Remove sage decorative box (bottom-left)
+- [ ] Story Card: Remove rust decorative box (top-right)
+- [ ] Story Card: Add emblem pattern (20% opacity)
+- [ ] Menu Section: Change "View full menu" button to terracotta
+- [ ] Menu Section: Reduce margin-bottom
+- [ ] Visit Section: Reduce margin-top
+- [ ] Visit Section: Remove "Reserve a Table" button
+- [ ] CTA Section: Reduce top/bottom padding
+- [ ] Footer: Reduce overall padding
+- [ ] Footer: Tighter link spacing (space-y-2)
+- [ ] Footer: Reduce margin under copyright
+- [ ] Navbar: Add "Home" link before "Story"
 
 ---
 
@@ -16,7 +35,7 @@ Quick reference for pending tasks. See ROADMAP.md for full details.
 - [ ] Page transitions (fade/slide between pages)
 - [ ] Image blur placeholders while loading
 - [ ] Loading skeleton states
-- [ ] 404 page
+- [x] 404 page ✅
 
 ### SEO
 - [ ] Set metadataBase for production URL
@@ -201,3 +220,4 @@ npm run build
 | Translations | EN/PT complete, DE/IT/ES pending |
 | SEO | Basic meta, advanced pending |
 | Performance | Not yet optimized |
+| v0.6.0 Design | In progress |

@@ -57,56 +57,100 @@ maida.pt/
 - [x] CTA section
 
 ### Phase 4: Menu Page ✅ COMPLETE
-- [x] Category cards carousel
-- [x] Arrow navigation
-- [x] Traditional menu layout
-- [x] Menu item component
-- [x] Category switching animation
+- [x] Category carousel with arrows
+- [x] Traditional inline menu layout
+- [x] Category switching
 - [x] Dietary tags (V, VG, GF)
-- [ ] SAJ callout + link to /maida-saj (optional)
-- [ ] Sharing note (optional)
 
-### Phase 5: Content Pages ✅ COMPLETE
-- [x] Story page (/story) - Hero, مائدة meaning, From Beirut to Lisboa, What we believe, CTA
-- [x] Contact page (/contact) - Form with reCAPTCHA, map, hours, UMAI widget
-- [x] Maída Live page (/maida-live) - Interactive night cards, DJ application modal, Thursday rotation
-- [x] SAJ page (/maida-saj) - What is SAJ, how we make it, full SAJ menu
-- [x] Coffee & Tea page (/coffee-tea) - Our coffee, teas, signature items, full menu
+### Phase 5: Contact Page ✅ COMPLETE
+- [x] Two-column layout
+- [x] Contact form with reCAPTCHA Enterprise
+- [x] PHP backend
+- [x] Google Map
+- [x] Opening hours
 
-### Phase 6: Blog ✅ COMPLETE
-- [x] Blog index page (featured post + grid)
-- [x] Blog post template (rich content rendering)
-- [x] Blog data JSON structure
-- [x] Tabbouleh article migrated with full content
-- [x] Related posts section
-- [x] Tags system
+### Phase 6: Story + Maída Live ✅ COMPLETE
+- [x] Story page with all sections
+- [x] Maída Live page with interactive night cards
+- [x] DJ application form with backend
 
-### Phase 7: Enhancements 🔜 TODO
-- [ ] Page transitions (fade/slide between pages)
-- [ ] Loading states for images
-- [ ] Image lazy loading with blur
-- [ ] SEO meta tags per page
-- [ ] Schema.org structured data
-- [ ] 404 page
+### Phase 7: SEO Pages + Blog ✅ COMPLETE
+- [x] SAJ page (SEO landing)
+- [x] Coffee & Tea page (SEO landing)
+- [x] Blog index page
+- [x] Blog post template
+- [x] 404 page
+
+### Phase 8: Design Refinements (v0.6.0) ⏳ IN PROGRESS
+- [ ] Hero: Tighter line-height
+- [ ] Story Card: Remove decorative boxes, add emblem pattern
+- [ ] Menu Section: Terracotta button, reduce margins
+- [ ] Visit Section: Reduce margin, remove Reserve button
+- [ ] CTA Section: Reduce padding
+- [ ] Footer: Tighter spacing
+- [ ] Navbar: Add "Home" link
+
+### Phase 9: Performance & SEO 🔮 PLANNED
+- [ ] Image optimization
+- [ ] Lighthouse 95+
+- [ ] Schema.org markup
 - [ ] Sitemap.xml
-- [ ] Robots.txt
-
-### Phase 8: Backend Preparation 🔮 FUTURE
-- [ ] API route structure
-- [ ] Database schema design
-- [ ] Admin panel wireframes
-- [ ] CMS integration planning
 
 ---
 
-## 📅 Development Log
+## 🎨 Design Decisions
+
+### Navigation
+- Navbar always has solid `bg-warm-white/95` background (not transparent)
+- Changed "Events" to "Maída Live" in nav
+- SAJ and Coffee & Tea pages NOT in main nav (accessible via footer + menu links)
+- **v0.6.0:** Adding "Home" link as first nav item
+
+### Scroll Indicators
+- Removed from ALL pages (Hero, Story, Maída Live)
+- Decision: cleaner look, users know to scroll
+
+### Color Usage for Cards (Maída Live)
+- Thursday: `stone/sand` tones
+- Friday: `sage/sage-light` tones  
+- Saturday: `terracotta/terracotta-light` tones
+
+### Footer Structure
+```
+Brand | Navigate | Discover | Hours | Contact
+      | Home     | SAJ      | ...   | ...
+      | Story    | Coffee   |       |
+      | Menu     | Blog     |       |
+      | Maída Live|         |       |
+      | Contact  |          |       |
+```
+
+### Blog
+- Featured post: Large card with image left, content right
+- Other posts: Grid of cards
+- Post template: Full-width hero image, rich content blocks
+
+### v0.6.0 Design Updates
+- **Hero:** `leading-[0.9]` for tighter title spacing
+- **Story Card:** No decorative boxes, emblem pattern at 20% opacity
+- **Buttons:** "View full menu" in terracotta (not charcoal)
+- **Spacing:** Reduced margins throughout homepage sections
+- **Footer:** Tighter link spacing (`space-y-2`)
+
+---
+
+## 🐛 Known Issues
+
+1. metadata.metadataBase warning (cosmetic, fix when deploying)
+
+---
+
+## 📝 Development Log
 
 ### 2026-01-01 (Session 1)
-- Initial project setup
-- Created all foundation files
-- Built core layout components
-- Completed Hero, Story, CTA sections
-- Built full Menu page with carousel
+- Set up Next.js project with Tailwind
+- Created component structure
+- Built Full Menu page with carousel
 - Organized all uploaded images
 - Created EN and PT translations
 
@@ -147,43 +191,15 @@ maida.pt/
   - Migrated tabbouleh article with full content
   - Tags and related posts support
 
----
-
-## 🎨 Design Decisions
-
-### Navigation
-- Navbar always has solid `bg-warm-white/95` background (not transparent)
-- Changed "Events" to "Maída Live" in nav
-- SAJ and Coffee & Tea pages NOT in main nav (accessible via footer + menu links)
-
-### Scroll Indicators
-- Removed from ALL pages (Hero, Story, Maída Live)
-- Decision: cleaner look, users know to scroll
-
-### Color Usage for Cards (Maída Live)
-- Thursday: `stone/sand` tones
-- Friday: `sage/sage-light` tones  
-- Saturday: `terracotta/terracotta-light` tones
-
-### Footer Structure
-```
-Brand | Navigate | Discover | Hours | Contact
-      | Story    | SAJ      | ...   | ...
-      | Menu     | Coffee   |       |
-      | Maída Live| Blog    |       |
-      | Contact  |          |       |
-```
-
-### Blog
-- Featured post: Large card with image left, content right
-- Other posts: Grid of cards
-- Post template: Full-width hero image, rich content blocks
-
----
-
-## 🐛 Known Issues
-
-1. metadata.metadataBase warning (cosmetic, fix when deploying)
+### 2026-01-03 (Session 5)
+- Planning homepage design refinements (v0.6.0):
+  - Hero title spacing
+  - Story card simplification (remove decorative boxes)
+  - Button color updates
+  - Section margin adjustments
+  - Footer spacing tightening
+  - Navbar "Home" link addition
+- Updated documentation
 
 ---
 

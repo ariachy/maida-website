@@ -2,73 +2,52 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
-
 ---
 
-## [Unreleased]
+## [0.6.0] - 2026-01-03 (In Progress)
 
-### Planned
-- Complete German translations
-- Complete Italian translations
-- Complete Spanish translations
-- Page transitions
-- Schema.org structured data
-- Sitemap.xml / Robots.txt
-- 404 page
-- Performance optimization
+### Planned - Homepage Refinements
+- **Hero:** Tighter line-height between "Mediterranean" and "Flavours"
+- **Story Card:** Remove decorative sage/rust boxes
+- **Story Card:** Add emblem pattern overlay (20% opacity)
+- **Menu Section:** Terracotta "View full menu" button (was charcoal)
+- **Menu Section:** Reduced bottom margin
+- **Visit Section:** Reduced top margin
+- **Visit Section:** Removed duplicate "Reserve a Table" button
+- **CTA Section:** Reduced vertical padding
+- **Footer:** Reduced overall padding
+- **Footer:** Tighter link spacing
+- **Navbar:** Added "Home" link before "Story"
 
 ---
 
 ## [0.5.0] - 2026-01-02
 
 ### Added - Blog System
-- **Blog index page** (`/blog`) - Featured post layout with grid for additional posts
-- **Blog post template** (`/blog/[slug]`) - Dynamic routing for blog posts
-- **BlogClient.tsx** - Blog index with animations, tags, date formatting
-- **BlogPostClient.tsx** - Rich content rendering with multiple block types
-- **blog.json** - Blog data structure with posts array
-- **Tabbouleh article** - Full "Great Lebanese Salad Debate (Part 1)" migrated
-- Support for content blocks: paragraph, heading, list, callout, highlight, cta
-- Italic text rendering with `*text*` syntax
-- Related posts section with "Coming Soon" support
-- Tags display on index and post pages
+- **Blog index page** (`/blog`) - Featured post + grid layout
+- **Blog post template** (`/blog/[slug]`) - Rich content rendering
+- **BlogClient.tsx** - Blog index component
+- **BlogPostClient.tsx** - Individual post component
+- **Content blocks** support: paragraphs, headings, lists, callouts, highlights, CTAs
+- **Related posts** section at end of each post
+- **Tags** display on posts
+- **Tabbouleh article** - Full content migrated as first post
 
----
-
-## [0.4.0] - 2026-01-02
-
-### Added - SEO Landing Pages
-- **SAJ page** (`/maida-saj`) - What is SAJ, how we make it, full menu
-- **Coffee & Tea page** (`/coffee-tea`) - Baobá coffee, Lebanese teas, full menu
-- **SAJClient.tsx** - Hero, explanation, savoury/sweet menu sections
-- **CoffeeTeaClient.tsx** - Hero, coffee section, tea section, full menu
-- Signature items highlighted with special styling
-- Dietary tags (V, VG) on menu items
+### Added - SEO Pages
+- **Maída SAJ page** (`/maida-saj`) - SEO landing page for SAJ bread
+- **Coffee & Tea page** (`/coffee-tea`) - SEO landing page for beverages
 
 ### Changed - Footer
-- Added **"Discover" section** with links to SAJ, Coffee & Tea, Blog
-- Updated **opening hours** with correct schedule:
-  - Mon, Wed, Thu, Sun: 12:30 – 23:00
-  - Friday: 12:30 – 00:00
-  - Saturday: 12:30 – 02:00
-  - Tuesday: Closed
-- Updated email to `info@maida.pt`
-- Added full address display
-- Changed grid from 4 to 5 columns
-
-### Changed - Story Page
-- **Removed scroll indicator** from hero section
+- Added **"Discover" column** with SAJ, Coffee & Tea, Blog links
+- Updated **opening hours** to correct schedule
 
 ---
 
 ## [0.3.0] - 2026-01-02
 
-### Added - Maída Live Page
-- **Maída Live page** (`/maida-live`) - Full events/DJ nights page
-- **MaidaLiveClient.tsx** - Interactive page with animations
-- **Dark theme** throughout the page
-- **Hero section** with DJ image, object-bottom positioning
+### Added - Maída Live
+- **Maída Live page** (`/maida-live`) - Events and atmosphere page
+- **Dark theme hero** with DJ image (object-bottom to show mixer)
 - **"More than music"** concept section
 - **Interactive night cards** (Thursday/Friday/Saturday):
   - Cards expand in place when clicked
@@ -129,7 +108,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **contact.php** - PHP backend for form processing
 - **reCAPTCHA Enterprise** integration (score-based, threshold 0.5)
 - Two-column layout (form left, info right)
-- Subject dropdown (General, Reservation, Private Event, Feedback, Other)
+- Form fields: Name, Email, Subject (dropdown), Message
+- Subject options: General, Reservation, Private Event, Feedback, Other
 - Honeypot field for spam protection
 - Time-based submission check
 - Rate limiting (5 submissions per IP per hour)
@@ -245,6 +225,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 | Version | Date | Summary |
 |---------|------|---------|
+| 0.6.0 | 2026-01-03 | Homepage design refinements (in progress) |
 | 0.5.0 | 2026-01-02 | Blog system complete |
 | 0.4.0 | 2026-01-02 | SAJ + Coffee & Tea pages, Footer update |
 | 0.3.0 | 2026-01-02 | Maída Live page with DJ form |
@@ -258,13 +239,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Upcoming Milestones
 
-### v0.6.0 - Polish & SEO
-- Page transitions
-- 404 page
+### v0.7.0 - Performance & SEO
 - Schema.org structured data
 - Sitemap.xml / Robots.txt
+- Lighthouse optimization
 
-### v0.7.0 - Translations
+### v0.8.0 - Translations
 - Complete German translations
 - Complete Italian translations
 - Complete Spanish translations

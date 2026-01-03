@@ -23,7 +23,7 @@ export default function Visit({ translations, locale }: VisitProps) {
   };
 
   return (
-    <section className="py-20 md:py-28 bg-sand/30">
+    <section className="pt-8 md:pt-12 pb-20 md:pb-28 bg-sand/30">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <motion.div
@@ -93,13 +93,19 @@ export default function Visit({ translations, locale }: VisitProps) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <span>3 min from Cais do Sodré metro</span>
+                  <span>5 min from Cais do Sodré metro</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <svg className="w-5 h-5 text-terracotta flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
-                  <span>5 min from Time Out Market</span>
+                  <span>3 min from Time Out Market</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-terracotta flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                  <span>7 min from Parliament</span>
                 </li>
               </ul>
             </div>
@@ -118,12 +124,6 @@ export default function Visit({ translations, locale }: VisitProps) {
                 </svg>
                 Get Directions
               </a>
-              <button
-                onClick={openReservation}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-terracotta text-white rounded-full font-medium hover:bg-terracotta/90 transition-colors"
-              >
-                Reserve a Table
-              </button>
             </div>
           </motion.div>
 

@@ -25,7 +25,7 @@ export default function CTASection({ translations }: CTASectionProps) {
   return (
     <section 
       ref={ref}
-      className="relative py-24 md:py-32 px-6 overflow-hidden"
+      className="relative py-16 md:py-20 px-6 overflow-hidden"
       style={{
         background: 'linear-gradient(135deg, #C67D5E 0%, #A65D3F 100%)',
       }}

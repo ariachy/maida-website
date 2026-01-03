@@ -38,7 +38,7 @@ export default function Hero({ translations, locale }: HeroProps) {
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20">
         {/* Location Badge - Two lines */}
         <motion.div
-          className="mb-8"
+          className="mt-6 mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -54,7 +54,7 @@ export default function Hero({ translations, locale }: HeroProps) {
         </motion.div>
         
         {/* Title */}
-        <h1 className="font-display text-fluid-5xl font-light leading-[1.1] mb-10">
+        <h1 className="font-display text-fluid-5xl font-light leading-[0.9] mb-10">
           <span className="block overflow-hidden">
             <motion.span
               className="block"

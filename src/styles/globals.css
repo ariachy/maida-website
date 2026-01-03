@@ -65,13 +65,6 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Desktop: Custom cursor */
-  @media (min-width: 768px) {
-    body {
-      cursor: none;
-    }
-  }
-
   ::selection {
     background-color: var(--terracotta);
     color: var(--warm-white);
@@ -347,37 +340,6 @@
   .divider-emblem::after {
     content: '';
     @apply flex-1 h-px bg-stone/20 max-w-[100px];
-  }
-}
-
-/* ============================================
-   CUSTOM CURSOR (Desktop only)
-   ============================================ */
-@media (min-width: 768px) {
-  .custom-cursor {
-    @apply fixed pointer-events-none z-[9999];
-    @apply w-5 h-5 rounded-full;
-    @apply border-[1.5px] border-terracotta;
-    transform: translate(-50%, -50%);
-    transition: transform 200ms ease-out;
-  }
-
-  .custom-cursor.hovering {
-    @apply scale-[2] bg-terracotta/10;
-  }
-
-  .custom-cursor-dot {
-    @apply fixed pointer-events-none z-[9999];
-    @apply w-1.5 h-1.5 rounded-full bg-terracotta;
-    transform: translate(-50%, -50%);
-  }
-}
-
-/* Hide cursor elements on mobile */
-@media (max-width: 767px) {
-  .custom-cursor,
-  .custom-cursor-dot {
-    display: none !important;
   }
 }
 
