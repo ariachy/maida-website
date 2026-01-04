@@ -72,7 +72,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
 
   return (
     <div className="bg-charcoal/95 text-white min-h-screen">
-      {/* Hero Section - UPDATED: Removed subtitle */}
+      {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
@@ -115,11 +115,10 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
               </motion.span>
             </span>
           </h1>
-          {/* REMOVED: Subtitle under "Maída Live" */}
         </div>
       </section>
 
-      {/* The Concept Section - UPDATED: Simplified text */}
+      {/* The Concept Section */}
       <section className="pt-12 pb-16 md:pt-16 md:pb-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
@@ -136,7 +135,6 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
               <span className="text-terracotta italic">It's curated culture.</span>
             </motion.h2>
 
-            {/* UPDATED: Simplified intro paragraph */}
             <motion.p 
               className="text-lg text-sand/70 max-w-2xl mx-auto leading-relaxed"
               variants={fadeInUp}
@@ -147,7 +145,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
         </div>
       </section>
 
-      {/* The Nights Section - UPDATED: "Our weekly program" title */}
+      {/* The Nights Section */}
       <section className="pt-12 pb-16 md:pt-16 md:pb-24 px-6 bg-warm-white">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -157,14 +155,13 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             viewport={{ once: true }}
             variants={fadeInUp}
           >
-            {/* UPDATED: Changed from "Choose Your Night" to "Our weekly program" */}
             <h2 className="font-display text-3xl md:text-5xl font-medium mb-4 text-charcoal">
               Our weekly program
             </h2>
             <p className="text-stone">Click to explore each experience</p>
           </motion.div>
 
-          {/* Cards - UPDATED: Square edges (removed rounded-3xl) */}
+          {/* Cards */}
           <motion.div 
             className="flex flex-col gap-6"
             initial="hidden"
@@ -174,7 +171,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
           >
             {/* Row 1: Thursday and Friday side by side on desktop */}
             <div className="grid md:grid-cols-2 gap-6">
-              {/* Thursday Card - UPDATED: Pluralized, square edges */}
+              {/* Thursday Card */}
               <motion.div
                 className="group relative overflow-hidden cursor-pointer"
                 variants={fadeInUp}
@@ -186,12 +183,11 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                     <Calendar className="w-7 h-7 text-charcoal" />
                   </div>
 
-                  {/* UPDATED: Pluralized to "Thursdays" */}
                   <h3 className="font-display text-3xl mb-2 text-charcoal">Thursdays</h3>
                   <p className="text-charcoal/80 text-lg mb-4">Cultural Rotation</p>
                   
                   <p className="text-charcoal/60 mb-6">
-                    Every Thursday brings a different flavour. Not just music — a cultural journey through sound.
+                    Every Thursday brings a different flavour. Not just music - a cultural journey through sound.
                   </p>
 
                   {/* Expanded content */}
@@ -228,7 +224,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                 </div>
               </motion.div>
 
-              {/* Friday Card - UPDATED: Pluralized, square edges */}
+              {/* Friday Card */}
               <motion.div
                 className="group relative overflow-hidden cursor-pointer"
                 variants={fadeInUp}
@@ -240,7 +236,6 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                     <Music className="w-7 h-7 text-charcoal" />
                   </div>
 
-                  {/* UPDATED: Pluralized to "Fridays" */}
                   <h3 className="font-display text-3xl mb-2 text-charcoal">Fridays</h3>
                   <p className="text-charcoal/80 text-lg mb-4">DJ Dinner</p>
                   
@@ -248,7 +243,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                     The weekend begins. Live DJ sets create the perfect backdrop for dinner and drinks.
                   </p>
 
-                  {/* Expanded content - UPDATED: Square edges on inner elements */}
+                  {/* Expanded content */}
                   <AnimatePresence>
                     {activeNight === 'friday' && (
                       <motion.div
@@ -261,7 +256,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                         <div className="bg-charcoal/5 p-6">
                           <p className="text-charcoal font-display text-xl mb-2">The Vibe</p>
                           <p className="text-charcoal/60">
-                            Not a party — an elevated dinner experience. The music complements your meal, 
+                            Not a party - an elevated dinner experience. The music complements your meal, 
                             the energy builds naturally, and the night unfolds at your pace.
                           </p>
                         </div>
@@ -287,7 +282,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
               </motion.div>
             </div>
 
-            {/* Row 2: Saturday full width - UPDATED: Pluralized, simplified, square edges */}
+            {/* Row 2: Saturday full width */}
             <motion.div
               className="group relative overflow-hidden cursor-pointer"
               variants={fadeInUp}
@@ -299,16 +294,14 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                   <PartyPopper className="w-7 h-7 text-charcoal" />
                 </div>
 
-                {/* UPDATED: Pluralized to "Saturdays" */}
                 <h3 className="font-display text-3xl mb-2 text-charcoal">Saturdays</h3>
                 <p className="text-charcoal/80 text-lg mb-4">The Full Journey</p>
                 
-                {/* UPDATED: Simplified description */}
                 <p className="text-charcoal/60 mb-6">
-                  The full journey — dinner, drinks, and dancing until 02:00.
+                  The full journey - dinner, drinks, and dancing until 02:00.
                 </p>
 
-                {/* Expanded content - UPDATED: Square edges */}
+                {/* Expanded content */}
                 <AnimatePresence>
                   {activeNight === 'saturday' && (
                     <motion.div
@@ -322,7 +315,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                         <div className="bg-charcoal/5 p-6">
                           <p className="text-charcoal font-display text-xl mb-2">The Journey</p>
                           <p className="text-charcoal/60">
-                            Start with dinner, stay for the party. Our Saturday nights are legendary — 
+                            Start with dinner, stay for the party. Our Saturday nights are legendary - 
                             the food, the drinks, the music, all building to a peak.
                           </p>
                         </div>
@@ -353,8 +346,10 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
         </div>
       </section>
 
-      {/* Private Events Section - UPDATED: Moved BEFORE DJ section, new title */}
-      <section className="py-16 md:py-24 px-6">
+      {/* ============================================
+          ENJOYING MAÍDA LIVE - Light Background
+          ============================================ */}
+      <section className="py-16 md:py-20 px-6 bg-cream">
         <motion.div
           className="text-center max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 30 }}
@@ -362,24 +357,25 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          {/* UPDATED: New title structure */}
-          <h2 className="font-display text-3xl md:text-4xl font-medium text-white mb-4">
+          <h2 className="font-display text-3xl md:text-4xl font-medium text-charcoal mb-4">
             Enjoying <span className="italic text-terracotta">Maída</span> Live?
           </h2>
-          <p className="text-xl text-sand/80 mb-4">
+          <p className="text-xl text-stone mb-4">
             Make it private.
           </p>
-          <p className="text-sand/60 mb-8">
+          <p className="text-stone/70 mb-8">
             Host your next celebration, corporate event, or private gathering with us.
           </p>
-          <Link href={`/${locale}/contact`} className="inline-block bg-terracotta text-warm-white px-8 py-3 text-base font-medium hover:bg-terracotta/90 transition-colors">
-            Learn more
+          <Link href={`/${locale}/contact`} className="inline-block bg-charcoal text-warm-white px-8 py-3 text-base font-medium hover:bg-charcoal/90 transition-colors">
+            Contact us
           </Link>
         </motion.div>
       </section>
 
-      {/* DJ Application CTA - Now AFTER Private Events */}
-      <section className="pt-12 pb-16 md:pt-16 md:pb-20 px-6 bg-gradient-to-b from-charcoal/95 to-charcoal">
+      {/* ============================================
+          DJ APPLICATION CTA - Dark Background (no icon)
+          ============================================ */}
+      <section className="py-16 md:py-20 px-6 bg-charcoal">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial="hidden"
@@ -387,15 +383,8 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            <motion.div
-              className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-terracotta/20 mb-8"
-              variants={fadeInUp}
-            >
-              <Music className="w-10 h-10 text-terracotta" />
-            </motion.div>
-
             <motion.h2 
-              className="font-display text-3xl md:text-5xl font-medium mb-6"
+              className="font-display text-3xl md:text-5xl font-medium mb-6 text-white"
               variants={fadeInUp}
             >
               Are you a DJ?
@@ -422,19 +411,38 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
         </div>
       </section>
 
-      {/* Final CTA - UPDATED: "Meet me at Maída" */}
-      <section className="py-20 md:py-32 px-6 text-center">
+      {/* ============================================
+          FINAL CTA - Terracotta with Emblem Pattern
+          ============================================ */}
+      <section 
+        className="relative py-16 md:py-20 px-6 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, rgb(198, 125, 94) 0%, rgb(166, 93, 63) 100%)' }}
+      >
+        {/* Emblem Pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage: `url('/images/brand/emblem.svg')`,
+            backgroundSize: '100px',
+            backgroundRepeat: 'repeat',
+            filter: 'brightness(0)',
+          }}
+        />
+        
         <motion.div
+          className="relative z-10 max-w-3xl mx-auto text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          {/* UPDATED: Changed from "See you this weekend" to "Meet me at Maída" */}
-          <h2 className="font-display text-4xl md:text-6xl font-medium text-white mb-8">
-            Meet me at <span className="italic text-terracotta">Maída</span>
+          <h2 className="font-display text-4xl md:text-5xl font-medium text-warm-white mb-8">
+            Meet me at <span className="italic">Maída</span>
           </h2>
-          <button onClick={handleReserveClick} className="bg-terracotta text-warm-white px-10 py-4 text-lg font-medium hover:bg-terracotta/90 transition-colors">
+          <button 
+            onClick={handleReserveClick} 
+            className="bg-charcoal text-warm-white px-10 py-4 text-lg font-medium hover:bg-warm-white hover:text-charcoal transition-colors"
+          >
             Reserve now
           </button>
         </motion.div>
@@ -563,14 +571,15 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
             onClick={onClose}
           />
 
-          {/* Modal - UPDATED: Square edges */}
-          <motion.div
-            className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-2xl md:max-h-[90vh] bg-charcoal z-[101] overflow-hidden flex flex-col"
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.3, ease: [0.19, 1, 0.22, 1] }}
-          >
+          {/* Modal Container - Centered */}
+          <div className="fixed inset-0 z-[101] flex items-center justify-center p-4">
+            <motion.div
+              className="w-full max-w-2xl max-h-[90vh] bg-charcoal overflow-hidden flex flex-col"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.3, ease: [0.19, 1, 0.22, 1] }}
+            >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-white/10">
               <div>
@@ -713,7 +722,7 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                   <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="w-full btn btn-primary py-4 flex items-center justify-center gap-2"
+                    className="w-full bg-terracotta text-warm-white py-3 flex items-center justify-center gap-2 font-medium hover:bg-terracotta/90 transition-colors disabled:opacity-50"
                   >
                     {status === 'sending' ? (
                       <>
@@ -736,6 +745,7 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
               )}
             </div>
           </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>

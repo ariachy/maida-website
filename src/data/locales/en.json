@@ -42,7 +42,7 @@
       },
       {
         "title": "Linger Longer",
-        "description": "A space for staying—not rushing. For the second glass, the extra mezze, the story that couldn't wait."
+        "description": "A space for staying-not rushing. For the second glass, the extra mezze, the story that couldn't wait."
       }
     ]
   },
@@ -249,14 +249,32 @@
   },
   "about": {
     "heroTitle": "Our Story",
-    "heroSubtitle": "A gathering table in the heart of Lisbon",
-    "section1Title": "The meaning of",
-    "section1Highlight": "مائدة",
-    "section1Text": "Maída (مائدة) means 'the table' in Arabic—but not just any table. It's the gathering table, the one where family and friends come together, where stories are shared, and where no one leaves hungry.",
-    "section2Title": "From Beirut to",
-    "section2Highlight": "Lisboa",
-    "section2Text": "Our journey began with memories of Lebanese family dinners—tables overflowing with mezze, conversations that lasted hours, and the warmth of shared meals. We brought that spirit to Cais do Sodré.",
-    "philosophyTitle": "What drives us"
+    "heroTagline": "What brought us here",
+    "heroSubtitle": "A place where flavors, music, and good company come together. Rooted in tradition, reimagined for today.",
+    "meaningLabel": "The meaning",
+    "meaningTitle": "A traditional feast,",
+    "meaningHighlight": "reimagined for today",
+    "meaningText1": "Inspired by المائدة (al-mā'idah), the beloved tradition of gathering, feasting, and celebrating with loved ones around a big table, Maída brings people together with authentic Mediterranean flavors & drinks, our in-house Saj Manoushe, and dishes that evolve throughout the day - all complemented by a smooth musical experience, elevated by our hi-fi sound system.",
+    "meaningText2": "It's the gathering table. Where family and friends come together, and stories are shared between bites.",
+    "meaningText3": "In Lebanon, المائدة represents abundance and generosity. That's why our mezze arrive in waves. Why the bread keeps coming. Why we'll always make room for one more.",
+    "rootsLabel": "From our roots",
+    "rootsTitle": "Where two worlds",
+    "rootsHighlight": "became one",
+    "rootsText1": "Our journey began with memories of Lebanese family dinners - tables overflowing with mezze, shawarma, grilled meats, and dishes passed hand to hand. Long evenings where everyone lingers, glasses clink, and stories grow louder with every round.",
+    "rootsText2": "When we arrived in Lisbon, we discovered something familiar: the Portuguese share this same love for gathering around a big table and turning a meal into an occasion. It felt like home.",
+    "rootsText3": "That's how two worlds became one. Maída is a Mediterranean restaurant with Lebanese soul in the heart of Cais do Sodré - where Portuguese warmth meets Lebanese generosity, celebrating what both cultures share: the belief that food is meant to bring people together.",
+    "foundersLabel": "Who we are",
+    "foundersTitle": "Anna & Anthony",
+    "foundersAnna": "Anna is a creative and animation director by heart, passionate about food, music, and the creative world. Over the years, she refined her skills in cooking and food presentation, turning every plate into a canvas.",
+    "foundersAnthony": "Anthony is an electrical engineer and consultant by trade, fascinated by the world of hospitality, mixology, and creating experiences that linger.",
+    "foundersMusic": "A lifelong passion for music led them to curate the soundscape that fills every experience at Maída.",
+    "foundersStory": "After opening The Happy Salad in Lisboa, they shared a dream: to present Lebanese food from a different perspective - not just the familiar classics, but the dishes they grew up eating at home. Food from across the Mediterranean, always made with Lebanese soul.",
+    "foundersRoots": "With roots stretching from the mountains of Lebanon to the vibrant streets of Lisbon, they found common ground in their love for food that brings people together, conversations that linger long after the last bite, and evenings that turn into memories you carry with you.",
+    "foundersToday": "Today, you'll find them where they belong: at the table with you - making sure every detail is right, every glass is full, and no guest ever leaves without a story to tell.",
+    "ctaTitle": "Find your place",
+    "ctaHighlight": "at the table",
+    "ctaHashtag": "#MeetMeAtMaída",
+    "ctaButton": "Reserve a Table"
   },
   "contact": {
     "title": "Get in Touch",

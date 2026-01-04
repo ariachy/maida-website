@@ -10,24 +10,28 @@ interface SAJClientProps {
   locale: Locale;
 }
 
-// SAJ Menu Items
-const sajSavoury = [
-  { name: "It's Thyme", description: 'Zaatar mix, tomato, cucumber, mint, olives', price: '€6.80', tags: ['V', 'VG'] },
-  { name: 'Thyme for Cheese', description: 'Zaatar mix, melted white cheese', price: '€7.50', tags: ['V'] },
-  { name: 'Cheesy', description: 'Melted white cheese', price: '€7.60', tags: ['V'] },
-  { name: 'Turkey & Cheese', description: 'Smoked turkey, cheese, lettuce, tomato, pickles', price: '€10.20', tags: [] },
-  { name: 'Halloumi Bacon', description: 'Halloumi, white cheese, crispy bacon, tomato', price: '€11.60', tags: [] },
-  { name: 'What the Feta', description: 'Creamy feta, tomato, arugula, onion, basil', price: '€9.80', tags: ['V'] },
-  { name: 'Roasted Veggies', description: 'Eggplant, zucchini, sweet potato, tahini', price: '€9.80', tags: ['V', 'VG'] },
-];
-
-const sajSweet = [
-  { name: 'The OG', description: 'Melted butter, sugar', price: '€4.20', tags: ['V'] },
-  { name: 'Nutella + Banana', description: '', price: '€6.50', tags: ['V'] },
-  { name: 'Nutella + Strawberry', description: '', price: '€6.70', tags: ['V'] },
-  { name: 'Nutella Mozzarella', description: 'Nutella, melted fresh mozzarella', price: '€7.50', tags: ['V'] },
-  { name: 'Berry Compote', description: 'Cream cheese, berry compote, strawberries', price: '€8.00', tags: ['V'] },
-  { name: 'Peanut Tahini', description: 'Peanut butter, maple tahini, bananas', price: '€7.00', tags: ['V', 'VG'] },
+// Featured SAJ Items
+const featuredSaj = [
+  { 
+    name: "It's Thyme", 
+    description: 'Zaatar mix, tomato, cucumber, mint, olives',
+    tags: ['V', 'VG']
+  },
+  { 
+    name: 'Thyme for Cheese', 
+    description: 'Zaatar mix, melted white cheese',
+    tags: ['V']
+  },
+  { 
+    name: 'Halloumi Bacon', 
+    description: 'Halloumi, white cheese, crispy bacon, tomato, pickles, mayo',
+    tags: []
+  },
+  { 
+    name: 'Roasted Veggies', 
+    description: 'Eggplant, zucchini, red pepper paste, in-house sweet potato chips, parsley, pomegranate',
+    tags: ['V', 'VG']
+  },
 ];
 
 export default function SAJClient({ translations, locale }: SAJClientProps) {
@@ -60,9 +64,10 @@ export default function SAJClient({ translations, locale }: SAJClientProps) {
 
   return (
     <div className="bg-cream">
-      {/* Hero Section */}
+      {/* ============================================
+          HERO SECTION
+          ============================================ */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-        {/* Background */}
         <div className="absolute inset-0">
           <Image
             src="/images/food/dough-ball.webp"
@@ -74,7 +79,6 @@ export default function SAJClient({ translations, locale }: SAJClientProps) {
           <div className="absolute inset-0 bg-charcoal/60" />
         </div>
 
-        {/* Content */}
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20">
           <motion.p
             className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-sand mb-6"
@@ -83,7 +87,7 @@ export default function SAJClient({ translations, locale }: SAJClientProps) {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="w-8 h-px bg-sand" />
-            From Our Griddle
+            The art of Lebanese flatbread
             <span className="w-8 h-px bg-sand" />
           </motion.p>
 
@@ -99,223 +103,272 @@ export default function SAJClient({ translations, locale }: SAJClientProps) {
               </motion.span>
             </span>
           </h1>
-
-          <motion.p
-            className="text-lg md:text-xl text-sand/90 max-w-xl mx-auto font-light"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            The Lebanese flatbread that started it all
-          </motion.p>
         </div>
       </section>
 
-      {/* What is SAJ Section */}
-      <section className="py-20 md:py-28 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-            {/* Content */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-100px' }}
-              variants={staggerContainer}
-            >
-              <motion.h2 
-                className="font-display text-4xl md:text-5xl font-light mb-8 text-charcoal"
-                variants={fadeInUp}
-              >
-                What is <span className="text-terracotta italic">SAJ</span>?
-              </motion.h2>
+      {/* ============================================
+          WHAT IS SAJ? SECTION
+          ============================================ */}
+      <section className="py-16 md:py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            className="text-center mb-12"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+          >
+            <h2 className="font-display text-4xl md:text-5xl font-light mb-6 text-charcoal">
+              What is <span className="text-terracotta italic">SAJ</span>?
+            </h2>
+            <p className="text-stone text-lg max-w-3xl mx-auto leading-relaxed mb-2">
+              SAJ is the traditional Lebanese flatbread - thin, slightly crispy, impossibly light.
+            </p>
+            <p className="text-stone text-lg max-w-3xl mx-auto leading-relaxed">
+              Baked fresh on a custom-made griddle called a <em>saj</em>, it's been the heart of Lebanese mornings for generations.
+            </p>
+          </motion.div>
 
-              <motion.div className="space-y-6 text-stone text-lg leading-relaxed" variants={fadeInUp}>
-                <p>
-                  <strong className="text-charcoal">SAJ</strong> (also called Manoushe) is a thin Lebanese flatbread baked on a domed griddle called a <em>saj</em>. The result? Crispy edges, soft center, endless possibilities.
-                </p>
-                <p>
-                  At Maída, we bake ours fresh with <strong className="text-charcoal">100% whole wheat flour</strong> — the traditional way. Each SAJ becomes a canvas for Mediterranean flavors, from classic zaatar to our signature halloumi bacon.
-                </p>
-                <p className="text-terracotta italic">
-                  Watch it bubble on the griddle, smell the wheat toasting, taste the warmth straight from the fire.
-                </p>
-              </motion.div>
+          {/* 3 Ways to Enjoy - Visual Cards */}
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-16"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+            variants={staggerContainer}
+          >
+            {/* Fresh from the Griddle */}
+            <motion.div 
+              className="bg-warm-white p-5 text-center"
+              variants={fadeInUp}
+            >
+              <div className="aspect-[4/3] mb-4 bg-sand/30 overflow-hidden">
+                <Image
+                  src="/images/food/dough-ball.webp"
+                  alt="Fresh SAJ bread"
+                  width={300}
+                  height={225}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="font-display text-lg text-charcoal mb-1">Fresh & Warm from the Griddle</h3>
+              <p className="text-stone text-sm">Light, airy, perfect on its own</p>
             </motion.div>
 
-            {/* Visual */}
+            {/* With Dips & Starters */}
+            <motion.div 
+              className="bg-warm-white p-5 text-center"
+              variants={fadeInUp}
+            >
+              <div className="aspect-[4/3] mb-4 bg-sand/30 overflow-hidden">
+                <Image
+                  src="/images/food/dough-ball.webp"
+                  alt="SAJ with dips"
+                  width={300}
+                  height={225}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="font-display text-lg text-charcoal mb-1">With Dips & Starters</h3>
+              <p className="text-stone text-sm">Hummus, Muhamara, labneh - perfect for scooping</p>
+            </motion.div>
+
+            {/* Bread for Mains */}
+            <motion.div 
+              className="bg-warm-white p-5 text-center"
+              variants={fadeInUp}
+            >
+              <div className="aspect-[4/3] mb-4 bg-sand/30 overflow-hidden">
+                <Image
+                  src="/images/food/dough-ball.webp"
+                  alt="SAJ with shawarma"
+                  width={300}
+                  height={225}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="font-display text-lg text-charcoal mb-1">Bread for Mains</h3>
+              <p className="text-stone text-sm">The perfect companion for shawarma & grilled meats</p>
+            </motion.div>
+          </motion.div>
+
+          {/* Manoushe Section - With Image */}
+          <motion.div 
+            className="grid md:grid-cols-2 gap-0 overflow-hidden max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Image Side */}
+            <div className="h-64 md:h-80 bg-sand/30 overflow-hidden">
+              <Image
+                src="/images/food/dough-ball.webp"
+                alt="Manoushe - SAJ with toppings"
+                width={400}
+                height={320}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            {/* Content Side */}
+            <div className="bg-charcoal text-white p-6 md:p-8 flex flex-col justify-center h-64 md:h-80">
+              <p className="text-xs tracking-[0.3em] uppercase text-terracotta-light mb-3">And then there's</p>
+              <h3 className="font-display text-2xl md:text-3xl italic text-white mb-4">Manoushe</h3>
+              <p className="text-sand/80 text-base leading-relaxed mb-4">
+                What happens when SAJ meets toppings - zaatar with olive oil, cheese, labneh.
+              </p>
+              <div className="flex flex-col gap-1 text-sand/60 text-sm">
+                <span>In Lebanon, it's breakfast.</span>
+                <span>It's a quick lunch.</span>
+                <span>It's the smell of every neighborhood bakery.</span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ============================================
+          THE SOUL OF OUR TEXTURE SECTION
+          ============================================ */}
+      <section className="py-20 md:py-28 px-6 bg-sand/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+            {/* Image Placeholder */}
             <motion.div
-              className="relative"
+              className="relative order-2 md:order-1"
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <div className="aspect-square rounded-3xl overflow-hidden">
+              <div className="aspect-[4/5] overflow-hidden bg-stone/20">
+                {/* Placeholder - replace with Anna/griddle image */}
                 <Image
                   src="/images/food/dough-ball.webp"
-                  alt="SAJ dough"
+                  alt="Anna preparing SAJ on the griddle"
                   fill
                   className="object-cover"
                 />
               </div>
-              {/* Decorative element */}
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-terracotta/10 rounded-full -z-10" />
-              <div className="absolute -top-6 -left-6 w-24 h-24 bg-sage/20 rounded-full -z-10" />
+            </motion.div>
+
+            {/* Content */}
+            <motion.div
+              className="order-1 md:order-2"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-100px' }}
+              variants={staggerContainer}
+            >
+              <motion.p 
+                className="text-xs tracking-[0.3em] uppercase text-terracotta mb-4"
+                variants={fadeInUp}
+              >
+                Our Process
+              </motion.p>
+
+              <motion.h2 
+                className="font-display text-3xl md:text-4xl font-light mb-8 text-charcoal"
+                variants={fadeInUp}
+              >
+                The Soul of Our<br />
+                <span className="text-terracotta italic">Texture and Flavor</span>
+              </motion.h2>
+
+              <motion.div className="space-y-5 text-stone text-base leading-relaxed" variants={fadeInUp}>
+                <p>
+                  Our wholewheat SAJ bread is the result of months of dedication and refinement by our chef, Anna, who was determined to create a more modern version without compromising authenticity.
+                </p>
+                <p>
+                  Made from a blend of wholewheat flour and natural ingredients, this recipe stays true to tradition while offering a richer, earthier flavor and a beautifully soft texture.
+                </p>
+                <p>
+                  Every piece is stretched and baked fresh on our custom-made burner - ensuring consistent heat for that perfect crisp outside and pillowy inside, just as it has been for generations. Only now, with Anna's signature touch.
+                </p>
+                <p className="text-terracotta italic font-medium">
+                  The moment it leaves the griddle, the warm aroma fills the room - there's nothing quite like fresh SAJ.
+                </p>
+              </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* How We Make It */}
-      <section className="py-20 md:py-28 px-6 bg-charcoal text-white">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* ============================================
+          FEATURED SAJ ITEMS SECTION
+          ============================================ */}
+      <section className="py-20 md:py-28 px-6 bg-warm-white">
+        <div className="max-w-5xl mx-auto">
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.p 
-              className="text-xs tracking-[0.3em] uppercase text-terracotta-light mb-4"
-              variants={fadeInUp}
-            >
-              #FromOurRoots
-            </motion.p>
-
-            <motion.h2 
-              className="font-display text-4xl md:text-5xl font-light mb-8"
-              variants={fadeInUp}
-            >
-              How we make it
-            </motion.h2>
-
-            <motion.div className="space-y-6 text-sand/80 text-lg leading-relaxed max-w-2xl mx-auto" variants={fadeInUp}>
-              <p>
-                The dough is stretched thin by hand and laid on our hot saj griddle. In minutes, it puffs, bubbles, and transforms into something special.
-              </p>
-              <p className="text-terracotta-light font-medium">
-                No machines. No shortcuts. Just the same technique Lebanese bakers have used for generations.
-              </p>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* The SAJ Menu */}
-      <section className="py-20 md:py-28 px-6">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
           >
             <h2 className="font-display text-4xl md:text-5xl font-light mb-4 text-charcoal">
-              Our SAJ Wraps
+              Featured <span className="text-terracotta italic">SAJ</span>
             </h2>
-            <p className="text-stone">Fresh from the griddle to your table</p>
+            <p className="text-stone text-lg max-w-2xl mx-auto">
+              At Maída, we honor the tradition while adding our own twist - from classic zaatar to halloumi & bacon, turkey & cheese, roasted veggies.
+            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16">
-            {/* Savoury */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-50px' }}
-              variants={staggerContainer}
-            >
-              <motion.h3 
-                className="font-display text-2xl text-charcoal mb-8 pb-4 border-b border-sand"
-                variants={fadeInUp}
-              >
-                Savoury
-              </motion.h3>
-              <div className="space-y-6">
-                {sajSavoury.map((item, index) => (
-                  <motion.div 
-                    key={index}
-                    className="flex justify-between items-start group"
-                    variants={fadeInUp}
-                  >
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-display text-lg text-charcoal group-hover:text-terracotta transition-colors">
-                          {item.name}
-                        </h4>
-                        {item.tags.map((tag, i) => (
-                          <span key={i} className="text-[10px] px-1.5 py-0.5 bg-sage/20 text-sage rounded">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      {item.description && (
-                        <p className="text-sm text-stone">{item.description}</p>
-                      )}
-                    </div>
-                    <span className="font-display text-terracotta-light ml-4">{item.price}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Sweet */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-50px' }}
-              variants={staggerContainer}
-            >
-              <motion.h3 
-                className="font-display text-2xl text-charcoal mb-8 pb-4 border-b border-sand"
-                variants={fadeInUp}
-              >
-                Sweet
-              </motion.h3>
-              <div className="space-y-6">
-                {sajSweet.map((item, index) => (
-                  <motion.div 
-                    key={index}
-                    className="flex justify-between items-start group"
-                    variants={fadeInUp}
-                  >
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-display text-lg text-charcoal group-hover:text-terracotta transition-colors">
-                          {item.name}
-                        </h4>
-                        {item.tags.map((tag, i) => (
-                          <span key={i} className="text-[10px] px-1.5 py-0.5 bg-sage/20 text-sage rounded">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      {item.description && (
-                        <p className="text-sm text-stone">{item.description}</p>
-                      )}
-                    </div>
-                    <span className="font-display text-terracotta-light ml-4">{item.price}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Note */}
-          <motion.p 
-            className="text-center text-stone text-sm mt-12 italic"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+          {/* Featured Items Grid */}
+          <motion.div 
+            className="grid sm:grid-cols-2 gap-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+            variants={staggerContainer}
           >
-            V = Vegetarian · VG = Vegan
-          </motion.p>
+            {featuredSaj.map((item, index) => (
+              <motion.div 
+                key={index}
+                className="bg-cream p-6 md:p-8 border border-sand/50 hover:border-terracotta/30 transition-colors"
+                variants={fadeInUp}
+              >
+                <div className="flex items-start justify-between gap-4 mb-3">
+                  <h3 className="font-display text-xl text-charcoal">{item.name}</h3>
+                  {item.tags.length > 0 && (
+                    <div className="flex gap-1 shrink-0">
+                      {item.tags.map((tag, i) => (
+                        <span key={i} className="text-[9px] px-1.5 py-0.5 bg-sage/20 text-sage font-medium">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <p className="text-stone text-sm leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* CTA Button */}
+          <motion.div 
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <Link
+              href={`/${locale}/menu`}
+              className="inline-block bg-terracotta text-warm-white px-8 py-3 font-medium hover:bg-terracotta/90 transition-colors"
+            >
+              View Saj Menu
+            </Link>
+          </motion.div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 md:py-20 px-6 bg-terracotta">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* ============================================
+          PERFECT PAIRINGS SECTION - Simple & Clean
+          ============================================ */}
+      <section className="py-16 md:py-20 px-6 bg-cream">
+        <div className="max-w-3xl mx-auto text-center">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -323,35 +376,78 @@ export default function SAJClient({ translations, locale }: SAJClientProps) {
             variants={staggerContainer}
           >
             <motion.h2 
-              className="font-display text-3xl md:text-4xl font-light mb-4 text-white"
+              className="font-display text-4xl md:text-5xl font-light mb-6 text-charcoal"
               variants={fadeInUp}
             >
-              Come taste it
+              SAJ is <span className="text-terracotta italic">always</span> a good idea.
             </motion.h2>
 
             <motion.p 
-              className="text-white/80 mb-8"
+              className="text-stone text-lg leading-relaxed mb-8"
               variants={fadeInUp}
             >
-              Fresh SAJ, straight from the griddle
+              Enjoy our SAJ with our selection of dips, as a side, or simply on its own with our combination of toppings.
             </motion.p>
 
-            <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" variants={fadeInUp}>
-              <button
-                onClick={handleReserveClick}
-                className="btn bg-white text-charcoal hover:bg-sand px-8 py-3"
-              >
-                Reserve a Table
-              </button>
+            <motion.div 
+              className="bg-sand/50 p-6 md:p-8 max-w-xl mx-auto"
+              variants={fadeInUp}
+            >
+              <p className="text-charcoal text-lg leading-relaxed mb-4">
+                Pair it with fresh juice, coffee, beer, or any drink you fancy.
+              </p>
               <Link
-                href={`/${locale}/menu`}
-                className="btn bg-charcoal text-white hover:bg-charcoal/80 px-8 py-3"
+                href={`/${locale}/menu#drinks`}
+                className="inline-flex items-center gap-2 text-terracotta font-medium hover:underline"
               >
-                View Full Menu
+                Explore our drinks
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             </motion.div>
           </motion.div>
         </div>
+      </section>
+
+      {/* ============================================
+          FINAL CTA - Terracotta with Emblem Pattern
+          ============================================ */}
+      <section 
+        className="relative py-16 md:py-20 px-6 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, rgb(198, 125, 94) 0%, rgb(166, 93, 63) 100%)' }}
+      >
+        {/* Emblem Pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage: `url('/images/brand/emblem.svg')`,
+            backgroundSize: '100px',
+            backgroundRepeat: 'repeat',
+            filter: 'brightness(0)',
+          }}
+        />
+        
+        <motion.div
+          className="relative z-10 max-w-3xl mx-auto text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="font-display text-4xl md:text-5xl font-medium text-warm-white mb-4">
+            Fresh from the griddle to your table
+          </h2>
+          <p className="text-warm-white/80 text-lg mb-8">
+            #MeetMeAtMaída
+          </p>
+          <button 
+            onClick={handleReserveClick} 
+            className="bg-charcoal text-warm-white px-10 py-4 text-lg font-medium hover:bg-warm-white hover:text-charcoal transition-colors"
+          >
+            Reserve a Table
+          </button>
+        </motion.div>
       </section>
     </div>
   );

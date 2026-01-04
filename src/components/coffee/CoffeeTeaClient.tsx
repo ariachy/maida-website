@@ -10,31 +10,38 @@ interface CoffeeTeaClientProps {
   locale: Locale;
 }
 
-// Coffee Menu
-const coffeeItems = [
-  { name: 'Espresso', price: '€1.80' },
-  { name: 'Espresso Double', price: '€3.00' },
-  { name: 'Cortado', price: '€1.80' },
-  { name: 'Americano', price: '€2.60' },
-  { name: 'Americano (iced)', price: '€2.60' },
-  { name: 'Macchiato', price: '€3.20' },
-  { name: 'Latte Macchiato', price: '€3.70' },
-  { name: 'Latte', price: '€4.10' },
-  { name: 'Latte (iced)', price: '€4.10' },
-  { name: 'Cappuccino', price: '€3.90' },
-  { name: 'Flat White', price: '€3.90' },
-  { name: 'Mocha', price: '€3.90' },
-  { name: 'Lavender Coffee', price: '€3.90', signature: true },
-  { name: 'Hot Chocolate', price: '€3.50' },
-];
-
-// Tea Menu
-const teaItems = [
-  { name: 'Moroccan Mint', description: 'Fresh mint, green tea', price: '€3.30' },
-  { name: 'Zhourat', description: 'Traditional Lebanese herbal blend', price: '€3.50' },
-  { name: 'Maída Blend', description: 'Rose syrup, mastic, house blend', price: '€3.50', signature: true },
-  { name: 'Cafe Blanc', description: 'White coffee with orange blossom water', price: '€3.20' },
-  { name: 'Other Teas', description: 'Ask for our selection', price: '€2.80' },
+// Featured Items
+const featuredItems = [
+  { 
+    name: 'Lavender Coffee', 
+    description: 'Espresso with house-made lavender syrup',
+    category: 'coffee',
+  },
+  { 
+    name: 'Lebanese Coffee', 
+    description: 'Traditional cardamom-spiced coffee',
+    category: 'coffee',
+  },
+  { 
+    name: 'Cafe Blanc', 
+    description: 'White coffee with orange blossom water',
+    category: 'coffee',
+  },
+  { 
+    name: 'Moroccan Mint', 
+    description: 'Fresh mint, green tea, served traditional style',
+    category: 'tea',
+  },
+  { 
+    name: 'Maída Blend', 
+    description: 'Rose syrup, mastic, house blend',
+    category: 'tea',
+  },
+  { 
+    name: 'Zhourat', 
+    description: 'Traditional Lebanese herbal blend',
+    category: 'tea',
+  },
 ];
 
 export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClientProps) {
@@ -61,15 +68,16 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.08 }
+      transition: { staggerChildren: 0.1 }
     }
   };
 
   return (
     <div className="bg-cream">
-      {/* Hero Section */}
+      {/* ============================================
+          HERO SECTION
+          ============================================ */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-        {/* Background */}
         <div className="absolute inset-0">
           <Image
             src="/images/drinks/coffee-cortado.webp"
@@ -81,7 +89,6 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
           <div className="absolute inset-0 bg-charcoal/60" />
         </div>
 
-        {/* Content */}
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20">
           <motion.p
             className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-sand mb-6"
@@ -90,7 +97,7 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="w-8 h-px bg-sand" />
-            Slow Down
+            Mediterranean warmth in every cup
             <span className="w-8 h-px bg-sand" />
           </motion.p>
 
@@ -106,19 +113,12 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
               </motion.span>
             </span>
           </h1>
-
-          <motion.p
-            className="text-lg md:text-xl text-sand/90 max-w-xl mx-auto font-light"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            From Baobá beans to Lebanese traditions
-          </motion.p>
         </div>
       </section>
 
-      {/* Our Coffee Section */}
+      {/* ============================================
+          OUR COFFEE SECTION
+          ============================================ */}
       <section className="py-20 md:py-28 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
@@ -136,15 +136,24 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
                 Our <span className="text-terracotta italic">Coffee</span>
               </motion.h2>
 
-              <motion.div className="space-y-6 text-stone text-lg leading-relaxed" variants={fadeInUp}>
+              <motion.div className="space-y-5 text-stone text-lg leading-relaxed" variants={fadeInUp}>
                 <p>
-                  We serve specialty coffee from <strong className="text-charcoal">Baobá</strong> — Lisbon roasters who share our obsession with quality.
+                  At Maída, we craft bold signature coffee drinks that honor Mediterranean tradition. To achieve this, we needed the perfect canvas - a smooth, balanced espresso that could hold its own alongside aromatic lavender, cardamom, and our house-made blends.
                 </p>
                 <p>
-                  But we're not just an espresso bar. Try our <strong className="text-charcoal">Lavender Coffee</strong> for something unexpected, or go traditional with a <strong className="text-charcoal">Lebanese Cafe Blanc</strong> — white coffee with orange blossom water.
+                  We partnered with{' '}
+                  <a 
+                    href="https://www.baoba.pt" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-terracotta hover:underline font-medium"
+                  >
+                    Baobá Coffee
+                  </a>
+                  {' '}to source their 100% Arabica blend from Brazil - a balanced, versatile roast perfect for smooth espresso or specialty drinks. Lisbon roasters who share our obsession with quality.
                 </p>
                 <p className="text-terracotta italic">
-                  Every cup is an invitation to slow down.
+                  Come for the coffee. Stay for the conversation.
                 </p>
               </motion.div>
             </motion.div>
@@ -157,22 +166,22 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <div className="aspect-square rounded-3xl overflow-hidden">
+              <div className="aspect-square overflow-hidden">
                 <Image
                   src="/images/drinks/coffee-cortado.webp"
-                  alt="Cortado at Maída"
+                  alt="Specialty coffee at Maída"
                   fill
                   className="object-cover"
                 />
               </div>
-              {/* Decorative element */}
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-terracotta/10 rounded-full -z-10" />
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Our Teas Section */}
+      {/* ============================================
+          OUR TEAS SECTION (Dark)
+          ============================================ */}
       <section className="py-20 md:py-28 px-6 bg-charcoal text-white">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
@@ -184,7 +193,7 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <div className="aspect-square rounded-3xl overflow-hidden">
+              <div className="aspect-square overflow-hidden">
                 <Image
                   src="/images/drinks/tea-topview.webp"
                   alt="Traditional tea at Maída"
@@ -192,8 +201,6 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
                   className="object-cover"
                 />
               </div>
-              {/* Decorative element */}
-              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-sage/20 rounded-full -z-10" />
             </motion.div>
 
             {/* Content */}
@@ -211,15 +218,15 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
                 Our <span className="text-terracotta-light italic">Teas</span>
               </motion.h2>
 
-              <motion.div className="space-y-6 text-sand/80 text-lg leading-relaxed" variants={fadeInUp}>
+              <motion.div className="space-y-5 text-sand/80 text-lg leading-relaxed" variants={fadeInUp}>
                 <p>
-                  <strong className="text-white">Moroccan mint.</strong> Zhourat — the Lebanese herbal blend. Our own <strong className="text-white">Maída blend</strong> with rose syrup and mastic.
+                  From traditional favorites to exotic regional blends and house-made creations - our tea selection celebrates Mediterranean and Lebanese tea culture.
                 </p>
                 <p>
-                  And then there's <strong className="text-white">Cafe Blanc</strong> — not actually coffee at all, but a soothing warm drink with orange blossom water. A Lebanese tradition.
+                  We source the finest loose-leaf teas from trusted suppliers, from classic Moroccan mint to our signature Maída blend with rose syrup and mastic.
                 </p>
                 <p className="text-terracotta-light italic">
-                  Every cup is an invitation to slow down.
+                  Every sip tells a story.
                 </p>
               </motion.div>
             </motion.div>
@@ -227,140 +234,111 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
         </div>
       </section>
 
-      {/* The Menu */}
-      <section className="py-20 md:py-28 px-6">
-        <div className="max-w-6xl mx-auto">
+      {/* ============================================
+          FEATURED ITEMS SECTION
+          ============================================ */}
+      <section className="py-20 md:py-28 px-6 bg-warm-white">
+        <div className="max-w-5xl mx-auto">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
           >
             <h2 className="font-display text-4xl md:text-5xl font-light mb-4 text-charcoal">
-              The Menu
+              Featured <span className="text-terracotta italic">Coffees & Teas</span>
             </h2>
-            <p className="text-stone">From morning espresso to evening tea</p>
+            <p className="text-stone text-lg max-w-2xl mx-auto">
+              Signature creations and traditional favorites
+            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16">
-            {/* Coffee */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-50px' }}
-              variants={staggerContainer}
-            >
-              <motion.h3 
-                className="font-display text-2xl text-charcoal mb-8 pb-4 border-b border-sand"
+          {/* Featured Items Grid */}
+          <motion.div 
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+            variants={staggerContainer}
+          >
+            {featuredItems.map((item, index) => (
+              <motion.div 
+                key={index}
+                className="bg-cream p-6 border border-sand/50 hover:border-terracotta/30 transition-colors"
                 variants={fadeInUp}
               >
-                Coffee
-              </motion.h3>
-              <div className="space-y-4">
-                {coffeeItems.map((item, index) => (
-                  <motion.div 
-                    key={index}
-                    className={`flex justify-between items-center group ${item.signature ? 'bg-terracotta/5 -mx-4 px-4 py-2 rounded-lg' : ''}`}
-                    variants={fadeInUp}
-                  >
-                    <div className="flex items-center gap-2">
-                      <h4 className={`font-display text-lg ${item.signature ? 'text-terracotta' : 'text-charcoal group-hover:text-terracotta'} transition-colors`}>
-                        {item.name}
-                      </h4>
-                      {item.signature && (
-                        <span className="text-[10px] px-1.5 py-0.5 bg-terracotta/20 text-terracotta rounded">
-                          Signature
-                        </span>
-                      )}
-                    </div>
-                    <span className="font-display text-terracotta-light">{item.price}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <h3 className="font-display text-xl text-charcoal">{item.name}</h3>
+                  <span className="text-[9px] px-1.5 py-0.5 bg-sand/50 text-stone font-medium uppercase shrink-0">
+                    {item.category}
+                  </span>
+                </div>
+                <p className="text-stone text-sm leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
 
-            {/* Tea */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-50px' }}
-              variants={staggerContainer}
+          {/* CTA Button + Takeaway pill */}
+          <motion.div 
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <span className="inline-block text-xs tracking-wide uppercase text-stone bg-sand/60 px-4 py-1.5 rounded-full mb-4">
+              Also available for takeaway
+            </span>
+            <br />
+            <Link
+              href={`/${locale}/menu#coffee-tea`}
+              className="inline-block bg-terracotta text-warm-white px-8 py-3 font-medium hover:bg-terracotta/90 transition-colors"
             >
-              <motion.h3 
-                className="font-display text-2xl text-charcoal mb-8 pb-4 border-b border-sand"
-                variants={fadeInUp}
-              >
-                Tea
-              </motion.h3>
-              <div className="space-y-6">
-                {teaItems.map((item, index) => (
-                  <motion.div 
-                    key={index}
-                    className={`flex justify-between items-start group ${item.signature ? 'bg-terracotta/5 -mx-4 px-4 py-3 rounded-lg' : ''}`}
-                    variants={fadeInUp}
-                  >
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className={`font-display text-lg ${item.signature ? 'text-terracotta' : 'text-charcoal group-hover:text-terracotta'} transition-colors`}>
-                          {item.name}
-                        </h4>
-                        {item.signature && (
-                          <span className="text-[10px] px-1.5 py-0.5 bg-terracotta/20 text-terracotta rounded">
-                            Signature
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-sm text-stone">{item.description}</p>
-                    </div>
-                    <span className="font-display text-terracotta-light ml-4">{item.price}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
+              View Coffee & Tea Menu
+            </Link>
+          </motion.div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 md:py-20 px-6 bg-terracotta">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
+      {/* ============================================
+          FINAL CTA - Terracotta with Emblem Pattern
+          ============================================ */}
+      <section 
+        className="relative py-16 md:py-20 px-6 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, rgb(198, 125, 94) 0%, rgb(166, 93, 63) 100%)' }}
+      >
+        {/* Emblem Pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage: `url('/images/brand/emblem.svg')`,
+            backgroundSize: '100px',
+            backgroundRepeat: 'repeat',
+            filter: 'brightness(0)',
+          }}
+        />
+        
+        <motion.div
+          className="relative z-10 max-w-3xl mx-auto text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="font-display text-4xl md:text-5xl font-medium text-warm-white mb-4">
+            Your table is waiting
+          </h2>
+          <p className="text-warm-white/80 text-lg mb-8">
+            #MeetMeAtMaída
+          </p>
+          <button 
+            onClick={handleReserveClick} 
+            className="bg-charcoal text-warm-white px-10 py-4 text-lg font-medium hover:bg-warm-white hover:text-charcoal transition-colors"
           >
-            <motion.h2 
-              className="font-display text-3xl md:text-4xl font-light mb-4 text-white"
-              variants={fadeInUp}
-            >
-              Your morning table is waiting
-            </motion.h2>
-
-            <motion.p 
-              className="text-white/80 mb-8"
-              variants={fadeInUp}
-            >
-              Start the day right at Maída
-            </motion.p>
-
-            <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" variants={fadeInUp}>
-              <button
-                onClick={handleReserveClick}
-                className="btn bg-white text-charcoal hover:bg-sand px-8 py-3"
-              >
-                Visit Us
-              </button>
-              <Link
-                href={`/${locale}/menu`}
-                className="btn bg-charcoal text-white hover:bg-charcoal/80 px-8 py-3"
-              >
-                View Full Menu
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
+            Reserve a Table
+          </button>
+        </motion.div>
       </section>
     </div>
   );

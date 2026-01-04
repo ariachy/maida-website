@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Locale } from '@/lib/i18n';
 
 interface StoryClientProps {
@@ -10,12 +11,34 @@ interface StoryClientProps {
   locale: Locale;
 }
 
+// Traditional Ma'ida gathering images for carousel
+// Replace these with your own images later: /images/story/maida-1.webp, etc.
+const maidaImages = [
+  {
+    src: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&h=600&fit=crop',
+    alt: 'Traditional Middle Eastern feast with multiple dishes',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1547573854-74d2a71d0826?w=800&h=600&fit=crop',
+    alt: 'Family gathering around a table with shared plates',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=800&h=600&fit=crop',
+    alt: 'Abundance of Mediterranean dishes on a table',
+  },
+];
+
 export default function StoryClient({ translations, locale }: StoryClientProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Auto-advance carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % maidaImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleReserveClick = () => {
     if (typeof window !== 'undefined' && (window as any).umaiWidget) {
@@ -25,6 +48,14 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
       });
       (window as any).umaiWidget.openWidget();
     }
+  };
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % maidaImages.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + maidaImages.length) % maidaImages.length);
   };
 
   // Animation variants
@@ -47,12 +78,14 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
 
   return (
     <div ref={containerRef} className="bg-cream">
-      {/* Hero Section - UPDATED: Changed label */}
+      {/* ============================================
+          HERO SECTION
+          ============================================ */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <Image
-            src="/images/hero/facade-night.webp"
+            src="/images/atmosphere/facade-night.webp"
             alt="Maída restaurant exterior"
             fill
             className="object-cover"
@@ -63,7 +96,6 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
 
         {/* Content */}
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          {/* UPDATED: Changed from "Our Story" label to "What brought us here" */}
           <motion.p
             className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-sand mb-6"
             initial={{ opacity: 0, y: 20 }}
@@ -89,21 +121,25 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
           </h1>
 
           <motion.p
-            className="text-lg md:text-xl text-sand/90 max-w-xl mx-auto font-light"
+            className="text-lg md:text-xl text-sand/90 max-w-2xl mx-auto font-light leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            A gathering table in the heart of Lisbon
+            A place where flavors, music, and good company come together.
+            <br className="hidden md:block" />
+            Rooted in tradition, reimagined for today.
           </motion.p>
         </div>
       </section>
 
-      {/* The Meaning Section */}
+      {/* ============================================
+          THE MEANING SECTION - Image Carousel + New Text
+          ============================================ */}
       <section className="py-24 md:py-32 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-            {/* Arabic Card - UPDATED: Using emblem pattern instead of stars */}
+            {/* Image Carousel - Left Side */}
             <motion.div
               className="relative"
               initial="hidden"
@@ -111,28 +147,59 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
               viewport={{ once: true, margin: '-100px' }}
               variants={fadeInUp}
             >
-              <div 
-                className="aspect-square bg-gradient-to-br from-terracotta to-rust flex flex-col items-center justify-center relative overflow-hidden"
-                style={{
-                  backgroundImage: `url('/images/brand/emblem.svg')`,
-                  backgroundSize: '60px',
-                  backgroundRepeat: 'repeat',
-                  backgroundBlendMode: 'soft-light',
-                }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-terracotta to-rust opacity-90" />
-                <div className="relative z-10 text-center p-8">
-                  <span className="font-display text-8xl md:text-9xl text-warm-white/90 arabic-text block mb-4">
-                    مائدة
-                  </span>
-                  <span className="text-sm tracking-[0.3em] uppercase text-warm-white/70">
-                    ma'ida
-                  </span>
+              <div className="aspect-[4/3] relative overflow-hidden bg-sand/20">
+                {maidaImages.map((image, index) => (
+                  <motion.div
+                    key={index}
+                    className="absolute inset-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: index === currentImageIndex ? 1 : 0 }}
+                    transition={{ duration: 0.7 }}
+                  >
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
+                ))}
+                
+                {/* Carousel Controls */}
+                <div className="absolute inset-0 flex items-center justify-between px-4">
+                  <button
+                    onClick={prevImage}
+                    className="w-10 h-10 bg-warm-white/80 backdrop-blur-sm flex items-center justify-center text-charcoal hover:bg-terracotta hover:text-warm-white transition-colors"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={nextImage}
+                    className="w-10 h-10 bg-warm-white/80 backdrop-blur-sm flex items-center justify-center text-charcoal hover:bg-terracotta hover:text-warm-white transition-colors"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* Dots Indicator */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                  {maidaImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentImageIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-colors ${
+                        index === currentImageIndex ? 'bg-terracotta' : 'bg-warm-white/50'
+                      }`}
+                      aria-label={`Go to image ${index + 1}`}
+                    />
+                  ))}
                 </div>
               </div>
             </motion.div>
 
-            {/* Text */}
+            {/* Text - Right Side */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -150,18 +217,18 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 className="font-display text-4xl md:text-5xl font-light mb-8 text-charcoal"
                 variants={fadeInUp}
               >
-                More than<br />
-                <span className="text-terracotta italic">a word</span>
+                A traditional feast,<br />
+                <span className="text-terracotta italic">reimagined for today</span>
               </motion.h2>
 
               <motion.div className="space-y-6 text-stone text-lg leading-relaxed" variants={fadeInUp}>
                 <p>
-                  In Arabic, <span className="text-terracotta font-medium">المائدة</span> (al-māʾidah) doesn't just mean "table."
+                  Inspired by <span className="text-terracotta font-medium">المائدة</span> (al-mā'idah), the beloved tradition of gathering, feasting, and celebrating with loved ones around a big table, Maída brings people together with authentic Mediterranean flavors & drinks, our in-house Saj Manoushe, and dishes that evolve throughout the day - all complemented by a smooth musical experience, elevated by our hi-fi sound system.
                 </p>
-                <p>
-                  It's the gathering table. Where family and friends come together, where stories are shared over plates passed hand to hand, where no one leaves hungry.
+                <p className="italic text-charcoal">
+                  It's the gathering table. Where family and friends come together, and stories are shared between bites.
                 </p>
-                <p className="text-terracotta italic">
+                <p className="text-terracotta">
                   In Lebanon, المائدة represents abundance and generosity. That's why our mezze arrive in waves. Why the bread keeps coming. Why we'll always make room for one more.
                 </p>
               </motion.div>
@@ -170,7 +237,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
         </div>
       </section>
 
-      {/* Divider - UPDATED: Using emblem instead of star */}
+      {/* Divider */}
       <div className="max-w-xs mx-auto flex items-center gap-4">
         <span className="flex-1 h-px bg-stone/20" />
         <Image
@@ -183,7 +250,9 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
         <span className="flex-1 h-px bg-stone/20" />
       </div>
 
-      {/* From Beirut to Lisboa - UPDATED: Added "From our roots" title */}
+      {/* ============================================
+          FROM BEIRUT TO LISBOA SECTION
+          ============================================ */}
       <section className="py-24 md:py-32 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
@@ -195,7 +264,6 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
               viewport={{ once: true, margin: '-100px' }}
               variants={staggerContainer}
             >
-              {/* UPDATED: Added "From our roots" as title above */}
               <motion.p 
                 className="text-xs tracking-[0.3em] uppercase text-terracotta mb-4"
                 variants={fadeInUp}
@@ -207,19 +275,19 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 className="font-display text-4xl md:text-5xl font-light mb-8 text-charcoal"
                 variants={fadeInUp}
               >
-                From Beirut<br />
-                <span className="text-terracotta italic">to Lisboa</span>
+                Where two worlds<br />
+                <span className="text-terracotta italic">became one</span>
               </motion.h2>
 
               <motion.div className="space-y-6 text-stone text-lg leading-relaxed" variants={fadeInUp}>
                 <p>
-                  Our journey began with memories of Lebanese family dinners — tables overflowing with mezze, conversations that lasted hours, and the warmth that comes from sharing food with people you love.
+                  Our journey began with memories of Lebanese family dinners - tables overflowing with mezze, shawarma, grilled meats, and dishes passed hand to hand. Long evenings where everyone lingers, glasses clink, and stories grow louder with every round.
                 </p>
                 <p>
-                  We brought that spirit to Rua da Boavista in Cais do Sodré, where the river meets the city and locals mix with travelers from around the world.
+                  When we arrived in Lisbon, we discovered something familiar: the Portuguese share this same love for gathering around a big table and turning a meal into an occasion. It felt like home.
                 </p>
                 <p className="font-medium text-charcoal">
-                  We're not a Lebanese restaurant. We're a Mediterranean restaurant with Lebanese soul — the warmth, the generosity, the belief that food is better when shared.
+                  That's how two worlds became one. Maída is a Mediterranean restaurant with Lebanese soul in the heart of Cais do Sodré - where Portuguese warmth meets Lebanese generosity, celebrating what both cultures share: the belief that food is meant to bring people together.
                 </p>
               </motion.div>
             </motion.div>
@@ -274,14 +342,13 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
       </section>
 
       {/* ============================================
-          WHO WE ARE Section (Replaces "What We Believe")
-          UPDATED: Complete replacement with Anna & Anthony story
+          WHO WE ARE - Anna & Anthony Section
           ============================================ */}
       <section className="py-24 md:py-32 px-6 bg-charcoal text-white">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
             
-            {/* Photo Placeholder - UPDATED: Portrait ratio */}
+            {/* Photo Placeholder */}
             <motion.div
               className="relative aspect-[3/4] bg-stone/20 overflow-hidden"
               initial={{ opacity: 0, x: -30 }}
@@ -329,20 +396,24 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 Anna & Anthony
               </h2>
               
-              <div className="space-y-6 text-sand/90 text-lg leading-relaxed">
+              <div className="space-y-5 text-sand/90 text-base leading-relaxed">
                 <p>
-                  <span className="italic text-terracotta-light">Maída</span> was born from a shared dream between Anna and Anthony — 
-                  to bring the warmth of Lebanese hospitality to the heart of Lisbon.
+                  <span className="font-medium text-warm-white">Anna</span> is a creative and animation director by heart, passionate about food, music, and the creative world. Over the years, she refined her skills in cooking and food presentation, turning every plate into a canvas.
                 </p>
                 <p>
-                  {/* Placeholder - replace with actual story */}
-                  With roots stretching from the mountains of Lebanon to the vibrant streets of Lisbon, 
-                  they found common ground in their love for food that brings people together, 
-                  conversations that linger, and evenings that become memories.
+                  <span className="font-medium text-warm-white">Anthony</span> is an electrical engineer and consultant by trade, fascinated by the world of hospitality, mixology, and creating experiences that linger.
                 </p>
                 <p>
-                  Today, you'll find them both where they belong: at the table, 
-                  making sure no glass stays empty and no guest leaves hungry.
+                  A lifelong passion for music led them to curate the soundscape that fills every experience at Maída.
+                </p>
+                <p>
+                  After opening The Happy Salad in Lisboa, they shared a dream: to present Lebanese food from a different perspective - not just the familiar classics, but the dishes they grew up eating at home. Food from across the Mediterranean, always made with Lebanese soul.
+                </p>
+                <p>
+                  With roots stretching from the mountains of Lebanon to the vibrant streets of Lisbon, they found common ground in their love for food that brings people together, conversations that linger long after the last bite, and evenings that turn into memories you carry with you.
+                </p>
+                <p className="text-terracotta-light italic">
+                  Today, you'll find them where they belong: at the table with you - making sure every detail is right, every glass is full, and no guest ever leaves without a story to tell.
                 </p>
               </div>
             </motion.div>
@@ -350,42 +421,58 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
         </div>
       </section>
 
-      {/* Final CTA - UPDATED: Removed "Come" from the beginning */}
-      <section className="py-24 md:py-32 px-6 text-center">
-        <motion.div
-          className="max-w-2xl mx-auto"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-        >
+      {/* ============================================
+          FINAL CTA - Matches Homepage Style with Emblem Pattern
+          ============================================ */}
+      <section 
+        className="relative py-16 md:py-20 px-6 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, rgb(198, 125, 94) 0%, rgb(166, 93, 63) 100%)' }}
+      >
+        {/* Emblem Pattern - darker for visibility on terracotta */}
+        <div 
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage: `url('/images/brand/emblem.svg')`,
+            backgroundSize: '100px',
+            backgroundRepeat: 'repeat',
+            filter: 'brightness(0)',
+          }}
+        />
+        
+        <div className="max-w-3xl mx-auto text-center relative z-10">
           <motion.h2 
-            className="font-display text-4xl md:text-5xl lg:text-6xl font-light mb-6 text-charcoal"
-            variants={fadeInUp}
+            className="font-display text-fluid-3xl font-light text-warm-white mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            {/* UPDATED: Changed "Come find your place" to "Find your place" */}
-            Find your place
-            <br />
-            <span className="text-terracotta italic">at the table</span>
+            Find your place at the table
           </motion.h2>
 
           <motion.p 
-            className="text-stone text-lg mb-10"
-            variants={fadeInUp}
+            className="text-lg text-warm-white/90 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
           >
             #MeetMeAtMaída
           </motion.p>
 
           <motion.button
             onClick={handleReserveClick}
-            className="btn btn-primary text-lg px-10 py-4"
-            variants={fadeInUp}
+            className="btn bg-charcoal text-warm-white hover:bg-warm-white hover:text-charcoal"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
-            Reserve a table
+            Reserve a Table
           </motion.button>
-        </motion.div>
+        </div>
       </section>
     </div>
   );

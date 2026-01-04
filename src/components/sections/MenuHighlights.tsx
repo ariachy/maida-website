@@ -11,22 +11,22 @@ const featuredFood = [
   {
     name: 'Hummus Beiruti',
     description: 'Warm chickpeas, olive oil, pine nuts',
-    image: '/images/food/hummus.webp',
+    image: '/images/food/placeholder-food.webp',
   },
   {
     name: 'Lamb Kofta',
     description: 'Grilled spiced lamb, tahini, pomegranate',
-    image: '/images/food/kofta.webp',
+    image: '/images/food/placeholder-food.webp',
   },
   {
     name: 'Fattoush',
     description: 'Crispy pita, fresh vegetables, sumac',
-    image: '/images/food/fattoush.webp',
+    image: '/images/food/placeholder-food.webp',
   },
   {
     name: 'Chicken Saj',
     description: 'Marinated chicken, garlic sauce, pickles',
-    image: '/images/food/saj-chicken.webp',
+    image: '/images/food/placeholder-food.webp',
   },
 ];
 
@@ -35,23 +35,45 @@ const featuredDrinks = [
   {
     name: 'Beirut Sunset',
     description: 'Arak, orange blossom, pomegranate',
-    image: '/images/drinks/cocktail-1.webp',
+    image: '/images/drinks/placeholder-drink.webp',
   },
   {
     name: 'Cedar Sour',
     description: 'Lebanese whiskey, lemon, honey',
-    image: '/images/drinks/cocktail-2.webp',
+    image: '/images/drinks/placeholder-drink.webp',
   },
   {
     name: 'Rose Garden',
     description: 'Gin, rose water, elderflower',
-    image: '/images/drinks/cocktail-3.webp',
+    image: '/images/drinks/placeholder-drink.webp',
   },
 ];
 
 interface MenuHighlightsProps {
   translations: any;
   locale: Locale;
+}
+
+// Placeholder component for images
+function PlaceholderImage({ name, type }: { name: string; type: 'food' | 'drink' }) {
+  return (
+    <div className={`absolute inset-0 flex items-center justify-center ${type === 'food' ? 'bg-sand/50' : 'bg-charcoal/10'}`}>
+      <div className="text-center p-4">
+        <div className={`w-12 h-12 mx-auto mb-2 rounded-full flex items-center justify-center ${type === 'food' ? 'bg-terracotta/20' : 'bg-sage/20'}`}>
+          {type === 'food' ? (
+            <svg className="w-6 h-6 text-terracotta/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+          ) : (
+            <svg className="w-6 h-6 text-sage/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+          )}
+        </div>
+        <p className="text-xs text-stone/60">Image coming soon</p>
+      </div>
+    </div>
+  );
 }
 
 export default function MenuHighlights({ translations, locale }: MenuHighlightsProps) {
@@ -62,6 +84,8 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
   const [canScrollFoodRight, setCanScrollFoodRight] = useState(true);
   const [canScrollDrinksLeft, setCanScrollDrinksLeft] = useState(false);
   const [canScrollDrinksRight, setCanScrollDrinksRight] = useState(true);
+  const [foodImageErrors, setFoodImageErrors] = useState<Record<string, boolean>>({});
+  const [drinkImageErrors, setDrinkImageErrors] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     setMounted(true);
@@ -173,14 +197,19 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <div className="group cursor-pointer">
-                  {/* Image */}
-                  <div className="relative aspect-square mb-4 overflow-hidden">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                  {/* Image with Placeholder Fallback */}
+                  <div className="relative aspect-square mb-4 overflow-hidden bg-sand/30">
+                    {foodImageErrors[item.name] ? (
+                      <PlaceholderImage name={item.name} type="food" />
+                    ) : (
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        onError={() => setFoodImageErrors(prev => ({ ...prev, [item.name]: true }))}
+                      />
+                    )}
                   </div>
                   {/* Name - NO PRICE */}
                   <h3 className="font-display text-xl text-charcoal group-hover:text-terracotta transition-colors">
@@ -270,14 +299,19 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <div className="group cursor-pointer">
-                  {/* Image */}
-                  <div className="relative aspect-square mb-4 overflow-hidden">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                  {/* Image with Placeholder Fallback */}
+                  <div className="relative aspect-square mb-4 overflow-hidden bg-charcoal/5">
+                    {drinkImageErrors[item.name] ? (
+                      <PlaceholderImage name={item.name} type="drink" />
+                    ) : (
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        onError={() => setDrinkImageErrors(prev => ({ ...prev, [item.name]: true }))}
+                      />
+                    )}
                   </div>
                   {/* Name */}
                   <h3 className="font-display text-xl text-charcoal group-hover:text-terracotta transition-colors">

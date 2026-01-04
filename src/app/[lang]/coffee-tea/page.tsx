@@ -4,8 +4,8 @@ import CoffeeTeaClient from '@/components/coffee/CoffeeTeaClient';
 
 export async function generateMetadata({ params }: { params: { lang: string } }) {
   return {
-    title: 'Coffee & Tea | Lebanese Traditions | Maída',
-    description: 'Specialty coffee from Baobá roasters, traditional Lebanese teas, and our signature Lavender Coffee. Discover the coffee culture at Maída in Lisbon.',
+    title: 'Maída - Mediterranean Flavours, Lebanese Soul | Coffee & Tea',
+    description: 'Specialty coffee beans from Brazil and traditional Mediterranean teas. From lavender coffee to Moroccan mint - Mediterranean warmth in every cup at Maída, Lisbon.',
   };
 }
 

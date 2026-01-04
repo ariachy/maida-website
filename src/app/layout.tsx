@@ -22,7 +22,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: {
     default: 'maída — Mediterranean Flavours. Lebanese Soul | Lisbon',
-    template: '%s | maída',
+    template: '%s',
   },
   description:
     'Maída is a Mediterranean restaurant with Lebanese soul in Cais do Sodré, Lisbon. Shareable plates, natural wines, and signature cocktails.',

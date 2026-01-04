@@ -29,10 +29,6 @@ export async function generateMetadata({
   
   return {
     // SEO Title Template - all pages will use this format
-    title: {
-      template: 'Maída - Mediterranean Flavours, Lebanese Soul | %s',
-      default: 'Maída - Mediterranean Flavours, Lebanese Soul',
-    },
     description: 'A gathering place for shared plates, natural wines, and evenings that linger. Restaurant-bar in Cais do Sodré, Lisboa.',
     alternates: {
       canonical: `https://maida.pt/${locale}`,

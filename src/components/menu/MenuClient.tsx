@@ -41,10 +41,26 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   // Sort categories by sortOrder
   const sortedCategories = [...categories].sort((a, b) => a.sortOrder - b.sortOrder);
   
-  // Get items for active category
-  const activeItems = items
-    .filter((item) => item.categoryId === activeCategory)
-    .sort((a, b) => a.sortOrder - b.sortOrder);
+  // Handle URL hash or query param for deep linking
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    const params = new URLSearchParams(window.location.search);
+    const categoryParam = params.get('category') || hash;
+    
+    if (categoryParam) {
+      const category = categories.find(c => c.slug === categoryParam);
+      if (category) {
+        setActiveCategory(category.id);
+      }
+    }
+  }, [categories]);
+  
+  // Get items for a specific category
+  const getItemsForCategory = (categoryId: string) => {
+    return items
+      .filter((item) => item.categoryId === categoryId)
+      .sort((a, b) => a.sortOrder - b.sortOrder);
+  };
   
   // Check if scrolling is needed and update arrows
   const updateScrollState = () => {
@@ -135,7 +151,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       {/* ============================================
           CATEGORY BUTTONS - Centered, scroll only if needed
           ============================================ */}
-      <div className="relative py-6 md:py-8 px-4 bg-cream">
+      <div className="relative py-5 md:py-6 px-4 bg-cream">
         <div className="max-w-4xl mx-auto relative">
           {/* Left Arrow - only show if scrolling needed */}
           <AnimatePresence>
@@ -199,95 +215,90 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       </div>
       
       {/* ============================================
-          MENU ITEMS - With decorative border
+          MENU ITEMS - Paper-like background, clean border
           ============================================ */}
-      <div className="py-10 md:py-14 px-4 bg-cream">
+      <div className="py-4 md:py-6 px-4 bg-cream">
         <div className="max-w-3xl mx-auto">
-          {/* Decorative Border Container */}
-          <div className="relative">
-            {/* Corner decorations */}
-            <div className="absolute -top-2 -left-2 w-8 h-8 border-l-2 border-t-2 border-terracotta" />
-            <div className="absolute -top-2 -right-2 w-8 h-8 border-r-2 border-t-2 border-terracotta" />
-            <div className="absolute -bottom-2 -left-2 w-8 h-8 border-l-2 border-b-2 border-terracotta" />
-            <div className="absolute -bottom-2 -right-2 w-8 h-8 border-r-2 border-b-2 border-terracotta" />
-            
-            {/* Decorative dots along edges */}
-            <div className="absolute top-0 left-1/4 w-1.5 h-1.5 bg-terracotta rounded-full -translate-y-1/2" />
-            <div className="absolute top-0 left-1/2 w-2 h-2 bg-terracotta rounded-full -translate-y-1/2" />
-            <div className="absolute top-0 left-3/4 w-1.5 h-1.5 bg-terracotta rounded-full -translate-y-1/2" />
-            <div className="absolute bottom-0 left-1/4 w-1.5 h-1.5 bg-terracotta rounded-full translate-y-1/2" />
-            <div className="absolute bottom-0 left-1/2 w-2 h-2 bg-terracotta rounded-full translate-y-1/2" />
-            <div className="absolute bottom-0 left-3/4 w-1.5 h-1.5 bg-terracotta rounded-full translate-y-1/2" />
+          {/* Menu Container - Paper style */}
+          <div 
+            className="relative border border-terracotta/30 shadow-sm"
+            style={{
+              background: 'linear-gradient(135deg, #FDFBF7 0%, #FAF8F4 50%, #F8F6F1 100%)',
+            }}
+          >
+            {/* Subtle inner shadow for paper depth */}
+            <div className="absolute inset-0 pointer-events-none shadow-inner opacity-30" />
 
-            {/* Content inside border */}
-            <div className="px-5 md:px-8 py-8 md:py-10 border border-sand bg-warm-white">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeCategory}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {/* Category Header with emblem underline */}
-                  <div className="text-center mb-8">
-                    <h2 className="font-display text-2xl md:text-3xl text-charcoal mb-3">
-                      {menu.categories[activeCategory]?.name}
-                    </h2>
-                    {/* Decorative underline with emblem */}
-                    <div className="flex items-center justify-center gap-3">
-                      <div className="w-10 h-px bg-terracotta" />
-                      <Image 
-                        src="/images/brand/emblem.svg" 
-                        alt="" 
-                        width={16} 
-                        height={16} 
-                        className="opacity-70"
-                      />
-                      <div className="w-10 h-px bg-terracotta" />
+            {/* Content */}
+            <div className="relative px-6 md:px-10 py-8 md:py-10">
+              {/* Render ALL categories for SEO - only show active one */}
+              {sortedCategories.map((category) => {
+                const categoryItems = getItemsForCategory(category.id);
+                const isActive = activeCategory === category.id;
+                
+                return (
+                  <div
+                    key={category.id}
+                    className={isActive ? 'block' : 'hidden'}
+                    aria-hidden={!isActive}
+                  >
+                    {/* Category Header with emblem underline - properly centered */}
+                    <div className="text-center mb-8">
+                      <h2 className="font-display text-2xl md:text-3xl text-charcoal mb-4">
+                        {menu.categories[category.id]?.name}
+                      </h2>
+                      {/* Decorative underline with emblem - using flex for perfect centering */}
+                      <div className="flex items-center justify-center">
+                        <div className="w-12 h-px bg-terracotta/60" />
+                        <div className="mx-3">
+                          <Image 
+                            src="/images/brand/emblem.svg" 
+                            alt="" 
+                            width={14} 
+                            height={14} 
+                            className="opacity-60"
+                          />
+                        </div>
+                        <div className="w-12 h-px bg-terracotta/60" />
+                      </div>
                     </div>
+                    
+                    {/* Items Grid - 2 columns on desktop */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-12">
+                      {categoryItems.map((item, index) => (
+                        <div key={item.id}>
+                          <MenuItem
+                            name={menu.items[item.id]?.name || item.id}
+                            description={menu.items[item.id]?.description || ''}
+                            price={item.price}
+                            priceBottle={item.priceBottle}
+                            tags={item.tags}
+                            tagLabels={menu.tags}
+                            glassLabel={menu.glass}
+                            bottleLabel={menu.bottle}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Empty state */}
+                    {categoryItems.length === 0 && (
+                      <p className="text-center text-stone py-12">
+                        {menu.emptyCategory || 'No items in this category yet.'}
+                      </p>
+                    )}
                   </div>
-                  
-                  {/* Items Grid - 2 columns on desktop, tighter gap */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 md:gap-x-8">
-                    {activeItems.map((item, index) => (
-                      <motion.div
-                        key={item.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.03 }}
-                      >
-                        <MenuItem
-                          name={menu.items[item.id]?.name || item.id}
-                          description={menu.items[item.id]?.description || ''}
-                          price={item.price}
-                          priceBottle={item.priceBottle}
-                          tags={item.tags}
-                          tagLabels={menu.tags}
-                          glassLabel={menu.glass}
-                          bottleLabel={menu.bottle}
-                        />
-                      </motion.div>
-                    ))}
-                  </div>
-                  
-                  {/* Empty state */}
-                  {activeItems.length === 0 && (
-                    <p className="text-center text-stone py-12">
-                      {menu.emptyCategory || 'No items in this category yet.'}
-                    </p>
-                  )}
-                </motion.div>
-              </AnimatePresence>
+                );
+              })}
               
               {/* Allergens Legend */}
-              <div className="mt-8 pt-6 border-t border-sand/50">
+              <div className="mt-8 pt-6 border-t border-stone/20">
                 <p className="text-center text-stone text-xs">
                   <span className="inline-flex items-center gap-3 flex-wrap justify-center">
                     <span><span className="inline-block px-1 py-0.5 bg-sage/20 text-sage text-[9px] font-medium mr-1">V</span> {menu.legend?.vegetarian || 'Vegetarian'}</span>
-                    <span className="text-sand">·</span>
+                    <span className="text-stone/40">·</span>
                     <span><span className="inline-block px-1 py-0.5 bg-sage/20 text-sage text-[9px] font-medium mr-1">VG</span> {menu.legend?.vegan || 'Vegan'}</span>
-                    <span className="text-sand">·</span>
+                    <span className="text-stone/40">·</span>
                     <span><span className="inline-block px-1 py-0.5 bg-sage/20 text-sage text-[9px] font-medium mr-1">GF</span> {menu.legend?.glutenFree || 'Gluten-Free'}</span>
                   </span>
                 </p>
@@ -296,7 +307,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           </div>
 
           {/* Disclaimer */}
-          <p className="text-center text-stone text-xs mt-6">
+          <p className="text-center text-stone text-xs mt-5">
             {menu.disclaimer || 'Prices in Euros. Prices include VAT.'}
           </p>
         </div>

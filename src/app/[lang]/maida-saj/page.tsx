@@ -4,8 +4,8 @@ import SAJClient from '@/components/saj/SAJClient';
 
 export async function generateMetadata({ params }: { params: { lang: string } }) {
   return {
-    title: 'What is SAJ? | Traditional Lebanese Flatbread | Maída',
-    description: 'Discover SAJ (Manoushe) - the traditional Lebanese flatbread baked fresh on our domed griddle. Crispy edges, soft center, endless possibilities. Try it at Maída in Lisbon.',
+    title: 'Maída - Mediterranean Flavours, Lebanese Soul | Maída SAJ',
+    description: 'Traditional Lebanese flatbread, cooked fresh on a Saj griddle. Crispy, soft, and light - perfect for wraps or with dips. Try it at Maída in Lisbon.',
   };
 }
 
