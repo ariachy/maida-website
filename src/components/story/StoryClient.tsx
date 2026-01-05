@@ -81,7 +81,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
       {/* ============================================
           HERO SECTION
           ============================================ */}
-      <section className="relative min-h-0 md:min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20 md:py-0">
+      <section className="relative min-h-0 md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-32 pb-20 md:py-0">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <Image
@@ -127,7 +127,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             A place where flavors, music, and good company come together.
-            <br className="hidden md:block" />
+            <br />
             Rooted in tradition, reimagined for today.
           </motion.p>
         </div>
@@ -136,7 +136,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
       {/* ============================================
           THE MEANING SECTION - Image Carousel + New Text
           ============================================ */}
-      <section className="py-16 md:py-32 px-6">
+      <section className="py-16 md:pt-20 md:pb-32 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
             {/* Image Carousel - Left Side */}
@@ -210,14 +210,15 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 className="text-xs tracking-[0.3em] uppercase text-terracotta mb-4"
                 variants={fadeInUp}
               >
-                The meaning of مائدة
+                The meaning
               </motion.p>
 
               <motion.h2 
                 className="font-display text-3xl md:text-4xl text-charcoal mb-6"
                 variants={fadeInUp}
               >
-                More than food on a table
+                A traditional feast,<br />
+                <span className="italic text-terracotta">reimagined for today</span>
               </motion.h2>
 
               <motion.div 
@@ -225,13 +226,13 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 variants={fadeInUp}
               >
                 <p>
-                  <span className="font-medium text-charcoal">Maída (مائدة)</span> - the gathering table. In Arabic, it means more than just a piece of furniture. It's the heart of the home, where families come together, stories are shared, and memories are made.
+                  Inspired by <span className="font-medium text-charcoal">المائدة</span> (al-mā'idah), the beloved tradition of gathering, feasting, and celebrating with loved ones around a big table, Maída brings people together with authentic Mediterranean flavors & drinks, our in-house Saj Manoushe, and dishes that evolve throughout the day - all complemented by a smooth musical experience, elevated by our hi-fi sound system.
+                </p>
+                <p className="italic">
+                  It's the gathering table. Where family and friends come together, and stories are shared between bites.
                 </p>
                 <p>
-                  Growing up in Lebanon, our fondest memories revolve around the ma'ida - overflowing with mezze, surrounded by laughter, where no one leaves hungry and conversations linger long after the last bite.
-                </p>
-                <p>
-                  This is what we wanted to bring to Lisboa: not just food, but that feeling. The warmth. The generosity. The joy of sharing a meal with people you love.
+                  In Lebanon, <span className="text-terracotta">المائدة</span> represents abundance and generosity. That's why our mezze arrive in waves. Why the bread keeps coming. Why we'll always make room for one more.
                 </p>
               </motion.div>
             </motion.div>
@@ -240,7 +241,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
       </section>
 
       {/* ============================================
-          FROM BEIRUT TO LISBOA
+          FROM OUR ROOTS
           ============================================ */}
       <section className="py-16 md:py-32 px-6 bg-sand/30">
         <div className="max-w-6xl mx-auto">
@@ -257,14 +258,15 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 className="text-xs tracking-[0.3em] uppercase text-terracotta mb-4"
                 variants={fadeInUp}
               >
-                From Beirut to Lisboa
+                From our roots
               </motion.p>
 
               <motion.h2 
                 className="font-display text-3xl md:text-4xl text-charcoal mb-6"
                 variants={fadeInUp}
               >
-                Two worlds, one table
+                Where two worlds<br />
+                <span className="italic text-sage">became one</span>
               </motion.h2>
 
               <motion.div 
@@ -272,7 +274,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 variants={fadeInUp}
               >
                 <p>
-                  We left Lebanon with recipes passed down through generations, flavors that tell stories of our grandmothers' kitchens, and a dream to share them with the world.
+                  Our journey began with memories of Lebanese family dinners - tables overflowing with mezze, shawarma, grilled meats, and dishes passed hand to hand. Long evenings where everyone lingers, glasses clink, and stories grow louder with every round.
                 </p>
                 <p>
                   When we arrived in Lisbon, we discovered something familiar: the Portuguese share this same love for gathering around a big table and turning a meal into an occasion. It felt like home.

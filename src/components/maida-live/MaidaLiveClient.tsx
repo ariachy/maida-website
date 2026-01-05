@@ -73,7 +73,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
   return (
     <div className="bg-charcoal/95 text-white min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-0 md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-32 pb-20 md:py-0">
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
@@ -91,9 +91,9 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
         <div className="absolute bottom-1/4 left-1/4 w-[200px] h-[200px] rounded-full bg-purple-500/10 blur-[80px] animate-pulse" style={{ animationDelay: '1s' }} />
 
         {/* Content */}
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20">
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <motion.p
-            className="inline-flex items-center gap-3 text-xs tracking-[0.3em] uppercase text-terracotta-light mb-6"
+            className="inline-flex items-center gap-3 text-xs tracking-[0.2em] uppercase text-terracotta-light mb-4 md:mb-6 whitespace-nowrap"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -103,7 +103,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             <span className="w-8 h-px bg-terracotta-light" />
           </motion.p>
 
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-medium mb-6">
+          <h1 className="font-display text-4xl md:text-7xl lg:text-8xl font-medium mb-4 md:mb-6">
             <span className="block overflow-hidden">
               <motion.span
                 className="block"
@@ -115,6 +115,19 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
               </motion.span>
             </span>
           </h1>
+
+          {/* Empty subtitle for consistent hero height */}
+          <motion.p
+            className="text-base md:text-xl text-transparent max-w-2xl mx-auto font-light leading-relaxed select-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            aria-hidden="true"
+          >
+            A place where flavors, music, and good company come together.
+            <br className="hidden md:block" />
+            Rooted in tradition, reimagined for today.
+          </motion.p>
         </div>
       </section>
 

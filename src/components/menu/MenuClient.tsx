@@ -105,7 +105,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       {/* ============================================
           HERO SECTION
           ============================================ */}
-      <section className="relative min-h-0 md:min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20 md:py-0">
+      <section className="relative min-h-0 md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-32 pb-20 md:py-0">
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
