@@ -2,7 +2,7 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
-  basePath: '/new',
+  //basePath: '/new',
   images: {
     unoptimized: true, // Required for static export
   },
