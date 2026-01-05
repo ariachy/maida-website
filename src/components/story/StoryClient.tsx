@@ -81,7 +81,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
       {/* ============================================
           HERO SECTION
           ============================================ */}
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-0 md:min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20 md:py-0">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <Image
@@ -97,7 +97,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
         {/* Content */}
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <motion.p
-            className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-sand mb-6"
+            className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-sand mb-4 md:mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -107,7 +107,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
             <span className="w-8 h-px bg-sand" />
           </motion.p>
 
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-light text-white mb-6">
+          <h1 className="font-display text-4xl md:text-7xl lg:text-8xl font-light text-white mb-4 md:mb-6">
             <span className="block overflow-hidden">
               <motion.span
                 className="block"
@@ -121,7 +121,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
           </h1>
 
           <motion.p
-            className="text-lg md:text-xl text-sand/90 max-w-2xl mx-auto font-light leading-relaxed"
+            className="text-base md:text-xl text-sand/90 max-w-2xl mx-auto font-light leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -136,7 +136,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
       {/* ============================================
           THE MEANING SECTION - Image Carousel + New Text
           ============================================ */}
-      <section className="py-24 md:py-32 px-6">
+      <section className="py-16 md:py-32 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
             {/* Image Carousel - Left Side */}
@@ -199,7 +199,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
               </div>
             </motion.div>
 
-            {/* Text - Right Side */}
+            {/* Text Content - Right Side */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -210,26 +210,28 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 className="text-xs tracking-[0.3em] uppercase text-terracotta mb-4"
                 variants={fadeInUp}
               >
-                The meaning
+                The meaning of مائدة
               </motion.p>
 
               <motion.h2 
-                className="font-display text-4xl md:text-5xl font-light mb-8 text-charcoal"
+                className="font-display text-3xl md:text-4xl text-charcoal mb-6"
                 variants={fadeInUp}
               >
-                A traditional feast,<br />
-                <span className="text-terracotta italic">reimagined for today</span>
+                More than food on a table
               </motion.h2>
 
-              <motion.div className="space-y-6 text-stone text-lg leading-relaxed" variants={fadeInUp}>
+              <motion.div 
+                className="space-y-4 text-stone text-base md:text-lg leading-relaxed"
+                variants={fadeInUp}
+              >
                 <p>
-                  Inspired by <span className="text-terracotta font-medium">المائدة</span> (al-mā'idah), the beloved tradition of gathering, feasting, and celebrating with loved ones around a big table, Maída brings people together with authentic Mediterranean flavors & drinks, our in-house Saj Manoushe, and dishes that evolve throughout the day - all complemented by a smooth musical experience, elevated by our hi-fi sound system.
+                  <span className="font-medium text-charcoal">Maída (مائدة)</span> - the gathering table. In Arabic, it means more than just a piece of furniture. It's the heart of the home, where families come together, stories are shared, and memories are made.
                 </p>
-                <p className="italic text-charcoal">
-                  It's the gathering table. Where family and friends come together, and stories are shared between bites.
+                <p>
+                  Growing up in Lebanon, our fondest memories revolve around the ma'ida - overflowing with mezze, surrounded by laughter, where no one leaves hungry and conversations linger long after the last bite.
                 </p>
-                <p className="text-terracotta">
-                  In Lebanon, المائدة represents abundance and generosity. That's why our mezze arrive in waves. Why the bread keeps coming. Why we'll always make room for one more.
+                <p>
+                  This is what we wanted to bring to Lisboa: not just food, but that feeling. The warmth. The generosity. The joy of sharing a meal with people you love.
                 </p>
               </motion.div>
             </motion.div>
@@ -237,26 +239,13 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
         </div>
       </section>
 
-      {/* Divider */}
-      <div className="max-w-xs mx-auto flex items-center gap-4">
-        <span className="flex-1 h-px bg-stone/20" />
-        <Image
-          src="/images/brand/emblem.svg"
-          alt=""
-          width={24}
-          height={24}
-          className="opacity-60"
-        />
-        <span className="flex-1 h-px bg-stone/20" />
-      </div>
-
       {/* ============================================
-          FROM BEIRUT TO LISBOA SECTION
+          FROM BEIRUT TO LISBOA
           ============================================ */}
-      <section className="py-24 md:py-32 px-6">
+      <section className="py-16 md:py-32 px-6 bg-sand/30">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-            {/* Content - Left */}
+            {/* Text - Left */}
             <motion.div
               className="md:order-1"
               initial="hidden"
@@ -268,20 +257,22 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 className="text-xs tracking-[0.3em] uppercase text-terracotta mb-4"
                 variants={fadeInUp}
               >
-                From our roots
+                From Beirut to Lisboa
               </motion.p>
 
               <motion.h2 
-                className="font-display text-4xl md:text-5xl font-light mb-8 text-charcoal"
+                className="font-display text-3xl md:text-4xl text-charcoal mb-6"
                 variants={fadeInUp}
               >
-                Where two worlds<br />
-                <span className="text-terracotta italic">became one</span>
+                Two worlds, one table
               </motion.h2>
 
-              <motion.div className="space-y-6 text-stone text-lg leading-relaxed" variants={fadeInUp}>
+              <motion.div 
+                className="space-y-4 text-stone text-base md:text-lg leading-relaxed"
+                variants={fadeInUp}
+              >
                 <p>
-                  Our journey began with memories of Lebanese family dinners - tables overflowing with mezze, shawarma, grilled meats, and dishes passed hand to hand. Long evenings where everyone lingers, glasses clink, and stories grow louder with every round.
+                  We left Lebanon with recipes passed down through generations, flavors that tell stories of our grandmothers' kitchens, and a dream to share them with the world.
                 </p>
                 <p>
                   When we arrived in Lisbon, we discovered something familiar: the Portuguese share this same love for gathering around a big table and turning a meal into an occasion. It felt like home.
@@ -344,7 +335,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
       {/* ============================================
           WHO WE ARE - Anna & Anthony Section
           ============================================ */}
-      <section className="py-24 md:py-32 px-6 bg-charcoal text-white">
+      <section className="py-16 md:py-32 px-6 bg-charcoal text-white">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
             

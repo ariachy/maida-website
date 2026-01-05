@@ -105,7 +105,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       {/* ============================================
           HERO SECTION
           ============================================ */}
-      <section className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-0 md:min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20 md:py-0">
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
@@ -122,7 +122,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         <div className="relative z-10 text-center px-6">
           {/* Tagline */}
           <motion.p
-            className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-sand mb-6"
+            className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-sand mb-4 md:mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -133,7 +133,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           </motion.p>
 
           {/* Title */}
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-light text-white mb-6">
+          <h1 className="font-display text-4xl md:text-7xl lg:text-8xl font-light text-white mb-4 md:mb-6">
             <span className="block overflow-hidden">
               <motion.span
                 className="block"
@@ -145,6 +145,19 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
               </motion.span>
             </span>
           </h1>
+
+          {/* Empty subtitle for consistent hero height */}
+          <motion.p
+            className="text-base md:text-xl text-transparent max-w-2xl mx-auto font-light leading-relaxed select-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            aria-hidden="true"
+          >
+            A place where flavors, music, and good company come together.
+            <br className="hidden md:block" />
+            Rooted in tradition, reimagined for today.
+          </motion.p>
         </div>
       </section>
 
