@@ -23,7 +23,7 @@ export default function Hero({ translations, locale }: HeroProps) {
   };
   
   return (
-    <section className="relative min-h-0 md:min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12 md:py-0">
+    <section className="relative min-h-0 md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-24 pb-8 md:py-0 md:pb-16">
       {/* Arabic Watermark - centered behind content */}
       <div className="arabic-watermark top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         مائدة
@@ -54,7 +54,7 @@ export default function Hero({ translations, locale }: HeroProps) {
         </motion.div>
         
         {/* Title */}
-        <h1 className="font-display text-fluid-5xl font-light leading-[0.9] mb-5 md:mb-10">
+        <h1 className="font-display text-fluid-5xl font-light leading-[1.05] mt-12 md:mt-0 mb-14 md:mb-10">
           <span className="block overflow-hidden">
             <motion.span
               className="block"
@@ -79,7 +79,7 @@ export default function Hero({ translations, locale }: HeroProps) {
         
         {/* CTAs - Always side by side */}
         <motion.div
-          className="flex flex-row gap-3 md:gap-4 justify-center"
+          className="flex flex-row gap-3 md:gap-4 justify-center mb-2 md:mb-0"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
