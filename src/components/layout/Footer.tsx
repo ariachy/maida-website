@@ -36,29 +36,29 @@ export default function Footer({ translations, locale }: FooterProps) {
   
   return (
     <footer className="bg-charcoal text-warm-white">
-      <div className="max-w-7xl mx-auto px-6 md:px-8 pt-12 md:pt-16 pb-6 md:pb-8">
-        {/* Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 md:gap-8 pb-12 border-b border-white/10">
-          {/* Brand */}
-          <div className="lg:col-span-1">
-            <div className="mb-4">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 pt-10 md:pt-16 pb-6 md:pb-8">
+        
+        {/* Brand Section - Always full width on mobile */}
+        <div className="pb-8 mb-8 border-b border-white/10">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
               <Image
                 src="/images/brand/logo.png"
                 alt="maída"
-                width={120}
-                height={48}
-                className="h-12 w-auto brightness-0 invert"
+                width={100}
+                height={40}
+                className="h-10 w-auto brightness-0 invert mb-2"
               />
+              <p className="text-stone text-sm italic">
+                {footer.tagline || 'Mediterranean Flavours. Lebanese Soul.'}
+              </p>
             </div>
-            <p className="text-stone text-sm italic mb-6">
-              {footer.tagline || 'Mediterranean Flavours. Lebanese Soul.'}
-            </p>
             <div className="flex gap-3">
               <a
                 href="https://instagram.com/maida.lisboa"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-warm-white hover:bg-terracotta hover:border-terracotta transition-all duration-300 hover:-translate-y-1"
+                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-warm-white hover:bg-terracotta hover:border-terracotta transition-all duration-300"
                 aria-label="Instagram"
               >
                 <Instagram className="w-4 h-4" />
@@ -67,17 +67,21 @@ export default function Footer({ translations, locale }: FooterProps) {
                 href="https://facebook.com/maida.lisboa"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-warm-white hover:bg-terracotta hover:border-terracotta transition-all duration-300 hover:-translate-y-1"
+                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-warm-white hover:bg-terracotta hover:border-terracotta transition-all duration-300"
                 aria-label="Facebook"
               >
                 <Facebook className="w-4 h-4" />
               </a>
             </div>
           </div>
+        </div>
+        
+        {/* Links Grid - 2x2 on mobile, 4 columns on desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-8 pb-8 border-b border-white/10">
           
           {/* Navigate */}
           <div>
-            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-6">
+            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-4 lg:mb-6">
               {footer.navigate || 'Navigate'}
             </h4>
             <ul className="space-y-2">
@@ -126,13 +130,13 @@ export default function Footer({ translations, locale }: FooterProps) {
 
           {/* Discover */}
           <div>
-            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-6">
+            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-4 lg:mb-6">
               Discover
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               <li>
                 <Link
-                  href={`/${locale}/maida-saj`}
+                  href={`/${locale}/saj`}
                   className="text-stone text-sm hover:text-warm-white transition-colors"
                 >
                   What is SAJ?
@@ -159,32 +163,26 @@ export default function Footer({ translations, locale }: FooterProps) {
           
           {/* Hours */}
           <div>
-            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-6">
+            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-4 lg:mb-6">
               {footer.hours || 'Hours'}
             </h4>
-            <ul className="space-y-2 text-stone text-sm">
-              <li className="flex justify-between">
-                <span>Mon, Wed, Thu, Sun</span>
-              </li>
-              <li className="text-warm-white text-xs mb-3">12:30 – 23:00</li>
-              <li className="flex justify-between">
-                <span>Friday</span>
-              </li>
-              <li className="text-warm-white text-xs mb-3">12:30 – 00:00</li>
-              <li className="flex justify-between">
-                <span>Saturday</span>
-              </li>
-              <li className="text-warm-white text-xs mb-3">12:30 – 02:00</li>
-              <li className="text-terracotta-light text-xs mt-2">Tuesday closed</li>
+            <ul className="space-y-1 text-stone text-xs">
+              <li>Mon, Wed-Thu, Sun</li>
+              <li className="text-warm-white mb-2">12:30 – 23:00</li>
+              <li>Friday</li>
+              <li className="text-warm-white mb-2">12:30 – 00:00</li>
+              <li>Saturday</li>
+              <li className="text-warm-white mb-2">12:30 – 02:00</li>
+              <li className="text-terracotta-light mt-2">Tuesday closed</li>
             </ul>
           </div>
           
           {/* Contact */}
           <div>
-            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-6">
+            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-4 lg:mb-6">
               {footer.contact || 'Contact'}
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               <li>
                 <a
                   href="mailto:info@maida.pt"
@@ -193,7 +191,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                   info@maida.pt
                 </a>
               </li>
-              <li className="text-stone text-sm">
+              <li className="text-stone text-xs leading-relaxed">
                 Rua da Boavista 66<br />
                 Cais do Sodré, Lisboa
               </li>
@@ -218,11 +216,11 @@ export default function Footer({ translations, locale }: FooterProps) {
         </div>
         
         {/* Bottom Section */}
-        <div className="pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-stone">
+        <div className="pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+          <p className="text-xs text-stone">
             {footer.copyright || '© 2026 maída · Cais do Sodré, Lisboa'}
           </p>
-          <p className="text-sm text-stone">
+          <p className="text-xs text-stone">
             #MeetMeAtMaida
           </p>
         </div>

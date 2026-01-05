@@ -23,7 +23,7 @@ export default function Hero({ translations, locale }: HeroProps) {
   };
   
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-0 md:min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12 md:py-0">
       {/* Arabic Watermark - centered behind content */}
       <div className="arabic-watermark top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         مائدة
@@ -35,10 +35,10 @@ export default function Hero({ translations, locale }: HeroProps) {
       <div className="absolute top-[60%] right-[25%] w-[150px] md:w-[200px] h-[150px] md:h-[200px] rounded-full bg-sand/40 blur-[80px] animate-float hidden md:block" style={{ animationDelay: '-14s' }} />
       
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20">
+      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center md:pt-20">
         {/* Location Badge - Two lines */}
         <motion.div
-          className="mt-6 mb-8"
+          className="mb-2 md:mt-6 md:mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -54,7 +54,7 @@ export default function Hero({ translations, locale }: HeroProps) {
         </motion.div>
         
         {/* Title */}
-        <h1 className="font-display text-fluid-5xl font-light leading-[0.9] mb-10">
+        <h1 className="font-display text-fluid-5xl font-light leading-[0.9] mb-5 md:mb-10">
           <span className="block overflow-hidden">
             <motion.span
               className="block"
@@ -77,17 +77,17 @@ export default function Hero({ translations, locale }: HeroProps) {
           </span>
         </h1>
         
-        {/* CTAs - moved up since definition box is removed */}
+        {/* CTAs - Always side by side */}
         <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex flex-row gap-3 md:gap-4 justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <button onClick={handleReserveClick} className="btn btn-primary">
+          <button onClick={handleReserveClick} className="btn btn-primary text-sm md:text-base px-4 md:px-6 py-3">
             {hero.cta || 'Reserve a table'}
           </button>
-          <Link href={`/${locale}/menu`} className="btn btn-ghost">
+          <Link href={`/${locale}/menu`} className="btn btn-ghost text-sm md:text-base px-4 md:px-6 py-3">
             {hero.viewMenu || 'View menu'}
           </Link>
         </motion.div>

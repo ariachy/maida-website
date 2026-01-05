@@ -155,11 +155,11 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
 
         {/* Food Items - Horizontal Scroll */}
         <div className="relative mb-16">
-          {/* Left Arrow */}
+          {/* Left Arrow - HIDDEN ON MOBILE */}
           {mounted && canScrollFoodLeft && (
             <button
               onClick={() => scrollFood('left')}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-sand -translate-x-1/2"
+              className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg items-center justify-center transition-all duration-300 hover:bg-sand -translate-x-1/2"
               aria-label="Scroll left"
             >
               <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -168,11 +168,11 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             </button>
           )}
 
-          {/* Right Arrow */}
+          {/* Right Arrow - HIDDEN ON MOBILE */}
           {mounted && canScrollFoodRight && (
             <button
               onClick={() => scrollFood('right')}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-sand translate-x-1/2"
+              className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg items-center justify-center transition-all duration-300 hover:bg-sand translate-x-1/2"
               aria-label="Scroll right"
             >
               <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -185,12 +185,12 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           <div
             ref={foodScrollRef}
             onScroll={checkFoodScroll}
-            className="flex gap-6 overflow-x-auto pb-4 -mx-6 px-6 snap-x snap-mandatory scrollbar-hide"
+            className="flex gap-5 md:gap-6 overflow-x-auto pb-4 -mx-6 px-6 snap-x snap-mandatory scrollbar-hide scroll-pl-6"
           >
             {featuredFood.map((item, index) => (
               <motion.div
                 key={item.name}
-                className="flex-shrink-0 w-[260px] md:w-[280px] snap-start"
+                className="flex-shrink-0 w-[75vw] max-w-[260px] md:w-[280px] md:max-w-none snap-start"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -257,11 +257,11 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
 
         {/* Drinks Items - Horizontal Scroll */}
         <div className="relative mb-12">
-          {/* Left Arrow */}
+          {/* Left Arrow - HIDDEN ON MOBILE */}
           {mounted && canScrollDrinksLeft && (
             <button
               onClick={() => scrollDrinks('left')}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-sand -translate-x-1/2"
+              className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg items-center justify-center transition-all duration-300 hover:bg-sand -translate-x-1/2"
               aria-label="Scroll left"
             >
               <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -270,11 +270,11 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             </button>
           )}
 
-          {/* Right Arrow */}
+          {/* Right Arrow - HIDDEN ON MOBILE */}
           {mounted && canScrollDrinksRight && (
             <button
               onClick={() => scrollDrinks('right')}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-sand translate-x-1/2"
+              className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg items-center justify-center transition-all duration-300 hover:bg-sand translate-x-1/2"
               aria-label="Scroll right"
             >
               <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -287,12 +287,12 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           <div
             ref={drinksScrollRef}
             onScroll={checkDrinksScroll}
-            className="flex gap-6 overflow-x-auto pb-4 -mx-6 px-6 snap-x snap-mandatory scrollbar-hide"
+            className="flex gap-5 md:gap-6 overflow-x-auto pb-4 -mx-6 px-6 snap-x snap-mandatory scrollbar-hide scroll-pl-6"
           >
             {featuredDrinks.map((item, index) => (
               <motion.div
                 key={item.name}
-                className="flex-shrink-0 w-[260px] md:w-[280px] snap-start"
+                className="flex-shrink-0 w-[75vw] max-w-[260px] md:w-[280px] md:max-w-none snap-start"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
