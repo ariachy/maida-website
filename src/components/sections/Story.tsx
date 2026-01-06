@@ -33,9 +33,9 @@ export default function Story({ translations, locale }: StoryProps) {
             transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
           >
             {/* "From our roots" as main title */}
-            <h2 className="font-display text-3xl md:text-4xl text-charcoal mb-4 lg:mb-6">
+            <p className="text-sm tracking-[0.2em] uppercase text-terracotta mb-3">
               From our roots
-            </h2>
+            </p>
             
             {/* Section subtitle */}
             <p className="font-display text-xl md:text-2xl text-stone mb-0">
@@ -78,7 +78,7 @@ export default function Story({ translations, locale }: StoryProps) {
                 <p className="text-sm md:text-lg text-warm-white/90 text-center leading-relaxed max-w-sm">
                   <span className="opacity-70">* المائدة</span>{' '}
                   <span className="italic opacity-70">[al-māʾidah] (noun)</span>{' '}
-                  <span>—</span> A communal table; a place where food, stories, and connection come together.
+                  <span>—</span> A communal table; a place where glasses clink, plates share, and time lingers.
                 </p>
               </div>
               
@@ -94,13 +94,10 @@ export default function Story({ translations, locale }: StoryProps) {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.19, 1, 0.22, 1] }}
           >
-            <p className="text-stone text-lg leading-relaxed mb-4">
-              {story.text1 || "Maída is more than a restaurant - it's an invitation. To slow down. To gather around the table. To share something meaningful."}
-            </p>
             
             {/* Hashtag in body text */}
             <p className="text-stone text-lg leading-relaxed mb-6 lg:mb-8">
-              {story.text2 || 'The word مائدة (ma\'ida) means "the gathering table" in Arabic - where family and friends come together, stories are shared, and no one leaves hungry. That\'s the spirit we brought from Beirut to Cais do Sodré.'}{' '}
+              {story.text2 || 'In Arabic, مائدة (ma\'ida) means "the gathering table" - where family and friends come together, glasses are never empty, stories grow louder with every round, and no one leaves hungry. That\'s the spirit we brought from Beirut to Cais do Sodré.'}{' '}
               <span className="text-terracotta font-medium">#FromOurRoots</span>
             </p>
             

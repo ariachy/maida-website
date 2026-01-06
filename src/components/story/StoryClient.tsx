@@ -231,9 +231,6 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 <p className="italic">
                   It's the gathering table. Where family and friends come together, and stories are shared between bites.
                 </p>
-                <p>
-                  In Lebanon, <span className="text-terracotta">المائدة</span> represents abundance and generosity. That's why our mezze arrive in waves. Why the bread keeps coming. Why we'll always make room for one more.
-                </p>
               </motion.div>
             </motion.div>
           </div>
@@ -274,7 +271,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 variants={fadeInUp}
               >
                 <p>
-                  Our journey began with memories of Lebanese family dinners - tables overflowing with mezze, shawarma, grilled meats, and dishes passed hand to hand. Long evenings where everyone lingers, glasses clink, and stories grow louder with every round.
+                  Our journey began with memories of Lebanese family dinners - tables overflowing with sharing plates, grilled meats, and the timeless flavours of the Mediterranean. Lively gatherings where everyone lingers, glasses clink, and stories grow louder with every round.
                 </p>
                 <p>
                   When we arrived in Lisbon, we discovered something familiar: the Portuguese share this same love for gathering around a big table and turning a meal into an occasion. It felt like home.
@@ -391,13 +388,10 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
               
               <div className="space-y-5 text-sand/90 text-base leading-relaxed">
                 <p>
-                  <span className="font-medium text-warm-white">Anna</span> is a creative and animation director by heart, passionate about food, music, and the creative world. Over the years, she refined her skills in cooking and food presentation, turning every plate into a canvas.
+                  <span className="font-medium text-warm-white">Anna</span> is a culinary and animation director by heart, passionate about food, music, and the creative world. Over the years, she refined her skills in cooking and food presentation, turning every plate into a canvas.
                 </p>
                 <p>
                   <span className="font-medium text-warm-white">Anthony</span> is an electrical engineer and consultant by trade, fascinated by the world of hospitality, mixology, and creating experiences that linger.
-                </p>
-                <p>
-                  A lifelong passion for music led them to curate the soundscape that fills every experience at Maída.
                 </p>
                 <p>
                   After opening The Happy Salad in Lisboa, they shared a dream: to present Lebanese food from a different perspective - not just the familiar classics, but the dishes they grew up eating at home. Food from across the Mediterranean, always made with Lebanese soul.
