@@ -6,29 +6,32 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Maída Brand Colors
+        // Maída Brand Colors - UPDATED 2026-01-09
         'warm-white': '#FEFCF9',
-        'cream': '#F8F4EF',
+        'cream': '#fedec7',
         'sand': '#E8E0D5',
         'terracotta': {
-          DEFAULT: '#C67D5E',
-          light: '#D4957A',
-          glow: '#E8A88A',
+          DEFAULT: '#ab5741',
+          light: '#f79c77',
+          glow: '#f79c77',
         },
         'rust': '#A65D3F',
-        'charcoal': '#2D2926',
+        'charcoal': '#043335',
         'stone': '#6B635B',
         'sage': {
           DEFAULT: '#9BAA8E',
           light: '#B5C4A8',
         },
+        'olive': '#4c5e36',
+        'coral': '#f04e4f',
       },
       fontFamily: {
-        'display': ['Fraunces', 'serif'],
-        'body': ['DM Sans', 'sans-serif'],
+        // UPDATED 2026-01-09: Cambria for titles/body, Roboto for navbar
+        'display': ['Cambria', 'Georgia', 'serif'],
+        'body': ['Cambria', 'Georgia', 'serif'],
+        'nav': ['Roboto', 'sans-serif'],
       },
       fontSize: {
-        // Custom fluid typography
         'fluid-xs': 'clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem)',
         'fluid-sm': 'clamp(0.875rem, 0.8rem + 0.375vw, 1rem)',
         'fluid-base': 'clamp(1rem, 0.9rem + 0.5vw, 1.125rem)',

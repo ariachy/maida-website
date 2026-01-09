@@ -8,11 +8,9 @@ export default function PageLoader() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Hide loader quickly once React has mounted
-    // Small delay just for the animation to be visible
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 800); // Just 0.8 seconds - enough to see it, fast enough to not annoy
+    }, 800);
 
     return () => clearTimeout(timer);
   }, []);
@@ -50,10 +48,10 @@ export default function PageLoader() {
               transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
             />
             
-            {/* Logo in center */}
+            {/* Logo in center - Updated to SVG */}
             <div className="absolute inset-2 flex items-center justify-center">
               <Image
-                src="/images/brand/logo.png"
+                src="/images/brand/logo.svg"
                 alt="maída"
                 width={60}
                 height={24}

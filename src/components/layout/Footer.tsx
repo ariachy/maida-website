@@ -14,6 +14,15 @@ export default function Footer({ translations, locale }: FooterProps) {
   const nav = translations?.nav || {};
   const footer = translations?.footer || {};
   
+  // Helper function to safely get translation value (handles both string and {label, value} formats)
+  const getLabel = (obj: any, key: string, fallback: string): string => {
+    const value = obj[key];
+    if (!value) return fallback;
+    if (typeof value === 'string') return value;
+    if (typeof value === 'object' && value.label) return value.label;
+    return fallback;
+  };
+  
   const handleReserveClick = () => {
     if (typeof window !== 'undefined' && (window as any).umaiWidget) {
       (window as any).umaiWidget.config({
@@ -36,21 +45,22 @@ export default function Footer({ translations, locale }: FooterProps) {
   
   return (
     <footer className="bg-charcoal text-warm-white">
-      <div className="max-w-7xl mx-auto px-6 md:px-8 pt-10 md:pt-16 pb-6 md:pb-8">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 pt-6 md:pt-10 pb-4 md:pb-6">
         
-        {/* Brand Section - Always full width on mobile */}
-        <div className="pb-8 mb-8 border-b border-white/10">
+        {/* Brand Section */}
+        <div className="pb-5 mb-5 border-b border-white/10">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
+              {/* Logo - light SVG version */}
               <Image
-                src="/images/brand/logo.png"
+                src="/images/brand/logo-light.svg"
                 alt="maída"
-                width={100}
-                height={40}
-                className="h-10 w-auto brightness-0 invert mb-2"
+                width={120}
+                height={48}
+                className="h-12 w-auto mb-2"
               />
               <p className="text-stone text-sm italic">
-                {footer.tagline || 'Mediterranean Flavours. Lebanese Soul.'}
+                {getLabel(footer, 'tagline', 'Mediterranean Flavours. Lebanese Soul.')}
               </p>
             </div>
             <div className="flex gap-3">
@@ -76,15 +86,15 @@ export default function Footer({ translations, locale }: FooterProps) {
           </div>
         </div>
         
-        {/* Links Grid - 2x2 on mobile, 4 columns on desktop */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-8 pb-8 border-b border-white/10">
+        {/* Links Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 pb-5 border-b border-white/10">
           
           {/* Navigate */}
           <div>
-            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-4 lg:mb-6">
-              {footer.navigate || 'Navigate'}
+            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-3">
+              {getLabel(footer, 'navigate', 'Navigate')}
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               <li>
                 <Link
                   href={`/${locale}`}
@@ -98,7 +108,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                   href={`/${locale}/story`}
                   className="text-stone text-sm hover:text-warm-white transition-colors"
                 >
-                  {nav.story || 'Story'}
+                  {getLabel(nav, 'story', 'Story')}
                 </Link>
               </li>
               <li>
@@ -106,7 +116,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                   href={`/${locale}/menu`}
                   className="text-stone text-sm hover:text-warm-white transition-colors"
                 >
-                  {nav.menu || 'Menu'}
+                  {getLabel(nav, 'menu', 'Menu')}
                 </Link>
               </li>
               <li>
@@ -122,7 +132,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                   href={`/${locale}/contact`}
                   className="text-stone text-sm hover:text-warm-white transition-colors"
                 >
-                  {nav.contact || 'Contact'}
+                  {getLabel(nav, 'contact', 'Contact')}
                 </Link>
               </li>
             </ul>
@@ -130,13 +140,13 @@ export default function Footer({ translations, locale }: FooterProps) {
 
           {/* Discover */}
           <div>
-            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-4 lg:mb-6">
+            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-3">
               Discover
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               <li>
                 <Link
-                  href={`/${locale}/saj`}
+                  href={`/${locale}/maida-saj`}
                   className="text-stone text-sm hover:text-warm-white transition-colors"
                 >
                   What is SAJ?
@@ -155,34 +165,34 @@ export default function Footer({ translations, locale }: FooterProps) {
                   href={`/${locale}/blog`}
                   className="text-stone text-sm hover:text-warm-white transition-colors"
                 >
-                  {nav.blog || 'Blog'}
+                  Blog
                 </Link>
               </li>
             </ul>
           </div>
-          
+
           {/* Hours */}
           <div>
-            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-4 lg:mb-6">
-              {footer.hours || 'Hours'}
+            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-3">
+              {getLabel(footer, 'hours', 'Hours')}
             </h4>
-            <ul className="space-y-1 text-stone text-xs">
-              <li>Mon, Wed-Thu, Sun</li>
-              <li className="text-warm-white mb-2">12:30 – 23:00</li>
-              <li>Friday</li>
-              <li className="text-warm-white mb-2">12:30 – 00:00</li>
-              <li>Saturday</li>
-              <li className="text-warm-white mb-2">12:30 – 02:00</li>
-              <li className="text-terracotta-light mt-2">Tuesday closed</li>
+            <ul className="space-y-1 text-sm text-stone">
+              <li>Mon, Wed, Thu, Sun</li>
+              <li className="text-warm-white">12:30 - 23:00</li>
+              <li className="mt-1">Friday</li>
+              <li className="text-warm-white">12:30 - 00:00</li>
+              <li className="mt-1">Saturday</li>
+              <li className="text-warm-white">12:30 - 02:00</li>
+              <li className="mt-1 text-terracotta-light">Tuesday closed</li>
             </ul>
           </div>
-          
+
           {/* Contact */}
           <div>
-            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-4 lg:mb-6">
-              {footer.contact || 'Contact'}
+            <h4 className="text-xs tracking-[0.15em] uppercase text-terracotta-light mb-3">
+              {getLabel(footer, 'contact', 'Contact')}
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               <li>
                 <a
                   href="mailto:info@maida.pt"
@@ -191,16 +201,19 @@ export default function Footer({ translations, locale }: FooterProps) {
                   info@maida.pt
                 </a>
               </li>
-              <li className="text-stone text-xs leading-relaxed">
-                Rua da Boavista 66<br />
+              <li className="text-stone text-sm">
+                Rua da Boavista 66
+              </li>
+              <li className="text-stone text-sm">
                 Cais do Sodré, Lisboa
               </li>
-              <li>
+              <li className="mt-2">
+                {/* UPDATED: "Book a table" text */}
                 <button
                   onClick={handleReserveClick}
                   className="text-terracotta-light text-sm hover:text-warm-white transition-colors"
                 >
-                  {footer.reservations || 'Reservations'}
+                  Book a table
                 </button>
               </li>
               <li>
@@ -208,7 +221,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                   onClick={handleGiftCardClick}
                   className="text-stone text-sm hover:text-warm-white transition-colors"
                 >
-                  {footer.giftCards || 'Gift Cards'}
+                  {getLabel(footer, 'giftCards', 'Gift Cards')}
                 </button>
               </li>
             </ul>
@@ -216,9 +229,9 @@ export default function Footer({ translations, locale }: FooterProps) {
         </div>
         
         {/* Bottom Section */}
-        <div className="pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <div className="pt-4 flex flex-col sm:flex-row justify-between items-center gap-2">
           <p className="text-xs text-stone">
-            {footer.copyright || '© 2026 maída · Cais do Sodré, Lisboa'}
+            {getLabel(footer, 'copyright', '© 2026 maída · Cais do Sodré, Lisboa')}
           </p>
           <p className="text-xs text-stone">
             #MeetMeAtMaida

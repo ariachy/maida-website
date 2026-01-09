@@ -22,11 +22,59 @@ export const languageFlags: Record<Locale, string> = {
   es: '🇪🇸',
 };
 
+/**
+ * ROOT CAUSE FIX: Normalizes translation values to plain strings.
+ * Handles both simple strings and {label, value} objects that may exist in JSON files.
+ */
+function normalizeValue(value: any): any {
+  // Null/undefined pass through
+  if (value === null || value === undefined) {
+    return value;
+  }
+  
+  // Strings pass through
+  if (typeof value === 'string') {
+    return value;
+  }
+  
+  // Arrays: normalize each item
+  if (Array.isArray(value)) {
+    return value.map(item => normalizeValue(item));
+  }
+  
+  // Objects: check for {label, value} format or recurse
+  if (typeof value === 'object') {
+    // Handle {label, value} format - extract the string
+    if ('value' in value && typeof value.value === 'string') {
+      return value.value;
+    }
+    if ('label' in value && typeof value.label === 'string') {
+      return value.label;
+    }
+    
+    // Regular nested object - recurse
+    const normalized: Record<string, any> = {};
+    for (const key in value) {
+      if (Object.prototype.hasOwnProperty.call(value, key)) {
+        normalized[key] = normalizeValue(value[key]);
+      }
+    }
+    return normalized;
+  }
+  
+  // Numbers, booleans, etc. pass through
+  return value;
+}
+
 // Get nested value from object using dot notation
 export function getNestedValue(obj: any, path: string): string {
-  return path.split('.').reduce((current, key) => {
+  const value = path.split('.').reduce((current, key) => {
     return current && current[key] !== undefined ? current[key] : path;
   }, obj);
+  
+  // Normalize in case it's an object
+  const normalized = normalizeValue(value);
+  return typeof normalized === 'string' ? normalized : path;
 }
 
 // Load translations for a locale
@@ -35,7 +83,10 @@ export async function loadTranslations(locale: Locale): Promise<Record<string, a
     // In a real app, this would fetch from an API
     // For now, we import the JSON files
     const translations = await import(`@/data/locales/${locale}.json`);
-    return translations.default || translations;
+    const raw = translations.default || translations;
+    
+    // CRITICAL FIX: Normalize all values to handle {label, value} format
+    return normalizeValue(raw);
   } catch (error) {
     console.error(`Failed to load translations for ${locale}:`, error);
     // Fallback to English

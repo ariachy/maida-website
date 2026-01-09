@@ -1,171 +1,142 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { MapPin, Clock, Phone } from 'lucide-react';
+import { Locale } from '@/lib/i18n';
 
 interface VisitProps {
   translations: any;
-  locale: string;
+  locale: Locale;
 }
 
 export default function Visit({ translations, locale }: VisitProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const openReservation = () => {
-    // Trigger UMAI widget if available
-    if (typeof window !== 'undefined' && (window as any).UMAIWidget) {
-      (window as any).UMAIWidget.open();
+  const visit = translations?.visit || {};
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  
+  const handleReserveClick = () => {
+    if (typeof window !== 'undefined' && (window as any).umaiWidget) {
+      (window as any).umaiWidget.config({
+        apiKey: 'd541f212-d5ca-4839-ab2b-7f9c99e1c96c',
+        widgetType: 'reservation',
+      });
+      (window as any).umaiWidget.openWidget();
     }
   };
 
+  const handleDirectionsClick = () => {
+    window.open('https://maps.google.com/?q=Rua+da+Boavista+66+Lisboa', '_blank');
+  };
+  
   return (
-    <section className="pt-8 md:pt-12 pb-20 md:pb-28 bg-sand/30">
-      <div className="max-w-7xl mx-auto px-6">
+    <section 
+      ref={ref}
+      className="pt-8 md:pt-12 pb-20 md:pb-28 px-6 bg-cream"
+    >
+      <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
-          className="mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          className="text-center mb-10 md:mb-14"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
         >
-          <p className="text-sm tracking-[0.2em] uppercase text-terracotta mb-4">
-            Find Us
+          <p className="text-xs tracking-[0.3em] uppercase text-terracotta mb-3">
+            {visit.label || 'Find us'}
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-charcoal">
-            Your table in Cais do Sodré
+          <h2 className="font-display text-fluid-3xl font-medium text-charcoal">
+            {visit.title || 'Your table in Cais do Sodré'}
           </h2>
         </motion.div>
 
         {/* Two Column Layout */}
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16">
-          {/* Left Column - Info */}
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
+          
+          {/* Left: Info */}
           <motion.div
-            className="space-y-8"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, x: -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             {/* Address */}
-            <div>
-              <h3 className="font-display text-xl text-charcoal mb-3">Location</h3>
-              <p className="text-stone leading-relaxed">
-                Rua da Boavista 66<br />
-                Cais do Sodré, Lisboa<br />
-                1200-066 Portugal
-              </p>
+            <div className="flex gap-4 mb-8">
+              <div className="w-10 h-10 rounded-full bg-terracotta/10 flex items-center justify-center flex-shrink-0">
+                <MapPin className="w-5 h-5 text-terracotta" />
+              </div>
+              <div>
+                <h3 className="font-display text-lg font-medium text-charcoal mb-1">
+                  {visit.address || 'Address'}
+                </h3>
+                <p className="text-stone">
+                  Rua da Boavista 66<br />
+                  1200-067 Lisboa
+                </p>
+              </div>
             </div>
 
             {/* Hours */}
-            <div>
-              <h3 className="font-display text-xl text-charcoal mb-3">Hours</h3>
-              <div className="space-y-2 text-stone">
-                <div className="flex justify-between max-w-xs">
-                  <span>Mon, Wed - Thu, Sun</span>
-                  <span>12:30 - 23:00</span>
-                </div>
-                <div className="flex justify-between max-w-xs">
-                  <span>Friday</span>
-                  <span>12:30 - 00:00</span>
-                </div>
-                <div className="flex justify-between max-w-xs">
-                  <span>Saturday</span>
-                  <span>12:30 - 00:00+</span>
-                </div>
-                <div className="flex justify-between max-w-xs text-terracotta">
-                  <span>Tuesday</span>
-                  <span>Closed</span>
+            <div className="flex gap-4 mb-8">
+              <div className="w-10 h-10 rounded-full bg-terracotta/10 flex items-center justify-center flex-shrink-0">
+                <Clock className="w-5 h-5 text-terracotta" />
+              </div>
+              <div>
+                <h3 className="font-display text-lg font-medium text-charcoal mb-1">
+                  {visit.hours || 'Opening Hours'}
+                </h3>
+                <div className="text-stone text-sm space-y-1">
+                  <p>Mon, Wed, Thu, Sun: 12:30 - 23:00</p>
+                  <p>Friday: 12:30 - 00:00</p>
+                  <p>Saturday: 12:30 - 02:00</p>
+                  <p className="text-terracotta">Tuesday: Closed</p>
                 </div>
               </div>
             </div>
 
-            {/* Getting Here */}
-            <div>
-              <h3 className="font-display text-xl text-charcoal mb-3">Getting Here</h3>
-              <ul className="space-y-2 text-stone">
-                <li className="flex items-start gap-2">
-                  <svg className="w-5 h-5 text-terracotta flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  <span>5 min from Cais do Sodré metro</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <svg className="w-5 h-5 text-terracotta flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                  </svg>
-                  <span>3 min from Time Out Market</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <svg className="w-5 h-5 text-terracotta flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                  </svg>
-                  <span>7 min from Parliament</span>
-                </li>
-              </ul>
+            {/* Contact */}
+            <div className="flex gap-4 mb-8">
+              <div className="w-10 h-10 rounded-full bg-terracotta/10 flex items-center justify-center flex-shrink-0">
+                <Phone className="w-5 h-5 text-terracotta" />
+              </div>
+              <div>
+                <h3 className="font-display text-lg font-medium text-charcoal mb-1">
+                  {visit.contact || 'Contact'}
+                </h3>
+                <p className="text-stone">
+                  <a href="mailto:info@maida.pt" className="hover:text-terracotta transition-colors">
+                    info@maida.pt
+                  </a>
+                </p>
+              </div>
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-4 pt-4">
-              <a
-                href="https://maps.google.com/?q=Rua+da+Boavista+66+Lisboa"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 border-2 border-charcoal text-charcoal rounded-full font-medium hover:bg-charcoal hover:text-white transition-all"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                Get Directions
-              </a>
-            </div>
+            {/* CTA Button - UPDATED: "Book a table" */}
+            <button
+              onClick={handleDirectionsClick}
+              className="btn btn-ghost"
+            >
+              Get Directions
+            </button>
           </motion.div>
 
-          {/* Right Column - Map */}
+          {/* Right: Map */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative aspect-[4/3] bg-sand overflow-hidden"
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <div className="relative aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden bg-stone/10">
-              {/* Google Maps Embed - only render on client */}
-              {mounted && (
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3113.9!2d-9.1448!3d38.7068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd19347fdf6d3c9b%3A0x0!2sRua%20da%20Boavista%2066%2C%20Lisboa!5e0!3m2!1sen!2spt!4v1704067200000"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="absolute inset-0"
-                  title="Maída Location"
-                />
-              )}
-              
-              {/* Fallback/Overlay with address */}
-              <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-terracotta/10 flex items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5 text-terracotta" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-medium text-charcoal">maída</p>
-                    <p className="text-sm text-stone">Rua da Boavista 66, Cais do Sodré</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3113.4832823894246!2d-9.146714684660947!3d38.70643397960015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd19347f1d66d0e7%3A0x5e9e5e5e5e5e5e5e!2sRua%20da%20Boavista%2066%2C%20Lisboa!5e0!3m2!1sen!2spt!4v1234567890"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Maída Location"
+              className="absolute inset-0"
+            />
           </motion.div>
         </div>
       </div>

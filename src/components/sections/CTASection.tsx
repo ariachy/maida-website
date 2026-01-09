@@ -27,17 +27,17 @@ export default function CTASection({ translations }: CTASectionProps) {
       ref={ref}
       className="relative py-16 md:py-20 px-6 overflow-hidden"
       style={{
-        background: 'linear-gradient(135deg, #C67D5E 0%, #A65D3F 100%)',
+        background: 'linear-gradient(135deg, #ab5741 0%, #8a4535 100%)',
       }}
     >
       <div className="max-w-3xl mx-auto text-center relative z-10">
         <motion.h2
-          className="font-display text-fluid-3xl font-light text-warm-white mb-4"
+          className="font-display text-fluid-3xl font-medium text-warm-white mb-4"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          {cta.title}
+          {cta.title || 'Your table is waiting'}
         </motion.h2>
         
         <motion.p
@@ -46,9 +46,10 @@ export default function CTASection({ translations }: CTASectionProps) {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
-          {cta.subtitle}
+          {cta.subtitle || '#MeetMeAtMaida'}
         </motion.p>
         
+        {/* UPDATED: "Book a table" text */}
         <motion.button
           onClick={handleReserveClick}
           className="btn bg-charcoal text-warm-white hover:bg-warm-white hover:text-charcoal"
@@ -56,7 +57,7 @@ export default function CTASection({ translations }: CTASectionProps) {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          {cta.button}
+          {cta.button || 'Book a table'}
         </motion.button>
       </div>
     </section>

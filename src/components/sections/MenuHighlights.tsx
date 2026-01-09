@@ -6,7 +6,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Locale } from '@/lib/i18n';
 
-// Featured food items (NO PRICES - removed per request)
 const featuredFood = [
   {
     name: 'Hummus Beiruti',
@@ -30,7 +29,6 @@ const featuredFood = [
   },
 ];
 
-// Featured drinks - Signature cocktails
 const featuredDrinks = [
   {
     name: 'Beirut Sunset',
@@ -54,7 +52,6 @@ interface MenuHighlightsProps {
   locale: Locale;
 }
 
-// Placeholder component for images
 function PlaceholderImage({ name, type }: { name: string; type: 'food' | 'drink' }) {
   return (
     <div className={`absolute inset-0 flex items-center justify-center ${type === 'food' ? 'bg-sand/50' : 'bg-charcoal/10'}`}>
@@ -132,30 +129,43 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
   };
 
   return (
-    <section className="pt-16 md:pt-20 pb-12 md:pb-16 bg-warm-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="pt-16 md:pt-20 pb-12 md:pb-16 px-6 bg-warm-white overflow-hidden">
+      <div className="max-w-6xl mx-auto">
         
-        {/* ============================================
-            FROM OUR KITCHEN - Food Section
-            ============================================ */}
+        {/* Section Header */}
         <motion.div
-          className="mb-8"
+          className="text-center mb-10 md:mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-sm tracking-[0.2em] uppercase text-terracotta mb-3">
+          <p className="text-xs tracking-[0.3em] uppercase text-terracotta mb-3">
             From our kitchen
           </p>
-          <h2 className="font-display text-3xl md:text-4xl text-charcoal">
-            Food made for sharing
+          <h2 className="font-display text-fluid-3xl font-medium text-charcoal">
+            Made for sharing
           </h2>
         </motion.div>
 
+        {/* Food Section Header */}
+        <motion.div
+          className="mb-6"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <p className="text-sm tracking-[0.2em] uppercase text-terracotta mb-2">
+            Featured dishes
+          </p>
+          <h3 className="font-display text-2xl md:text-3xl font-medium text-charcoal">
+            Taste the Mediterranean
+          </h3>
+        </motion.div>
+
         {/* Food Items - Horizontal Scroll */}
-        <div className="relative mb-16">
-          {/* Left Arrow - HIDDEN ON MOBILE */}
+        <div className="relative mb-12">
           {mounted && canScrollFoodLeft && (
             <button
               onClick={() => scrollFood('left')}
@@ -168,7 +178,6 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             </button>
           )}
 
-          {/* Right Arrow - HIDDEN ON MOBILE */}
           {mounted && canScrollFoodRight && (
             <button
               onClick={() => scrollFood('right')}
@@ -181,7 +190,6 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             </button>
           )}
 
-          {/* Scrollable Food Items */}
           <div
             ref={foodScrollRef}
             onScroll={checkFoodScroll}
@@ -197,7 +205,6 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <div className="group cursor-pointer">
-                  {/* Image with Placeholder Fallback */}
                   <div className="relative aspect-square mb-4 overflow-hidden bg-sand/30">
                     {foodImageErrors[item.name] ? (
                       <PlaceholderImage name={item.name} type="food" />
@@ -211,8 +218,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
                       />
                     )}
                   </div>
-                  {/* Name - NO PRICE */}
-                  <h3 className="font-display text-xl text-charcoal group-hover:text-terracotta transition-colors">
+                  <h3 className="font-display text-xl font-medium text-charcoal group-hover:text-terracotta transition-colors">
                     {item.name}
                   </h3>
                   <p className="text-sm text-stone mt-1">{item.description}</p>
@@ -222,9 +228,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           </div>
         </div>
 
-        {/* ============================================
-            DIVIDER WITH EMBLEM
-            ============================================ */}
+        {/* Divider with Emblem */}
         <div className="flex items-center justify-center gap-4 my-12">
           <span className="flex-1 max-w-[100px] h-px bg-stone/20" />
           <Image
@@ -237,9 +241,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           <span className="flex-1 max-w-[100px] h-px bg-stone/20" />
         </div>
 
-        {/* ============================================
-            FROM OUR BAR - Drinks Section
-            ============================================ */}
+        {/* Drinks Section Header */}
         <motion.div
           className="mb-8"
           initial={{ opacity: 0, y: 20 }}
@@ -250,14 +252,13 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           <p className="text-sm tracking-[0.2em] uppercase text-terracotta mb-3">
             From our bar
           </p>
-          <h3 className="font-display text-2xl md:text-3xl text-charcoal">
+          <h3 className="font-display text-2xl md:text-3xl font-medium text-charcoal">
             Signature cocktails
           </h3>
         </motion.div>
 
         {/* Drinks Items - Horizontal Scroll */}
         <div className="relative mb-12">
-          {/* Left Arrow - HIDDEN ON MOBILE */}
           {mounted && canScrollDrinksLeft && (
             <button
               onClick={() => scrollDrinks('left')}
@@ -270,7 +271,6 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             </button>
           )}
 
-          {/* Right Arrow - HIDDEN ON MOBILE */}
           {mounted && canScrollDrinksRight && (
             <button
               onClick={() => scrollDrinks('right')}
@@ -283,7 +283,6 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             </button>
           )}
 
-          {/* Scrollable Drinks Items */}
           <div
             ref={drinksScrollRef}
             onScroll={checkDrinksScroll}
@@ -299,8 +298,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <div className="group cursor-pointer">
-                  {/* Image with Placeholder Fallback */}
-                  <div className="relative aspect-square mb-4 overflow-hidden bg-charcoal/5">
+                  <div className="relative aspect-square mb-4 overflow-hidden bg-sand/30">
                     {drinkImageErrors[item.name] ? (
                       <PlaceholderImage name={item.name} type="drink" />
                     ) : (
@@ -313,8 +311,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
                       />
                     )}
                   </div>
-                  {/* Name */}
-                  <h3 className="font-display text-xl text-charcoal group-hover:text-terracotta transition-colors">
+                  <h3 className="font-display text-xl font-medium text-charcoal group-hover:text-terracotta transition-colors">
                     {item.name}
                   </h3>
                   <p className="text-sm text-stone mt-1">{item.description}</p>
@@ -324,9 +321,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           </div>
         </div>
 
-        {/* ============================================
-            SINGLE CTA - View Full Menu
-            ============================================ */}
+        {/* UPDATED: "Menu" button instead of "View full menu" */}
         <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -334,8 +329,11 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <Link href={`/${locale}/menu`} className="bg-terracotta text-warm-white px-8 py-4 text-sm font-medium hover:bg-terracotta/90 transition-colors">
-            View full menu
+          <Link 
+            href={`/${locale}/menu`} 
+            className="bg-terracotta text-warm-white px-8 py-4 text-sm font-medium hover:bg-terracotta/90 transition-colors inline-block"
+          >
+            Menu
           </Link>
         </motion.div>
       </div>

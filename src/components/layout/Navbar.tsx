@@ -24,6 +24,15 @@ export default function Navbar({ translations, locale }: NavbarProps) {
   
   const nav = translations?.nav || {};
   
+  // Helper function to safely get translation value (handles both string and {label, value} formats)
+  const getNavLabel = (key: string, fallback: string): string => {
+    const value = nav[key];
+    if (!value) return fallback;
+    if (typeof value === 'string') return value;
+    if (typeof value === 'object' && value.label) return value.label;
+    return fallback;
+  };
+  
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -33,7 +42,6 @@ export default function Navbar({ translations, locale }: NavbarProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (discoverRef.current && !discoverRef.current.contains(e.target as Node)) {
@@ -68,30 +76,26 @@ export default function Navbar({ translations, locale }: NavbarProps) {
     };
   }, [isMobileMenuOpen]);
   
-  // Main navigation links
   const navLinks = [
     { href: `/${locale}`, label: 'Home', segment: '' },
-    { href: `/${locale}/story`, label: nav.story || 'Story', segment: 'story' },
-    { href: `/${locale}/menu`, label: nav.menu || 'Menu', segment: 'menu' },
+    { href: `/${locale}/story`, label: getNavLabel('story', 'Story'), segment: 'story' },
+    { href: `/${locale}/menu`, label: getNavLabel('menu', 'Menu'), segment: 'menu' },
     { href: `/${locale}/maida-live`, label: 'Maída Live', segment: 'maida-live' },
-    { href: `/${locale}/contact`, label: nav.contact || 'Contact', segment: 'contact' },
+    { href: `/${locale}/contact`, label: getNavLabel('contact', 'Contact'), segment: 'contact' },
   ];
   
-  // Discover dropdown items
   const discoverLinks = [
     { href: `/${locale}/maida-saj`, label: 'Maída SAJ', segment: 'maida-saj' },
     { href: `/${locale}/coffee-tea`, label: 'Coffee & Tea', segment: 'coffee-tea' },
     { href: `/${locale}/blog`, label: 'Blog', segment: 'blog' },
   ];
   
-  // Check if current path matches the link
   const isActiveLink = (segment: string) => {
     const pathSegments = pathname.split('/').filter(Boolean);
     const currentSegment = pathSegments[1] || '';
     return currentSegment === segment;
   };
   
-  // Check if any Discover sub-item is active
   const isDiscoverActive = discoverLinks.some(link => isActiveLink(link.segment));
   
   const handleReserveClick = () => {
@@ -115,18 +119,19 @@ export default function Navbar({ translations, locale }: NavbarProps) {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
+          {/* Logo - SVG, bigger size */}
           <Link href={`/${locale}`} className="relative z-10">
             <Image
-              src="/images/brand/logo.png"
+              src="/images/brand/logo.svg"
               alt="maída"
-              width={140}
-              height={56}
-              className="h-12 md:h-14 w-auto"
+              width={160}
+              height={64}
+              className="h-14 md:h-16 w-auto"
               priority
             />
           </Link>
           
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Using font-nav (Roboto) */}
           <ul className="hidden md:flex items-center gap-8 lg:gap-12">
             {navLinks.map((link) => {
               const isActive = isActiveLink(link.segment);
@@ -135,7 +140,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className={`relative text-base lg:text-lg transition-colors duration-300 tracking-wide group ${
+                    className={`relative font-nav text-base lg:text-lg transition-colors duration-300 tracking-wide group ${
                       isActive
                         ? 'text-terracotta'
                         : 'text-stone hover:text-terracotta'
@@ -159,7 +164,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
             >
               <button
                 onClick={() => setIsDiscoverOpen(!isDiscoverOpen)}
-                className={`flex items-center gap-1 text-base lg:text-lg transition-colors duration-300 tracking-wide ${
+                className={`flex items-center gap-1 font-nav text-base lg:text-lg transition-colors duration-300 tracking-wide ${
                   isDiscoverActive ? 'text-terracotta' : 'text-stone hover:text-terracotta'
                 }`}
               >
@@ -171,7 +176,6 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                 />
               </button>
               
-              {/* Dropdown Menu */}
               <AnimatePresence>
                 {isDiscoverOpen && (
                   <motion.div
@@ -190,7 +194,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                             key={link.href}
                             href={link.href}
                             onClick={() => setIsDiscoverOpen(false)}
-                            className={`block px-5 py-2.5 text-sm transition-colors ${
+                            className={`block px-5 py-2.5 font-nav text-sm transition-colors ${
                               isActive 
                                 ? 'text-terracotta bg-sand/30' 
                                 : 'text-stone hover:text-terracotta hover:bg-sand/20'
@@ -209,11 +213,12 @@ export default function Navbar({ translations, locale }: NavbarProps) {
           
           <div className="hidden md:flex items-center gap-4">
             <LanguageSwitcher locale={locale} />
+            {/* UPDATED: "Book a table" text */}
             <button
               onClick={handleReserveClick}
-              className="btn btn-ghost text-sm py-2 px-5"
+              className="btn btn-ghost text-sm py-2 px-5 font-nav"
             >
-              {nav.reserve || 'Reserve a Table'}
+              Book a table
             </button>
           </div>
           
@@ -234,7 +239,6 @@ export default function Navbar({ translations, locale }: NavbarProps) {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               className="fixed inset-0 bg-charcoal/50 z-50 md:hidden"
               initial={{ opacity: 0 }}
@@ -243,7 +247,6 @@ export default function Navbar({ translations, locale }: NavbarProps) {
               onClick={() => setIsMobileMenuOpen(false)}
             />
             
-            {/* Drawer */}
             <motion.div
               className="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-warm-white z-50 md:hidden"
               initial={{ x: '100%' }}
@@ -252,7 +255,6 @@ export default function Navbar({ translations, locale }: NavbarProps) {
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             >
               <div className="flex flex-col h-full p-6">
-                {/* Close Button */}
                 <div className="flex justify-end mb-8">
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
@@ -263,7 +265,6 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                   </button>
                 </div>
                 
-                {/* Mobile Nav Links */}
                 <nav className="flex-1">
                   <ul className="space-y-6">
                     {navLinks.map((link, index) => {
@@ -279,7 +280,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                           <Link
                             href={link.href}
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className={`font-display text-2xl transition-colors ${
+                            className={`font-nav text-2xl transition-colors ${
                               isActive
                                 ? 'text-terracotta'
                                 : 'text-charcoal hover:text-terracotta'
@@ -291,7 +292,6 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                       );
                     })}
                     
-                    {/* Mobile Discover Section */}
                     <motion.li
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -299,7 +299,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                     >
                       <button
                         onClick={() => setIsMobileDiscoverOpen(!isMobileDiscoverOpen)}
-                        className={`flex items-center gap-2 font-display text-2xl transition-colors ${
+                        className={`flex items-center gap-2 font-nav text-2xl transition-colors ${
                           isDiscoverActive ? 'text-terracotta' : 'text-charcoal'
                         }`}
                       >
@@ -311,7 +311,6 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                         />
                       </button>
                       
-                      {/* Mobile Discover Submenu */}
                       <AnimatePresence>
                         {isMobileDiscoverOpen && (
                           <motion.ul
@@ -329,7 +328,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                                   <Link
                                     href={link.href}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className={`block text-lg transition-colors ${
+                                    className={`block font-nav text-lg transition-colors ${
                                       isActive 
                                         ? 'text-terracotta' 
                                         : 'text-stone hover:text-terracotta'
@@ -347,7 +346,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                   </ul>
                 </nav>
                 
-                {/* Reserve Button */}
+                {/* UPDATED: "Book a table" text */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -360,7 +359,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                     }}
                     className="btn btn-primary w-full"
                   >
-                    {nav.reserve || 'Reserve a Table'}
+                    Book a table
                   </button>
                 </motion.div>
               </div>
