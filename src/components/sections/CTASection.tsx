@@ -30,6 +30,17 @@ export default function CTASection({ translations }: CTASectionProps) {
         background: 'linear-gradient(135deg, #ab5741 0%, #8a4535 100%)',
       }}
     >
+      {/* Repeating Emblem Pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.08]"
+        style={{
+          backgroundImage: 'url(/images/brand/emblem.svg)',
+          backgroundSize: '80px 80px',
+          backgroundRepeat: 'repeat',
+          filter: 'brightness(0) invert(1)',
+        }}
+      />
+      
       <div className="max-w-3xl mx-auto text-center relative z-10">
         <motion.h2
           className="font-display text-fluid-3xl font-medium text-warm-white mb-4"

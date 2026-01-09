@@ -8,42 +8,42 @@ import { Locale } from '@/lib/i18n';
 
 const featuredFood = [
   {
-    name: 'Hummus Beiruti',
-    description: 'Warm chickpeas, olive oil, pine nuts',
-    image: '/images/food/placeholder-food.webp',
+    name: 'Caesar Salad',
+    description: 'Crisp romaine, parmesan, anchovy dressing',
+    image: '/images/catering/caesar-salad.webp',
   },
   {
-    name: 'Lamb Kofta',
-    description: 'Grilled spiced lamb, tahini, pomegranate',
-    image: '/images/food/placeholder-food.webp',
-  },
-  {
-    name: 'Fattoush',
+    name: 'Fattouch',
     description: 'Crispy pita, fresh vegetables, sumac',
-    image: '/images/food/placeholder-food.webp',
+    image: '/images/catering/fattouch.webp',
   },
   {
-    name: 'Chicken Saj',
-    description: 'Marinated chicken, garlic sauce, pickles',
-    image: '/images/food/placeholder-food.webp',
+    name: 'Tabbouleh',
+    description: 'Parsley, bulgur, tomato, lemon',
+    image: '/images/catering/tabbouleh.webp',
+  },
+  {
+    name: 'Shish Barak',
+    description: 'Lebanese dumplings, yogurt, mint',
+    image: '/images/catering/shish-barak.webp',
   },
 ];
 
 const featuredDrinks = [
   {
-    name: 'Beirut Sunset',
-    description: 'Arak, orange blossom, pomegranate',
-    image: '/images/drinks/placeholder-drink.webp',
+    name: 'Manhattan',
+    description: 'Whiskey, sweet vermouth, bitters',
+    image: '/images/drinks/manhattan.webp',
   },
   {
-    name: 'Cedar Sour',
-    description: 'Lebanese whiskey, lemon, honey',
-    image: '/images/drinks/placeholder-drink.webp',
+    name: 'Zhourat Tea',
+    description: 'Traditional Lebanese herbal blend',
+    image: '/images/drinks/zhourat-tea.webp',
   },
   {
-    name: 'Rose Garden',
-    description: 'Gin, rose water, elderflower',
-    image: '/images/drinks/placeholder-drink.webp',
+    name: 'Cortado',
+    description: 'Espresso, steamed milk',
+    image: '/images/drinks/coffee-cortado.webp',
   },
 ];
 
@@ -132,19 +132,17 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
     <section className="pt-16 md:pt-20 pb-12 md:pb-16 px-6 bg-warm-white overflow-hidden">
       <div className="max-w-6xl mx-auto">
         
-        {/* Section Header */}
+        {/* Section Header - Stacked Title */}
         <motion.div
-          className="text-center mb-10 md:mb-12"
+          className="mb-10 md:mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-xs tracking-[0.3em] uppercase text-terracotta mb-3">
-            From our kitchen
-          </p>
-          <h2 className="font-display text-fluid-3xl font-medium text-charcoal">
-            Made for sharing
+          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-terracotta leading-[1.1]">
+            <span className="block">A TASTE</span>
+            <span className="block">OF MAÍDA</span>
           </h2>
         </motion.div>
 
@@ -156,12 +154,9 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-sm tracking-[0.2em] uppercase text-terracotta mb-2">
-            Featured dishes
+          <p className="text-base md:text-lg tracking-[0.15em] uppercase text-charcoal font-semibold">
+            From our kitchen
           </p>
-          <h3 className="font-display text-2xl md:text-3xl font-medium text-charcoal">
-            Taste the Mediterranean
-          </h3>
         </motion.div>
 
         {/* Food Items - Horizontal Scroll */}
@@ -249,12 +244,9 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-sm tracking-[0.2em] uppercase text-terracotta mb-3">
+          <p className="text-base md:text-lg tracking-[0.15em] uppercase text-charcoal font-semibold">
             From our bar
           </p>
-          <h3 className="font-display text-2xl md:text-3xl font-medium text-charcoal">
-            Signature cocktails
-          </h3>
         </motion.div>
 
         {/* Drinks Items - Horizontal Scroll */}
@@ -321,7 +313,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           </div>
         </div>
 
-        {/* UPDATED: "Menu" button instead of "View full menu" */}
+        {/* Full Menu button */}
         <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -333,7 +325,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             href={`/${locale}/menu`} 
             className="bg-terracotta text-warm-white px-8 py-4 text-sm font-medium hover:bg-terracotta/90 transition-colors inline-block"
           >
-            Menu
+            Full Menu
           </Link>
         </motion.div>
       </div>

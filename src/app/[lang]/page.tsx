@@ -5,7 +5,6 @@ import HeroCTA from '@/components/sections/HeroCTA';
 import Story from '@/components/sections/Story';
 import MenuHighlights from '@/components/sections/MenuHighlights';
 import Visit from '@/components/sections/Visit';
-import CTASection from '@/components/sections/CTASection';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -33,7 +32,6 @@ export default async function HomePage({
       <Story translations={translations} locale={locale} />
       <MenuHighlights translations={translations} locale={locale} />
       <Visit translations={translations} locale={locale} />
-      <CTASection translations={translations} />
     </>
   );
 }
