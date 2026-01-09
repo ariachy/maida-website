@@ -351,3 +351,39 @@ Reserve a Table
 ---
 
 **All pages built and ready for deployment!**
+
+---
+
+# 📄 PAGE: 404 NOT FOUND ✅
+
+## Two Random Variations
+
+Each page load randomly displays one of two themes:
+
+### Variation 1: Light Theme
+- **Background:** Cream (#FCF8ED)
+- **Image:** table-setup.webp
+- **Title:** "Oops! This page wandered off"
+- **Subtitle:** "Maybe it went to grab more hummus."
+- **Description:** "Let's get you back to the table."
+- **Tagline:** "The best meals are the ones you almost missed"
+
+### Variation 2: Dark Theme
+- **Background:** Sage green (#39431D)
+- **Image:** a-taste-of-tradition.webp
+- **Title:** "This page doesn't exist"
+- **Subtitle:** "But ours does."
+- **Description:** "Looks like you've wandered off the menu."
+- **Tagline:** "A taste of tradition, a vibe of today"
+
+### CTAs (Both Variations)
+- Back to home (terracotta primary)
+- View Menu (ghost)
+- Reserve a table (ghost, opens UMAI widget)
+
+### Page Title
+`404 | This page went to grab more hummus | Maída`
+
+### Images Location
+`/images/404/table-setup.webp`
+`/images/404/a-taste-of-tradition.webp`

@@ -2,7 +2,7 @@
 
 Quick reference for pending tasks. See ROADMAP.md for full details.
 
-**Last Updated:** 2026-01-03
+**Last Updated:** 2026-01-09
 
 ---
 
@@ -23,6 +23,12 @@ Quick reference for pending tasks. See ROADMAP.md for full details.
 - [ ] Footer: Reduce margin under copyright
 - [ ] Navbar: Add "Home" link before "Story"
 
+### Recently Completed (v0.7.1)
+- [x] Homepage Hero: Mobile spacing adjustments ✅
+- [x] Maída Live: Combined Private Events + DJ Application sections ✅
+- [x] 404 page with 2 random variations ✅
+- [x] Text content refinements (Story, brand messaging) ✅
+
 ---
 
 ## 🟢 Low Priority (Nice to Have)
@@ -35,7 +41,7 @@ Quick reference for pending tasks. See ROADMAP.md for full details.
 - [ ] Page transitions (fade/slide between pages)
 - [ ] Image blur placeholders while loading
 - [ ] Loading skeleton states
-- [x] 404 page ✅
+- [x] 404 page (2 random variations) ✅
 
 ### SEO
 - [ ] Set metadataBase for production URL

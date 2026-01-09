@@ -4,6 +4,37 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.7.1] - 2026-01-09
+
+### Added - 404 Page
+- **404 page** (`/not-found.tsx`) with 2 random variations
+- **Light theme:** Cream background, "Oops! This page wandered off", "Maybe it went to grab more hummus"
+- **Dark theme:** Sage green background, "This page doesn't exist", "But ours does"
+- Random selection on each page load
+- Fun page title: "404 | This page went to grab more hummus | Maída"
+- UMAI widget integration for Reserve button
+- Images in `/images/404/` folder
+
+### Changed - Homepage Hero (Mobile)
+- Adjusted mobile spacing for better balance
+- Location badge moved higher (pt-32 → pt-24)
+- Title moved down slightly (mt-12)
+- More gap between title and buttons (mb-14)
+- Buttons closer to bottom edge (pb-8, mb-2)
+
+### Changed - Maída Live Page
+- **Combined** Private Events + DJ Application into single unified section
+- Side-by-side layout on desktop, stacked on mobile with divider
+- Cleaner, lighter design with reduced font sizes
+- Updated final CTA: "An evolving atmosphere of food, drinks, and music"
+
+### Changed - Text Content
+- **Story page:** "long gatherings" → "lively gatherings"
+- **Story page:** "grandmothers' dishes passed hand to hand" → "timeless flavours of the Mediterranean"
+- **Brand messaging:** Updated مائدة definition to include drinking culture ("glasses clink", "wine flows")
+
+---
+
 ## [0.6.0] - 2026-01-03 (In Progress)
 
 ### Planned - Homepage Refinements
@@ -225,6 +256,7 @@ All notable changes to this project will be documented in this file.
 
 | Version | Date | Summary |
 |---------|------|---------|
+| 0.7.1 | 2026-01-09 | 404 page, Homepage hero mobile, Maída Live section merge |
 | 0.6.0 | 2026-01-03 | Homepage design refinements (in progress) |
 | 0.5.0 | 2026-01-02 | Blog system complete |
 | 0.4.0 | 2026-01-02 | SAJ + Coffee & Tea pages, Footer update |
