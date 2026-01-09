@@ -118,7 +118,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
 
           {/* Empty subtitle for consistent hero height */}
           <motion.p
-            className="text-base md:text-xl text-transparent max-w-2xl mx-auto font-light leading-relaxed select-none"
+            className="text-base md:text-xl text-sand/90 max-w-2xl mx-auto font-light leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -128,33 +128,6 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             <br className="hidden md:block" />
             Rooted in tradition, reimagined for today.
           </motion.p>
-        </div>
-      </section>
-
-      {/* The Concept Section */}
-      <section className="pt-12 pb-16 md:pt-16 md:pb-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            variants={staggerContainer}
-          >
-            <motion.h2 
-              className="font-display text-3xl md:text-5xl font-medium mb-8"
-              variants={fadeInUp}
-            >
-              More than music.<br />
-              <span className="text-terracotta italic">It's curated culture.</span>
-            </motion.h2>
-
-            <motion.p 
-              className="text-lg text-sand/70 max-w-2xl mx-auto leading-relaxed"
-              variants={fadeInUp}
-            >
-              The dining experience. The atmosphere evolves.
-            </motion.p>
-          </motion.div>
         </div>
       </section>
 
@@ -171,7 +144,6 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             <h2 className="font-display text-3xl md:text-5xl font-medium mb-4 text-charcoal">
               Our weekly program
             </h2>
-            <p className="text-stone">Click to explore each experience</p>
           </motion.div>
 
           {/* Cards */}
@@ -250,7 +222,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                   </div>
 
                   <h3 className="font-display text-3xl mb-2 text-charcoal">Fridays</h3>
-                  <p className="text-charcoal/80 text-lg mb-4">DJ Dinner</p>
+                  <p className="text-charcoal/80 text-lg mb-4">Dinner & DJ</p>
                   
                   <p className="text-charcoal/60 mb-6">
                     The weekend begins. Live DJ sets create the perfect backdrop for dinner and drinks.
@@ -360,67 +332,61 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
       </section>
 
       {/* ============================================
-          ENJOYING MAÍDA LIVE - Light Background
-          ============================================ */}
-      <section className="py-16 md:py-20 px-6 bg-cream">
-        <motion.div
-          className="text-center max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="font-display text-3xl md:text-4xl font-medium text-charcoal mb-4">
-            Enjoying <span className="italic text-terracotta">Maída</span> Live?
-          </h2>
-          <p className="text-xl text-stone mb-4">
-            Make it private.
-          </p>
-          <p className="text-stone/70 mb-8">
-            Host your next celebration, corporate event, or private gathering with us.
-          </p>
-          <Link href={`/${locale}/contact`} className="inline-block bg-charcoal text-warm-white px-8 py-3 text-base font-medium hover:bg-charcoal/90 transition-colors">
-            Contact us
-          </Link>
-        </motion.div>
-      </section>
-
-      {/* ============================================
-          DJ APPLICATION CTA - Dark Background (no icon)
+          PRIVATE EVENTS + DJ APPLICATION - Combined Section
           ============================================ */}
       <section className="py-16 md:py-20 px-6 bg-charcoal">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.h2 
-              className="font-display text-3xl md:text-5xl font-medium mb-6 text-white"
-              variants={fadeInUp}
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16">
+            {/* Private Events */}
+            <motion.div
+              className="text-center"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
             >
-              Are you a DJ?
-            </motion.h2>
+              <h2 className="font-display text-2xl md:text-3xl font-medium text-white mb-3">
+                Enjoying <span className="italic text-terracotta">Maída</span> Live?
+              </h2>
+              <p className="text-lg text-sand mb-2">
+                Make it private.
+              </p>
+              <p className="text-sand/60 mb-6 text-sm">
+                Host your next celebration, corporate event, or private gathering with us.
+              </p>
+              <Link href={`/${locale}/contact`} className="inline-block bg-warm-white text-charcoal px-6 py-3 text-sm font-medium hover:bg-sand transition-colors">
+                Contact us
+              </Link>
+            </motion.div>
 
-            <motion.p 
-              className="text-lg text-sand/70 max-w-xl mx-auto mb-10"
-              variants={fadeInUp}
-            >
-              We're always looking for talented DJs to join our rotation. 
-              If your sound fits our vibe, we want to hear from you.
-            </motion.p>
+            {/* Divider - mobile only */}
+            <div className="md:hidden w-16 h-px bg-sand/30 mx-auto" />
 
-            <motion.button
-              onClick={() => setIsDJModalOpen(true)}
-              className="bg-terracotta text-warm-white px-10 py-4 text-lg font-medium hover:bg-terracotta/90 transition-colors"
-              variants={fadeInUp}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
+            {/* DJ Application */}
+            <motion.div
+              className="text-center"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
-              Apply to play
-            </motion.button>
-          </motion.div>
+              <h2 className="font-display text-2xl md:text-3xl font-medium text-white mb-3">
+                Are you a DJ?
+              </h2>
+              <p className="text-lg text-sand mb-2">
+                Join our rotation.
+              </p>
+              <p className="text-sand/60 mb-6 text-sm">
+                If your sound fits our vibe, we want to hear from you.
+              </p>
+              <button
+                onClick={() => setIsDJModalOpen(true)}
+                className="inline-block bg-terracotta text-warm-white px-6 py-3 text-sm font-medium hover:bg-terracotta/90 transition-colors"
+              >
+                Apply to play
+              </button>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -431,7 +397,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
         className="relative py-16 md:py-20 px-6 overflow-hidden"
         style={{ background: 'linear-gradient(135deg, rgb(198, 125, 94) 0%, rgb(166, 93, 63) 100%)' }}
       >
-        {/* Emblem Pattern */}
+        {/* Emblem Pattern - darker for visibility on terracotta */}
         <div 
           className="absolute inset-0 opacity-[0.08]"
           style={{
@@ -442,23 +408,40 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
           }}
         />
         
-        <motion.div
-          className="relative z-10 max-w-3xl mx-auto text-center"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 className="font-display text-4xl md:text-5xl font-medium text-warm-white mb-8">
-            Meet me at <span className="italic">Maída</span>
-          </h2>
-          <button 
-            onClick={handleReserveClick} 
-            className="bg-charcoal text-warm-white px-10 py-4 text-lg font-medium hover:bg-warm-white hover:text-charcoal transition-colors"
+        <div className="max-w-3xl mx-auto text-center relative z-10">
+          <motion.h2 
+            className="font-display text-fluid-3xl font-light text-warm-white mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            Reserve now
-          </button>
-        </motion.div>
+             An evolving atmosphere of food, drinks, <span className="italic">and music</span>
+          </motion.h2>
+
+          <motion.p 
+            className="text-lg text-warm-white/90 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            #MeetMeAtMaída
+          </motion.p>
+
+          <motion.button
+            onClick={handleReserveClick}
+            className="btn bg-charcoal text-warm-white hover:bg-warm-white hover:text-charcoal"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Reserve a Table
+          </motion.button>
+        </div>
       </section>
 
       {/* DJ Application Modal */}
