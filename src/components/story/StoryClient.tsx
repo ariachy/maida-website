@@ -42,7 +42,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
   };
 
   return (
-    <div ref={containerRef} className="bg-cream">
+    <div ref={containerRef} className="bg-cream overflow-x-hidden">
       {/* ============================================
           HERO SECTION
           ============================================ */}

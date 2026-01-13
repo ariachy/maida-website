@@ -4,7 +4,7 @@ import StoryClient from '@/components/story/StoryClient';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Our Story | Maída - Mediterranean Flavours, Lebanese Soul',
+  title: 'Maída - Mediterranean Flavours, Lebanese Soul | Our Story ',
   description: 'Discover the story behind Maída - from Beirut to Lisboa. A gathering table in the heart of Lisbon.',
 };
 
