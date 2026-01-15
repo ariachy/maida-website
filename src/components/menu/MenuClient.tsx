@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
-import MenuItem from '@/components/ui/MenuItem';
 
 interface MenuClientProps {
   translations: any;
@@ -18,10 +17,6 @@ interface MenuClientProps {
     items: Array<{
       id: string;
       categoryId: string;
-      price: number;
-      priceBottle?: number;
-      image: string | null;
-      tags: string[];
       sortOrder: number;
     }>;
   };
@@ -31,7 +26,6 @@ interface MenuClientProps {
 export default function MenuClient({ translations, menuData, locale }: MenuClientProps) {
   const [activeCategory, setActiveCategory] = useState(menuData.categories[0]?.id || '');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
   const [needsScroll, setNeedsScroll] = useState(false);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
@@ -42,20 +36,9 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   // Sort categories by sortOrder
   const sortedCategories = [...categories].sort((a, b) => a.sortOrder - b.sortOrder);
   
-  // Handle category click with scroll
+  // Handle category click - just switch category, no scroll
   const handleCategoryClick = (categoryId: string) => {
     setActiveCategory(categoryId);
-    // Scroll to menu section smoothly
-    if (menuRef.current) {
-      const offset = 100; // Account for sticky header/buttons
-      const elementPosition = menuRef.current.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
   };
   
   // Handle URL hash or query param for deep linking
@@ -120,18 +103,10 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   return (
     <div className="min-h-screen bg-warm-white">
       {/* ============================================
-          HEADER SECTION (replaces hero)
+          HEADER SECTION
           ============================================ */}
       <section className="pt-28 md:pt-32 pb-6 md:pb-8 px-6 bg-warm-white">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.p
-            className="text-xs tracking-[0.3em] uppercase text-terracotta mb-3"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-          </motion.p>
-
           <motion.h1 
             className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal mb-3"
             initial={{ opacity: 0, y: 20 }}
@@ -147,7 +122,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Mediterranean flavour, Lebanese soul.
+            {menu.heroSubtitle || 'Mediterranean flavours. Lebanese soul.'}
           </motion.p>
         </div>
       </section>
@@ -156,7 +131,6 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           DIVIDER WITH ARABIC WATERMARK
           ============================================ */}
       <div className="relative flex items-center justify-center gap-4 px-6 pb-4 overflow-hidden">
-        {/* Arabic text as subtle background */}
         <span className="absolute text-6xl text-terracotta/[0.06] font-display select-none pointer-events-none" style={{ fontFamily: 'serif' }}>
           مائدة
         </span>
@@ -172,11 +146,11 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       </div>
 
       {/* ============================================
-          CATEGORY BUTTONS - Centered, scroll only if needed
+          CATEGORY BUTTONS
           ============================================ */}
       <div className="relative py-5 md:py-6 px-4 bg-sand/30">
         <div className="max-w-4xl mx-auto relative">
-          {/* Left Arrow - only show if scrolling needed */}
+          {/* Left Arrow */}
           <AnimatePresence>
             {showLeftArrow && (
               <motion.button
@@ -219,7 +193,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
             })}
           </div>
           
-          {/* Right Arrow - only show if scrolling needed */}
+          {/* Right Arrow */}
           <AnimatePresence>
             {showRightArrow && (
               <motion.button
@@ -238,20 +212,19 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       </div>
       
       {/* ============================================
-          MENU ITEMS - Paper-like background with Arabic watermark
+          MENU ITEMS
           ============================================ */}
       <div className="py-6 md:py-10 px-4 bg-sand/30">
         <div className="max-w-3xl mx-auto">
           {/* Menu Container - Paper style */}
           <div 
-            ref={menuRef}
             className="relative border border-stone/10 shadow-lg overflow-hidden"
             style={{
               background: '#FFFFFF',
               boxShadow: '0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05)',
             }}
           >
-            {/* Paper texture - subtle fiber pattern */}
+            {/* Paper texture */}
             <div 
               className="absolute inset-0 pointer-events-none opacity-[0.4]"
               style={{
@@ -259,7 +232,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
               }}
             />
             
-            {/* Subtle edge darkening for depth */}
+            {/* Edge darkening */}
             <div 
               className="absolute inset-0 pointer-events-none"
               style={{
@@ -267,16 +240,14 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
               }}
             />
             
-            {/* Decorative corner accents */}
+            {/* Corner accents */}
             <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-terracotta/20 pointer-events-none" />
             <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-terracotta/20 pointer-events-none" />
             <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-terracotta/20 pointer-events-none" />
             <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-terracotta/20 pointer-events-none" />
             
-            {/* Arabic Watermark - centered */}
-            <div 
-              className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
-            >
+            {/* Arabic Watermark */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
               <span 
                 className="text-[180px] md:text-[250px] text-terracotta/[0.06] font-display"
                 style={{ fontFamily: 'serif' }}
@@ -287,7 +258,6 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
 
             {/* Content */}
             <div className="relative px-8 md:px-12 py-10 md:py-12">
-              {/* Render ALL categories for SEO - only show active one */}
               {sortedCategories.map((category) => {
                 const categoryItems = getItemsForCategory(category.id);
                 const isActive = activeCategory === category.id;
@@ -298,12 +268,11 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                     className={isActive ? 'block' : 'hidden'}
                     aria-hidden={!isActive}
                   >
-                    {/* Category Header with emblem underline - properly centered */}
+                    {/* Category Header */}
                     <div className="text-center mb-8">
                       <h2 className="font-display text-2xl md:text-3xl text-charcoal mb-4">
                         {menu.categories[category.id]?.name}
                       </h2>
-                      {/* Decorative underline with emblem - using flex for perfect centering */}
                       <div className="flex items-center justify-center">
                         <div className="w-12 h-px bg-terracotta/60" />
                         <div className="mx-3">
@@ -319,22 +288,25 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                       </div>
                     </div>
                     
-                    {/* Items Grid - 2 columns on desktop */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-12">
-                      {categoryItems.map((item, index) => (
-                        <div key={item.id}>
-                          <MenuItem
-                            name={menu.items[item.id]?.name || item.id}
-                            description={menu.items[item.id]?.description || ''}
-                            price={item.price}
-                            priceBottle={item.priceBottle}
-                            tags={item.tags}
-                            tagLabels={menu.tags}
-                            glassLabel={menu.glass}
-                            bottleLabel={menu.bottle}
-                          />
-                        </div>
-                      ))}
+                    {/* Items Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-4">
+                      {categoryItems.map((item) => {
+                        const itemTranslation = menu.items?.[item.id];
+                        if (!itemTranslation) return null;
+                        
+                        return (
+                          <div key={item.id} className="py-2">
+                            <h3 className="font-display text-base md:text-lg text-charcoal font-medium">
+                              {itemTranslation.name}
+                            </h3>
+                            {itemTranslation.description && (
+                              <p className="text-stone text-sm mt-1 leading-relaxed">
+                                {itemTranslation.description}
+                              </p>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                     
                     {/* Empty state */}
@@ -347,25 +319,14 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                 );
               })}
               
-              {/* Allergens Legend */}
-              <div className="mt-8 pt-6 border-t border-stone/20">
-                <p className="text-center text-stone text-xs">
-                  <span className="inline-flex items-center gap-3 flex-wrap justify-center">
-                    <span><span className="inline-block px-1 py-0.5 bg-sage/20 text-sage text-[9px] font-medium mr-1">V</span> {menu.legend?.vegetarian || 'Vegetarian'}</span>
-                    <span className="text-stone/40">·</span>
-                    <span><span className="inline-block px-1 py-0.5 bg-sage/20 text-sage text-[9px] font-medium mr-1">VG</span> {menu.legend?.vegan || 'Vegan'}</span>
-                    <span className="text-stone/40">·</span>
-                    <span><span className="inline-block px-1 py-0.5 bg-sage/20 text-sage text-[9px] font-medium mr-1">GF</span> {menu.legend?.glutenFree || 'Gluten-Free'}</span>
-                  </span>
+              {/* Allergen Note */}
+              <div className="mt-10 pt-6 border-t border-stone/20">
+                <p className="text-center text-stone text-sm italic">
+                  {menu.allergenNote || 'Please ask our team about allergens and dietary requirements.'}
                 </p>
               </div>
             </div>
           </div>
-
-          {/* Disclaimer */}
-          <p className="text-center text-stone text-xs mt-5">
-            {menu.disclaimer || 'Prices in Euros. Prices include VAT.'}
-          </p>
         </div>
       </div>
     </div>
