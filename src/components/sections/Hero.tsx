@@ -25,8 +25,8 @@ export default function Hero({ translations }: HeroProps) {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/hero/hero-bg.webp"
-          alt="Maída Restaurant"
+          src="/images/hero/maida-table.webp"
+          alt="Maída Table Setup"
           fill
           className="object-cover"
           priority
@@ -45,7 +45,7 @@ export default function Hero({ translations }: HeroProps) {
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-16 md:pt-20">
         {/* Location Badge */}
         <motion.div
-          className="mb-6 md:mb-8"
+          className="mb-16 md:mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}

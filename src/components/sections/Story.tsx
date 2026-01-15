@@ -32,16 +32,16 @@ export default function Story({ translations, locale }: StoryProps) {
         
         {/* Left - Image */}
         <motion.div
-          className="relative h-[280px] md:h-auto"
+          className="relative h-[280px] md:h-auto overflow-hidden"
           initial={{ opacity: 0, x: -30 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
         >
           <Image
-            src="/images/atmosphere/gathering-table.webp"
+            src="/images/home/gathering-table.webp"
             alt="Friends gathering around the table at Maída"
             fill
-            className="object-cover"
+            className="object-cover scale-150"
           />
         </motion.div>
         

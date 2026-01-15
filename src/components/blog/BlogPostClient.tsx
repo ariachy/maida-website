@@ -134,8 +134,8 @@ export default function BlogPostClient({ translations, locale, post }: BlogPostC
 
   return (
     <div className="bg-cream min-h-screen">
-      {/* Hero Section */}
-      <section className="relative min-h-[50vh] md:min-h-[60vh] flex items-end overflow-hidden">
+      {/* Hero Section - taller to match other pages */}
+      <section className="relative min-h-[calc(100svh-100px)] md:min-h-[calc(100svh-120px)] flex items-end overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image

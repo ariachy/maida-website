@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Fraunces, DM_Sans } from 'next/font/google';
+import Script from 'next/script';
 import '@/styles/globals.css';
+import { RestaurantJsonLd, OrganizationJsonLd, WebsiteJsonLd } from '@/components/seo/JsonLd';
 
 // Font configurations
 const fraunces = Fraunces({
@@ -20,9 +22,10 @@ const dmSans = DM_Sans({
 
 // Base metadata
 export const metadata: Metadata = {
+  metadataBase: new URL('https://maida.pt'),
   title: {
-    default: 'maída — Mediterranean Flavours. Lebanese Soul | Lisbon',
-    template: '%s',
+    default: 'Maída – Mediterranean Flavours. Lebanese Soul | Lisbon',
+    template: '%s | Maída',
   },
   description:
     'Maída is a Mediterranean restaurant with Lebanese soul in Cais do Sodré, Lisbon. Shareable plates, natural wines, and signature cocktails.',
@@ -35,15 +38,23 @@ export const metadata: Metadata = {
     'natural wine Lisbon',
     'mezze Lisbon',
     'cocktails Lisbon',
+    'SAJ bread Lisbon',
+    'brunch Lisbon',
   ],
-  authors: [{ name: 'maída' }],
-  creator: 'maída',
+  authors: [{ name: 'Maída' }],
+  creator: 'Maída',
+  publisher: 'Maída',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
     type: 'website',
     locale: 'en_GB',
     url: 'https://maida.pt',
-    siteName: 'maída',
-    title: 'maída — Mediterranean Flavours. Lebanese Soul',
+    siteName: 'Maída',
+    title: 'Maída – Mediterranean Flavours. Lebanese Soul',
     description:
       'A gathering place for shared plates, natural wines, and evenings that linger. Cais do Sodré, Lisbon.',
     images: [
@@ -51,22 +62,35 @@ export const metadata: Metadata = {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'maída restaurant',
+        alt: 'Maída restaurant - Mediterranean flavours with Lebanese soul',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'maída — Mediterranean Flavours. Lebanese Soul',
+    title: 'Maída – Mediterranean Flavours. Lebanese Soul',
     description:
       'A gathering place for shared plates, natural wines, and evenings that linger.',
+    images: ['/images/og-image.jpg'],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   icons: {
     icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: '/site.webmanifest',
+  verification: {
+    google: 'google4b903f4f9499dd80',
   },
 };
 
@@ -78,22 +102,52 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
       <head>
+        {/* 
+          GTM Consent Mode - MUST load BEFORE GTM
+          This sets default consent to 'denied' until user accepts
+        */}
+        <Script id="gtm-consent-default" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){dataLayer.push(arguments);}
+            
+            // Set default consent to denied
+            window.gtag('consent', 'default', {
+              'analytics_storage': 'denied',
+              'ad_storage': 'denied',
+              'ad_user_data': 'denied',
+              'ad_personalization': 'denied',
+              'functionality_storage': 'denied',
+              'personalization_storage': 'denied',
+              'security_storage': 'granted',
+              'wait_for_update': 500
+            });
+            
+            // Enable URL passthrough for better analytics
+            window.gtag('set', 'url_passthrough', true);
+            
+            // Enable ads data redaction when consent denied
+            window.gtag('set', 'ads_data_redaction', true);
+          `}
+        </Script>
+
         {/* Google Tag Manager */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MZ83M6VJ');`,
-          }}
-        />
-        {/* UMAI Widget */}
-        <script
+        <Script id="gtm-script" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-MZ83M6VJ');
+          `}
+        </Script>
+
+        {/* UMAI Widget - loads with functional consent */}
+        <Script
           src="https://widget.letsumai.com/dist/embed.min.js"
           data-api-key="d541f212-d5ca-4839-ab2b-7f9c99e1c96c"
           data-widget-type="reservation"
-          defer
+          strategy="lazyOnload"
         />
       </head>
       <body className="font-body bg-warm-white text-charcoal antialiased">
@@ -106,7 +160,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             style={{ display: 'none', visibility: 'hidden' }}
           />
         </noscript>
-        
+
+        {/* Structured Data for SEO */}
+        <RestaurantJsonLd />
+        <OrganizationJsonLd />
+        <WebsiteJsonLd />
+
         {children}
       </body>
     </html>

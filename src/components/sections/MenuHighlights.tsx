@@ -8,24 +8,24 @@ import { Locale } from '@/lib/i18n';
 
 const featuredFood = [
   {
-    name: 'Caesar Salad',
-    description: 'Crisp romaine, parmesan, anchovy dressing',
-    image: '/images/catering/caesar-salad.webp',
-  },
-  {
-    name: 'Fattouch',
-    description: 'Crispy pita, fresh vegetables, sumac',
-    image: '/images/catering/fattouch.webp',
-  },
-  {
-    name: 'Tabbouleh',
-    description: 'Parsley, bulgur, tomato, lemon',
-    image: '/images/catering/tabbouleh.webp',
-  },
-  {
     name: 'Shish Barak',
-    description: 'Lebanese dumplings, yogurt, mint',
-    image: '/images/catering/shish-barak.webp',
+    description: 'fried minced beef dumplings sauteed in chili paste, served over farlicky yogurt and caramelized onions, with roasted almonds.',
+    image: '/images/food/shish-barak.webp',
+  },
+  {
+    name: 'Kebab Pistachio',
+    description: 'minced meat with pistachios and house spices, sauteed in pomegranate molasses. Served with hummus',
+    image: '/images/food/kebab.webp',
+  },
+  {
+    name: 'Muhamara',
+    description: 'roasted red pepper dip, walnuts, tahini, pomegranate molasses and a hint of chili',
+    image: '/images/food/muhamara.webp',
+  },
+  {
+    name: 'Shawarma',
+    description: '(beef) with fries, onions and parsley salad, tomato, pickles, tahini dressing and saj bread',
+    image: '/images/food/shawarma.webp',
   },
 ];
 

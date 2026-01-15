@@ -7,6 +7,7 @@ import Footer from '@/components/layout/Footer';
 import ScrollProgress from '@/components/layout/ScrollProgress';
 import PageLoader from '@/components/layout/PageLoader';
 import NavigationLoader from '@/components/layout/NavigationLoader';
+import CookieConsent from '@/components/consent/CookieConsent';
 
 // Generate static params for all locales
 export function generateStaticParams() {
@@ -84,6 +85,9 @@ export default async function LocaleLayout({
       
       {/* Footer */}
       <Footer translations={translations} locale={locale} />
+      
+      {/* Cookie Consent Banner */}
+      <CookieConsent locale={locale} />
     </>
   );
 }

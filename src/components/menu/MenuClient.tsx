@@ -31,6 +31,7 @@ interface MenuClientProps {
 export default function MenuClient({ translations, menuData, locale }: MenuClientProps) {
   const [activeCategory, setActiveCategory] = useState(menuData.categories[0]?.id || '');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const [needsScroll, setNeedsScroll] = useState(false);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
@@ -40,6 +41,22 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   
   // Sort categories by sortOrder
   const sortedCategories = [...categories].sort((a, b) => a.sortOrder - b.sortOrder);
+  
+  // Handle category click with scroll
+  const handleCategoryClick = (categoryId: string) => {
+    setActiveCategory(categoryId);
+    // Scroll to menu section smoothly
+    if (menuRef.current) {
+      const offset = 100; // Account for sticky header/buttons
+      const elementPosition = menuRef.current.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
   
   // Handle URL hash or query param for deep linking
   useEffect(() => {
@@ -101,70 +118,63 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   };
   
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="min-h-screen bg-warm-white">
       {/* ============================================
-          HERO SECTION
+          HEADER SECTION (replaces hero)
           ============================================ */}
-      <section className="relative min-h-0 md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-32 pb-20 md:py-0">
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <Image
-            src="/images/atmosphere/facade-night.webp"
-            alt="Maída Restaurant"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-charcoal/60 via-charcoal/40 to-charcoal/70" />
-        </div>
-
-        {/* Content */}
-        <div className="relative z-10 text-center px-6">
-          {/* Tagline */}
+      <section className="pt-28 md:pt-32 pb-6 md:pb-8 px-6 bg-warm-white">
+        <div className="max-w-4xl mx-auto text-center">
           <motion.p
-            className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-sand mb-4 md:mb-6"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-xs tracking-[0.3em] uppercase text-terracotta mb-3"
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6 }}
           >
-            <span className="w-8 h-px bg-sand" />
-            {menu.heroTagline || 'Made for sharing'}
-            <span className="w-8 h-px bg-sand" />
           </motion.p>
 
-          {/* Title */}
-          <h1 className="font-display text-4xl md:text-7xl lg:text-8xl font-light text-white mb-4 md:mb-6">
-            <span className="block overflow-hidden">
-              <motion.span
-                className="block"
-                initial={{ y: '100%' }}
-                animate={{ y: 0 }}
-                transition={{ duration: 1.2, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
-              >
-                {menu.heroTitle || 'Our Menu'}
-              </motion.span>
-            </span>
-          </h1>
+          <motion.h1 
+            className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal mb-3"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            {menu.heroTitle || 'Our Menu'}
+          </motion.h1>
 
-          {/* Empty subtitle for consistent hero height */}
           <motion.p
-            className="text-base md:text-xl text-transparent max-w-2xl mx-auto font-light leading-relaxed select-none"
+            className="text-stone text-base md:text-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            aria-hidden="true"
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            A place where flavors, music, and good company come together.
-            <br className="hidden md:block" />
-            Rooted in tradition, reimagined for today.
+            Mediterranean flavour, Lebanese soul.
           </motion.p>
         </div>
       </section>
 
       {/* ============================================
+          DIVIDER WITH ARABIC WATERMARK
+          ============================================ */}
+      <div className="relative flex items-center justify-center gap-4 px-6 pb-4 overflow-hidden">
+        {/* Arabic text as subtle background */}
+        <span className="absolute text-6xl text-terracotta/[0.06] font-display select-none pointer-events-none" style={{ fontFamily: 'serif' }}>
+          مائدة
+        </span>
+        <span className="relative w-16 md:w-24 h-px bg-terracotta/30" />
+        <Image 
+          src="/images/brand/emblem.svg" 
+          alt="" 
+          width={20} 
+          height={20} 
+          className="relative opacity-50"
+        />
+        <span className="relative w-16 md:w-24 h-px bg-terracotta/30" />
+      </div>
+
+      {/* ============================================
           CATEGORY BUTTONS - Centered, scroll only if needed
           ============================================ */}
-      <div className="relative py-5 md:py-6 px-4 bg-cream">
+      <div className="relative py-5 md:py-6 px-4 bg-sand/30">
         <div className="max-w-4xl mx-auto relative">
           {/* Left Arrow - only show if scrolling needed */}
           <AnimatePresence>
@@ -196,11 +206,11 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
               return (
                 <button
                   key={category.id}
-                  onClick={() => setActiveCategory(category.id)}
+                  onClick={() => handleCategoryClick(category.id)}
                   className={`flex-shrink-0 px-4 py-2 text-sm font-medium transition-all duration-300 whitespace-nowrap ${
                     isActive
                       ? 'bg-terracotta text-warm-white'
-                      : 'bg-sand/50 text-charcoal hover:bg-sand hover:text-terracotta'
+                      : 'bg-sand text-charcoal hover:bg-terracotta/10 hover:text-terracotta'
                   }`}
                 >
                   {menu.categories[category.id]?.name || category.id}
@@ -228,22 +238,55 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       </div>
       
       {/* ============================================
-          MENU ITEMS - Paper-like background, clean border
+          MENU ITEMS - Paper-like background with Arabic watermark
           ============================================ */}
-      <div className="py-4 md:py-6 px-4 bg-cream">
+      <div className="py-6 md:py-10 px-4 bg-sand/30">
         <div className="max-w-3xl mx-auto">
           {/* Menu Container - Paper style */}
           <div 
-            className="relative border border-terracotta/30 shadow-sm"
+            ref={menuRef}
+            className="relative border border-stone/10 shadow-lg overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, #FDFBF7 0%, #FAF8F4 50%, #F8F6F1 100%)',
+              background: '#FFFFFF',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05)',
             }}
           >
-            {/* Subtle inner shadow for paper depth */}
-            <div className="absolute inset-0 pointer-events-none shadow-inner opacity-30" />
+            {/* Paper texture - subtle fiber pattern */}
+            <div 
+              className="absolute inset-0 pointer-events-none opacity-[0.4]"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' stitchTiles='stitch'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fff' surfaceScale='2'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E")`,
+              }}
+            />
+            
+            {/* Subtle edge darkening for depth */}
+            <div 
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                boxShadow: 'inset 0 0 60px rgba(0,0,0,0.03)',
+              }}
+            />
+            
+            {/* Decorative corner accents */}
+            <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-terracotta/20 pointer-events-none" />
+            <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-terracotta/20 pointer-events-none" />
+            <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-terracotta/20 pointer-events-none" />
+            <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-terracotta/20 pointer-events-none" />
+            
+            {/* Arabic Watermark - centered */}
+            <div 
+              className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
+            >
+              <span 
+                className="text-[180px] md:text-[250px] text-terracotta/[0.06] font-display"
+                style={{ fontFamily: 'serif' }}
+              >
+                مائدة
+              </span>
+            </div>
 
             {/* Content */}
-            <div className="relative px-6 md:px-10 py-8 md:py-10">
+            <div className="relative px-8 md:px-12 py-10 md:py-12">
               {/* Render ALL categories for SEO - only show active one */}
               {sortedCategories.map((category) => {
                 const categoryItems = getItemsForCategory(category.id);

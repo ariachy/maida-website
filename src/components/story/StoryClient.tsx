@@ -50,8 +50,8 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <Image
-            src="/images/hero/facade-night-people.webp"
-            alt="Maída restaurant exterior at night"
+            src="/images/hero/maida-saj-setup.webp"
+            alt="Maida traditional setup"
             fill
             className="object-cover"
             priority

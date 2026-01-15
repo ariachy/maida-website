@@ -57,18 +57,18 @@ export default function BlogClient({ translations, locale, posts }: BlogClientPr
 
   return (
     <div className="bg-cream min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-32 md:py-40 px-6 bg-charcoal text-white overflow-hidden">
+      {/* Hero Section - matching other pages */}
+      <section className="relative min-h-[calc(100svh-100px)] md:min-h-[calc(100svh-120px)] flex items-center justify-center px-6 bg-charcoal text-white overflow-hidden">
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-terracotta blur-[150px]" />
           <div className="absolute bottom-1/4 left-1/4 w-64 h-64 rounded-full bg-sage blur-[100px]" />
         </div>
 
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
+        <div className="relative z-10 max-w-4xl mx-auto text-center pt-16 md:pt-20">
           {/* UPDATED: Changed from "From Our Kitchen" to "Traditions, flavours, moments" */}
           <motion.p
-            className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-terracotta-light mb-6"
+            className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-terracotta-light mb-4 md:mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -79,7 +79,7 @@ export default function BlogClient({ translations, locale, posts }: BlogClientPr
           </motion.p>
 
           {/* UPDATED: Header now says "Discover" instead of "Blog" */}
-          <h1 className="font-display text-5xl md:text-7xl font-light mb-6">
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-6 leading-[1.1]">
             <span className="block overflow-hidden">
               <motion.span
                 className="block"
@@ -93,7 +93,7 @@ export default function BlogClient({ translations, locale, posts }: BlogClientPr
           </h1>
 
           <motion.p
-            className="text-lg md:text-xl text-sand/80 max-w-xl mx-auto"
+            className="text-base md:text-xl text-sand/90 max-w-xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}

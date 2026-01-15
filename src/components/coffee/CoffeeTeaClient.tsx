@@ -14,32 +14,32 @@ interface CoffeeTeaClientProps {
 const featuredItems = [
   { 
     name: 'Lavender Coffee', 
-    description: 'Espresso with house-made lavender syrup',
+    description: 'americano with house-made lavender syrup',
     category: 'coffee',
   },
   { 
     name: 'Lebanese Coffee', 
-    description: 'Traditional cardamom-spiced coffee',
+    description: 'traditional Lebanese coffee. Most enjoyed with cardamon!',
     category: 'coffee',
   },
   { 
     name: 'Cafe Blanc', 
-    description: 'White coffee with orange blossom water',
+    description: 'orange blossom and a bit of honey',
     category: 'coffee',
   },
   { 
     name: 'Moroccan Mint', 
-    description: 'Fresh mint, green tea, served traditional style',
+    description: 'fresh mint, green tea, from Morocco',
     category: 'tea',
   },
   { 
-    name: 'Maída Blend', 
-    description: 'Rose syrup, mastic, house blend',
+    name: 'Maída Tea', 
+    description: 'In-house blend of herbs. Soothing & calming',
     category: 'tea',
   },
   { 
     name: 'Zhourat', 
-    description: 'Traditional Lebanese herbal blend',
+    description: 'our version of the tradional Lebanese herbal blend "Zhourat"',
     category: 'tea',
   },
 ];
@@ -75,9 +75,9 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
   return (
     <div className="bg-cream">
       {/* ============================================
-          HERO SECTION
+          HERO SECTION - matching other pages
           ============================================ */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[calc(100svh-100px)] md:min-h-[calc(100svh-120px)] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/drinks/coffee-cortado.webp"
@@ -89,9 +89,9 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
           <div className="absolute inset-0 bg-charcoal/60" />
         </div>
 
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20">
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-16 md:pt-20">
           <motion.p
-            className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-sand mb-6"
+            className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-sand mb-4 md:mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -101,7 +101,7 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
             <span className="w-8 h-px bg-sand" />
           </motion.p>
 
-          <h1 className="font-display text-5xl md:text-7xl font-light text-white mb-6">
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 md:mb-6 leading-[1.1]">
             <span className="block overflow-hidden">
               <motion.span
                 className="block"
@@ -113,6 +113,17 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
               </motion.span>
             </span>
           </h1>
+
+          <motion.p
+            className="text-base md:text-xl text-sand/90 max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            From traditional Lebanese coffee to signature blends.
+            <br />
+            Every sip tells a story.
+          </motion.p>
         </div>
       </section>
 
@@ -223,7 +234,7 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
                   From traditional favorites to exotic regional blends and house-made creations - our tea selection celebrates Mediterranean and Lebanese tea culture.
                 </p>
                 <p>
-                  We source the finest loose-leaf teas from trusted suppliers, from classic Moroccan mint to our signature Maída blend with rose syrup and mastic.
+                  We source the finest loose-leaf teas from trusted suppliers, from classic Moroccan mint to our signature Maída tea with a mix of soothing and relaxing herbs.
                 </p>
                 <p className="text-terracotta-light italic">
                   Every sip tells a story.

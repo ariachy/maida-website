@@ -72,8 +72,8 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
 
   return (
     <div className="bg-charcoal/95 text-white min-h-screen">
-      {/* Hero Section */}
-      <section className="relative min-h-0 md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-32 pb-20 md:py-0">
+      {/* Hero Section - matching Story/Menu pages */}
+      <section className="relative min-h-[calc(100svh-100px)] md:min-h-[calc(100svh-120px)] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
@@ -83,15 +83,15 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             className="object-cover object-bottom"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal" />
+          <div className="absolute inset-0 bg-charcoal/60" />
         </div>
 
         {/* Animated gradient orbs */}
         <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] rounded-full bg-terracotta/20 blur-[100px] animate-pulse" />
         <div className="absolute bottom-1/4 left-1/4 w-[200px] h-[200px] rounded-full bg-purple-500/10 blur-[80px] animate-pulse" style={{ animationDelay: '1s' }} />
 
-        {/* Content */}
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+        {/* Content - with top offset for navbar */}
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-16 md:pt-20">
           <motion.p
             className="inline-flex items-center gap-3 text-xs tracking-[0.2em] uppercase text-terracotta-light mb-4 md:mb-6 whitespace-nowrap"
             initial={{ opacity: 0, y: 20 }}
@@ -103,7 +103,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             <span className="w-8 h-px bg-terracotta-light" />
           </motion.p>
 
-          <h1 className="font-display text-4xl md:text-7xl lg:text-8xl font-medium mb-4 md:mb-6">
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-6 leading-[1.1]">
             <span className="block overflow-hidden">
               <motion.span
                 className="block"
@@ -116,17 +116,15 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             </span>
           </h1>
 
-          {/* Empty subtitle for consistent hero height */}
           <motion.p
-            className="text-base md:text-xl text-sand/90 max-w-2xl mx-auto font-light leading-relaxed"
+            className="text-base md:text-xl text-sand/90 max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            aria-hidden="true"
           >
-            A place where flavors, music, and good company come together.
-            <br className="hidden md:block" />
-            Rooted in tradition, reimagined for today.
+            Where dinner becomes an experience.
+            <br />
+            Music, culture, and atmosphere.
           </motion.p>
         </div>
       </section>

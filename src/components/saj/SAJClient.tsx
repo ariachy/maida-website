@@ -65,12 +65,12 @@ export default function SAJClient({ translations, locale }: SAJClientProps) {
   return (
     <div className="bg-cream">
       {/* ============================================
-          HERO SECTION
+          HERO SECTION - matching other pages
           ============================================ */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[calc(100svh-100px)] md:min-h-[calc(100svh-120px)] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/food/dough-ball.webp"
+            src="/images/saj/dough-ball.webp"
             alt="SAJ bread being prepared"
             fill
             className="object-cover"
@@ -79,9 +79,9 @@ export default function SAJClient({ translations, locale }: SAJClientProps) {
           <div className="absolute inset-0 bg-charcoal/60" />
         </div>
 
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20">
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-16 md:pt-20">
           <motion.p
-            className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-sand mb-6"
+            className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-sand mb-4 md:mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -91,7 +91,7 @@ export default function SAJClient({ translations, locale }: SAJClientProps) {
             <span className="w-8 h-px bg-sand" />
           </motion.p>
 
-          <h1 className="font-display text-5xl md:text-7xl font-light text-white mb-6">
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 md:mb-6 leading-[1.1]">
             <span className="block overflow-hidden">
               <motion.span
                 className="block"
@@ -103,6 +103,17 @@ export default function SAJClient({ translations, locale }: SAJClientProps) {
               </motion.span>
             </span>
           </h1>
+
+          <motion.p
+            className="text-base md:text-xl text-sand/90 max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            Thin, crispy, impossibly light.
+            <br />
+            Baked fresh on our custom griddle.
+          </motion.p>
         </div>
       </section>
 
@@ -203,7 +214,7 @@ export default function SAJClient({ translations, locale }: SAJClientProps) {
             {/* Image Side */}
             <div className="h-64 md:h-80 bg-sand/30 overflow-hidden">
               <Image
-                src="/images/food/dough-ball.webp"
+                src="/images/saj/wraps.webp"
                 alt="Manoushe - SAJ with toppings"
                 width={400}
                 height={320}
