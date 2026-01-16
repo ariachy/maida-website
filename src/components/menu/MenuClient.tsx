@@ -5,6 +5,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 
+interface MenuItem {
+  id: string;
+  categoryId: string;
+  sortOrder: number;
+}
+
 interface MenuClientProps {
   translations: any;
   menuData: {
@@ -14,14 +20,38 @@ interface MenuClientProps {
       image: string;
       sortOrder: number;
     }>;
-    items: Array<{
-      id: string;
-      categoryId: string;
-      sortOrder: number;
-    }>;
+    items: Array<MenuItem>;
   };
   locale: string;
 }
+
+// Define sub-categories with their sortOrder ranges
+const subCategories: Record<string, Array<{ id: string; name: string; minOrder: number; maxOrder: number }>> = {
+  'to-start': [
+    { id: 'starters', name: 'Starters', minOrder: 1, maxOrder: 9 },
+    { id: 'dips', name: 'Dips', minOrder: 10, maxOrder: 19 },
+    { id: 'salads', name: 'Salads', minOrder: 30, maxOrder: 39 },
+  ],
+  'saj-wraps': [
+    { id: 'savoury', name: 'Savoury', minOrder: 1, maxOrder: 9 },
+    { id: 'sweet', name: 'Sweet', minOrder: 10, maxOrder: 19 },
+  ],
+  'drinks': [
+    { id: 'coffee', name: 'Coffee', minOrder: 1, maxOrder: 19 },
+    { id: 'tea', name: 'Tea', minOrder: 20, maxOrder: 29 },
+    { id: 'lemonade', name: 'Lemonade', minOrder: 30, maxOrder: 34 },
+    { id: 'juices', name: 'Juices', minOrder: 35, maxOrder: 39 },
+    { id: 'milkshakes', name: 'Milkshakes', minOrder: 40, maxOrder: 49 },
+    { id: 'soft-drinks', name: 'Soft Drinks', minOrder: 50, maxOrder: 69 },
+    { id: 'mocktails', name: 'Mocktails', minOrder: 70, maxOrder: 79 },
+  ],
+  'cocktails-wine': [
+    { id: 'signatures', name: "Maída's Signatures", minOrder: 1, maxOrder: 19 },
+    { id: 'classics', name: 'Classics', minOrder: 20, maxOrder: 39 },
+    { id: 'wines', name: 'Wines', minOrder: 40, maxOrder: 49 },
+    { id: 'beers', name: 'Beers', minOrder: 50, maxOrder: 59 },
+  ],
+};
 
 export default function MenuClient({ translations, menuData, locale }: MenuClientProps) {
   const [activeCategory, setActiveCategory] = useState(menuData.categories[0]?.id || '');
@@ -62,6 +92,13 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       .sort((a, b) => a.sortOrder - b.sortOrder);
   };
   
+  // Get items for a sub-category
+  const getItemsForSubCategory = (categoryId: string, minOrder: number, maxOrder: number) => {
+    return items
+      .filter((item) => item.categoryId === categoryId && item.sortOrder >= minOrder && item.sortOrder <= maxOrder)
+      .sort((a, b) => a.sortOrder - b.sortOrder);
+  };
+  
   // Check if scrolling is needed and update arrows
   const updateScrollState = () => {
     if (scrollContainerRef.current) {
@@ -79,7 +116,6 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       container.addEventListener('scroll', updateScrollState);
       updateScrollState();
       
-      // Also check on resize
       window.addEventListener('resize', updateScrollState);
       return () => {
         container.removeEventListener('scroll', updateScrollState);
@@ -99,6 +135,113 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       scrollContainerRef.current.scrollBy({ left: 200, behavior: 'smooth' });
     }
   };
+
+  // Render items grid - compact mode for simple items like drinks
+  const renderItems = (itemsList: MenuItem[], compact: boolean = false) => {
+    if (compact) {
+      // Single column, minimal spacing for drinks/simple items
+      return (
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-1">
+          {itemsList.map((item, index) => {
+            const itemTranslation = menu?.items?.[item.id];
+            const itemName = itemTranslation?.name || item.id.replace(/-/g, ' ');
+            const itemDescription = itemTranslation?.description || '';
+            
+            return (
+              <span key={item.id} className="text-charcoal text-sm capitalize py-1">
+                {itemName}
+                {itemDescription && (
+                  <span className="text-stone text-xs ml-1">({itemDescription})</span>
+                )}
+              </span>
+            );
+          })}
+        </div>
+      );
+    }
+    
+    // Regular 2-column grid
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-4">
+        {itemsList.map((item) => {
+          const itemTranslation = menu?.items?.[item.id];
+          const itemName = itemTranslation?.name || item.id.replace(/-/g, ' ');
+          const itemDescription = itemTranslation?.description || '';
+          
+          return (
+            <div key={item.id} className="py-2">
+              <h3 className="font-display text-base md:text-lg text-charcoal font-medium capitalize">
+                {itemName}
+              </h3>
+              {itemDescription && (
+                <p className="text-stone text-sm mt-1 leading-relaxed">
+                  {itemDescription}
+                </p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  // Render Couvert box - special styling
+  const renderCouvertBox = (categoryId: string) => {
+    const couvertItems = getItemsForSubCategory(categoryId, 20, 29);
+    if (couvertItems.length === 0) return null;
+    
+    const couvertName = menu?.subCategories?.couvert || 'Couvert';
+    
+    return (
+      <div className="relative mb-12 mt-2">
+        {/* Couvert label centered above the box */}
+        <div className="text-center mb-3">
+          <span className="text-xs uppercase tracking-[0.25em] text-terracotta/70 font-medium">
+            {couvertName}
+          </span>
+        </div>
+        
+        {/* Transparent box with border */}
+        <div className="border border-terracotta/25 px-6 py-5">
+          {/* Couvert items in a row with more spacing */}
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
+            {couvertItems.map((item, index) => {
+              const itemTranslation = menu?.items?.[item.id];
+              const itemName = itemTranslation?.name || item.id.replace(/-/g, ' ');
+              
+              return (
+                <span key={item.id} className="text-charcoal text-sm capitalize flex items-center">
+                  {index > 0 && <span className="text-terracotta/40 mr-8">·</span>}
+                  {itemName}
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Render sub-category section
+  const renderSubCategory = (subCat: { id: string; name: string; minOrder: number; maxOrder: number }, categoryId: string, isFirst: boolean) => {
+    const subCatItems = getItemsForSubCategory(categoryId, subCat.minOrder, subCat.maxOrder);
+    if (subCatItems.length === 0) return null;
+    
+    // Get translated sub-category name if available
+    const subCatName = menu?.subCategories?.[subCat.id] || subCat.name;
+    
+    // Use compact mode for drinks category
+    const isCompact = categoryId === 'drinks';
+    
+    return (
+      <div key={subCat.id} className={isFirst ? '' : isCompact ? 'mt-6' : 'mt-10'}>
+        <h3 className="text-center text-sm uppercase tracking-[0.2em] text-terracotta/80 mb-4">
+          {subCatName}
+        </h3>
+        {renderItems(subCatItems, isCompact)}
+      </div>
+    );
+  };
   
   return (
     <div className="min-h-screen bg-warm-white">
@@ -113,7 +256,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            {menu.heroTitle || 'Our Menu'}
+            {menu?.heroTitle || 'Our Menu'}
           </motion.h1>
 
           <motion.p
@@ -122,7 +265,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {menu.heroSubtitle || 'Mediterranean flavours. Lebanese soul.'}
+            {menu?.heroSubtitle || 'Mediterranean flavours. Lebanese soul.'}
           </motion.p>
         </div>
       </section>
@@ -177,6 +320,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           >
             {sortedCategories.map((category) => {
               const isActive = activeCategory === category.id;
+              const categoryName = menu?.categories?.[category.id]?.name || category.id;
               return (
                 <button
                   key={category.id}
@@ -187,7 +331,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                       : 'bg-sand text-charcoal hover:bg-terracotta/10 hover:text-terracotta'
                   }`}
                 >
-                  {menu.categories[category.id]?.name || category.id}
+                  {categoryName}
                 </button>
               );
             })}
@@ -261,6 +405,8 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
               {sortedCategories.map((category) => {
                 const categoryItems = getItemsForCategory(category.id);
                 const isActive = activeCategory === category.id;
+                const categoryName = menu?.categories?.[category.id]?.name || category.id;
+                const hasSubCategories = subCategories[category.id];
                 
                 return (
                   <div
@@ -271,7 +417,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                     {/* Category Header */}
                     <div className="text-center mb-8">
                       <h2 className="font-display text-2xl md:text-3xl text-charcoal mb-4">
-                        {menu.categories[category.id]?.name}
+                        {categoryName}
                       </h2>
                       <div className="flex items-center justify-center">
                         <div className="w-12 h-px bg-terracotta/60" />
@@ -288,31 +434,22 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                       </div>
                     </div>
                     
-                    {/* Items Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-4">
-                      {categoryItems.map((item) => {
-                        const itemTranslation = menu.items?.[item.id];
-                        if (!itemTranslation) return null;
-                        
-                        return (
-                          <div key={item.id} className="py-2">
-                            <h3 className="font-display text-base md:text-lg text-charcoal font-medium">
-                              {itemTranslation.name}
-                            </h3>
-                            {itemTranslation.description && (
-                              <p className="text-stone text-sm mt-1 leading-relaxed">
-                                {itemTranslation.description}
-                              </p>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
+                    {/* Render Couvert box at top for to-start category */}
+                    {category.id === 'to-start' && renderCouvertBox(category.id)}
+                    
+                    {/* Render with sub-categories if available, otherwise flat list */}
+                    {hasSubCategories ? (
+                      hasSubCategories.map((subCat, index) => 
+                        renderSubCategory(subCat, category.id, index === 0)
+                      )
+                    ) : (
+                      renderItems(categoryItems)
+                    )}
                     
                     {/* Empty state */}
                     {categoryItems.length === 0 && (
                       <p className="text-center text-stone py-12">
-                        {menu.emptyCategory || 'No items in this category yet.'}
+                        {menu?.emptyCategory || 'No items in this category yet.'}
                       </p>
                     )}
                   </div>
@@ -322,7 +459,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
               {/* Allergen Note */}
               <div className="mt-10 pt-6 border-t border-stone/20">
                 <p className="text-center text-stone text-sm italic">
-                  {menu.allergenNote || 'Please ask our team about allergens and dietary requirements.'}
+                  {menu?.allergenNote || 'Please ask our team about allergens and dietary requirements.'}
                 </p>
               </div>
             </div>

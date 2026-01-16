@@ -47,162 +47,289 @@
     ]
   },
   "menu": {
-    "heroTagline": "Made for sharing",
     "heroTitle": "Our Menu",
+    "heroSubtitle": "Mediterranean flavours. Lebanese soul.",
+    "allergenNote": "Please ask our team about allergens and dietary requirements.",
     "title": "The Menu",
     "subtitle": "Explore our offerings",
     "viewFull": "View Full Menu",
-    "disclaimer": "Prices in Euros. Prices include VAT.",
     "emptyCategory": "No items in this category yet.",
     "categories": {
       "to-start": {
-        "name": "To Start"
+        "name": "To Start",
+        "description": "Starters, dips, salads & couvert"
       },
-      "later": {
-        "name": "Later"
+      "mains": {
+        "name": "Mains",
+        "description": "Hearty Mediterranean dishes"
       },
       "to-end": {
-        "name": "To End"
+        "name": "To End",
+        "description": "Sweet endings"
       },
-      "non-alcoholic": {
-        "name": "To Drink (Non-Alcoholic)"
+      "saj-wraps": {
+        "name": "SAJ Wraps",
+        "description": "Thin, crispy Lebanese flatbread cooked on a saj griddle"
       },
-      "alcoholic": {
-        "name": "To Drink (Alcoholic)"
+      "drinks": {
+        "name": "Drinks",
+        "description": "Coffee, tea & refreshments"
       },
-      "teas-coffees": {
-        "name": "Teas & Coffees"
-      },
-      "wine": {
-        "name": "Wine Selection"
+      "cocktails-wine": {
+        "name": "Cocktails & Wine",
+        "description": "Signature cocktails, classics, wines & beers"
       }
     },
     "items": {
-      "hummus-beiruti": {
-        "name": "Hummus Beiruti",
-        "description": "Warm chickpeas, olive oil, pine nuts"
+      "honey-roasted-halloumi": {
+        "name": "Honey Roasted Halloumi",
+        "description": "With roasted cherry tomatoes and fresh thyme"
       },
-      "kibbeh-nayeh": {
-        "name": "Kibbeh Nayeh",
-        "description": "Raw lamb tartare, bulgur, fresh mint"
+      "shrimp-saj-crostini": {
+        "name": "Shrimp Saj Crostini",
+        "description": "Crispy saj rounds topped with tabbouleh, sautéed shrimp, and lemon zest"
       },
-      "batata-harra": {
-        "name": "Batata Harra",
-        "description": "Crispy potatoes, garlic, coriander, chili"
+      "shish-barak": {
+        "name": "Shish Barak",
+        "description": "Fried minced beef dumplings sautéed in chili paste, served over garlicky yogurt and caramelized onions, with roasted almonds"
       },
-      "fattoush": {
-        "name": "Fattoush",
-        "description": "Crispy pita, pomegranate, sumac, fresh vegetables"
+      "kebab-pistachio": {
+        "name": "Kebab Pistachio",
+        "description": "Minced meat with pistachios and house spices, sautéed in pomegranate molasses. Served with hummus"
       },
-      "baba-ganoush": {
-        "name": "Baba Ganoush",
-        "description": "Smoky eggplant, tahini, pomegranate"
+      "chicken-rolls": {
+        "name": "Chicken Rolls",
+        "description": "Mousakhan - crispy saj rolls filled with shredded chicken, caramelized onions and sumac. Served with a yogurt dip"
       },
-      "labneh": {
-        "name": "Labneh",
-        "description": "Strained yogurt, za'atar, olive oil"
+      "falafel-bites": {
+        "name": "Falafel Bites",
+        "description": "Chickpea balls served with mixed veggies, bread crumbles and tahini dressing"
+      },
+      "cheese-rolls": {
+        "name": "Cheese Rolls",
+        "description": "Crispy pastry filled with cheese and parsley"
+      },
+      "fries": {
+        "name": "Fries",
+        "description": "Homemade"
+      },
+      "spinach-artichoke-gratin": {
+        "name": "Spinach & Artichoke Gratin",
+        "description": "Oven-baked creamy dip, served hot with melted parmesan and mozzarella"
+      },
+      "muhamara": {
+        "name": "Muhamara",
+        "description": "Roasted red pepper dip, walnuts, tahini, pomegranate molasses and a hint of chili"
+      },
+      "hummus": {
+        "name": "Hummus",
+        "description": "Creamy chickpeas dip, topped with pomegranate seeds"
       },
       "feta-brulee": {
         "name": "Feta Brûlée",
-        "description": "Caramelized feta, honey, sesame"
+        "description": "Creamy feta mix with mild chili, finished with a crisp caramelized sugar crust"
       },
-      "halloumi-honey": {
-        "name": "Honey Roasted Halloumi",
-        "description": "Grilled halloumi, honey, pine nuts"
+      "labneh-plus": {
+        "name": "Labneh+",
+        "description": "Creamy strained yogurt mixed with diced veggies and olives"
       },
-      "chicken-shawarma": {
-        "name": "Chicken Shawarma",
-        "description": "Marinated chicken, garlic sauce, pickles"
+      "marinated-olives": {
+        "name": "Marinated Olives",
+        "description": ""
       },
-      "lamb-kofta": {
-        "name": "Lamb Kofta",
-        "description": "Spiced lamb skewers, tahini, fresh herbs"
+      "zaatar-mix-crackers": {
+        "name": "Zaatar Mix & Crackers",
+        "description": ""
       },
-      "grilled-chicken": {
-        "name": "Grilled Chicken Breast",
-        "description": "Mediterranean spices, lemon, herbs"
+      "saj-crackers": {
+        "name": "Saj Crackers",
+        "description": ""
       },
-      "mixed-grill": {
-        "name": "Mixed Grill",
-        "description": "Selection of grilled meats, rice, salad"
+      "saj-bread": {
+        "name": "Saj Bread",
+        "description": ""
       },
-      "lamb-chops": {
-        "name": "Lamb Chops",
-        "description": "Char-grilled, herbs, garlic"
+      "fatoush": {
+        "name": "Fatoush",
+        "description": "Romaine, parsley, mint, tomato, cucumber, bell pepper, green onion, radish, crispy bread, tangy dressing"
       },
-      "saj-zaatar": {
-        "name": "Saj Zaatar",
-        "description": "Traditional za'atar, olive oil"
+      "tabbouleh": {
+        "name": "Tabbouleh",
+        "description": "Parsley, tomato, mint, green onion, lemon-oil dressing"
       },
-      "saj-cheese": {
-        "name": "Saj Cheese",
-        "description": "Melted white cheese, fresh mint"
+      "caesar": {
+        "name": "Caesar",
+        "description": "Marinated chicken, romaine, parmesan, croutons, caesar dressing"
       },
-      "saj-labneh": {
-        "name": "Saj Labneh",
-        "description": "Strained yogurt, cucumber, tomato"
+      "shawarma": {
+        "name": "Shawarma",
+        "description": "Beef with fries, onion and parsley salad, tomato, pickles, tahini dressing and saj bread"
       },
-      "kunafa": {
-        "name": "Kunafa",
-        "description": "Shredded pastry, sweet cheese, rose syrup"
+      "salmon": {
+        "name": "Salmon",
+        "description": "Grilled with tahini sauce mixed with diced red and green bell pepper, coriander, served with sautéed baby potatoes"
       },
-      "baklava": {
-        "name": "Baklava",
-        "description": "Layers of filo, pistachios, honey"
+      "chicken-breast": {
+        "name": "Chicken Breast",
+        "description": "House marinated and grilled, served with sautéed baby potatoes, cherry tomatoes and yogurt-herb sauce"
       },
-      "warda": {
-        "name": "Warda",
-        "description": "Rose jam, bourbon, lime, cardamom"
+      "lasagna": {
+        "name": "Lasagna",
+        "description": "Chili made with beef and pork ragu, melted parmesan and mozzarella"
       },
-      "beirut-sour": {
-        "name": "Beirut Sour",
-        "description": "Arak, orange blossom, citrus, egg white"
+      "lebanese-burger": {
+        "name": "Lebanese Burger",
+        "description": "Two smash patties, coleslaw, fries, pickles, ketchup & mustard in a toasted bun. Served with fries and coleslaw"
       },
-      "cedar-old-fashioned": {
-        "name": "Cedar Old Fashioned",
-        "description": "Whiskey, cedar, orange, bitters"
+      "tiramisu": {
+        "name": "Tiramisu",
+        "description": "To share - mascarpone, pasteurized eggs, savoiardi, a touch of kahlua, cocoa powder"
       },
-      "fattouch-on-ice": {
-        "name": "Fattouch on Ice",
-        "description": "Bourbon, pomegranate, sumac, mint"
+      "rice-pudding": {
+        "name": "Rice Pudding",
+        "description": "Risotto, milk, cinnamon powder"
       },
-      "house-red": {
-        "name": "House Red",
-        "description": "Portuguese selection"
+      "znoud-el-set": {
+        "name": "Znoud el Set",
+        "description": "Crispy baklava sheets, sweet cream filling (ashta), sugar syrup, pistachio"
       },
-      "house-white": {
-        "name": "House White",
-        "description": "Portuguese selection"
+      "pain-perdu": {
+        "name": "Pain Perdu",
+        "description": "To share - oven-baked soaked French toast with a drizzle of caramel"
       },
-      "cortado": {
-        "name": "Cortado",
-        "description": "Espresso, steamed milk"
+      "saj-its-thyme": {
+        "name": "It's Thyme",
+        "description": "Zaatar mix, tomato, cucumber, mint, olives"
       },
-      "lebanese-coffee": {
-        "name": "Lebanese Coffee",
-        "description": "Traditional cardamom coffee"
+      "saj-thyme-cheese": {
+        "name": "Thyme for Cheese",
+        "description": "Zaatar mix, melted white cheese"
       },
-      "mint-tea": {
-        "name": "Fresh Mint Tea",
-        "description": "Fresh mint leaves, honey"
+      "saj-cheesy": {
+        "name": "Cheesy",
+        "description": "Melted white cheese"
       },
-      "lemonade": {
-        "name": "House Lemonade",
-        "description": "Fresh squeezed, mint, rose water"
-      }
-    },
-    "tags": {
-      "vegetarian": "V",
-      "vegan": "VG",
-      "gluten-free": "GF"
-    },
-    "legend": {
-      "vegetarian": "Vegetarian",
-      "vegan": "Vegan",
-      "glutenFree": "Gluten-Free"
-    },
-    "glass": "glass",
-    "bottle": "bottle"
+      "saj-turkey-cheese": {
+        "name": "Turkey and Cheese",
+        "description": "Smoked turkey, melted cheese, lettuce, tomato, pickles, mayo-mustard dressing"
+      },
+      "saj-halloumi-bacon": {
+        "name": "Halloumi Bacon",
+        "description": "Melted halloumi and white cheese, crispy bacon, tomato, pickles, mayo"
+      },
+      "saj-what-the-feta": {
+        "name": "What the Feta",
+        "description": "Creamy feta, tomato, arugula, onion, basil, zaatar"
+      },
+      "saj-roasted-veggies": {
+        "name": "Roasted Veggies",
+        "description": "Roasted eggplant and zucchini, red pepper paste, sweet potato chips, pomegranate seeds, parsley, tahini dressing"
+      },
+      "saj-nutella-mozzarella": {
+        "name": "Nutella Mozzarella",
+        "description": "Nutella, melted fresh mozzarella"
+      },
+      "saj-nutella-white-cheese": {
+        "name": "Nutella + White Cheese",
+        "description": "Nutella, melted white cheese"
+      },
+      "saj-berry-compote": {
+        "name": "Berry Compote",
+        "description": "Cream cheese, berry compote, strawberries"
+      },
+      "saj-peanut-tahini": {
+        "name": "Peanut Tahini",
+        "description": "Peanut butter, maple tahini, bananas"
+      },
+      "saj-the-og": {
+        "name": "The OG",
+        "description": "Melted butter, sugar"
+      },
+      "saj-nutella-banana": {
+        "name": "Nutella + Banana",
+        "description": ""
+      },
+      "saj-nutella-strawberry": {
+        "name": "Nutella + Strawberry",
+        "description": ""
+      },
+      "cortado": { "name": "Cortado", "description": "" },
+      "espresso": { "name": "Espresso", "description": "" },
+      "espresso-double": { "name": "Espresso Double", "description": "" },
+      "americano": { "name": "Americano", "description": "" },
+      "americano-iced": { "name": "Americano (iced)", "description": "" },
+      "cappuccino": { "name": "Cappuccino", "description": "" },
+      "flat-white": { "name": "Flat White", "description": "" },
+      "hot-chocolate": { "name": "Hot Chocolate", "description": "" },
+      "hot-chocolate-sweet": { "name": "Hot Chocolate (sweet)", "description": "" },
+      "latte": { "name": "Latte", "description": "" },
+      "latte-iced": { "name": "Latte (iced)", "description": "" },
+      "latte-macchiato": { "name": "Latte Macchiato", "description": "" },
+      "lavender-coffee": { "name": "Lavender Coffee", "description": "" },
+      "macchiato": { "name": "Macchiato", "description": "" },
+      "mocha": { "name": "Mocha", "description": "" },
+      "milk": { "name": "Milk", "description": "" },
+      "tea-moroccan": { "name": "Moroccan Tea", "description": "" },
+      "tea-zhourat": { "name": "Zhourat", "description": "" },
+      "tea-maida": { "name": "Maída Tea", "description": "" },
+      "tea-cafe-blanc": { "name": "Cafe Blanc", "description": "" },
+      "tea-other": { "name": "Other Teas", "description": "Ask us about our selection" },
+      "tea-kombucha": { "name": "Kombucha Tea", "description": "" },
+      "lemonade": { "name": "Lemonade", "description": "" },
+      "lemonade-maida": { "name": "Maída Lemonade", "description": "Rose syrup, mastic syrup, lemon" },
+      "lemonade-pitcher": { "name": "Lemonade (pitcher)", "description": "" },
+      "juice-passion-fruit": { "name": "Passion Fruit & Cinnamon", "description": "" },
+      "juice-buzz": { "name": "Buzz", "description": "Carrot, apple, ginger" },
+      "milkshake-banana": { "name": "Banana Heaven", "description": "" },
+      "cola": { "name": "Cola", "description": "" },
+      "cola-zero": { "name": "Cola Zero", "description": "" },
+      "kombucha": { "name": "Kombucha", "description": "" },
+      "ice-tea": { "name": "Ice Tea", "description": "" },
+      "fritz-spritz": { "name": "Fritz Spritz", "description": "" },
+      "fritz-limo": { "name": "Fritz Limo", "description": "" },
+      "pink-grapefruit": { "name": "Pink Grapefruit", "description": "Fever-tree" },
+      "still-water": { "name": "Still Water", "description": "" },
+      "sparkling-water": { "name": "Sparkling Water", "description": "" },
+      "tonic-water": { "name": "Tonic Water", "description": "Fever-tree" },
+      "soda-water": { "name": "Soda Water", "description": "" },
+      "ginger-beer": { "name": "Ginger Beer", "description": "" },
+      "ginger-ale": { "name": "Ginger Ale", "description": "" },
+      "mocktail-paloma": { "name": "Paloma Picante", "description": "" },
+      "mocktail-kombucha-mojito": { "name": "Kombucha Mojito", "description": "" },
+      "cocktail-fatouch-rocks": { "name": "Fatouch on the Rocks", "description": "Bourbon, pomegranate molasses, mint, lemon" },
+      "cocktail-maida-martini": { "name": "Maída Martini", "description": "Gin, vermouth, orange blossom" },
+      "cocktail-mediterranean-gt": { "name": "Mediterranean G&T", "description": "Mediterranean gin, lillet, lime, tonic water" },
+      "cocktail-warda": { "name": "Warda", "description": "Bourbon, rose jam, ginger" },
+      "cocktail-thyme-margarita": { "name": "Thyme for Margarita", "description": "Tequila, orange liqueur, thyme, sumac" },
+      "cocktail-azeitona-cafe": { "name": "Azeitona Cafe", "description": "Vodka, coffee liqueur, espresso, olive oil, olives" },
+      "cocktail-marie-antoinette": { "name": "Marie-Antoinette", "description": "Vodka, passion fruit, St. Germain, vanilla, tonka beans" },
+      "cocktail-soraya": { "name": "Soraya", "description": "Arak, rum, lemon, ginjinha foam" },
+      "cocktail-mimosa": { "name": "Mimosa", "description": "Sparkling wine, orange" },
+      "cocktail-manhattan": { "name": "Manhattan", "description": "Bourbon, vermouth, bitter" },
+      "cocktail-gin-basil-smash": { "name": "Gin Basil Smash", "description": "Gin, basil, lemon" },
+      "cocktail-daiquiri": { "name": "Daiquiri", "description": "White rum, lime" },
+      "cocktail-negroni": { "name": "Negroni", "description": "Gin, campari, vermouth" },
+      "cocktail-naked-famous": { "name": "Naked & Famous", "description": "Mezcal, chartreuse, aperol, lime" },
+      "cocktail-caipirinha": { "name": "Caipirinha de Limão", "description": "Cachaça, demerara sugar, lime" },
+      "cocktail-espresso-martini": { "name": "Espresso Martini", "description": "Vodka, coffee liqueur, espresso" },
+      "cocktail-aperol-spritz": { "name": "Aperol Spritz", "description": "Prosecco, aperol, soda water" },
+      "cocktail-moscow-mule": { "name": "Moscow Mule", "description": "Vodka, ginger, lemon, bitter" },
+      "cocktail-margarita": { "name": "Margarita", "description": "Tequila, orange liqueur, lemon" },
+      "cocktail-new-york-sour": { "name": "New York Sour", "description": "Bourbon, lemon, bitter, red wine" },
+      "wine-2160-white": { "name": "2160", "description": "White - Douro" },
+      "wine-infinitude-white": { "name": "Infinitude", "description": "White - Sintra" },
+      "wine-altitudes-white": { "name": "Altitudes Ixsir", "description": "White - Lebanon" },
+      "wine-cameleao-green": { "name": "Camaleão Alvarinho", "description": "Green - Amarante" },
+      "wine-memorias-rose": { "name": "Memórias", "description": "Rosé - Dão" },
+      "wine-anexo-red": { "name": "Anexo", "description": "Red - Alentejo" },
+      "wine-biaia-red": { "name": "Biaia Colheita", "description": "Red - Beira" },
+      "wine-sparkling": { "name": "Sparkling Wine", "description": "" },
+      "beer-clay-cold": { "name": "Clay Cold", "description": "Blonde, lemon, salt. Served in a cold clay cup" },
+      "beer-draft-25": { "name": "Draft Beer (25cl)", "description": "" },
+      "beer-draft-50": { "name": "Draft Beer (50cl)", "description": "" },
+      "beer-superbock": { "name": "Superbock", "description": "" },
+      "beer-musa-apa": { "name": "Musa (APA)", "description": "" }
+    }
   },
   "drinks": {
     "label": "From Our Roots",
