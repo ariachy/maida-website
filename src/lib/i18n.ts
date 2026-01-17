@@ -1,5 +1,5 @@
-// Supported languages
-export const locales = ['en', 'pt', 'de', 'it', 'es'] as const;
+// Supported languages - LIMITED TO EN/PT FOR NOW
+export const locales = ['en', 'pt'] as const;
 export type Locale = typeof locales[number];
 
 export const defaultLocale: Locale = 'en';
@@ -8,18 +8,12 @@ export const defaultLocale: Locale = 'en';
 export const languageNames: Record<Locale, string> = {
   en: 'English',
   pt: 'Português',
-  de: 'Deutsch',
-  it: 'Italiano',
-  es: 'Español',
 };
 
 // Language flags (emoji)
 export const languageFlags: Record<Locale, string> = {
   en: '🇬🇧',
   pt: '🇵🇹',
-  de: '🇩🇪',
-  it: '🇮🇹',
-  es: '🇪🇸',
 };
 
 /**
@@ -129,12 +123,6 @@ export function removeLocaleFromPathname(pathname: string): string {
 // Add locale prefix to pathname
 export function addLocaleToPathname(pathname: string, locale: Locale): string {
   const cleanPath = removeLocaleFromPathname(pathname);
-  
-  // Don't add locale prefix for default locale (optional - can be changed)
-  // if (locale === defaultLocale) {
-  //   return cleanPath;
-  // }
-  
   return `/${locale}${cleanPath === '/' ? '' : cleanPath}`;
 }
 

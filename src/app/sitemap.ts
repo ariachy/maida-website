@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-const locales = ['en', 'pt', 'de', 'it', 'es'];
+const locales = ['en', 'pt'];
 const baseUrl = 'https://maida.pt';
 
 // All pages in the site
@@ -26,11 +26,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date(),
         changeFrequency: page === '' ? 'weekly' : 'monthly',
         priority: page === '' ? 1 : page === '/menu' ? 0.9 : 0.7,
-        alternates: {
-          languages: Object.fromEntries(
-            locales.map((l) => [l, `${baseUrl}/${l}${page}`])
-          ),
-        },
       });
     }
   }
