@@ -147,11 +147,21 @@ export default function ContactClient({ translations, locale }: ContactClientPro
               {/* Hours */}
               <div>
                 <h3 className="font-display text-xl text-charcoal mb-4">Opening Hours</h3>
-                <div className="space-y-1 text-charcoal/70">
-                  <p>Mon–Tue: Closed</p>
-                  <p>Wed, Thu, Sun: 12:30 – 23:00</p>
-                  <p>Friday: 12:30 – 00:00</p>
-                  <p>Saturday: 12:30 – 02:00</p>
+                <div className="space-y-2 text-charcoal/70 text-sm">
+                  <div>
+                    <p className="text-charcoal font-medium">Mon–Tue</p>
+                    <p>Closed</p>
+                  </div>
+                  <div>
+                    <p className="text-charcoal font-medium">Wed, Thu, Sun</p>
+                    <p>12:30 - 23:00</p>
+                    <p className="text-xs text-stone">Kitchen closes 22:30</p>
+                  </div>
+                  <div>
+                    <p className="text-charcoal font-medium">Fri–Sat</p>
+                    <p>12:30 - 01:00</p>
+                    <p className="text-xs text-stone">Kitchen closes 23:30</p>
+                  </div>
                 </div>
               </div>
 
@@ -312,9 +322,9 @@ export default function ContactClient({ translations, locale }: ContactClientPro
           >
             <div className="aspect-[2/1] bg-sand/30 overflow-hidden relative">
               <LazyMap
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3113.4276289882!2d-9.145!3d38.706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDQyJzIxLjYiTiA5wrAwOCc0Mi4wIlc!5e0!3m2!1sen!2spt!4v1234567890"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2849.8846023983865!2d-9.15119542455817!3d38.70891275780444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd193332b934a279%3A0x3191bb53cc89ae9!2sma%C3%ADda%20%7C%20Mediterranean%20Flavours%2C%20Lebanese%20Soul!5e1!3m2!1sen!2slb!4v1768684138120!5m2!1sen!2slb"
                 title="Maída Restaurant Location"
-                className="absolute inset-0"
+                loading="eager"
               />
             </div>
           </motion.div>

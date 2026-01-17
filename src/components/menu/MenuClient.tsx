@@ -189,36 +189,47 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
 
   // Render Couvert box - special styling
   const renderCouvertBox = (categoryId: string) => {
-    const couvertItems = getItemsForSubCategory(categoryId, 20, 29);
+    let couvertItems = getItemsForSubCategory(categoryId, 20, 29);
     if (couvertItems.length === 0) return null;
+    
+    // Custom order for couvert items: Marinated Olives, Saj Crackers, Zaatar Mix & Crackers, Saj Bread
+    const couvertOrder = ['marinated-olives', 'saj-crackers', 'zaatar-mix-crackers', 'saj-bread'];
+    couvertItems = [...couvertItems].sort((a, b) => {
+      const aIndex = couvertOrder.indexOf(a.id);
+      const bIndex = couvertOrder.indexOf(b.id);
+      // If item not in custom order, put it at the end
+      const aOrder = aIndex === -1 ? 999 : aIndex;
+      const bOrder = bIndex === -1 ? 999 : bIndex;
+      return aOrder - bOrder;
+    });
     
     const couvertName = menu?.subCategories?.couvert || 'Couvert';
     
     return (
       <div className="relative mb-12 mt-2">
-        {/* Couvert label centered above the box - FIXED: Now uses h3 like other sub-categories */}
+        {/* Couvert label centered above the box */}
         <div className="text-center mb-3">
           <h3 className="text-base uppercase tracking-[0.2em] text-terracotta/80 font-bold">
             {couvertName}
           </h3>
         </div>
         
-        {/* CHANGE 3: Reduced padding (py-5 → py-3) */}
-        <div className="border border-terracotta/25 px-6 py-3">
-          {/* Couvert items in a row with more spacing */}
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
+        {/* Couvert box with items */}
+        <div className="border border-terracotta/25 px-4 py-3">
+          {/* Couvert items as inline text with dot separators */}
+          <p className="text-center text-charcoal text-sm leading-relaxed">
             {couvertItems.map((item, index) => {
               const itemTranslation = menu?.items?.[item.id];
               const itemName = itemTranslation?.name || item.id.replace(/-/g, ' ');
               
               return (
-                <span key={item.id} className="text-charcoal text-sm capitalize flex items-center">
-                  {index > 0 && <span className="text-terracotta/40 mr-8">·</span>}
+                <span key={item.id} className="capitalize whitespace-nowrap inline-block">
+                  {index > 0 && <span className="text-terracotta/40 mx-2">·</span>}
                   {itemName}
                 </span>
               );
             })}
-          </div>
+          </p>
         </div>
       </div>
     );
@@ -313,11 +324,15 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
             )}
           </AnimatePresence>
           
-          {/* Categories - FIXED: Added justify-center for center alignment */}
+          {/* Categories - Scrollable on mobile, centered on desktop */}
           <div 
             ref={scrollContainerRef}
-            className="flex justify-center gap-2 overflow-x-auto scrollbar-hide px-1"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            className="flex md:justify-center gap-2 overflow-x-auto scrollbar-hide px-1"
+            style={{ 
+              scrollbarWidth: 'none', 
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch'
+            }}
           >
             {sortedCategories.map((category) => {
               const isActive = activeCategory === category.id;

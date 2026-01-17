@@ -9,7 +9,7 @@ import { Locale } from '@/lib/i18n';
 const featuredFood = [
   {
     name: 'Shish Barak',
-    description: 'fried minced beef dumplings sauteed in chili paste, served over farlicky yogurt and caramelized onions, with roasted almonds.',
+    description: 'fried minced beef dumplings sauteed in chili paste, served over garlicky yogurt and caramelized onions with roasted almonds.',
     image: '/images/food/shish-barak.webp',
   },
   {
@@ -185,10 +185,16 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             </button>
           )}
 
+          {/* FIXED: Added overflow-y-hidden, touchAction, overscrollBehavior for mobile scroll fix */}
           <div
             ref={foodScrollRef}
             onScroll={checkFoodScroll}
-            className="flex gap-5 md:gap-6 overflow-x-auto pb-4 -mx-6 px-6 snap-x snap-mandatory scrollbar-hide scroll-pl-6"
+            className="flex gap-5 md:gap-6 overflow-x-auto overflow-y-hidden pb-4 -mx-6 px-6 snap-x snap-mandatory scrollbar-hide scroll-pl-6"
+            style={{ 
+              touchAction: 'pan-x',
+              overscrollBehaviorX: 'contain',
+              WebkitOverflowScrolling: 'touch'
+            }}
           >
             {featuredFood.map((item, index) => (
               <motion.div
@@ -208,6 +214,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
                         src={item.image}
                         alt={item.name}
                         fill
+                        sizes="(max-width: 768px) 75vw, 280px"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                         onError={() => setFoodImageErrors(prev => ({ ...prev, [item.name]: true }))}
                       />
@@ -275,10 +282,16 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             </button>
           )}
 
+          {/* FIXED: Added overflow-y-hidden, touchAction, overscrollBehavior for mobile scroll fix */}
           <div
             ref={drinksScrollRef}
             onScroll={checkDrinksScroll}
-            className="flex gap-5 md:gap-6 overflow-x-auto pb-4 -mx-6 px-6 snap-x snap-mandatory scrollbar-hide scroll-pl-6"
+            className="flex gap-5 md:gap-6 overflow-x-auto overflow-y-hidden pb-4 -mx-6 px-6 snap-x snap-mandatory scrollbar-hide scroll-pl-6"
+            style={{ 
+              touchAction: 'pan-x',
+              overscrollBehaviorX: 'contain',
+              WebkitOverflowScrolling: 'touch'
+            }}
           >
             {featuredDrinks.map((item, index) => (
               <motion.div
@@ -298,6 +311,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
                         src={item.image}
                         alt={item.name}
                         fill
+                        sizes="(max-width: 768px) 75vw, 280px"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                         onError={() => setDrinkImageErrors(prev => ({ ...prev, [item.name]: true }))}
                       />
