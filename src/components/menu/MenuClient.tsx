@@ -160,7 +160,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       );
     }
     
-    // Regular 2-column grid
+    {/* CHANGE 2: Center-aligned menu text */}
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-4">
         {itemsList.map((item) => {
@@ -169,12 +169,14 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           const itemDescription = itemTranslation?.description || '';
           
           return (
-            <div key={item.id} className="py-2">
+            // CHANGE 7: Reduced line-height between item name and description (py-2 → py-1.5)
+            <div key={item.id} className="py-1.5 text-center">
               <h3 className="font-display text-base md:text-lg text-charcoal font-medium capitalize">
                 {itemName}
               </h3>
               {itemDescription && (
-                <p className="text-stone text-sm mt-1 leading-relaxed">
+                // CHANGE 7: Reduced margin-top (mt-1 → mt-0.5) for tighter spacing
+                <p className="text-stone text-sm mt-0.5 leading-snug">
                   {itemDescription}
                 </p>
               )}
@@ -194,15 +196,15 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
     
     return (
       <div className="relative mb-12 mt-2">
-        {/* Couvert label centered above the box */}
+        {/* Couvert label centered above the box - FIXED: Now uses h3 like other sub-categories */}
         <div className="text-center mb-3">
-          <span className="text-xs uppercase tracking-[0.25em] text-terracotta/70 font-medium">
+          <h3 className="text-base uppercase tracking-[0.2em] text-terracotta/80 font-bold">
             {couvertName}
-          </span>
+          </h3>
         </div>
         
-        {/* Transparent box with border */}
-        <div className="border border-terracotta/25 px-6 py-5">
+        {/* CHANGE 3: Reduced padding (py-5 → py-3) */}
+        <div className="border border-terracotta/25 px-6 py-3">
           {/* Couvert items in a row with more spacing */}
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
             {couvertItems.map((item, index) => {
@@ -235,7 +237,8 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
     
     return (
       <div key={subCat.id} className={isFirst ? '' : isCompact ? 'mt-6' : 'mt-10'}>
-        <h3 className="text-center text-sm uppercase tracking-[0.2em] text-terracotta/80 mb-4">
+        {/* CHANGE 6: Increased sub-category size (text-sm → text-base) and added font-bold */}
+        <h3 className="text-center text-base uppercase tracking-[0.2em] text-terracotta/80 mb-4 font-bold">
           {subCatName}
         </h3>
         {renderItems(subCatItems, isCompact)}
@@ -267,32 +270,33 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           >
             {menu?.heroSubtitle || 'Mediterranean flavours. Lebanese soul.'}
           </motion.p>
+          
+          {/* CHANGE 1: Removed مائدة from the decorative divider */}
+          <motion.div
+            className="relative flex items-center justify-center gap-4 px-6 pb-4 overflow-hidden mt-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            {/* Removed: Arabic watermark مائدة */}
+            <span className="relative w-16 md:w-24 h-px bg-terracotta/30" />
+            <Image 
+              src="/images/brand/emblem.svg" 
+              alt="" 
+              width={20} 
+              height={20}
+              className="relative opacity-50"
+            />
+            <span className="relative w-16 md:w-24 h-px bg-terracotta/30" />
+          </motion.div>
         </div>
       </section>
-
+      
       {/* ============================================
-          DIVIDER WITH ARABIC WATERMARK
+          CATEGORY SELECTOR (Sticky)
           ============================================ */}
-      <div className="relative flex items-center justify-center gap-4 px-6 pb-4 overflow-hidden">
-        <span className="absolute text-6xl text-terracotta/[0.06] font-display select-none pointer-events-none" style={{ fontFamily: 'serif' }}>
-          مائدة
-        </span>
-        <span className="relative w-16 md:w-24 h-px bg-terracotta/30" />
-        <Image 
-          src="/images/brand/emblem.svg" 
-          alt="" 
-          width={20} 
-          height={20} 
-          className="relative opacity-50"
-        />
-        <span className="relative w-16 md:w-24 h-px bg-terracotta/30" />
-      </div>
-
-      {/* ============================================
-          CATEGORY BUTTONS
-          ============================================ */}
-      <div className="relative py-5 md:py-6 px-4 bg-sand/30">
-        <div className="max-w-4xl mx-auto relative">
+      <div className="sticky top-[72px] md:top-[80px] z-40 bg-warm-white/95 backdrop-blur-sm border-b border-stone/10">
+        <div className="max-w-4xl mx-auto relative py-3 px-4">
           {/* Left Arrow */}
           <AnimatePresence>
             {showLeftArrow && (
@@ -309,14 +313,11 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
             )}
           </AnimatePresence>
           
-          {/* Category Buttons Container */}
-          <div
+          {/* Categories - FIXED: Added justify-center for center alignment */}
+          <div 
             ref={scrollContainerRef}
-            className={`flex gap-2 md:gap-3 py-2 ${
-              needsScroll 
-                ? 'overflow-x-auto scrollbar-hide scroll-smooth-x px-8' 
-                : 'overflow-visible flex-wrap justify-center'
-            }`}
+            className="flex justify-center gap-2 overflow-x-auto scrollbar-hide px-1"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {sortedCategories.map((category) => {
               const isActive = activeCategory === category.id;
@@ -368,9 +369,9 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
               boxShadow: '0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05)',
             }}
           >
-            {/* Paper texture */}
+            {/* CHANGE 4: Reduced paper texture opacity by ~25% (0.4 → 0.3) */}
             <div 
-              className="absolute inset-0 pointer-events-none opacity-[0.4]"
+              className="absolute inset-0 pointer-events-none opacity-[0.3]"
               style={{
                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' stitchTiles='stitch'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fff' surfaceScale='2'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E")`,
               }}
@@ -390,15 +391,8 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
             <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-terracotta/20 pointer-events-none" />
             <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-terracotta/20 pointer-events-none" />
             
-            {/* Arabic Watermark */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-              <span 
-                className="text-[180px] md:text-[250px] text-terracotta/[0.06] font-display"
-                style={{ fontFamily: 'serif' }}
-              >
-                مائدة
-              </span>
-            </div>
+            {/* REMOVED: Arabic Watermark - was causing visual clutter */}
+            {/* Previously: <span className="text-[180px] md:text-[250px] text-terracotta/[0.06]">مائدة</span> */}
 
             {/* Content */}
             <div className="relative px-8 md:px-12 py-10 md:py-12">
@@ -414,24 +408,22 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                     className={isActive ? 'block' : 'hidden'}
                     aria-hidden={!isActive}
                   >
-                    {/* Category Header */}
-                    <div className="text-center mb-8">
-                      <h2 className="font-display text-2xl md:text-3xl text-charcoal mb-4">
-                        {categoryName}
-                      </h2>
-                      <div className="flex items-center justify-center">
-                        <div className="w-12 h-px bg-terracotta/60" />
-                        <div className="mx-3">
-                          <Image 
-                            src="/images/brand/emblem.svg" 
-                            alt="" 
-                            width={14} 
-                            height={14} 
-                            className="opacity-60"
-                          />
-                        </div>
-                        <div className="w-12 h-px bg-terracotta/60" />
+                    {/* CHANGE 5: Removed Category Header title - category buttons are enough */}
+                    {/* Previously showed: categoryName with emblem divider */}
+                    
+                    {/* Simple top divider instead of full header */}
+                    <div className="flex items-center justify-center mb-8">
+                      <div className="w-12 h-px bg-terracotta/40" />
+                      <div className="mx-3">
+                        <Image 
+                          src="/images/brand/emblem.svg" 
+                          alt="" 
+                          width={16} 
+                          height={16} 
+                          className="opacity-50"
+                        />
                       </div>
+                      <div className="w-12 h-px bg-terracotta/40" />
                     </div>
                     
                     {/* Render Couvert box at top for to-start category */}
