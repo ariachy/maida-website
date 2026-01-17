@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Script from 'next/script';
 import { Locale } from '@/lib/i18n';
+import LazyMap from '@/components/common/LazyMap';
 
 // reCAPTCHA Enterprise Site Key
 const RECAPTCHA_SITE_KEY = '6LdxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxX'; // Replace with your actual key
@@ -143,76 +144,36 @@ export default function ContactClient({ translations, locale }: ContactClientPro
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              {/* FIX 1: Hours BEFORE Address */}
               {/* Hours */}
               <div>
-                <h2 className="font-display text-2xl text-charcoal mb-4">Opening hours</h2>
-                <div className="space-y-2 text-stone">
-                  <div className="flex justify-between max-w-xs text-terracotta">
-                    <span>Monday</span>
-                    <span>Closed</span>
-                  </div>
-                  <div className="flex justify-between max-w-xs text-terracotta">
-                    <span>Tuesday</span>
-                    <span>Closed</span>
-                  </div>
-                  <div className="flex justify-between max-w-xs">
-                    <span>Wednesday</span>
-                    <span>12:30 - 23:00</span>
-                  </div>
-                  <div className="flex justify-between max-w-xs">
-                    <span>Thursday</span>
-                    <span>12:30 - 23:00</span>
-                  </div>
-                  <div className="flex justify-between max-w-xs">
-                    <span>Friday</span>
-                    <span>12:30 - 01:00</span>
-                  </div>
-                  <div className="flex justify-between max-w-xs">
-                    <span>Saturday</span>
-                    <span>12:30 - 01:00</span>
-                  </div>
-                  <div className="flex justify-between max-w-xs">
-                    <span>Sunday</span>
-                    <span>12:30 - 23:00</span>
-                  </div>
-                  <div className="text-stone/60 text-sm mt-3 space-y-1">
-                    <p>Kitchen closes 22:30 (Wed, Thu, Sun)</p>
-                    <p>Kitchen closes 23:30 (Fri, Sat)</p>
-                  </div>
+                <h3 className="font-display text-xl text-charcoal mb-4">Opening Hours</h3>
+                <div className="space-y-1 text-charcoal/70">
+                  <p>Mon–Tue: Closed</p>
+                  <p>Wed, Thu, Sun: 12:30 – 23:00</p>
+                  <p>Friday: 12:30 – 00:00</p>
+                  <p>Saturday: 12:30 – 02:00</p>
                 </div>
               </div>
 
-              {/* Address - Now AFTER hours */}
+              {/* Address */}
               <div>
-                <h2 className="font-display text-2xl text-charcoal mb-4">Address</h2>
-                <p className="text-stone leading-relaxed">
+                <h3 className="font-display text-xl text-charcoal mb-4">Location</h3>
+                <p className="text-charcoal/70">
                   Rua da Boavista 66<br />
-                  Cais do Sodré<br />
-                  1200-066 Lisboa, Portugal
-                </p>
-                <a
-                  href="https://maps.google.com/?q=Rua+da+Boavista+66+Lisboa"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-terracotta hover:text-terracotta/80 mt-3 transition-colors"
-                >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  Directions
-                </a>
-              </div>
-
-              {/* Group Booking Note */}
-              <div className="p-4 bg-cream border-l-4 border-terracotta">
-                <p className="text-stone text-sm">
-                  For groups of 6 or more, please use our contact form or call us.
+                  1200-067 Lisboa<br />
+                  Cais do Sodré
                 </p>
               </div>
 
-              {/* FIX 2: REMOVED Reserve Button */}
+              {/* Contact */}
+              <div>
+                <h3 className="font-display text-xl text-charcoal mb-4">Contact</h3>
+                <p className="text-charcoal/70">
+                  <a href="mailto:info@maida.pt" className="hover:text-terracotta transition-colors">
+                    info@maida.pt
+                  </a>
+                </p>
+              </div>
             </motion.div>
 
             {/* Right Column - Contact Form */}
@@ -341,7 +302,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
             </motion.div>
           </div>
 
-          {/* Map Section */}
+          {/* Map Section (UPDATED: Using LazyMap for deferred loading) */}
           <motion.div
             className="mt-16"
             initial={{ opacity: 0, y: 20 }}
@@ -349,15 +310,11 @@ export default function ContactClient({ translations, locale }: ContactClientPro
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="aspect-[2/1] bg-sand/30 overflow-hidden">
-              <iframe
+            <div className="aspect-[2/1] bg-sand/30 overflow-hidden relative">
+              <LazyMap
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3113.4276289882!2d-9.145!3d38.706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDQyJzIxLjYiTiA5wrAwOCc0Mi4wIlc!5e0!3m2!1sen!2spt!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
+                title="Maída Restaurant Location"
+                className="absolute inset-0"
               />
             </div>
           </motion.div>

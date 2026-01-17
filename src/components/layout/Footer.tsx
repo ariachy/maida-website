@@ -77,10 +77,10 @@ export default function Footer({ translations, locale }: FooterProps) {
           
           {/* Navigate */}
           <div>
-            {/* FIXED: Changed h4 from text-xs to text-sm for better readability */}
-            <h4 className="text-sm tracking-[0.15em] uppercase text-terracotta-light mb-3 font-medium">
+            {/* ACCESSIBILITY FIX: Changed h4 to span for proper heading hierarchy (no h1-h3 before h4) */}
+            <span className="block text-sm tracking-[0.15em] uppercase text-terracotta-light mb-3 font-medium">
               {getLabel(footer, 'navigate', 'Navigate')}
-            </h4>
+            </span>
             <ul className="space-y-1.5">
               <li>
                 <Link
@@ -127,9 +127,9 @@ export default function Footer({ translations, locale }: FooterProps) {
 
           {/* Discover */}
           <div>
-            <h4 className="text-sm tracking-[0.15em] uppercase text-terracotta-light mb-3 font-medium">
+            <span className="block text-sm tracking-[0.15em] uppercase text-terracotta-light mb-3 font-medium">
               Discover
-            </h4>
+            </span>
             <ul className="space-y-1.5">
               <li>
                 <Link
@@ -158,29 +158,34 @@ export default function Footer({ translations, locale }: FooterProps) {
             </ul>
           </div>
 
-          {/* Hours */}
+          {/* Hours - ACCESSIBILITY FIX: Improved contrast throughout */}
           <div>
-            <h4 className="text-sm tracking-[0.15em] uppercase text-terracotta-light mb-3 font-medium">
+            <span className="block text-sm tracking-[0.15em] uppercase text-terracotta-light mb-3 font-medium">
               {getLabel(footer, 'hours', 'Hours')}
-            </h4>
-            {/* Opening hours */}
-            <ul className="text-warm-white/50">
+            </span>
+            {/* Opening hours - FIXED: Changed /50 to /70 for better contrast */}
+            <ul className="text-sm">
+              {/* Day labels in full white, times in /70 */}
               <li className="text-warm-white">Mon–Tue</li>
-              <li>Closed</li>
+              <li className="text-warm-white/70">Closed</li>
+              
               <li className="mt-2 text-warm-white">Wed, Thu, Sun</li>
-              <li>12:30 - 23:00</li>
-              <li className="text-warm-white/50 text-xs">Kitchen closes 22:30</li>
+              <li className="text-warm-white/70">12:30 - 23:00</li>
+              {/* FIXED: Kitchen note from /50 to /70 */}
+              <li className="text-warm-white/70 text-xs">Kitchen closes 22:30</li>
+              
               <li className="mt-2 text-warm-white">Fri–Sat</li>
-              <li>12:30 - 01:00</li>
-              <li className="text-warm-white/50 text-xs">Kitchen closes 23:30</li>
+              <li className="text-warm-white/70">12:30 - 01:00</li>
+              {/* FIXED: Kitchen note from /50 to /70 */}
+              <li className="text-warm-white/70 text-xs">Kitchen closes 23:30</li>
             </ul>
           </div>
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm tracking-[0.15em] uppercase text-terracotta-light mb-3 font-medium">
+            <span className="block text-sm tracking-[0.15em] uppercase text-terracotta-light mb-3 font-medium">
               {getLabel(footer, 'contact', 'Contact')}
-            </h4>
+            </span>
             <ul className="space-y-1.5">
               <li>
                 <a
@@ -192,10 +197,10 @@ export default function Footer({ translations, locale }: FooterProps) {
               </li>
               {/* FIXED: Changed text-stone to text-warm-white/70 */}
               <li className="text-warm-white/70 text-sm">
-                Rua da Boavista 66, Cais do Sodré, Lisboa
+                Rua da Boavista 66
               </li>
               <li className="text-warm-white/70 text-sm">
-                
+                Cais do Sodré, Lisboa
               </li>
               <li className="mt-2">
                 <button
