@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import LanguageSwitcher from './LanguageSwitcher';
 import { Locale } from '@/lib/i18n';
+import { useUmaiWidget } from '@/components/integrations/UmaiLoader';
 
 interface NavbarProps {
   translations: any;
@@ -23,6 +24,9 @@ export default function Navbar({ translations, locale }: NavbarProps) {
   const pathname = usePathname();
   
   const nav = translations?.nav || {};
+  
+  // UMAI Widget hook
+  const { openWidget, isOpening } = useUmaiWidget();
   
   // Helper function to safely get translation value (handles both string and {label, value} formats)
   const getNavLabel = (key: string, fallback: string): string => {
@@ -97,16 +101,6 @@ export default function Navbar({ translations, locale }: NavbarProps) {
   };
   
   const isDiscoverActive = discoverLinks.some(link => isActiveLink(link.segment));
-  
-  const handleReserveClick = () => {
-    if (typeof window !== 'undefined' && (window as any).umaiWidget) {
-      (window as any).umaiWidget.config({
-        apiKey: 'd541f212-d5ca-4839-ab2b-7f9c99e1c96c',
-        widgetType: 'reservation',
-      });
-      (window as any).umaiWidget.openWidget();
-    }
-  };
   
   return (
     <>
@@ -213,12 +207,13 @@ export default function Navbar({ translations, locale }: NavbarProps) {
           
           <div className="hidden md:flex items-center gap-4">
             <LanguageSwitcher locale={locale} />
-            {/* UPDATED: "Book a table" text */}
+            {/* Desktop Reserve Button */}
             <button
-              onClick={handleReserveClick}
-              className="btn btn-ghost text-sm py-2 px-5 font-nav"
+              onClick={openWidget}
+              disabled={isOpening}
+              className="btn btn-ghost text-sm py-2 px-5 font-nav disabled:opacity-70"
             >
-              Book a table
+              {isOpening ? 'Loading...' : 'Book a table'}
             </button>
           </div>
           
@@ -346,7 +341,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                   </ul>
                 </nav>
                 
-                {/* UPDATED: "Book a table" text */}
+                {/* Mobile Reserve Button */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -355,11 +350,12 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                   <button
                     onClick={() => {
                       setIsMobileMenuOpen(false);
-                      handleReserveClick();
+                      openWidget();
                     }}
-                    className="btn btn-primary w-full"
+                    disabled={isOpening}
+                    className="btn btn-primary w-full disabled:opacity-70"
                   >
-                    Book a table
+                    {isOpening ? 'Loading...' : 'Book a table'}
                   </button>
                 </motion.div>
               </div>

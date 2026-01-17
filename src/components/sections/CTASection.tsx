@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { useUmaiWidget } from '@/components/integrations/UmaiLoader';
 
 interface CTASectionProps {
   translations: any;
@@ -12,15 +13,7 @@ export default function CTASection({ translations }: CTASectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   
-  const handleReserveClick = () => {
-    if (typeof window !== 'undefined' && (window as any).umaiWidget) {
-      (window as any).umaiWidget.config({
-        apiKey: 'd541f212-d5ca-4839-ab2b-7f9c99e1c96c',
-        widgetType: 'reservation',
-      });
-      (window as any).umaiWidget.openWidget();
-    }
-  };
+  const { openWidget, isOpening } = useUmaiWidget();
   
   return (
     <section 
@@ -60,15 +53,15 @@ export default function CTASection({ translations }: CTASectionProps) {
           {cta.subtitle || '#MeetMeAtMaida'}
         </motion.p>
         
-        {/* UPDATED: "Book a table" text */}
         <motion.button
-          onClick={handleReserveClick}
-          className="btn bg-charcoal text-warm-white hover:bg-warm-white hover:text-charcoal"
+          onClick={openWidget}
+          disabled={isOpening}
+          className="btn bg-charcoal text-warm-white hover:bg-warm-white hover:text-charcoal disabled:opacity-70"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          {cta.button || 'Book a table'}
+          {isOpening ? 'Loading...' : (cta.button || 'Book a table')}
         </motion.button>
       </div>
     </section>

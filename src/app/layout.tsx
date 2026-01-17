@@ -3,6 +3,7 @@ import { Fraunces, DM_Sans } from 'next/font/google';
 import Script from 'next/script';
 import '@/styles/globals.css';
 import { RestaurantJsonLd, OrganizationJsonLd, WebsiteJsonLd } from '@/components/seo/JsonLd';
+import UmaiLoader from '@/components/integrations/UmaiLoader';
 
 // Font configurations
 const fraunces = Fraunces({
@@ -102,10 +103,29 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
       <head>
-        {/* 
-          GTM Consent Mode - MUST load BEFORE GTM
-          This sets default consent to 'denied' until user accepts
-        */}
+        {/* ===========================================
+            PERFORMANCE: Preload & Preconnect
+            =========================================== */}
+        
+        {/* Preload hero image - CRITICAL for LCP */}
+        <link
+          rel="preload"
+          href="/images/hero/maida-table.webp"
+          as="image"
+          type="image/webp"
+        />
+        
+        {/* Preconnect to external domains (reduces DNS/TCP/TLS time) */}
+        <link rel="preconnect" href="https://widget.letsumai.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        
+        {/* DNS prefetch for resources loaded later */}
+        <link rel="dns-prefetch" href="https://maps.googleapis.com" />
+        <link rel="dns-prefetch" href="https://js.stripe.com" />
+
+        {/* ===========================================
+            GTM Consent Mode - MUST load BEFORE GTM
+            =========================================== */}
         <Script id="gtm-consent-default" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
@@ -142,13 +162,7 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* UMAI Widget - loads with functional consent */}
-        <Script
-          src="https://widget.letsumai.com/dist/embed.min.js"
-          data-api-key="d541f212-d5ca-4839-ab2b-7f9c99e1c96c"
-          data-widget-type="reservation"
-          strategy="lazyOnload"
-        />
+        {/* UMAI Widget is now loaded via UmaiLoader component after user interaction */}
       </head>
       <body className="font-body bg-warm-white text-charcoal antialiased">
         {/* Google Tag Manager (noscript) */}
@@ -165,6 +179,9 @@ export default function RootLayout({
         <RestaurantJsonLd />
         <OrganizationJsonLd />
         <WebsiteJsonLd />
+
+        {/* UMAI Loader - loads widget after user interaction (scroll, click, etc.) */}
+        <UmaiLoader />
 
         {children}
       </body>

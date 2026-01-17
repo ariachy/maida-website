@@ -3,21 +3,14 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Locale } from '@/lib/i18n';
+import { useUmaiWidget } from '@/components/integrations/UmaiLoader';
 
 interface HeroCTAProps {
   locale: Locale;
 }
 
 export default function HeroCTA({ locale }: HeroCTAProps) {
-  const handleReserveClick = () => {
-    if (typeof window !== 'undefined' && (window as any).umaiWidget) {
-      (window as any).umaiWidget.config({
-        apiKey: 'd541f212-d5ca-4839-ab2b-7f9c99e1c96c',
-        widgetType: 'reservation',
-      });
-      (window as any).umaiWidget.openWidget();
-    }
-  };
+  const { openWidget, isOpening } = useUmaiWidget();
   
   return (
     <motion.div
@@ -28,10 +21,11 @@ export default function HeroCTA({ locale }: HeroCTAProps) {
     >
       <div className="flex flex-row gap-3 md:gap-4 justify-center px-6">
         <button 
-          onClick={handleReserveClick} 
-          className="btn btn-primary text-sm px-5 md:px-6 py-2 md:py-2.5"
+          onClick={openWidget}
+          disabled={isOpening}
+          className="btn btn-primary text-sm px-5 md:px-6 py-2 md:py-2.5 disabled:opacity-70"
         >
-          Book a table
+          {isOpening ? 'Loading...' : 'Book a table'}
         </button>
         <Link 
           href={`/${locale}/menu`} 
