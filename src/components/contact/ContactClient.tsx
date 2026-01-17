@@ -4,10 +4,9 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Script from 'next/script';
 import { Locale } from '@/lib/i18n';
-import LazyMap from '@/components/common/LazyMap';
 
 // reCAPTCHA Enterprise Site Key
-const RECAPTCHA_SITE_KEY = '6LdxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxX'; // Replace with your actual key
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '6LffXD0sAAAAACfEknWv1dMM2MTVwa3ScqsDP-2U';
 
 interface ContactClientProps {
   translations: any;
@@ -122,24 +121,25 @@ export default function ContactClient({ translations, locale }: ContactClientPro
       />
 
       <div className="min-h-screen bg-warm-white pt-32 pb-20">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6">
           {/* Header */}
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="font-display text-5xl md:text-6xl text-charcoal mb-4">
-              Get in touch with us
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-charcoal mb-4">
+              Get in Touch
             </h1>
           </motion.div>
 
-          {/* Main Content - Two Columns */}
-          <div className="grid lg:grid-cols-2 gap-16">
-            {/* Left Column - Info */}
+          {/* Main Content - Two columns on desktop (1/3 + 2/3) */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 mb-16">
+            
+            {/* Left Column - Info (shows second on mobile) - 1/3 width on desktop */}
             <motion.div
-              className="space-y-10"
+              className="order-2 lg:order-1 lg:col-span-1 space-y-10 text-center lg:text-left"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -147,7 +147,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
               {/* Hours */}
               <div>
                 <h3 className="font-display text-xl text-charcoal mb-4">Opening Hours</h3>
-                <div className="space-y-2 text-charcoal/70 text-sm">
+                <div className="space-y-3 text-charcoal/70 text-sm">
                   <div>
                     <p className="text-charcoal font-medium">Mon–Tue</p>
                     <p>Closed</p>
@@ -165,20 +165,28 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                 </div>
               </div>
 
-              {/* Address */}
+              {/* Location */}
               <div>
                 <h3 className="font-display text-xl text-charcoal mb-4">Location</h3>
-                <p className="text-charcoal/70">
+                <p className="text-charcoal/70 text-sm">
                   Rua da Boavista 66<br />
                   1200-067 Lisboa<br />
                   Cais do Sodré
                 </p>
+                <a
+                  href="https://maps.google.com/?q=Rua+da+Boavista+66+Lisboa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-3 text-terracotta hover:text-terracotta/80 text-sm transition-colors"
+                >
+                  Get Directions →
+                </a>
               </div>
 
               {/* Contact */}
               <div>
                 <h3 className="font-display text-xl text-charcoal mb-4">Contact</h3>
-                <p className="text-charcoal/70">
+                <p className="text-charcoal/70 text-sm">
                   <a href="mailto:info@maida.pt" className="hover:text-terracotta transition-colors">
                     info@maida.pt
                   </a>
@@ -186,14 +194,15 @@ export default function ContactClient({ translations, locale }: ContactClientPro
               </div>
             </motion.div>
 
-            {/* Right Column - Contact Form */}
+            {/* Right Column - Contact Form (shows first on mobile) - 2/3 width on desktop */}
             <motion.div
+              className="order-1 lg:order-2 lg:col-span-2"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <div className="bg-sand/30 p-8 md:p-10">
-                <h2 className="font-display text-2xl text-charcoal mb-6">Send us a message</h2>
+              <div className="bg-sand/30 p-6 md:p-10">
+                <h2 className="font-display text-2xl text-charcoal mb-6 text-center lg:text-left">Send us a message</h2>
                 
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {/* Honeypot field - hidden from users */}
@@ -298,7 +307,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                   <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="w-full btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-terracotta text-warm-white px-6 py-3 font-medium hover:bg-terracotta/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {status === 'sending' ? 'Sending...' : 'Send message'}
                   </button>
@@ -312,19 +321,22 @@ export default function ContactClient({ translations, locale }: ContactClientPro
             </motion.div>
           </div>
 
-          {/* Map Section (UPDATED: Using LazyMap for deferred loading) */}
+          {/* Map Section */}
           <motion.div
-            className="mt-16"
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <div className="aspect-[2/1] bg-sand/30 overflow-hidden relative">
-              <LazyMap
+            <div className="aspect-[2/1] md:aspect-[3/1] bg-sand/30 overflow-hidden">
+              <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2849.8846023983865!2d-9.15119542455817!3d38.70891275780444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd193332b934a279%3A0x3191bb53cc89ae9!2sma%C3%ADda%20%7C%20Mediterranean%20Flavours%2C%20Lebanese%20Soul!5e1!3m2!1sen!2slb!4v1768684138120!5m2!1sen!2slb"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
                 title="Maída Restaurant Location"
-                loading="eager"
               />
             </div>
           </motion.div>
