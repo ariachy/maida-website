@@ -69,10 +69,9 @@ export default function Visit({ translations, locale }: VisitProps) {
             <div className="text-charcoal/80">
               {/* Hours */}
               <div className="text-sm md:text-base space-y-0.5 mb-8">
-                <p>Mon, Wed, Thu, Sun: 12:30 – 23:00</p>
-                <p>Friday: 12:30 – 00:00</p>
-                <p>Saturday: 12:30 – 02:00</p>
-                <p className="text-terracotta">Tuesday: Closed</p>
+                <p className="text-terracotta">Mon–Tue: Closed</p>
+                <p>Wed, Thu, Sun: 12:30 – 23:00 <span className="text-charcoal/50 text-xs">(Kitchen 22:30)</span></p>
+                <p>Fri–Sat: 12:30 – 01:00 <span className="text-charcoal/50 text-xs">(Kitchen 23:30)</span></p>
               </div>
               
               {/* Address */}

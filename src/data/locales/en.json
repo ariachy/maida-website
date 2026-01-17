@@ -415,16 +415,17 @@
     "info": {
       "title": "Visit Us",
       "address": "Rua da Boavista 66",
-      "city": "1200-066 Lisboa, Portugal",
-      "phone": "+351 XXX XXX XXX",
-      "email": "hello@maida.pt"
+      "city": "1200-068 Lisboa, Portugal",
+      "phone": "+351 961 111 383",
+      "email": "info@maida.pt"
     },
     "hours": {
       "title": "Opening Hours",
-      "weekdays": "Tuesday - Saturday",
-      "weekdaysTime": "19:00 - 00:00",
-      "weekend": "Sunday - Monday",
-      "weekendTime": "Closed"
+      "closed": "Monday - Tuesday: Closed",
+      "midweek": "Wed, Thu, Sun: 12:30 - 23:00",
+      "midweekKitchen": "Kitchen closes 22:30",
+      "weekend": "Fri - Sat: 12:30 - 01:00",
+      "weekendKitchen": "Kitchen closes 23:30"
     }
   },
   "common": {

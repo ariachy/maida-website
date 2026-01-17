@@ -280,11 +280,12 @@
       "email": "hello@maida.pt"
     },
     "hours": {
-      "title": "Opening Hours",
-      "weekdays": "Tuesday - Saturday",
-      "weekdaysTime": "19:00 - 00:00",
-      "weekend": "Sunday - Monday",
-      "weekendTime": "Closed"
+      "title": "Orari",
+      "closed": "Lunedì - Martedì: Chiuso",
+      "midweek": "Mer, Gio, Dom: 12:30 - 23:00",
+      "midweekKitchen": "Cucina chiude 22:30",
+      "weekend": "Ven - Sab: 12:30 - 01:00",
+      "weekendKitchen": "Cucina chiude 23:30"
     }
   },
   "common": {

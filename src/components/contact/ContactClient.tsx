@@ -148,9 +148,9 @@ export default function ContactClient({ translations, locale }: ContactClientPro
               <div>
                 <h2 className="font-display text-2xl text-charcoal mb-4">Opening hours</h2>
                 <div className="space-y-2 text-stone">
-                  <div className="flex justify-between max-w-xs">
+                  <div className="flex justify-between max-w-xs text-terracotta">
                     <span>Monday</span>
-                    <span>12:30 - 23:00</span>
+                    <span>Closed</span>
                   </div>
                   <div className="flex justify-between max-w-xs text-terracotta">
                     <span>Tuesday</span>
@@ -166,15 +166,19 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                   </div>
                   <div className="flex justify-between max-w-xs">
                     <span>Friday</span>
-                    <span>12:30 - 00:00</span>
+                    <span>12:30 - 01:00</span>
                   </div>
                   <div className="flex justify-between max-w-xs">
                     <span>Saturday</span>
-                    <span>12:30 - 02:00</span>
+                    <span>12:30 - 01:00</span>
                   </div>
                   <div className="flex justify-between max-w-xs">
                     <span>Sunday</span>
                     <span>12:30 - 23:00</span>
+                  </div>
+                  <div className="text-stone/60 text-sm mt-3 space-y-1">
+                    <p>Kitchen closes 22:30 (Wed, Thu, Sun)</p>
+                    <p>Kitchen closes 23:30 (Fri, Sat)</p>
                   </div>
                 </div>
               </div>
