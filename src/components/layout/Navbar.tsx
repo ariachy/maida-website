@@ -24,16 +24,25 @@ export default function Navbar({ translations, locale }: NavbarProps) {
   const pathname = usePathname();
   
   const nav = translations?.nav || {};
+  const footer = translations?.footer || {};
   
   // UMAI Widget hook
   const { openWidget, isOpening } = useUmaiWidget();
   
-  // Helper function to safely get translation value (handles both string and {label, value} formats)
-  const getNavLabel = (key: string, fallback: string): string => {
+  // Helper function to safely get translation value
+  const t = (key: string, fallback: string): string => {
     const value = nav[key];
     if (!value) return fallback;
     if (typeof value === 'string') return value;
     if (typeof value === 'object' && value.label) return value.label;
+    return fallback;
+  };
+  
+  // Helper for footer translations (for discover links)
+  const tf = (key: string, fallback: string): string => {
+    const value = footer[key];
+    if (!value) return fallback;
+    if (typeof value === 'string') return value;
     return fallback;
   };
   
@@ -80,18 +89,20 @@ export default function Navbar({ translations, locale }: NavbarProps) {
     };
   }, [isMobileMenuOpen]);
   
+  // Navigation links with translations
   const navLinks = [
-    { href: `/${locale}`, label: 'Home', segment: '' },
-    { href: `/${locale}/story`, label: getNavLabel('story', 'Story'), segment: 'story' },
-    { href: `/${locale}/menu`, label: getNavLabel('menu', 'Menu'), segment: 'menu' },
-    { href: `/${locale}/maida-live`, label: 'Maída Live', segment: 'maida-live' },
-    { href: `/${locale}/contact`, label: getNavLabel('contact', 'Contact'), segment: 'contact' },
+    { href: `/${locale}`, label: t('home', 'Home'), segment: '' },
+    { href: `/${locale}/story`, label: t('story', 'Story'), segment: 'story' },
+    { href: `/${locale}/menu`, label: t('menu', 'Menu'), segment: 'menu' },
+    { href: `/${locale}/maida-live`, label: t('events', 'Maída Live'), segment: 'maida-live' },
+    { href: `/${locale}/contact`, label: t('contact', 'Contact'), segment: 'contact' },
   ];
   
+  // Discover dropdown links with translations
   const discoverLinks = [
-    { href: `/${locale}/maida-saj`, label: 'Maída SAJ', segment: 'maida-saj' },
-    { href: `/${locale}/coffee-tea`, label: 'Coffee & Tea', segment: 'coffee-tea' },
-    { href: `/${locale}/blog`, label: 'Blog', segment: 'blog' },
+    { href: `/${locale}/maida-saj`, label: tf('whatIsSaj', 'What is SAJ?'), segment: 'maida-saj' },
+    { href: `/${locale}/coffee-tea`, label: tf('coffeeTea', 'Coffee & Tea'), segment: 'coffee-tea' },
+    { href: `/${locale}/blog`, label: t('blog', 'Blog'), segment: 'blog' },
   ];
   
   const isActiveLink = (segment: string) => {
@@ -101,6 +112,11 @@ export default function Navbar({ translations, locale }: NavbarProps) {
   };
   
   const isDiscoverActive = discoverLinks.some(link => isActiveLink(link.segment));
+  
+  // Button text from translations
+  const bookTableText = t('bookTable', 'Book a table');
+  const loadingText = t('loading', 'Loading...');
+  const discoverText = t('discover', 'Discover');
   
   return (
     <>
@@ -113,7 +129,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
-          {/* Logo - SVG, bigger size */}
+          {/* Logo */}
           <Link href={`/${locale}`} className="relative z-10">
             <Image
               src="/images/brand/logo.svg"
@@ -125,7 +141,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
             />
           </Link>
           
-          {/* Desktop Navigation - Using font-nav (Roboto) */}
+          {/* Desktop Navigation */}
           <ul className="hidden md:flex items-center gap-8 lg:gap-12">
             {navLinks.map((link) => {
               const isActive = isActiveLink(link.segment);
@@ -162,7 +178,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                   isDiscoverActive ? 'text-terracotta' : 'text-stone hover:text-terracotta'
                 }`}
               >
-                Discover
+                {discoverText}
                 <ChevronDown 
                   className={`w-4 h-4 transition-transform duration-200 ${
                     isDiscoverOpen ? 'rotate-180' : ''
@@ -213,7 +229,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
               disabled={isOpening}
               className="btn btn-ghost text-sm py-2 px-5 font-nav disabled:opacity-70"
             >
-              {isOpening ? 'Loading...' : 'Book a table'}
+              {isOpening ? loadingText : bookTableText}
             </button>
           </div>
           
@@ -287,6 +303,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                       );
                     })}
                     
+                    {/* Mobile Discover Dropdown */}
                     <motion.li
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -298,7 +315,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                           isDiscoverActive ? 'text-terracotta' : 'text-charcoal'
                         }`}
                       >
-                        Discover
+                        {discoverText}
                         <ChevronDown 
                           className={`w-5 h-5 transition-transform duration-200 ${
                             isMobileDiscoverOpen ? 'rotate-180' : ''
@@ -355,7 +372,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                     disabled={isOpening}
                     className="btn btn-primary w-full disabled:opacity-70"
                   >
-                    {isOpening ? 'Loading...' : 'Book a table'}
+                    {isOpening ? loadingText : bookTableText}
                   </button>
                 </motion.div>
               </div>

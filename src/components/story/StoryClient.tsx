@@ -12,6 +12,9 @@ interface StoryClientProps {
 
 export default function StoryClient({ translations, locale }: StoryClientProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const about = translations?.about || {};
+  const cta = translations?.cta || {};
+  const nav = translations?.nav || {};
 
   const handleReserveClick = () => {
     if (typeof window !== 'undefined' && (window as any).umaiWidget) {
@@ -68,7 +71,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="w-8 h-px bg-sand" />
-            What brought us here
+            {about?.heroTagline || 'What brought us here'}
             <span className="w-8 h-px bg-sand" />
           </motion.p>
 
@@ -81,7 +84,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 animate={{ y: 0 }}
                 transition={{ duration: 1.2, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
               >
-                Our Story
+                {about?.heroTitle || 'Our Story'}
               </motion.span>
             </span>
           </h1>
@@ -92,9 +95,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            A place where flavors, music, and good company come together.
-            <br />
-            Rooted in tradition, reimagined for today.
+            {about?.heroSubtitle || 'A place where flavors, music, and good company come together. Rooted in tradition, reimagined for today.'}
           </motion.p>
         </div>
       </section>
@@ -105,7 +106,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
       <section className="py-10 md:py-14 bg-warm-white px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-display text-3xl md:text-4xl text-charcoal">
-            A traditional feast, <span className="italic text-terracotta">reimagined for today</span>
+            {about?.meaningTitle || 'A traditional feast,'} <span className="italic text-terracotta">{about?.meaningHighlight || 'reimagined for today'}</span>
           </h2>
         </div>
       </section>
@@ -147,10 +148,10 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
               {/* Body Text */}
               <div className="space-y-4 text-warm-white/90 text-base leading-relaxed">
                 <p>
-                  Inspired by <span className="font-medium">المائدة</span> (al-mā'idah), the beloved tradition of gathering, feasting, and celebrating with loved ones around a big table, Maída brings people together with authentic Mediterranean flavors & drinks, our in-house Saj Manoushe, and dishes that evolve throughout the day - all complemented by a smooth musical experience, elevated by our hi-fi sound system.
+                  {about?.meaningText1 || 'Inspired by المائدة (al-mā\'idah), the beloved tradition of gathering, feasting, and celebrating with loved ones around a big table, Maída brings people together with authentic Mediterranean flavors & drinks, our in-house Saj Manoushe, and dishes that evolve throughout the day - all complemented by a smooth musical experience, elevated by our hi-fi sound system.'}
                 </p>
                 <p className="italic">
-                  It's the gathering table. Where family and friends come together, and stories are shared between bites.
+                  {about?.meaningText2 || 'It\'s the gathering table. Where family and friends come together, and stories are shared between bites.'}
                 </p>
               </div>
             </div>
@@ -194,9 +195,9 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal leading-[1.1] mb-6"
                 variants={fadeInUp}
               >
-                <span className="block">FROM</span>
-                <span className="block">BEIRUT TO</span>
-                <span className="block text-terracotta">LISBOA</span>
+                <span className="block">{about?.rootsHeadline1 || 'FROM'}</span>
+                <span className="block">{about?.rootsHeadline2 || 'BEIRUT TO'}</span>
+                <span className="block text-terracotta">{about?.rootsHeadline3 || 'LISBOA'}</span>
               </motion.h2>
 
               <motion.div 
@@ -204,13 +205,13 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
                 variants={fadeInUp}
               >
                 <p>
-                  In Lebanon, meals are never rushed. They're occasions - long gatherings where everyone lingers, glasses clink, and stories grow louder with every round.
+                  {about?.rootsText1 || 'In Lebanon, meals are never rushed. They\'re occasions - long gatherings where everyone lingers, glasses clink, and stories grow louder with every round.'}
                 </p>
                 <p>
-                  When we arrived in Lisbon, we discovered something familiar: the Portuguese share this same love for gathering around a big table and turning a meal into an occasion. It felt like home.
+                  {about?.rootsText2 || 'When we arrived in Lisbon, we discovered something familiar: the Portuguese share this same love for gathering around a big table and turning a meal into an occasion. It felt like home.'}
                 </p>
                 <p className="font-medium text-charcoal">
-                  That's how two worlds became one. Maída is a Mediterranean restaurant with Lebanese soul in the heart of Cais do Sodré - where Portuguese warmth meets Lebanese generosity.
+                  {about?.rootsText3 || 'That\'s how two worlds became one. Maída is a Mediterranean restaurant with Lebanese soul in the heart of Cais do Sodré - where Portuguese warmth meets Lebanese generosity.'}
                 </p>
               </motion.div>
             </motion.div>
@@ -296,27 +297,27 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
           >
             <div className="px-6 md:px-10 lg:px-12 py-8 md:py-10">
               <p className="text-xs tracking-[0.3em] uppercase text-terracotta-light mb-4">
-                Who we are
+                {about?.foundersLabel || 'Who we are'}
               </p>
               
               {/* Stacked Title */}
               <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-warm-white leading-[1.1] mb-8">
-                <span className="block">ANNA &</span>
-                <span className="block">ANTHONY</span>
+                <span className="block">{about?.foundersHeadline1 || 'ANNA &'}</span>
+                <span className="block">{about?.foundersHeadline2 || 'ANTHONY'}</span>
               </h2>
               
               <div className="space-y-5 text-sand/90 text-base leading-relaxed">
                 <p>
-                  <span className="font-medium text-warm-white">Anna</span> is a culinary and animation director by heart, passionate about food, music, and the creative world. Over the years, she refined her skills in cooking and food presentation, turning every plate into a canvas.
+                  <span className="font-medium text-warm-white">Anna</span> {about?.foundersAnna || 'is a culinary and animation director by heart, passionate about food, music, and the creative world. Over the years, she refined her skills in cooking and food presentation, turning every plate into a canvas.'}
                 </p>
                 <p>
-                  <span className="font-medium text-warm-white">Anthony</span> is an electrical engineer and consultant by trade, fascinated by the world of hospitality, mixology, and creating experiences that linger.
+                  <span className="font-medium text-warm-white">Anthony</span> {about?.foundersAnthony || 'is an electrical engineer and consultant by trade, fascinated by the world of hospitality, mixology, and creating experiences that linger.'}
                 </p>
                 <p>
-                  After opening The Happy Salad in Lisboa, they shared a dream: to present Lebanese food from a different perspective - not just the familiar classics, but the dishes they grew up eating at home.
+                  {about?.foundersStory || 'After opening The Happy Salad in Lisboa, they shared a dream: to present Lebanese food from a different perspective - not just the familiar classics, but the dishes they grew up eating at home.'}
                 </p>
                 <p className="text-terracotta-light italic">
-                  Today, you'll find them where they belong: at the table with you - making sure every detail is right, every glass is full, and no guest ever leaves without a story to tell.
+                  {about?.foundersToday || 'Today, you\'ll find them where they belong: at the table with you - making sure every detail is right, every glass is full, and no guest ever leaves without a story to tell.'}
                 </p>
               </div>
             </div>
@@ -350,7 +351,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            Find your place at the table
+            {about?.ctaTitle || 'Find your place at the table'}
           </motion.h2>
 
           <motion.p 
@@ -360,7 +361,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            #MeetMeAtMaída
+            {about?.ctaHashtag || '#MeetMeAtMaída'}
           </motion.p>
 
           <motion.button
@@ -371,7 +372,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Book a table
+            {nav?.bookTable || about?.ctaButton || 'Book a table'}
           </motion.button>
         </div>
       </section>

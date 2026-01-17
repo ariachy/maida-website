@@ -1,13 +1,34 @@
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 import { isValidLocale, loadTranslations, Locale } from '@/lib/i18n';
+import { generatePageMetadata } from '@/lib/seo';
 import BlogClient from '@/components/blog/BlogClient';
 import blogData from '@/data/blog.json';
-import { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'Maída - Mediterranean Flavours, Lebanese Soul | Discover',
-  description: 'Stories from our kitchen, our roots, and the table. Traditions, flavours, and moments.',
-};
+export async function generateMetadata({ 
+  params 
+}: { 
+  params: { lang: string } 
+}): Promise<Metadata> {
+  const locale = params.lang;
+  
+  if (!isValidLocale(locale)) {
+    return {};
+  }
+
+  const isPortuguese = locale === 'pt';
+  
+  return generatePageMetadata({
+    title: isPortuguese 
+      ? 'Maída - Sabores Mediterrânicos. Alma Libanesa | Descobrir'
+      : 'Maída - Mediterranean Flavours. Lebanese Soul | Discover',
+    description: isPortuguese
+      ? 'Histórias da nossa cozinha, das nossas raízes e da mesa. Tradições, sabores e momentos.'
+      : 'Stories from our kitchen, our roots, and the table. Traditions, flavours, and moments.',
+    path: '/blog',
+    locale,
+  });
+}
 
 export default async function BlogPage({
   params,
@@ -24,5 +45,3 @@ export default async function BlogPage({
   
   return <BlogClient translations={translations} locale={locale} posts={blogData.posts} />;
 }
-
-

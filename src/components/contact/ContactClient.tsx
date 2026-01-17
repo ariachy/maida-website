@@ -14,6 +14,13 @@ interface ContactClientProps {
 }
 
 export default function ContactClient({ translations, locale }: ContactClientProps) {
+  const contact = translations?.contact || {};
+  const form = contact?.form || {};
+  const subjects = contact?.subjects || {};
+  const info = contact?.info || {};
+  const hours = contact?.hours || {};
+  const location = contact?.location || {};
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -38,7 +45,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
     // Honeypot check
     if (formData.website) {
       setStatus('error');
-      setErrorMessage('Something went wrong. Please try again.');
+      setErrorMessage(form?.error || 'Something went wrong. Please try again.');
       return;
     }
 
@@ -97,7 +104,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
         setTimestamp(Math.floor(Date.now() / 1000));
       } else {
         setStatus('error');
-        setErrorMessage(data.message || 'Something went wrong. Please try again.');
+        setErrorMessage(data.message || form?.error || 'Something went wrong. Please try again.');
       }
     } catch (error) {
       setStatus('error');
@@ -130,7 +137,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
             transition={{ duration: 0.6 }}
           >
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-charcoal mb-4">
-              Get in Touch
+              {contact?.title || 'Get in Touch'}
             </h1>
           </motion.div>
 
@@ -146,31 +153,31 @@ export default function ContactClient({ translations, locale }: ContactClientPro
             >
               {/* Hours */}
               <div>
-                <h3 className="font-display text-xl text-charcoal mb-4">Opening Hours</h3>
+                <h3 className="font-display text-xl text-charcoal mb-4">{hours?.title || 'Opening Hours'}</h3>
                 <div className="space-y-3 text-charcoal/70 text-sm">
                   <div>
                     <p className="text-charcoal font-medium">Mon–Tue</p>
-                    <p>Closed</p>
+                    <p>{hours?.closedText || 'Closed'}</p>
                   </div>
                   <div>
                     <p className="text-charcoal font-medium">Wed, Thu, Sun</p>
                     <p>12:30 - 23:00</p>
-                    <p className="text-xs text-stone">Kitchen closes 22:30</p>
+                    <p className="text-xs text-stone">{hours?.midweekKitchen || 'Kitchen closes 22:30'}</p>
                   </div>
                   <div>
                     <p className="text-charcoal font-medium">Fri–Sat</p>
                     <p>12:30 - 01:00</p>
-                    <p className="text-xs text-stone">Kitchen closes 23:30</p>
+                    <p className="text-xs text-stone">{hours?.weekendKitchen || 'Kitchen closes 23:30'}</p>
                   </div>
                 </div>
               </div>
 
               {/* Location */}
               <div>
-                <h3 className="font-display text-xl text-charcoal mb-4">Location</h3>
+                <h3 className="font-display text-xl text-charcoal mb-4">{location?.title || 'Location'}</h3>
                 <p className="text-charcoal/70 text-sm">
-                  Rua da Boavista 66<br />
-                  1200-067 Lisboa<br />
+                  {info?.address || 'Rua da Boavista 66'}<br />
+                  {info?.city || '1200-067 Lisboa'}<br />
                   Cais do Sodré
                 </p>
                 <a
@@ -179,16 +186,16 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                   rel="noopener noreferrer"
                   className="inline-block mt-3 text-terracotta hover:text-terracotta/80 text-sm transition-colors"
                 >
-                  Get Directions →
+                  {location?.directions || 'Get Directions →'}
                 </a>
               </div>
 
               {/* Contact */}
               <div>
-                <h3 className="font-display text-xl text-charcoal mb-4">Contact</h3>
+                <h3 className="font-display text-xl text-charcoal mb-4">{info?.title || 'Contact'}</h3>
                 <p className="text-charcoal/70 text-sm">
                   <a href="mailto:info@maida.pt" className="hover:text-terracotta transition-colors">
-                    info@maida.pt
+                    {info?.email || 'info@maida.pt'}
                   </a>
                 </p>
               </div>
@@ -202,7 +209,9 @@ export default function ContactClient({ translations, locale }: ContactClientPro
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               <div className="bg-sand/30 p-6 md:p-10">
-                <h2 className="font-display text-2xl text-charcoal mb-6 text-center lg:text-left">Send us a message</h2>
+                <h2 className="font-display text-2xl text-charcoal mb-6 text-center lg:text-left">
+                  {form?.title || 'Send us a message'}
+                </h2>
                 
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {/* Honeypot field - hidden from users */}
@@ -220,7 +229,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                   {/* Name */}
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-charcoal mb-2">
-                      Your name *
+                      {form?.name || 'Your name'} *
                     </label>
                     <input
                       type="text"
@@ -237,7 +246,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                   {/* Email */}
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-charcoal mb-2">
-                      Email address *
+                      {form?.email || 'Email address'} *
                     </label>
                     <input
                       type="email"
@@ -254,7 +263,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                   {/* Subject */}
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-charcoal mb-2">
-                      Subject
+                      {form?.subject || 'Subject'}
                     </label>
                     <select
                       id="subject"
@@ -263,19 +272,19 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                       onChange={handleChange}
                       className="w-full px-4 py-3 bg-white border border-stone/20 focus:outline-none focus:ring-2 focus:ring-terracotta/50 focus:border-terracotta transition-colors"
                     >
-                      <option value="">Select a topic</option>
-                      <option value="General Inquiry">General inquiry</option>
-                      <option value="Large Group Reservation">Large group reservation (6+)</option>
-                      <option value="Private Event">Private event</option>
-                      <option value="Feedback">Feedback</option>
-                      <option value="Other">Other</option>
+                      <option value="">{subjects?.select || 'Select a topic'}</option>
+                      <option value="General Inquiry">{subjects?.general || 'General inquiry'}</option>
+                      <option value="Large Group Reservation">{subjects?.reservation || 'Large group reservation (6+)'}</option>
+                      <option value="Private Event">{subjects?.event || 'Private event'}</option>
+                      <option value="Feedback">{subjects?.feedback || 'Feedback'}</option>
+                      <option value="Other">{subjects?.other || 'Other'}</option>
                     </select>
                   </div>
 
                   {/* Message */}
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-charcoal mb-2">
-                      Message *
+                      {form?.message || 'Message'} *
                     </label>
                     <textarea
                       id="message"
@@ -285,7 +294,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                       value={formData.message}
                       onChange={handleChange}
                       className="w-full px-4 py-3 bg-white border border-stone/20 focus:outline-none focus:ring-2 focus:ring-terracotta/50 focus:border-terracotta transition-colors resize-none"
-                      placeholder="How can we help you?"
+                      placeholder={form?.placeholder || 'How can we help you?'}
                     />
                   </div>
 
@@ -299,7 +308,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                   {/* Success Message */}
                   {status === 'success' && (
                     <p className="text-green-700 text-sm bg-green-50 p-3">
-                      Thank you! Your message has been sent. We&apos;ll get back to you soon.
+                      {form?.success || "Thank you! Your message has been sent. We'll get back to you soon."}
                     </p>
                   )}
 
@@ -309,7 +318,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                     disabled={status === 'sending'}
                     className="w-full bg-terracotta text-warm-white px-6 py-3 font-medium hover:bg-terracotta/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {status === 'sending' ? 'Sending...' : 'Send message'}
+                    {status === 'sending' ? (form?.sending || 'Sending...') : (form?.send || 'Send message')}
                   </button>
 
                   {/* reCAPTCHA notice */}

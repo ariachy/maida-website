@@ -12,13 +12,13 @@ interface StoryProps {
 }
 
 export default function Story({ translations, locale }: StoryProps) {
-  const story = translations?.story || {};
+  const homeStory = translations?.homeStory || {};
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   
   // Helper function to safely get translation value
-  const getLabel = (key: string, fallback: string): string => {
-    const value = story[key];
+  const t = (key: string, fallback: string): string => {
+    const value = homeStory[key];
     if (!value) return fallback;
     if (typeof value === 'string') return value;
     if (typeof value === 'object' && value.label) return value.label;
@@ -41,6 +41,7 @@ export default function Story({ translations, locale }: StoryProps) {
             src="/images/home/gathering-table.webp"
             alt="Friends gathering around the table at Maída"
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover scale-150"
           />
         </motion.div>
@@ -53,30 +54,29 @@ export default function Story({ translations, locale }: StoryProps) {
           transition={{ duration: 0.8, delay: 0.1, ease: [0.19, 1, 0.22, 1] }}
         >
           <div className="px-6 md:px-10 lg:px-12 py-8 md:py-10 max-w-xl">
-            {/* Stacked Headline */}
+            {/* Stacked Headline - Now from translations */}
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-warm-white leading-[1.1] mb-3">
-              <span className="block">FROM</span>
-              <span className="block">OUR</span>
-              <span className="block">ROOTS</span>
+              <span className="block">{t('headline1', 'FROM')}</span>
+              <span className="block">{t('headline2', 'OUR')}</span>
+              <span className="block">{t('headline3', 'ROOTS')}</span>
             </h2>
             
-            {/* Subtitle - closer to headline, dark green, bolder */}
+            {/* Subtitle */}
             <p className="font-display text-xl md:text-2xl font-semibold text-charcoal mb-5">
-              {getLabel('title', 'Where every meal is')} <em className="italic">{getLabel('titleHighlight', 'an invitation')}</em>
+              {t('title', 'Where every meal is')} <em className="italic">{t('titleHighlight', 'an invitation')}</em>
             </p>
             
-            {/* Body Text - wider container */}
+            {/* Body Text - Now from translations */}
             <p className="text-warm-white/90 text-base leading-relaxed mb-5">
-              The word مائدة (ma'ida) means "the gathering table" in Arabic - where family and friends come together, glasses clink, plates are shared, and time lingers. That's the spirit we brought from Beirut to Cais do Sodré.{' '}
-              <span className="font-medium">#FromOurRoots</span>
+              {t('text', 'The word مائدة (ma\'ida) means "the gathering table" in Arabic - where family and friends come together, glasses clink, plates are shared, and time lingers. That\'s the spirit we brought from Beirut to Cais do Sodré.')}
             </p>
             
             {/* CTA Link */}
-            <Link 
+            <Link
               href={`/${locale}/story`}
               className="inline-block text-warm-white border-b border-warm-white/50 hover:border-warm-white pb-1 transition-colors"
             >
-              {getLabel('cta', 'Read our story')} →
+              {t('cta', 'Read Our Story')} →
             </Link>
           </div>
         </motion.div>

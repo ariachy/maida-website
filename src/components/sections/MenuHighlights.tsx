@@ -6,51 +6,66 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Locale } from '@/lib/i18n';
 
-const featuredFood = [
-  {
-    name: 'Shish Barak',
-    description: 'fried minced beef dumplings sauteed in chili paste, served over garlicky yogurt and caramelized onions with roasted almonds.',
-    image: '/images/food/shish-barak.webp',
-  },
-  {
-    name: 'Kebab Pistachio',
-    description: 'minced meat with pistachios and house spices, sauteed in pomegranate molasses. Served with hummus',
-    image: '/images/food/kebab.webp',
-  },
-  {
-    name: 'Muhamara',
-    description: 'roasted red pepper dip, walnuts, tahini, pomegranate molasses and a hint of chili',
-    image: '/images/food/muhamara.webp',
-  },
-  {
-    name: 'Shawarma',
-    description: '(beef) with fries, onions and parsley salad, tomato, pickles, tahini dressing and saj bread',
-    image: '/images/food/shawarma.webp',
-  },
-];
-
-const featuredDrinks = [
-  {
-    name: 'Manhattan',
-    description: 'Whiskey, sweet vermouth, bitters',
-    image: '/images/drinks/manhattan.webp',
-  },
-  {
-    name: 'Zhourat Tea',
-    description: 'Traditional Lebanese herbal blend',
-    image: '/images/drinks/zhourat-tea.webp',
-  },
-  {
-    name: 'Cortado',
-    description: 'Espresso, steamed milk',
-    image: '/images/drinks/coffee-cortado.webp',
-  },
-];
-
 interface MenuHighlightsProps {
   translations: any;
   locale: Locale;
 }
+
+interface FeaturedItem {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+}
+
+// Default featured items (fallback if not in translations)
+const defaultFeaturedFood: FeaturedItem[] = [
+  {
+    id: 'shish-barak',
+    name: 'Shish Barak',
+    description: 'Fried minced beef dumplings sautéed in chili paste, served over garlicky yogurt and caramelized onions with roasted almonds.',
+    image: '/images/food/shish-barak.webp',
+  },
+  {
+    id: 'kebab-pistachio',
+    name: 'Kebab Pistachio',
+    description: 'Minced meat with pistachios and house spices, sautéed in pomegranate molasses. Served with hummus.',
+    image: '/images/food/kebab.webp',
+  },
+  {
+    id: 'muhamara',
+    name: 'Muhamara',
+    description: 'Roasted red pepper dip, walnuts, tahini, pomegranate molasses and a hint of chili.',
+    image: '/images/food/muhamara.webp',
+  },
+  {
+    id: 'shawarma',
+    name: 'Shawarma',
+    description: '(beef) with fries, onions and parsley salad, tomato, pickles, tahini dressing and saj bread.',
+    image: '/images/food/shawarma.webp',
+  },
+];
+
+const defaultFeaturedDrinks: FeaturedItem[] = [
+  {
+    id: 'manhattan',
+    name: 'Manhattan',
+    description: 'Whiskey, sweet vermouth, bitters.',
+    image: '/images/drinks/manhattan.webp',
+  },
+  {
+    id: 'zhourat-tea',
+    name: 'Zhourat Tea',
+    description: 'Traditional Lebanese herbal blend.',
+    image: '/images/drinks/zhourat-tea.webp',
+  },
+  {
+    id: 'cortado',
+    name: 'Cortado',
+    description: 'Espresso, steamed milk.',
+    image: '/images/drinks/coffee-cortado.webp',
+  },
+];
 
 function PlaceholderImage({ name, type }: { name: string; type: 'food' | 'drink' }) {
   return (
@@ -74,6 +89,21 @@ function PlaceholderImage({ name, type }: { name: string; type: 'food' | 'drink'
 }
 
 export default function MenuHighlights({ translations, locale }: MenuHighlightsProps) {
+  const homeMenu = translations?.homeMenu || {};
+  const common = translations?.common || {};
+  
+  // Helper function to get translation
+  const t = (key: string, fallback: string): string => {
+    const value = homeMenu[key];
+    if (!value) return fallback;
+    if (typeof value === 'string') return value;
+    return fallback;
+  };
+  
+  // Get featured items from translations or use defaults
+  const featuredFood: FeaturedItem[] = homeMenu.featuredFood || defaultFeaturedFood;
+  const featuredDrinks: FeaturedItem[] = homeMenu.featuredDrinks || defaultFeaturedDrinks;
+  
   const foodScrollRef = useRef<HTMLDivElement>(null);
   const drinksScrollRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -128,11 +158,15 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
     }
   };
 
+  const scrollLeftLabel = common.scrollLeft || 'Scroll left';
+  const scrollRightLabel = common.scrollRight || 'Scroll right';
+  const imageComingSoon = t('imageComingSoon', 'Image coming soon');
+
   return (
     <section className="pt-16 md:pt-20 pb-12 md:pb-16 px-6 bg-warm-white overflow-hidden">
       <div className="max-w-6xl mx-auto">
         
-        {/* Section Header - Stacked Title */}
+        {/* Section Header - Stacked Title - Now from translations */}
         <motion.div
           className="mb-10 md:mb-12"
           initial={{ opacity: 0, y: 20 }}
@@ -141,12 +175,12 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-terracotta leading-[1.1]">
-            <span className="block">A TASTE</span>
-            <span className="block">OF MAÍDA</span>
+            <span className="block">{t('title1', 'A TASTE')}</span>
+            <span className="block">{t('title2', 'OF MAÍDA')}</span>
           </h2>
         </motion.div>
 
-        {/* Food Section Header */}
+        {/* Food Section Header - Now from translations */}
         <motion.div
           className="mb-6"
           initial={{ opacity: 0, y: 20 }}
@@ -155,7 +189,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           transition={{ duration: 0.6 }}
         >
           <p className="text-base md:text-lg tracking-[0.15em] uppercase text-charcoal font-semibold">
-            From our kitchen
+            {t('fromKitchen', 'From our kitchen')}
           </p>
         </motion.div>
 
@@ -165,7 +199,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             <button
               onClick={() => scrollFood('left')}
               className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg items-center justify-center transition-all duration-300 hover:bg-sand -translate-x-1/2"
-              aria-label="Scroll left"
+              aria-label={scrollLeftLabel}
             >
               <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -177,7 +211,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             <button
               onClick={() => scrollFood('right')}
               className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg items-center justify-center transition-all duration-300 hover:bg-sand translate-x-1/2"
-              aria-label="Scroll right"
+              aria-label={scrollRightLabel}
             >
               <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -185,7 +219,6 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             </button>
           )}
 
-          {/* FIXED: Added overflow-y-hidden, touchAction, overscrollBehavior for mobile scroll fix */}
           <div
             ref={foodScrollRef}
             onScroll={checkFoodScroll}
@@ -198,7 +231,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           >
             {featuredFood.map((item, index) => (
               <motion.div
-                key={item.name}
+                key={item.id}
                 className="flex-shrink-0 w-[75vw] max-w-[260px] md:w-[280px] md:max-w-none snap-start"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -207,7 +240,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
               >
                 <div className="group cursor-pointer">
                   <div className="relative aspect-square mb-4 overflow-hidden bg-sand/30">
-                    {foodImageErrors[item.name] ? (
+                    {foodImageErrors[item.id] ? (
                       <PlaceholderImage name={item.name} type="food" />
                     ) : (
                       <Image
@@ -216,7 +249,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
                         fill
                         sizes="(max-width: 768px) 75vw, 280px"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        onError={() => setFoodImageErrors(prev => ({ ...prev, [item.name]: true }))}
+                        onError={() => setFoodImageErrors(prev => ({ ...prev, [item.id]: true }))}
                       />
                     )}
                   </div>
@@ -243,7 +276,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           <span className="flex-1 max-w-[100px] h-px bg-stone/20" />
         </div>
 
-        {/* Drinks Section Header */}
+        {/* Drinks Section Header - Now from translations */}
         <motion.div
           className="mb-8"
           initial={{ opacity: 0, y: 20 }}
@@ -252,7 +285,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           transition={{ duration: 0.6 }}
         >
           <p className="text-base md:text-lg tracking-[0.15em] uppercase text-charcoal font-semibold">
-            From our bar
+            {t('fromBar', 'From our bar')}
           </p>
         </motion.div>
 
@@ -262,7 +295,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             <button
               onClick={() => scrollDrinks('left')}
               className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg items-center justify-center transition-all duration-300 hover:bg-sand -translate-x-1/2"
-              aria-label="Scroll left"
+              aria-label={scrollLeftLabel}
             >
               <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -274,7 +307,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             <button
               onClick={() => scrollDrinks('right')}
               className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg items-center justify-center transition-all duration-300 hover:bg-sand translate-x-1/2"
-              aria-label="Scroll right"
+              aria-label={scrollRightLabel}
             >
               <svg className="w-5 h-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -282,7 +315,6 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             </button>
           )}
 
-          {/* FIXED: Added overflow-y-hidden, touchAction, overscrollBehavior for mobile scroll fix */}
           <div
             ref={drinksScrollRef}
             onScroll={checkDrinksScroll}
@@ -295,7 +327,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           >
             {featuredDrinks.map((item, index) => (
               <motion.div
-                key={item.name}
+                key={item.id}
                 className="flex-shrink-0 w-[75vw] max-w-[260px] md:w-[280px] md:max-w-none snap-start"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -304,7 +336,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
               >
                 <div className="group cursor-pointer">
                   <div className="relative aspect-square mb-4 overflow-hidden bg-sand/30">
-                    {drinkImageErrors[item.name] ? (
+                    {drinkImageErrors[item.id] ? (
                       <PlaceholderImage name={item.name} type="drink" />
                     ) : (
                       <Image
@@ -313,7 +345,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
                         fill
                         sizes="(max-width: 768px) 75vw, 280px"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        onError={() => setDrinkImageErrors(prev => ({ ...prev, [item.name]: true }))}
+                        onError={() => setDrinkImageErrors(prev => ({ ...prev, [item.id]: true }))}
                       />
                     )}
                   </div>
@@ -327,7 +359,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
           </div>
         </div>
 
-        {/* Full Menu button */}
+        {/* Full Menu button - Now from translations */}
         <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -339,7 +371,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             href={`/${locale}/menu`} 
             className="bg-terracotta text-warm-white px-8 py-4 text-sm font-medium hover:bg-terracotta/90 transition-colors inline-block"
           >
-            Full Menu
+            {t('fullMenu', 'Full Menu')}
           </Link>
         </motion.div>
       </div>

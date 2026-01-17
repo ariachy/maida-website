@@ -1,13 +1,19 @@
 {
   "locale": "pt",
   "nav": {
+    "home": "Início",
     "story": "História",
     "menu": "Menu",
-    "about": "Sobre",
+    "events": "Maída Live",
+    "blog": "Blog",
     "contact": "Contacto",
-    "reserve": "Reservar"
+    "reserve": "Reservar Mesa",
+    "discover": "Descobrir",
+    "bookTable": "Reservar mesa",
+    "loading": "A carregar..."
   },
   "hero": {
+    "badge": "Restaurante-bar",
     "location": "Cais do Sodré, Lisboa",
     "title1": "Sabores Mediterrânicos.",
     "title2": "Alma Libanesa.",
@@ -16,13 +22,97 @@
     "viewMenu": "Ver Menu",
     "scroll": "Scroll"
   },
+  "homeStory": {
+    "headline1": "DAS",
+    "headline2": "NOSSAS",
+    "headline3": "RAÍZES",
+    "title": "Onde cada refeição é",
+    "titleHighlight": "um convite",
+    "text": "A palavra مائدة (ma'ida) significa \"a mesa de reunião\" em árabe - onde família e amigos se juntam, copos brindam, pratos são partilhados e o tempo se prolonga. É esse o espírito que trouxemos de Beirute para o Cais do Sodré.",
+    "cta": "Ler a Nossa História"
+  },
+  "homeMenu": {
+    "title1": "UM SABOR",
+    "title2": "DE MAÍDA",
+    "fromKitchen": "Da nossa cozinha",
+    "fromBar": "Do nosso bar",
+    "fullMenu": "Menu Completo",
+    "imageComingSoon": "Imagem em breve",
+    "featuredFood": [
+      {
+        "id": "shish-barak",
+        "name": "Shish Barak",
+        "description": "Dumplings de carne picada fritos, salteados em pasta de chili, servidos sobre iogurte com alho e cebolas caramelizadas com amêndoas torradas.",
+        "image": "/images/food/shish-barak.webp"
+      },
+      {
+        "id": "kebab-pistachio",
+        "name": "Kebab Pistácio",
+        "description": "Carne picada com pistácios e especiarias da casa, salteada em melaço de romã. Servido com hummus.",
+        "image": "/images/food/kebab.webp"
+      },
+      {
+        "id": "muhamara",
+        "name": "Muhamara",
+        "description": "Dip de pimento vermelho assado, nozes, tahini, melaço de romã e um toque de chili.",
+        "image": "/images/food/muhamara.webp"
+      },
+      {
+        "id": "shawarma",
+        "name": "Shawarma",
+        "description": "(carne) com batatas fritas, salada de cebola e salsa, tomate, pickles, molho tahini e pão saj.",
+        "image": "/images/food/shawarma.webp"
+      }
+    ],
+    "featuredDrinks": [
+      {
+        "id": "manhattan",
+        "name": "Manhattan",
+        "description": "Whiskey, vermute doce, bitters.",
+        "image": "/images/drinks/manhattan.webp"
+      },
+      {
+        "id": "zhourat-tea",
+        "name": "Chá Zhourat",
+        "description": "Mistura tradicional de ervas libanesas.",
+        "image": "/images/drinks/zhourat-tea.webp"
+      },
+      {
+        "id": "cortado",
+        "name": "Cortado",
+        "description": "Espresso, leite vaporizado.",
+        "image": "/images/drinks/coffee-cortado.webp"
+      }
+    ]
+  },
+  "homeVisit": {
+    "headline1": "ENCONTRE",
+    "headline2": "-NOS",
+    "hours": {
+      "monWedThuSun": "Seg, Qua, Qui, Dom: 12:30 – 23:00",
+      "friday": "Sexta: 12:30 – 01:00",
+      "saturday": "Sábado: 12:30 – 01:00",
+      "closed": "Terça: Fechado",
+      "kitchenCloses": "Cozinha fecha"
+    },
+    "address": {
+      "street": "Rua da Boavista 66",
+      "postal": "1200-068 Lisboa"
+    },
+    "directions": "Direções"
+  },
+  "homeCta": {
+    "title": "A sua mesa está à espera",
+    "subtitle": "#MeetMeAtMaída",
+    "button": "Reservar Mesa"
+  },
   "story": {
-    "label": "A Nossa História",
-    "title": "Onde cada refeição sabe a",
-    "titleHighlight": "casa",
-    "text1": "O Maída é mais do que um restaurante—é um convite para abrandar, reunir à volta da mesa e partilhar algo significativo.",
-    "text2": "Enraizado na tradição libanesa e inspirado pelo calor mediterrânico, criamos comida feita para ser partilhada. Cada prato conta uma história. Cada noite sabe a casa.",
-    "cta": "Explorar o Menu",
+    "label": "#DasNossasRaízes",
+    "title": "Onde cada refeição é",
+    "titleHighlight": "um convite",
+    "text1": "O Maída é mais do que um restaurante - é um convite. Para abrandar. Para reunir à volta da mesa. Para partilhar algo significativo.",
+    "text2": "A palavra مائدة (ma'ida) significa \"a mesa de reunião\" em árabe - onde família e amigos se juntam, histórias são partilhadas, e ninguém sai com fome. É esse o espírito que trouxemos de Beirute para o Cais do Sodré.",
+    "cta": "Ler a Nossa História",
     "arabicWord": "مائدة",
     "arabicMeaning": "A Mesa de Reunião"
   },
@@ -41,165 +131,274 @@
       },
       {
         "title": "Demorar Mais",
-        "description": "Um espaço para ficar—não para apressar. Para o segundo copo, o mezze extra, a história que não podia esperar."
+        "description": "Um espaço para ficar — não para apressar. Para o segundo copo, o mezze extra, a história que não podia esperar."
       }
     ]
   },
   "menu": {
+    "heroTitle": "O Nosso Menu",
+    "heroSubtitle": "Sabores mediterrânicos. Alma libanesa.",
+    "allergenNote": "Por favor, pergunte à nossa equipa sobre alergénios e requisitos dietéticos.",
     "title": "O Menu",
     "subtitle": "Explore as nossas ofertas",
     "viewFull": "Ver Menu Completo",
+    "emptyCategory": "Ainda não há itens nesta categoria.",
     "categories": {
-      "mezze": {
-        "name": "Mezze & Entradas",
-        "description": "Pequenos pratos para partilhar e saborear"
+      "to-start": {
+        "name": "Para Começar",
+        "description": "Entradas, dips, saladas e couvert"
       },
       "mains": {
         "name": "Pratos Principais",
-        "description": "Pratos reconfortantes da nossa cozinha"
+        "description": "Pratos mediterrânicos reconfortantes"
       },
-      "grilled": {
-        "name": "Grelhados",
-        "description": "Grelhados na perfeição"
+      "to-end": {
+        "name": "Para Terminar",
+        "description": "Doces finais"
       },
-      "saj": {
-        "name": "Pão Saj",
-        "description": "Pão achatado tradicional libanês"
+      "saj-wraps": {
+        "name": "SAJ Wraps",
+        "description": "Pão fino e estaladiço libanês cozido na chapa saj"
       },
-      "desserts": {
-        "name": "Sobremesas",
-        "description": "Doces tradicionais"
-      },
-      "cocktails": {
-        "name": "Cocktails de Assinatura",
-        "description": "Bebidas com alma libanesa"
-      },
-      "wine": {
-        "name": "Seleção de Vinhos",
-        "description": "Vinhos mediterrânicos & naturais"
-      },
-      "coffee": {
-        "name": "Café",
-        "description": "Especialidade & tradicional"
-      },
-      "soft-drinks": {
+      "drinks": {
         "name": "Bebidas",
-        "description": "Chás, sumos & mais"
+        "description": "Café, chá e refrescos"
+      },
+      "cocktails-wine": {
+        "name": "Cocktails e Vinhos",
+        "description": "Cocktails de assinatura, clássicos, vinhos e cervejas"
       }
     },
+    "subCategories": {
+      "starters": "Entradas",
+      "dips": "Dips",
+      "couvert": "Couvert",
+      "salads": "Saladas",
+      "savoury": "Salgados",
+      "sweet": "Doces",
+      "coffee": "Café",
+      "tea": "Chá",
+      "lemonade": "Limonada",
+      "juices": "Sumos",
+      "milkshakes": "Batidos",
+      "soft-drinks": "Refrigerantes",
+      "mocktails": "Mocktails",
+      "signatures": "Assinaturas Maída",
+      "classics": "Clássicos",
+      "wines": "Vinhos",
+      "beers": "Cervejas"
+    },
     "items": {
-      "hummus-beiruti": {
-        "name": "Hummus Beiruti",
-        "description": "Grão-de-bico quente, azeite, pinhões"
+      "honey-roasted-halloumi": {
+        "name": "Halloumi Assado com Mel",
+        "description": "Com tomate cereja assado e tomilho fresco"
       },
-      "kibbeh-nayeh": {
-        "name": "Kibbeh Nayeh",
-        "description": "Tártaro de borrego cru, bulgur, hortelã fresca"
+      "shrimp-saj-crostini": {
+        "name": "Crostini de Saj com Camarão",
+        "description": "Rodelas de saj crocantes com tabbouleh, camarão salteado e raspa de limão"
       },
-      "batata-harra": {
-        "name": "Batata Harra",
-        "description": "Batatas crocantes, alho, coentros, malagueta"
+      "shish-barak": {
+        "name": "Shish Barak",
+        "description": "Dumplings de carne picada fritos, salteados em pasta de chili, servidos sobre iogurte com alho e cebolas caramelizadas, com amêndoas torradas"
       },
-      "fattoush": {
-        "name": "Fattoush",
-        "description": "Pita crocante, romã, sumac, vegetais frescos"
+      "kebab-pistachio": {
+        "name": "Kebab Pistácio",
+        "description": "Carne picada com pistácios e especiarias da casa, salteada em melaço de romã. Servido com hummus"
       },
-      "baba-ganoush": {
-        "name": "Baba Ganoush",
-        "description": "Beringela fumada, tahini, romã"
+      "chicken-rolls": {
+        "name": "Rolos de Frango",
+        "description": "Mousakhan - rolos de saj crocantes recheados com frango desfiado, cebolas caramelizadas e sumac. Servido com dip de iogurte"
       },
-      "labneh": {
-        "name": "Labneh",
-        "description": "Iogurte coado, za'atar, azeite"
+      "falafel-bites": {
+        "name": "Falafel Bites",
+        "description": "Bolinhas de grão-de-bico servidas com vegetais mistos, migalhas de pão e molho tahini"
+      },
+      "cheese-rolls": {
+        "name": "Rolos de Queijo",
+        "description": "Massa crocante recheada com queijo e salsa"
+      },
+      "fries": {
+        "name": "Batatas Fritas",
+        "description": "Caseiras"
+      },
+      "spinach-artichoke-gratin": {
+        "name": "Gratinado de Espinafres e Alcachofra",
+        "description": "Dip cremoso gratinado, servido quente com parmesão e mozzarella derretidos"
+      },
+      "muhamara": {
+        "name": "Muhamara",
+        "description": "Dip de pimento vermelho assado, nozes, tahini, melaço de romã e um toque de chili"
+      },
+      "hummus": {
+        "name": "Hummus",
+        "description": "Dip cremoso de grão-de-bico, coberto com sementes de romã"
       },
       "feta-brulee": {
         "name": "Feta Brûlée",
-        "description": "Feta caramelizado, mel, sésamo"
+        "description": "Mistura cremosa de feta com chili suave, finalizado com crosta de açúcar caramelizado"
       },
-      "halloumi-honey": {
-        "name": "Halloumi com Mel",
-        "description": "Halloumi grelhado, mel, pinhões"
+      "labneh-plus": {
+        "name": "Labneh+",
+        "description": "Iogurte coado cremoso misturado com vegetais picados e azeitonas"
       },
-      "chicken-shawarma": {
-        "name": "Shawarma de Frango",
-        "description": "Frango marinado, molho de alho, pickles"
+      "marinated-olives": {
+        "name": "Azeitonas Marinadas",
+        "description": ""
       },
-      "lamb-kofta": {
-        "name": "Kofta de Borrego",
-        "description": "Espetadas de borrego especiado, tahini, ervas frescas"
+      "saj-crackers": {
+        "name": "Crackers de Saj",
+        "description": ""
       },
-      "grilled-chicken": {
-        "name": "Peito de Frango Grelhado",
-        "description": "Especiarias mediterrânicas, limão, ervas"
+      "zaatar-mix-crackers": {
+        "name": "Mix de Zaatar e Crackers",
+        "description": ""
       },
-      "mixed-grill": {
-        "name": "Grelhada Mista",
-        "description": "Seleção de carnes grelhadas, arroz, salada"
+      "saj-bread": {
+        "name": "Pão Saj",
+        "description": ""
       },
-      "lamb-chops": {
-        "name": "Costeletas de Borrego",
-        "description": "Grelhadas, ervas, alho"
+      "fatoush": {
+        "name": "Fatoush",
+        "description": "Alface romana, salsa, hortelã, tomate, pepino, pimento, cebolinho, rabanete, pão crocante, molho picante"
       },
-      "saj-zaatar": {
-        "name": "Saj Zaatar",
-        "description": "Za'atar tradicional, azeite"
+      "tabbouleh": {
+        "name": "Tabbouleh",
+        "description": "Salsa, tomate, hortelã, cebolinho, molho de limão e azeite"
       },
-      "saj-cheese": {
-        "name": "Saj Queijo",
-        "description": "Queijo branco derretido, hortelã fresca"
+      "lamb-kebab": {
+        "name": "Kebab de Borrego",
+        "description": "Costeletas de borrego grelhadas com especiarias da casa, servidas com hummus"
       },
-      "saj-labneh": {
-        "name": "Saj Labneh",
-        "description": "Iogurte coado, pepino, tomate"
+      "kafta-mashwiye": {
+        "name": "Kafta Mashwiye",
+        "description": "Espetadas de carne picada grelhadas com especiarias, servidas com hummus"
+      },
+      "chicken-taouk": {
+        "name": "Frango Taouk",
+        "description": "Peito de frango marinado em iogurte e especiarias, grelhado, servido com molho de alho libanês"
+      },
+      "picanha": {
+        "name": "Picanha",
+        "description": "Picanha grelhada estilo brasileiro, servida com hummus"
+      },
+      "seabass": {
+        "name": "Robalo",
+        "description": "Peixe fresco grelhado com azeite, limão e ervas mediterrânicas"
       },
       "kunafa": {
         "name": "Kunafa",
-        "description": "Massa desfiada, queijo doce, calda de rosa"
+        "description": "Sobremesa tradicional com massa desfiada, queijo doce e calda de flor de laranjeira"
       },
-      "baklava": {
-        "name": "Baklava",
-        "description": "Camadas de filo, pistácios, mel"
+      "rice-pudding": {
+        "name": "Arroz Doce Libanês",
+        "description": "Arroz doce cremoso com água de rosas, canela e pistácios"
       },
-      "warda": {
-        "name": "Warda",
-        "description": "Geleia de rosa, bourbon, lima, cardamomo"
+      "saj-nutella": {
+        "name": "Saj Nutella",
+        "description": "Saj quente com Nutella e banana"
       },
-      "beirut-sour": {
-        "name": "Beirut Sour",
-        "description": "Arak, flor de laranjeira, citrinos, clara de ovo"
+      "saj-zaatar": {
+        "name": "Saj Zaatar",
+        "description": "Mistura tradicional de zaatar com azeite"
       },
-      "cedar-old-fashioned": {
-        "name": "Cedar Old Fashioned",
-        "description": "Whiskey, cedro, laranja, bitters"
+      "saj-cheese": {
+        "name": "Saj Queijo",
+        "description": "Queijo akkawi derretido"
       },
-      "fattouch-on-ice": {
-        "name": "Fattouch on Ice",
-        "description": "Bourbon, romã, sumac, hortelã"
+      "saj-halloumi-zaatar": {
+        "name": "Saj Halloumi e Zaatar",
+        "description": "Halloumi grelhado com zaatar"
       },
-      "house-red": {
-        "name": "Tinto da Casa",
-        "description": "Seleção portuguesa, copo ou garrafa"
+      "saj-labneh": {
+        "name": "Saj Labneh",
+        "description": "Iogurte coado com pepino e hortelã"
       },
-      "house-white": {
-        "name": "Branco da Casa",
-        "description": "Seleção portuguesa, copo ou garrafa"
+      "saj-chicken-shawarma": {
+        "name": "Saj Shawarma de Frango",
+        "description": "Frango marinado desfiado, pickles, molho de alho"
       },
-      "cortado": {
-        "name": "Cortado",
-        "description": "Espresso, leite vaporizado"
+      "saj-kafta": {
+        "name": "Saj Kafta",
+        "description": "Carne picada especiada grelhada com cebola e tomate"
       },
-      "lebanese-coffee": {
-        "name": "Café Libanês",
-        "description": "Café tradicional com cardamomo"
+      "saj-nutella-banana": {
+        "name": "Saj Nutella e Banana",
+        "description": "Nutella com banana fresca"
       },
-      "mint-tea": {
-        "name": "Chá de Hortelã Fresco",
-        "description": "Folhas de hortelã frescas, mel"
+      "saj-ashta": {
+        "name": "Saj Ashta",
+        "description": "Creme libanês tradicional com mel e pistácios"
       },
-      "lemonade": {
-        "name": "Limonada da Casa",
-        "description": "Espremida na hora, hortelã, água de rosas"
-      }
+      "espresso": { "name": "Espresso", "description": "" },
+      "espresso-double": { "name": "Espresso Duplo", "description": "" },
+      "americano": { "name": "Americano", "description": "" },
+      "cappuccino": { "name": "Cappuccino", "description": "" },
+      "latte": { "name": "Latte", "description": "" },
+      "flat-white": { "name": "Flat White", "description": "" },
+      "mocha": { "name": "Mocha", "description": "" },
+      "lebanese-coffee": { "name": "Café Libanês", "description": "Com cardamomo" },
+      "hot-chocolate": { "name": "Chocolate Quente", "description": "" },
+      "tea-fresh-mint": { "name": "Chá de Hortelã Fresca", "description": "" },
+      "tea-ginger-mint": { "name": "Chá de Gengibre e Hortelã", "description": "" },
+      "tea-lemon-ginger": { "name": "Chá de Limão e Gengibre", "description": "" },
+      "tea-english-breakfast": { "name": "Chá English Breakfast", "description": "" },
+      "tea-earl-grey": { "name": "Chá Earl Grey", "description": "" },
+      "tea-chamomile": { "name": "Chá de Camomila", "description": "" },
+      "tea-green": { "name": "Chá Verde", "description": "" },
+      "lemonade-classic": { "name": "Limonada Clássica", "description": "" },
+      "lemonade-maida": { "name": "Limonada Maída", "description": "Xarope de rosas, xarope de mástique, limão" },
+      "lemonade-pitcher": { "name": "Limonada (jarro)", "description": "" },
+      "juice-passion-fruit": { "name": "Maracujá e Canela", "description": "" },
+      "juice-buzz": { "name": "Buzz", "description": "Cenoura, maçã, gengibre" },
+      "milkshake-banana": { "name": "Banana Heaven", "description": "" },
+      "cola": { "name": "Cola", "description": "" },
+      "cola-zero": { "name": "Cola Zero", "description": "" },
+      "kombucha": { "name": "Kombucha", "description": "" },
+      "ice-tea": { "name": "Ice Tea", "description": "" },
+      "fritz-spritz": { "name": "Fritz Spritz", "description": "" },
+      "fritz-limo": { "name": "Fritz Limo", "description": "" },
+      "pink-grapefruit": { "name": "Toranja Rosa", "description": "Fever-tree" },
+      "still-water": { "name": "Água Sem Gás", "description": "" },
+      "sparkling-water": { "name": "Água Com Gás", "description": "" },
+      "tonic-water": { "name": "Água Tónica", "description": "Fever-tree" },
+      "soda-water": { "name": "Água Com Gás", "description": "" },
+      "ginger-beer": { "name": "Ginger Beer", "description": "" },
+      "ginger-ale": { "name": "Ginger Ale", "description": "" },
+      "mocktail-paloma": { "name": "Paloma Picante", "description": "" },
+      "mocktail-kombucha-mojito": { "name": "Kombucha Mojito", "description": "" },
+      "cocktail-fatouch-rocks": { "name": "Fatouch on the Rocks", "description": "Bourbon, melaço de romã, hortelã, limão" },
+      "cocktail-maida-martini": { "name": "Maída Martini", "description": "Gin, vermute, flor de laranjeira" },
+      "cocktail-mediterranean-gt": { "name": "G&T Mediterrânico", "description": "Gin mediterrânico, lillet, lima, água tónica" },
+      "cocktail-warda": { "name": "Warda", "description": "Bourbon, compota de rosas, gengibre" },
+      "cocktail-thyme-margarita": { "name": "Thyme for Margarita", "description": "Tequila, licor de laranja, tomilho, sumac" },
+      "cocktail-azeitona-cafe": { "name": "Azeitona Cafe", "description": "Vodka, licor de café, espresso, azeite, azeitonas" },
+      "cocktail-marie-antoinette": { "name": "Marie-Antoinette", "description": "Vodka, maracujá, St. Germain, baunilha, fava tonka" },
+      "cocktail-soraya": { "name": "Soraya", "description": "Arak, rum, limão, espuma de ginjinha" },
+      "cocktail-mimosa": { "name": "Mimosa", "description": "Espumante, laranja" },
+      "cocktail-manhattan": { "name": "Manhattan", "description": "Bourbon, vermute, bitter" },
+      "cocktail-gin-basil-smash": { "name": "Gin Basil Smash", "description": "Gin, manjericão, limão" },
+      "cocktail-daiquiri": { "name": "Daiquiri", "description": "Rum branco, lima" },
+      "cocktail-negroni": { "name": "Negroni", "description": "Gin, campari, vermute" },
+      "cocktail-naked-famous": { "name": "Naked & Famous", "description": "Mezcal, chartreuse, aperol, lima" },
+      "cocktail-caipirinha": { "name": "Caipirinha de Limão", "description": "Cachaça, açúcar demerara, lima" },
+      "cocktail-espresso-martini": { "name": "Espresso Martini", "description": "Vodka, licor de café, espresso" },
+      "cocktail-aperol-spritz": { "name": "Aperol Spritz", "description": "Prosecco, aperol, água com gás" },
+      "cocktail-moscow-mule": { "name": "Moscow Mule", "description": "Vodka, gengibre, limão, bitter" },
+      "cocktail-margarita": { "name": "Margarita", "description": "Tequila, licor de laranja, limão" },
+      "cocktail-new-york-sour": { "name": "New York Sour", "description": "Bourbon, limão, bitter, vinho tinto" },
+      "wine-2160-white": { "name": "2160", "description": "Branco - Douro" },
+      "wine-infinitude-white": { "name": "Infinitude", "description": "Branco - Sintra" },
+      "wine-altitudes-white": { "name": "Altitudes Ixsir", "description": "Branco - Líbano" },
+      "wine-cameleao-green": { "name": "Camaleão Alvarinho", "description": "Verde - Amarante" },
+      "wine-memorias-rose": { "name": "Memórias", "description": "Rosé - Dão" },
+      "wine-anexo-red": { "name": "Anexo", "description": "Tinto - Alentejo" },
+      "wine-biaia-red": { "name": "Biaia Colheita", "description": "Tinto - Beira" },
+      "wine-sparkling": { "name": "Espumante", "description": "" },
+      "beer-clay-cold": { "name": "Clay Cold", "description": "Loira, limão, sal. Servida em copo de barro frio" },
+      "beer-draft-25": { "name": "Imperial (25cl)", "description": "" },
+      "beer-draft-50": { "name": "Caneca (50cl)", "description": "" },
+      "beer-superbock": { "name": "Superbock", "description": "" },
+      "beer-musa-apa": { "name": "Musa (APA)", "description": "" }
     },
     "tags": {
       "vegetarian": "V",
@@ -223,7 +422,7 @@
     "titleHighlight": "Cais do Sodré",
     "address": {
       "label": "Morada",
-      "value": "Rua da Boavista 66, 1200-066 Lisboa"
+      "value": "Rua da Boavista 66, 1200-068 Lisboa"
     },
     "hours": {
       "label": "Horário",
@@ -231,18 +430,19 @@
     },
     "contact": {
       "label": "Contacto",
-      "value": "hello@maida.pt"
+      "value": "info@maida.pt"
     },
     "directions": "Como Chegar"
   },
   "cta": {
     "title": "A sua mesa está à espera",
-    "subtitle": "Junte-se a nós para calor mediterrânico e alma libanesa.",
-    "button": "Reservar Agora"
+    "subtitle": "#MeetMeAtMaida",
+    "button": "Reservar Mesa"
   },
   "footer": {
     "tagline": "Sabores Mediterrânicos. Alma Libanesa.",
     "navigate": "Navegação",
+    "discover": "Descobrir",
     "hours": "Horário",
     "hoursValue": "Ter – Sáb: 19h – 00h",
     "closed": "Dom – Seg: Fechado",
@@ -250,47 +450,219 @@
     "reservations": "Reservas",
     "giftCards": "Cartões Oferta",
     "copyright": "© 2026 maída",
-    "location": "Cais do Sodré, Lisboa"
+    "location": "Cais do Sodré, Lisboa",
+    "whatIsSaj": "O que é SAJ?",
+    "coffeeTea": "Café e Chá"
   },
   "about": {
     "heroTitle": "A Nossa História",
-    "heroSubtitle": "Uma mesa de reunião no coração de Lisboa",
-    "section1Title": "O significado de",
-    "section1Highlight": "مائدة",
-    "section1Text": "Maída (مائدة) significa 'a mesa' em árabe—mas não qualquer mesa. É a mesa de reunião, onde família e amigos se juntam, onde histórias são partilhadas, e onde ninguém sai com fome.",
-    "section2Title": "De Beirute a",
-    "section2Highlight": "Lisboa",
-    "section2Text": "A nossa jornada começou com memórias de jantares de família libaneses—mesas transbordando de mezze, conversas que duravam horas, e o calor de refeições partilhadas. Trouxemos esse espírito para o Cais do Sodré.",
-    "philosophyTitle": "O que nos move"
+    "heroTagline": "O que nos trouxe aqui",
+    "heroSubtitle": "Um lugar onde sabores, música e boa companhia se encontram. Enraizado na tradição, reinventado para hoje.",
+    "meaningTitle": "Uma festa tradicional,",
+    "meaningHighlight": "reinventada para hoje",
+    "meaningText1": "Inspirado na المائدة (al-mā'idah), a querida tradição de reunir, festejar e celebrar com os entes queridos à volta de uma grande mesa, o Maída junta pessoas com autênticos sabores e bebidas mediterrânicos, o nosso Saj Manoushe caseiro, e pratos que evoluem ao longo do dia - tudo complementado por uma experiência musical suave, elevada pelo nosso sistema de som hi-fi.",
+    "meaningText2": "É a mesa de reunião. Onde família e amigos se juntam, e histórias são partilhadas entre cada garfada.",
+    "rootsHeadline1": "DE",
+    "rootsHeadline2": "BEIRUTE A",
+    "rootsHeadline3": "LISBOA",
+    "rootsText1": "No Líbano, as refeições nunca são apressadas. São ocasiões - longos encontros onde todos demoram, copos brindam, e histórias crescem a cada rodada.",
+    "rootsText2": "Quando chegámos a Lisboa, descobrimos algo familiar: os portugueses partilham este mesmo amor por reunir à volta de uma grande mesa e transformar uma refeição numa ocasião. Sentimo-nos em casa.",
+    "rootsText3": "Foi assim que dois mundos se tornaram um. O Maída é um restaurante mediterrânico com alma libanesa no coração do Cais do Sodré - onde o calor português encontra a generosidade libanesa.",
+    "foundersLabel": "Quem somos",
+    "foundersHeadline1": "ANNA &",
+    "foundersHeadline2": "ANTHONY",
+    "foundersAnna": "é diretora culinária e de animação de coração, apaixonada por comida, música e o mundo criativo. Ao longo dos anos, refinou as suas competências em cozinha e apresentação de comida, transformando cada prato numa tela.",
+    "foundersAnthony": "é engenheiro eletrotécnico e consultor de profissão, fascinado pelo mundo da hospitalidade, mixologia e criação de experiências que perduram.",
+    "foundersStory": "Depois de abrirem The Happy Salad em Lisboa, partilharam um sonho: apresentar comida libanesa de uma perspetiva diferente - não apenas os clássicos familiares, mas os pratos com que cresceram a comer em casa.",
+    "foundersToday": "Hoje, encontrá-los-ão onde pertencem: à mesa convosco - garantindo que cada detalhe está certo, cada copo está cheio, e nenhum convidado sai sem uma história para contar.",
+    "ctaTitle": "Encontre o seu lugar à mesa",
+    "ctaHashtag": "#MeetMeAtMaída",
+    "ctaButton": "Reservar mesa"
   },
   "contact": {
     "title": "Entre em Contacto",
     "subtitle": "Adoraríamos ouvir de si",
     "form": {
-      "name": "O Seu Nome",
-      "email": "Email",
-      "message": "A Sua Mensagem",
-      "send": "Enviar Mensagem"
+      "title": "Envie-nos uma mensagem",
+      "name": "O seu nome",
+      "email": "Endereço de email",
+      "subject": "Assunto",
+      "message": "Mensagem",
+      "placeholder": "Como podemos ajudar?",
+      "send": "Enviar mensagem",
+      "sending": "A enviar...",
+      "success": "Obrigado! A sua mensagem foi enviada. Responderemos em breve.",
+      "error": "Algo correu mal. Por favor tente novamente."
+    },
+    "subjects": {
+      "select": "Selecione um tópico",
+      "general": "Questão geral",
+      "reservation": "Reserva de grupo grande (6+)",
+      "event": "Evento privado",
+      "feedback": "Feedback",
+      "other": "Outro"
     },
     "info": {
-      "title": "Visite-nos",
+      "title": "Contacto",
       "address": "Rua da Boavista 66",
-      "city": "1200-066 Lisboa, Portugal",
-      "phone": "+351 XXX XXX XXX",
-      "email": "hello@maida.pt"
+      "city": "1200-067 Lisboa",
+      "phone": "+351 961 111 383",
+      "email": "info@maida.pt"
     },
     "hours": {
-      "title": "Horário",
+      "title": "Horário de Funcionamento",
+      "closedText": "Fechado",
       "closed": "Segunda - Terça: Fechado",
       "midweek": "Qua, Qui, Dom: 12:30 - 23:00",
       "midweekKitchen": "Cozinha fecha 22:30",
       "weekend": "Sex - Sáb: 12:30 - 01:00",
       "weekendKitchen": "Cozinha fecha 23:30"
+    },
+    "location": {
+      "title": "Localização",
+      "directions": "Como Chegar →"
     }
+  },
+  "maidaLive": {
+    "heroTagline": "Música • Cultura • Atmosfera",
+    "heroTitle": "Maída Live",
+    "heroSubtitle": "Onde o jantar se torna uma experiência. Música, cultura e atmosfera.",
+    "weeklyProgramTitle": "O nosso programa semanal",
+    "monthlyRotation": "Rotação Mensal",
+    "week": "Semana",
+    "theVibe": "A Vibe",
+    "theJourney": "A Jornada",
+    "hours": "Horário",
+    "djSetsFrom": "DJ Sets a partir das",
+    "partyMode": "Modo Festa",
+    "from": "A partir das",
+    "clickToCollapse": "Clique para fechar",
+    "clickToSeeSchedule": "Clique para ver agenda",
+    "clickToLearnMore": "Clique para saber mais",
+    "ctaTitle": "Uma atmosfera em evolução de comida, bebidas,",
+    "ctaTitleHighlight": "e música",
+    "ctaHashtag": "#MeetMeAtMaída",
+    "ctaButton": "Reservar Mesa",
+    "thursdayThemes": [
+      { "week": "1ª", "theme": "Noite das Décadas", "description": "Hits dos anos 80, 90, 00" },
+      { "week": "2ª", "theme": "World Music", "description": "Árabe, Francês, Latino e mais" },
+      { "week": "3ª", "theme": "Noite de Jazz", "description": "Jazz suave, vibes soulful" },
+      { "week": "4ª", "theme": "A Anunciar", "description": "Siga-nos para surpresas" }
+    ],
+    "nights": {
+      "thursday": {
+        "title": "Quintas",
+        "subtitle": "Rotação Cultural",
+        "description": "Cada quinta traz um sabor diferente. Não é só música - é uma viagem cultural através do som."
+      },
+      "friday": {
+        "title": "Sextas",
+        "subtitle": "Jantar & DJ",
+        "description": "O fim de semana começa. Sets de DJ ao vivo criam o cenário perfeito para jantar e drinks.",
+        "vibeDescription": "Não é uma festa - é uma experiência de jantar elevada. A música complementa a sua refeição, a energia cresce naturalmente, e a noite desenrola-se ao seu ritmo."
+      },
+      "saturday": {
+        "title": "Sábados",
+        "subtitle": "A Jornada Completa",
+        "description": "A jornada completa - jantar, drinks e dança até às 02:00.",
+        "journeyDescription": "Comece com jantar, fique para a festa. As nossas noites de sábado são lendárias - a comida, as bebidas, a música, tudo a construir para um pico."
+      }
+    },
+    "privateEvents": {
+      "title": "A gostar do",
+      "subtitle": "Torne-o privado.",
+      "description": "Organize a sua próxima celebração, evento corporativo ou encontro privado connosco.",
+      "cta": "Contacte-nos"
+    },
+    "djApplication": {
+      "title": "És DJ?",
+      "subtitle": "Junta-te à nossa rotação.",
+      "description": "Se o teu som encaixa no nosso vibe, queremos ouvir de ti.",
+      "cta": "Candidatar-se",
+      "form": {
+        "modalTitle": "Candidatura DJ",
+        "modalSubtitle": "Junta-te à",
+        "rotation": "rotação",
+        "name": "Nome completo",
+        "namePlaceholder": "O teu nome ou nome de DJ",
+        "email": "Email",
+        "phone": "Telefone",
+        "genres": "Géneros que tocas",
+        "otherGenresPlaceholder": "Outros géneros (opcional)",
+        "musicLink": "Link de música (opcional)",
+        "musicLinkHint": "Partilha um link para os teus mixes ou música",
+        "message": "Fala-nos sobre ti (opcional)",
+        "messagePlaceholder": "Bio breve, experiência, porquê Maída...",
+        "submit": "Enviar candidatura",
+        "sending": "A enviar...",
+        "close": "Fechar",
+        "successTitle": "Candidatura enviada!",
+        "successMessage": "Obrigado pelo interesse! Vamos analisar a tua candidatura e entrar em contacto se houver fit.",
+        "validationError": "Por favor preenche todos os campos obrigatórios e seleciona pelo menos um género.",
+        "error": "Algo correu mal. Por favor tenta novamente.",
+        "networkError": "Erro de rede. Por favor tenta novamente.",
+        "privacyNote": "Ao submeter, concordas em ser contactado sobre oportunidades de DJ no"
+      }
+    }
+  },
+  "saj": {
+    "heroTitle": "O que é SAJ?",
+    "heroSubtitle": "O coração da cozinha libanesa",
+    "intro": "Saj é um pão achatado tradicional libanês cozido numa chapa convexa - a mesma técnica usada há séculos nas montanhas do Líbano.",
+    "tradition": {
+      "title": "Uma tradição milenar",
+      "text": "O saj é mais do que um pão - é uma forma de arte. Esticado finamente à mão e cozido em segundos sobre uma chapa quente, fica estaladiço por fora e macio por dentro."
+    },
+    "atMaida": {
+      "title": "Saj no Maída",
+      "text": "No Maída, fazemos o nosso saj fresco todos os dias. Pode prová-lo como wrap com os nossos recheios salgados ou doces, ou como acompanhamento dos nossos dips e mezze."
+    },
+    "cta": "Ver Menu SAJ"
+  },
+  "coffeeTea": {
+    "heroTitle": "Café e Chá",
+    "heroSubtitle": "Do Médio Oriente para a sua chávena",
+    "coffee": {
+      "title": "Café",
+      "text": "O nosso café é torrado localmente em Lisboa, com grãos selecionados de todo o mundo. Experimente o nosso café libanês tradicional com cardamomo."
+    },
+    "tea": {
+      "title": "Chá",
+      "text": "Chás frescos preparados na hora - desde o clássico chá de hortelã libanês até misturas de gengibre e limão para aquecer a alma."
+    },
+    "cta": "Ver Menu de Bebidas",
+    "takeaway": "Também disponível para levar"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Histórias da nossa mesa",
+    "readMore": "Ler mais",
+    "backToBlog": "Voltar ao Blog",
+    "relatedPosts": "Artigos Relacionados",
+    "tags": "Tags",
+    "publishedOn": "Publicado em"
   },
   "common": {
     "loading": "A carregar...",
     "error": "Algo correu mal",
-    "backToHome": "Voltar ao Início"
+    "backToHome": "Voltar ao Início",
+    "learnMore": "Saber Mais",
+    "viewAll": "Ver Todos",
+    "close": "Fechar",
+    "scrollLeft": "Deslocar para a esquerda",
+    "scrollRight": "Deslocar para a direita"
+  },
+  "cookie": {
+    "message": "Utilizamos cookies para melhorar a sua experiência no nosso site.",
+    "accept": "Aceitar",
+    "decline": "Recusar",
+    "learnMore": "Saber mais"
+  },
+  "404": {
+    "title": "Página Não Encontrada",
+    "subtitle": "Parece que esta página não existe.",
+    "cta": "Voltar ao Início",
+    "viewMenu": "Ver Menu",
+    "reserve": "Reservar mesa"
   }
 }

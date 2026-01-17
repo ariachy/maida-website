@@ -6,7 +6,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/_next/', '/admin/'],
+        disallow: [
+          '/api/',
+          '/_next/',
+          '/admin/',
+          '/*?*',  // Block all URLs with query parameters
+        ],
       },
     ],
     sitemap: 'https://maida.pt/sitemap.xml',

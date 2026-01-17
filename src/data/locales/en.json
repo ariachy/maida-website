@@ -1,14 +1,19 @@
 {
   "locale": "en",
   "nav": {
+    "home": "Home",
     "story": "Story",
     "menu": "Menu",
-    "events": "Events",
+    "events": "Maída Live",
     "blog": "Blog",
     "contact": "Contact",
-    "reserve": "Reserve a Table"
+    "reserve": "Reserve a Table",
+    "discover": "Discover",
+    "bookTable": "Book a table",
+    "loading": "Loading..."
   },
   "hero": {
+    "badge": "Restaurant-bar",
     "location": "Cais do Sodré, Lisboa",
     "title1": "Mediterranean Flavours.",
     "title2": "Lebanese Soul.",
@@ -16,6 +21,90 @@
     "cta": "Reserve a Table",
     "viewMenu": "View Menu",
     "scroll": "Scroll"
+  },
+  "homeStory": {
+    "headline1": "FROM",
+    "headline2": "OUR",
+    "headline3": "ROOTS",
+    "title": "Where every meal is",
+    "titleHighlight": "an invitation",
+    "text": "The word مائدة (ma'ida) means \"the gathering table\" in Arabic - where family and friends come together, glasses clink, plates are shared, and time lingers. That's the spirit we brought from Beirut to Cais do Sodré.",
+    "cta": "Read Our Story"
+  },
+  "homeMenu": {
+    "title1": "A TASTE",
+    "title2": "OF MAÍDA",
+    "fromKitchen": "From our kitchen",
+    "fromBar": "From our bar",
+    "fullMenu": "Full Menu",
+    "imageComingSoon": "Image coming soon",
+    "featuredFood": [
+      {
+        "id": "shish-barak",
+        "name": "Shish Barak",
+        "description": "Fried minced beef dumplings sautéed in chili paste, served over garlicky yogurt and caramelized onions with roasted almonds.",
+        "image": "/images/food/shish-barak.webp"
+      },
+      {
+        "id": "kebab-pistachio",
+        "name": "Kebab Pistachio",
+        "description": "Minced meat with pistachios and house spices, sautéed in pomegranate molasses. Served with hummus.",
+        "image": "/images/food/kebab.webp"
+      },
+      {
+        "id": "muhamara",
+        "name": "Muhamara",
+        "description": "Roasted red pepper dip, walnuts, tahini, pomegranate molasses and a hint of chili.",
+        "image": "/images/food/muhamara.webp"
+      },
+      {
+        "id": "shawarma",
+        "name": "Shawarma",
+        "description": "(beef) with fries, onions and parsley salad, tomato, pickles, tahini dressing and saj bread.",
+        "image": "/images/food/shawarma.webp"
+      }
+    ],
+    "featuredDrinks": [
+      {
+        "id": "manhattan",
+        "name": "Manhattan",
+        "description": "Whiskey, sweet vermouth, bitters.",
+        "image": "/images/drinks/manhattan.webp"
+      },
+      {
+        "id": "zhourat-tea",
+        "name": "Zhourat Tea",
+        "description": "Traditional Lebanese herbal blend.",
+        "image": "/images/drinks/zhourat-tea.webp"
+      },
+      {
+        "id": "cortado",
+        "name": "Cortado",
+        "description": "Espresso, steamed milk.",
+        "image": "/images/drinks/coffee-cortado.webp"
+      }
+    ]
+  },
+  "homeVisit": {
+    "headline1": "FIND",
+    "headline2": "US",
+    "hours": {
+      "monWedThuSun": "Mon, Wed, Thu, Sun: 12:30 – 23:00",
+      "friday": "Friday: 12:30 – 01:00",
+      "saturday": "Saturday: 12:30 – 01:00",
+      "closed": "Tuesday: Closed",
+      "kitchenCloses": "Kitchen closes"
+    },
+    "address": {
+      "street": "Rua da Boavista 66",
+      "postal": "1200-068 Lisboa"
+    },
+    "directions": "Directions"
+  },
+  "homeCta": {
+    "title": "Your table is waiting",
+    "subtitle": "#MeetMeAtMaída",
+    "button": "Reserve a Table"
   },
   "story": {
     "label": "#FromOurRoots",
@@ -79,6 +168,25 @@
         "name": "Cocktails & Wine",
         "description": "Signature cocktails, classics, wines & beers"
       }
+    },
+    "subCategories": {
+      "starters": "Starters",
+      "dips": "Dips",
+      "couvert": "Couvert",
+      "salads": "Salads",
+      "savoury": "Savoury",
+      "sweet": "Sweet",
+      "coffee": "Coffee",
+      "tea": "Tea",
+      "lemonade": "Lemonade",
+      "juices": "Juices",
+      "milkshakes": "Milkshakes",
+      "soft-drinks": "Soft Drinks",
+      "mocktails": "Mocktails",
+      "signatures": "Maída's Signatures",
+      "classics": "Classics",
+      "wines": "Wines",
+      "beers": "Beers"
     },
     "items": {
       "honey-roasted-halloumi": {
@@ -157,125 +265,87 @@
         "name": "Tabbouleh",
         "description": "Parsley, tomato, mint, green onion, lemon-oil dressing"
       },
-      "caesar": {
-        "name": "Caesar",
-        "description": "Marinated chicken, romaine, parmesan, croutons, caesar dressing"
+      "lamb-kebab": {
+        "name": "Lamb Kebab",
+        "description": "Grilled lamb chops with house spices, served with hummus"
       },
-      "shawarma": {
-        "name": "Shawarma",
-        "description": "Beef with fries, onion and parsley salad, tomato, pickles, tahini dressing and saj bread"
+      "kafta-mashwiye": {
+        "name": "Kafta Mashwiye",
+        "description": "Grilled spiced minced meat skewers, served with hummus"
       },
-      "salmon": {
-        "name": "Salmon",
-        "description": "Grilled with tahini sauce mixed with diced red and green bell pepper, coriander, served with sautéed baby potatoes"
+      "chicken-taouk": {
+        "name": "Chicken Taouk",
+        "description": "Marinated chicken breast in yogurt and spices, grilled, served with Lebanese garlic sauce"
       },
-      "chicken-breast": {
-        "name": "Chicken Breast",
-        "description": "House marinated and grilled, served with sautéed baby potatoes, cherry tomatoes and yogurt-herb sauce"
+      "picanha": {
+        "name": "Picanha",
+        "description": "Brazilian-style grilled picanha, served with hummus"
       },
-      "lasagna": {
-        "name": "Lasagna",
-        "description": "Chili made with beef and pork ragu, melted parmesan and mozzarella"
+      "seabass": {
+        "name": "Seabass",
+        "description": "Fresh grilled fish with olive oil, lemon and Mediterranean herbs"
       },
-      "lebanese-burger": {
-        "name": "Lebanese Burger",
-        "description": "Two smash patties, coleslaw, fries, pickles, ketchup & mustard in a toasted bun. Served with fries and coleslaw"
-      },
-      "tiramisu": {
-        "name": "Tiramisu",
-        "description": "To share - mascarpone, pasteurized eggs, savoiardi, a touch of kahlua, cocoa powder"
+      "kunafa": {
+        "name": "Kunafa",
+        "description": "Traditional dessert with shredded pastry, sweet cheese and orange blossom syrup"
       },
       "rice-pudding": {
-        "name": "Rice Pudding",
-        "description": "Risotto, milk, cinnamon powder"
+        "name": "Lebanese Rice Pudding",
+        "description": "Creamy rice pudding with rose water, cinnamon and pistachios"
       },
-      "znoud-el-set": {
-        "name": "Znoud el Set",
-        "description": "Crispy baklava sheets, sweet cream filling (ashta), sugar syrup, pistachio"
+      "saj-nutella": {
+        "name": "Saj Nutella",
+        "description": "Warm saj with Nutella and banana"
       },
-      "pain-perdu": {
-        "name": "Pain Perdu",
-        "description": "To share - oven-baked soaked French toast with a drizzle of caramel"
+      "saj-zaatar": {
+        "name": "Saj Zaatar",
+        "description": "Traditional zaatar blend with olive oil"
       },
-      "saj-its-thyme": {
-        "name": "It's Thyme",
-        "description": "Zaatar mix, tomato, cucumber, mint, olives"
+      "saj-cheese": {
+        "name": "Saj Cheese",
+        "description": "Melted akkawi cheese"
       },
-      "saj-thyme-cheese": {
-        "name": "Thyme for Cheese",
-        "description": "Zaatar mix, melted white cheese"
+      "saj-halloumi-zaatar": {
+        "name": "Saj Halloumi & Zaatar",
+        "description": "Grilled halloumi with zaatar"
       },
-      "saj-cheesy": {
-        "name": "Cheesy",
-        "description": "Melted white cheese"
+      "saj-labneh": {
+        "name": "Saj Labneh",
+        "description": "Strained yogurt with cucumber and mint"
       },
-      "saj-turkey-cheese": {
-        "name": "Turkey and Cheese",
-        "description": "Smoked turkey, melted cheese, lettuce, tomato, pickles, mayo-mustard dressing"
+      "saj-chicken-shawarma": {
+        "name": "Saj Chicken Shawarma",
+        "description": "Shredded marinated chicken, pickles, garlic sauce"
       },
-      "saj-halloumi-bacon": {
-        "name": "Halloumi Bacon",
-        "description": "Melted halloumi and white cheese, crispy bacon, tomato, pickles, mayo"
-      },
-      "saj-what-the-feta": {
-        "name": "What the Feta",
-        "description": "Creamy feta, tomato, arugula, onion, basil, zaatar"
-      },
-      "saj-roasted-veggies": {
-        "name": "Roasted Veggies",
-        "description": "Roasted eggplant and zucchini, red pepper paste, sweet potato chips, pomegranate seeds, parsley, tahini dressing"
-      },
-      "saj-nutella-mozzarella": {
-        "name": "Nutella Mozzarella",
-        "description": "Nutella, melted fresh mozzarella"
-      },
-      "saj-nutella-white-cheese": {
-        "name": "Nutella + White Cheese",
-        "description": "Nutella, melted white cheese"
-      },
-      "saj-berry-compote": {
-        "name": "Berry Compote",
-        "description": "Cream cheese, berry compote, strawberries"
-      },
-      "saj-peanut-tahini": {
-        "name": "Peanut Tahini",
-        "description": "Peanut butter, maple tahini, bananas"
-      },
-      "saj-the-og": {
-        "name": "The OG",
-        "description": "Melted butter, sugar"
+      "saj-kafta": {
+        "name": "Saj Kafta",
+        "description": "Grilled spiced minced meat with onion and tomato"
       },
       "saj-nutella-banana": {
-        "name": "Nutella + Banana",
-        "description": ""
+        "name": "Saj Nutella & Banana",
+        "description": "Nutella with fresh banana"
       },
-      "saj-nutella-strawberry": {
-        "name": "Nutella + Strawberry",
-        "description": ""
+      "saj-ashta": {
+        "name": "Saj Ashta",
+        "description": "Traditional Lebanese cream with honey and pistachios"
       },
-      "cortado": { "name": "Cortado", "description": "" },
       "espresso": { "name": "Espresso", "description": "" },
-      "espresso-double": { "name": "Espresso Double", "description": "" },
+      "espresso-double": { "name": "Double Espresso", "description": "" },
       "americano": { "name": "Americano", "description": "" },
-      "americano-iced": { "name": "Americano (iced)", "description": "" },
       "cappuccino": { "name": "Cappuccino", "description": "" },
-      "flat-white": { "name": "Flat White", "description": "" },
-      "hot-chocolate": { "name": "Hot Chocolate", "description": "" },
-      "hot-chocolate-sweet": { "name": "Hot Chocolate (sweet)", "description": "" },
       "latte": { "name": "Latte", "description": "" },
-      "latte-iced": { "name": "Latte (iced)", "description": "" },
-      "latte-macchiato": { "name": "Latte Macchiato", "description": "" },
-      "lavender-coffee": { "name": "Lavender Coffee", "description": "" },
-      "macchiato": { "name": "Macchiato", "description": "" },
+      "flat-white": { "name": "Flat White", "description": "" },
       "mocha": { "name": "Mocha", "description": "" },
-      "milk": { "name": "Milk", "description": "" },
-      "tea-moroccan": { "name": "Moroccan Tea", "description": "" },
-      "tea-zhourat": { "name": "Zhourat", "description": "" },
-      "tea-maida": { "name": "Maída Tea", "description": "" },
-      "tea-cafe-blanc": { "name": "Cafe Blanc", "description": "" },
-      "tea-other": { "name": "Other Teas", "description": "Ask us about our selection" },
-      "tea-kombucha": { "name": "Kombucha Tea", "description": "" },
-      "lemonade": { "name": "Lemonade", "description": "" },
+      "lebanese-coffee": { "name": "Lebanese Coffee", "description": "With cardamom" },
+      "hot-chocolate": { "name": "Hot Chocolate", "description": "" },
+      "tea-fresh-mint": { "name": "Fresh Mint Tea", "description": "" },
+      "tea-ginger-mint": { "name": "Ginger Mint Tea", "description": "" },
+      "tea-lemon-ginger": { "name": "Lemon Ginger Tea", "description": "" },
+      "tea-english-breakfast": { "name": "English Breakfast", "description": "" },
+      "tea-earl-grey": { "name": "Earl Grey", "description": "" },
+      "tea-chamomile": { "name": "Chamomile", "description": "" },
+      "tea-green": { "name": "Green Tea", "description": "" },
+      "lemonade-classic": { "name": "Classic Lemonade", "description": "" },
       "lemonade-maida": { "name": "Maída Lemonade", "description": "Rose syrup, mastic syrup, lemon" },
       "lemonade-pitcher": { "name": "Lemonade (pitcher)", "description": "" },
       "juice-passion-fruit": { "name": "Passion Fruit & Cinnamon", "description": "" },
@@ -329,7 +399,14 @@
       "beer-draft-50": { "name": "Draft Beer (50cl)", "description": "" },
       "beer-superbock": { "name": "Superbock", "description": "" },
       "beer-musa-apa": { "name": "Musa (APA)", "description": "" }
-    }
+    },
+    "tags": {
+      "vegetarian": "V",
+      "vegan": "VG",
+      "gluten-free": "GF"
+    },
+    "glass": "glass",
+    "bottle": "bottle"
   },
   "drinks": {
     "label": "From Our Roots",
@@ -345,7 +422,7 @@
     "titleHighlight": "Cais do Sodré",
     "address": {
       "label": "Address",
-      "value": "Rua da Boavista 66, 1200-066 Lisboa"
+      "value": "Rua da Boavista 66, 1200-068 Lisboa"
     },
     "hours": {
       "label": "Hours",
@@ -353,7 +430,7 @@
     },
     "contact": {
       "label": "Contact",
-      "value": "hello@maida.pt"
+      "value": "info@maida.pt"
     },
     "directions": "Get Directions"
   },
@@ -365,6 +442,7 @@
   "footer": {
     "tagline": "Mediterranean Flavours. Lebanese Soul.",
     "navigate": "Navigate",
+    "discover": "Discover",
     "hours": "Hours",
     "hoursValue": "Tue – Sat: 19h – 00h",
     "closed": "Sun – Mon: Closed",
@@ -372,65 +450,219 @@
     "reservations": "Reservations",
     "giftCards": "Gift Cards",
     "copyright": "© 2026 maída",
-    "location": "Cais do Sodré, Lisboa"
+    "location": "Cais do Sodré, Lisboa",
+    "whatIsSaj": "What is SAJ?",
+    "coffeeTea": "Coffee & Tea"
   },
   "about": {
     "heroTitle": "Our Story",
     "heroTagline": "What brought us here",
     "heroSubtitle": "A place where flavors, music, and good company come together. Rooted in tradition, reimagined for today.",
-    "meaningLabel": "The meaning",
     "meaningTitle": "A traditional feast,",
     "meaningHighlight": "reimagined for today",
     "meaningText1": "Inspired by المائدة (al-mā'idah), the beloved tradition of gathering, feasting, and celebrating with loved ones around a big table, Maída brings people together with authentic Mediterranean flavors & drinks, our in-house Saj Manoushe, and dishes that evolve throughout the day - all complemented by a smooth musical experience, elevated by our hi-fi sound system.",
     "meaningText2": "It's the gathering table. Where family and friends come together, and stories are shared between bites.",
-    "meaningText3": "In Lebanon, المائدة represents abundance and generosity. That's why our mezze arrive in waves. Why the bread keeps coming. Why we'll always make room for one more.",
-    "rootsLabel": "From our roots",
-    "rootsTitle": "Where two worlds",
-    "rootsHighlight": "became one",
-    "rootsText1": "Our journey began with memories of Lebanese family dinners - tables overflowing with mezze, shawarma, grilled meats, and dishes passed hand to hand. Long evenings where everyone lingers, glasses clink, and stories grow louder with every round.",
+    "rootsHeadline1": "FROM",
+    "rootsHeadline2": "BEIRUT TO",
+    "rootsHeadline3": "LISBOA",
+    "rootsText1": "In Lebanon, meals are never rushed. They're occasions - long gatherings where everyone lingers, glasses clink, and stories grow louder with every round.",
     "rootsText2": "When we arrived in Lisbon, we discovered something familiar: the Portuguese share this same love for gathering around a big table and turning a meal into an occasion. It felt like home.",
-    "rootsText3": "That's how two worlds became one. Maída is a Mediterranean restaurant with Lebanese soul in the heart of Cais do Sodré - where Portuguese warmth meets Lebanese generosity, celebrating what both cultures share: the belief that food is meant to bring people together.",
+    "rootsText3": "That's how two worlds became one. Maída is a Mediterranean restaurant with Lebanese soul in the heart of Cais do Sodré - where Portuguese warmth meets Lebanese generosity.",
     "foundersLabel": "Who we are",
-    "foundersTitle": "Anna & Anthony",
-    "foundersAnna": "Anna is a creative and animation director by heart, passionate about food, music, and the creative world. Over the years, she refined her skills in cooking and food presentation, turning every plate into a canvas.",
-    "foundersAnthony": "Anthony is an electrical engineer and consultant by trade, fascinated by the world of hospitality, mixology, and creating experiences that linger.",
-    "foundersMusic": "A lifelong passion for music led them to curate the soundscape that fills every experience at Maída.",
-    "foundersStory": "After opening The Happy Salad in Lisboa, they shared a dream: to present Lebanese food from a different perspective - not just the familiar classics, but the dishes they grew up eating at home. Food from across the Mediterranean, always made with Lebanese soul.",
-    "foundersRoots": "With roots stretching from the mountains of Lebanon to the vibrant streets of Lisbon, they found common ground in their love for food that brings people together, conversations that linger long after the last bite, and evenings that turn into memories you carry with you.",
+    "foundersHeadline1": "ANNA &",
+    "foundersHeadline2": "ANTHONY",
+    "foundersAnna": "is a culinary and animation director by heart, passionate about food, music, and the creative world. Over the years, she refined her skills in cooking and food presentation, turning every plate into a canvas.",
+    "foundersAnthony": "is an electrical engineer and consultant by trade, fascinated by the world of hospitality, mixology, and creating experiences that linger.",
+    "foundersStory": "After opening The Happy Salad in Lisboa, they shared a dream: to present Lebanese food from a different perspective - not just the familiar classics, but the dishes they grew up eating at home.",
     "foundersToday": "Today, you'll find them where they belong: at the table with you - making sure every detail is right, every glass is full, and no guest ever leaves without a story to tell.",
-    "ctaTitle": "Find your place",
-    "ctaHighlight": "at the table",
+    "ctaTitle": "Find your place at the table",
     "ctaHashtag": "#MeetMeAtMaída",
-    "ctaButton": "Reserve a Table"
+    "ctaButton": "Book a table"
   },
   "contact": {
     "title": "Get in Touch",
     "subtitle": "We'd love to hear from you",
     "form": {
-      "name": "Your Name",
-      "email": "Email Address",
-      "message": "Your Message",
-      "send": "Send Message"
+      "title": "Send us a message",
+      "name": "Your name",
+      "email": "Email address",
+      "subject": "Subject",
+      "message": "Message",
+      "placeholder": "How can we help you?",
+      "send": "Send message",
+      "sending": "Sending...",
+      "success": "Thank you! Your message has been sent. We'll get back to you soon.",
+      "error": "Something went wrong. Please try again."
+    },
+    "subjects": {
+      "select": "Select a topic",
+      "general": "General inquiry",
+      "reservation": "Large group reservation (6+)",
+      "event": "Private event",
+      "feedback": "Feedback",
+      "other": "Other"
     },
     "info": {
-      "title": "Visit Us",
+      "title": "Contact",
       "address": "Rua da Boavista 66",
-      "city": "1200-068 Lisboa, Portugal",
+      "city": "1200-067 Lisboa",
       "phone": "+351 961 111 383",
       "email": "info@maida.pt"
     },
     "hours": {
       "title": "Opening Hours",
+      "closedText": "Closed",
       "closed": "Monday - Tuesday: Closed",
       "midweek": "Wed, Thu, Sun: 12:30 - 23:00",
       "midweekKitchen": "Kitchen closes 22:30",
       "weekend": "Fri - Sat: 12:30 - 01:00",
       "weekendKitchen": "Kitchen closes 23:30"
+    },
+    "location": {
+      "title": "Location",
+      "directions": "Get Directions →"
     }
+  },
+  "maidaLive": {
+    "heroTagline": "Music • Culture • Atmosphere",
+    "heroTitle": "Maída Live",
+    "heroSubtitle": "Where dinner becomes an experience. Music, culture, and atmosphere.",
+    "weeklyProgramTitle": "Our weekly program",
+    "monthlyRotation": "Monthly Rotation",
+    "week": "Week",
+    "theVibe": "The Vibe",
+    "theJourney": "The Journey",
+    "hours": "Hours",
+    "djSetsFrom": "DJ Sets from",
+    "partyMode": "Party Mode",
+    "from": "From",
+    "clickToCollapse": "Click to collapse",
+    "clickToSeeSchedule": "Click to see schedule",
+    "clickToLearnMore": "Click to learn more",
+    "ctaTitle": "An evolving atmosphere of food, drinks,",
+    "ctaTitleHighlight": "and music",
+    "ctaHashtag": "#MeetMeAtMaída",
+    "ctaButton": "Reserve a Table",
+    "thursdayThemes": [
+      { "week": "1st", "theme": "Decades Night", "description": "80s, 90s, 00s hits" },
+      { "week": "2nd", "theme": "World Music", "description": "Arabic, French, Latin & more" },
+      { "week": "3rd", "theme": "Jazz Night", "description": "Smooth jazz, soulful vibes" },
+      { "week": "4th", "theme": "To Be Announced", "description": "Follow us for surprises" }
+    ],
+    "nights": {
+      "thursday": {
+        "title": "Thursdays",
+        "subtitle": "Cultural Rotation",
+        "description": "Every Thursday brings a different flavour. Not just music - a cultural journey through sound."
+      },
+      "friday": {
+        "title": "Fridays",
+        "subtitle": "Dinner & DJ",
+        "description": "The weekend begins. Live DJ sets create the perfect backdrop for dinner and drinks.",
+        "vibeDescription": "Not a party - an elevated dinner experience. The music complements your meal, the energy builds naturally, and the night unfolds at your pace."
+      },
+      "saturday": {
+        "title": "Saturdays",
+        "subtitle": "The Full Journey",
+        "description": "The full journey - dinner, drinks, and dancing until 02:00.",
+        "journeyDescription": "Start with dinner, stay for the party. Our Saturday nights are legendary - the food, the drinks, the music, all building to a peak."
+      }
+    },
+    "privateEvents": {
+      "title": "Enjoying",
+      "subtitle": "Make it private.",
+      "description": "Host your next celebration, corporate event, or private gathering with us.",
+      "cta": "Contact us"
+    },
+    "djApplication": {
+      "title": "Are you a DJ?",
+      "subtitle": "Join our rotation.",
+      "description": "If your sound fits our vibe, we want to hear from you.",
+      "cta": "Apply to play",
+      "form": {
+        "modalTitle": "DJ Application",
+        "modalSubtitle": "Join the",
+        "rotation": "rotation",
+        "name": "Full name",
+        "namePlaceholder": "Your name or DJ name",
+        "email": "Email",
+        "phone": "Phone",
+        "genres": "Genres you play",
+        "otherGenresPlaceholder": "Other genres (optional)",
+        "musicLink": "Music link (optional)",
+        "musicLinkHint": "Share a link to your mixes or music",
+        "message": "Tell us about yourself (optional)",
+        "messagePlaceholder": "Brief bio, experience, why Maída...",
+        "submit": "Submit application",
+        "sending": "Sending...",
+        "close": "Close",
+        "successTitle": "Application sent!",
+        "successMessage": "Thanks for your interest! We'll review your application and get back to you if there's a fit.",
+        "validationError": "Please fill in all required fields and select at least one genre.",
+        "error": "Something went wrong. Please try again.",
+        "networkError": "Network error. Please try again.",
+        "privacyNote": "By submitting, you agree to be contacted about DJ opportunities at"
+      }
+    }
+  },
+  "saj": {
+    "heroTitle": "What is SAJ?",
+    "heroSubtitle": "The heart of Lebanese cuisine",
+    "intro": "Saj is a traditional Lebanese flatbread cooked on a convex griddle - the same technique used for centuries in the mountains of Lebanon.",
+    "tradition": {
+      "title": "A centuries-old tradition",
+      "text": "Saj is more than just bread - it's an art form. Stretched thin by hand and cooked in seconds over a hot griddle, it becomes crispy on the outside and soft inside."
+    },
+    "atMaida": {
+      "title": "Saj at Maída",
+      "text": "At Maída, we make our saj fresh every day. You can enjoy it as a wrap with our savoury or sweet fillings, or as an accompaniment to our dips and mezze."
+    },
+    "cta": "View SAJ Menu"
+  },
+  "coffeeTea": {
+    "heroTitle": "Coffee & Tea",
+    "heroSubtitle": "From the Middle East to your cup",
+    "coffee": {
+      "title": "Coffee",
+      "text": "Our coffee is locally roasted in Lisbon, with beans selected from around the world. Try our traditional Lebanese coffee with cardamom."
+    },
+    "tea": {
+      "title": "Tea",
+      "text": "Fresh teas prepared to order - from classic Lebanese mint tea to ginger and lemon blends to warm the soul."
+    },
+    "cta": "View Drinks Menu",
+    "takeaway": "Also available for takeaway"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Stories from our table",
+    "readMore": "Read more",
+    "backToBlog": "Back to Blog",
+    "relatedPosts": "Related Posts",
+    "tags": "Tags",
+    "publishedOn": "Published on"
   },
   "common": {
     "loading": "Loading...",
     "error": "Something went wrong",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "close": "Close",
+    "scrollLeft": "Scroll left",
+    "scrollRight": "Scroll right"
+  },
+  "cookie": {
+    "message": "We use cookies to improve your experience on our site.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "learnMore": "Learn more"
+  },
+  "404": {
+    "title": "Page Not Found",
+    "subtitle": "Looks like this page doesn't exist.",
+    "cta": "Back to Home",
+    "viewMenu": "View Menu",
+    "reserve": "Reserve a table"
   }
 }

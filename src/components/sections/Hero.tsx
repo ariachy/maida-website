@@ -11,7 +11,7 @@ export default function Hero({ translations }: HeroProps) {
   const hero = translations?.hero || {};
   
   // Helper function to safely get translation value
-  const getHeroLabel = (key: string, fallback: string): string => {
+  const t = (key: string, fallback: string): string => {
     const value = hero[key];
     if (!value) return fallback;
     if (typeof value === 'string') return value;
@@ -21,7 +21,7 @@ export default function Hero({ translations }: HeroProps) {
   };
   
   return (
-    <section className="relative min-h-[calc(100svh-100px)] md:min-h-[calc(100svh-120px)] flex flex-col overflow-hidden">
+    <section className="relative min-h-[calc(100svh-100px)] md:min-h-[calc(100svh-120px)] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
@@ -41,63 +41,50 @@ export default function Hero({ translations }: HeroProps) {
         مائدة
       </div>
       
-      {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center flex flex-col flex-1 w-full">
-        
-        {/* ============================================
-            SECTION 1: Restaurant-bar & Cais do Sodré
-            - Positioned near top (below navbar)
-            - Very tight line spacing between the two lines
-            ============================================ */}
+      {/* Content - Vertically centered, with top offset for navbar */}
+      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-16 md:pt-20">
+        {/* Location Badge - Now from translations */}
         <motion.div
-          className="pt-24 md:pt-28"
+          className="mb-16 md:mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          {/* Restaurant-bar and Cais do Sodré stacked tightly */}
-          <p className="text-sm md:text-base tracking-[0.2em] uppercase text-warm-white/90 leading-tight mb-0">
-            Restaurant-bar
+          <p className="text-sm md:text-base tracking-[0.2em] uppercase text-warm-white/90 mb-0">
+            {t('badge', 'Restaurant-bar')}
           </p>
-          {/* Cais do Sodré - minimal spacing */}
-          <p className="inline-flex items-center gap-3 md:gap-4 text-xs tracking-[0.3em] uppercase text-terracotta-light leading-tight mt-0.5">
-            <span className="w-6 md:w-8 h-px bg-terracotta-light" />
-            Cais do Sodré, Lisboa
-            <span className="w-6 md:w-8 h-px bg-terracotta-light" />
+          <p className="inline-flex items-center gap-4 text-xs tracking-[0.3em] uppercase text-terracotta-light mt-1">
+            <span className="w-8 h-px bg-terracotta-light" />
+            {t('location', 'Cais do Sodré, Lisboa')}
+            <span className="w-8 h-px bg-terracotta-light" />
           </p>
         </motion.div>
         
-        {/* ============================================
-            SECTION 2: Mediterranean Flavours. Lebanese Soul.
-            - Centered in remaining space
-            - Responsive margin from section 1
-            ============================================ */}
-        <div className="flex-1 flex items-center justify-center">
-          <h1 className="font-display text-fluid-5xl font-medium">
-            {/* Mediterranean Flavours - tight line height */}
-            <span className="block leading-[0.95]">
-              <motion.span
-                className="block text-warm-white"
-                initial={{ y: '100%', opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1.2, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
-              >
-                {getHeroLabel('title1', 'Mediterranean Flavours.')}
-              </motion.span>
-            </span>
-            {/* Lebanese Soul - reduced margin for tighter spacing */}
-            <span className="block mt-1 md:mt-2">
-              <motion.span
-                className="block text-terracotta-light italic leading-[0.95]"
-                initial={{ y: '100%', opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1.2, delay: 0.45, ease: [0.19, 1, 0.22, 1] }}
-              >
-                {getHeroLabel('title2', 'Lebanese Soul.')}
-              </motion.span>
-            </span>
-          </h1>
-        </div>
+        {/* Title */}
+        <h1 className="font-display text-fluid-5xl font-medium">
+          {/* Mediterranean Flavours - tighter line height */}
+          <span className="block leading-[0.95]">
+            <motion.span
+              className="block text-warm-white"
+              initial={{ y: '100%', opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1.2, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
+            >
+              {t('title1', 'Mediterranean Flavours.')}
+            </motion.span>
+          </span>
+          {/* Lebanese Soul - with extra top margin for more distance */}
+          <span className="block mt-3 md:mt-4">
+            <motion.span
+              className="block text-terracotta-light italic"
+              initial={{ y: '100%', opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1.2, delay: 0.45, ease: [0.19, 1, 0.22, 1] }}
+            >
+              {t('title2', 'Lebanese Soul.')}
+            </motion.span>
+          </span>
+        </h1>
       </div>
     </section>
   );

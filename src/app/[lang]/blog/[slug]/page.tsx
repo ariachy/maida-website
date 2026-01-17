@@ -1,5 +1,7 @@
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 import { isValidLocale, loadTranslations, Locale } from '@/lib/i18n';
+import { generatePageMetadata } from '@/lib/seo';
 import BlogPostClient from '@/components/blog/BlogPostClient';
 import blogData from '@/data/blog.json';
 
@@ -38,19 +40,29 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: { lang: string; slug: string } }) {
+export async function generateMetadata({ 
+  params 
+}: { 
+  params: { lang: string; slug: string } 
+}): Promise<Metadata> {
+  const locale = params.lang;
   const post = blogData.posts.find((p) => p.slug === params.slug);
   
-  if (!post) {
+  if (!post || !isValidLocale(locale)) {
     return {
       title: 'Post Not Found | Maída',
     };
   }
+
+  const isPortuguese = locale === 'pt';
   
-  return {
-    title: `${post.title} | Maída Blog`,
+  return generatePageMetadata({
+    title: `${post.title} | Maída`,
     description: post.excerpt,
-  };
+    path: `/blog/${params.slug}`,
+    locale,
+    image: post.image,
+  });
 }
 
 export default async function BlogPostPage({

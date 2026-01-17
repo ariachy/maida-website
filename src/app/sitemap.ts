@@ -23,7 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     for (const locale of locales) {
       entries.push({
         url: `${baseUrl}/${locale}${page}`,
-        lastModified: new Date(),
+        lastModified: new Date('2025-01-18'),
         changeFrequency: page === '' ? 'weekly' : 'monthly',
         priority: page === '' ? 1 : page === '/menu' ? 0.9 : 0.7,
       });

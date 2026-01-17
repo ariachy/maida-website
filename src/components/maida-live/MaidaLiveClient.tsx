@@ -12,30 +12,37 @@ interface MaidaLiveClientProps {
   locale: Locale;
 }
 
-// Thursday themes rotation
-const thursdayThemes = [
-  { week: '1st', theme: 'Decades Night', description: '80s, 90s, 00s hits' },
-  { week: '2nd', theme: 'World Music', description: 'Arabic, French, Latin & more' },
-  { week: '3rd', theme: 'Jazz Night', description: 'Smooth jazz, soulful vibes' },
-  { week: '4th', theme: 'To Be Announced', description: 'Follow us for surprises' },
-];
-
-// Genre options for DJ form
-const genreOptions = [
-  'House',
-  'Deep House',
-  'Techno',
-  'Electronica',
-  'Commercial / Top 40',
-  '80s / 90s / 00s',
-  'Jazz',
-  'World / Arabic',
-  'Funk / Soul',
-];
-
 export default function MaidaLiveClient({ translations, locale }: MaidaLiveClientProps) {
+  const maidaLive = translations?.maidaLive || {};
+  const nights = maidaLive?.nights || {};
+  const privateEvents = maidaLive?.privateEvents || {};
+  const djApplication = maidaLive?.djApplication || {};
+  const djForm = djApplication?.form || {};
+  const nav = translations?.nav || {};
+  
   const [isDJModalOpen, setIsDJModalOpen] = useState(false);
   const [activeNight, setActiveNight] = useState<'thursday' | 'friday' | 'saturday' | null>(null);
+
+  // Thursday themes rotation
+  const thursdayThemes = maidaLive?.thursdayThemes || [
+    { week: '1st', theme: 'Decades Night', description: '80s, 90s, 00s hits' },
+    { week: '2nd', theme: 'World Music', description: 'Arabic, French, Latin & more' },
+    { week: '3rd', theme: 'Jazz Night', description: 'Smooth jazz, soulful vibes' },
+    { week: '4th', theme: 'To Be Announced', description: 'Follow us for surprises' },
+  ];
+
+  // Genre options for DJ form
+  const genreOptions = [
+    'House',
+    'Deep House',
+    'Techno',
+    'Electronica',
+    'Commercial / Top 40',
+    '80s / 90s / 00s',
+    'Jazz',
+    'World / Arabic',
+    'Funk / Soul',
+  ];
 
   const handleReserveClick = () => {
     if (typeof window !== 'undefined' && (window as any).umaiWidget) {
@@ -99,7 +106,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="w-8 h-px bg-terracotta-light" />
-            Music • Culture • Atmosphere
+            {maidaLive?.heroTagline || 'Music • Culture • Atmosphere'}
             <span className="w-8 h-px bg-terracotta-light" />
           </motion.p>
 
@@ -122,9 +129,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            Where dinner becomes an experience.
-            <br />
-            Music, culture, and atmosphere.
+            {maidaLive?.heroSubtitle || 'Where dinner becomes an experience. Music, culture, and atmosphere.'}
           </motion.p>
         </div>
       </section>
@@ -140,7 +145,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             variants={fadeInUp}
           >
             <h2 className="font-display text-3xl md:text-5xl font-medium mb-4 text-charcoal">
-              Our weekly program
+              {maidaLive?.weeklyProgramTitle || 'Our weekly program'}
             </h2>
           </motion.div>
 
@@ -166,11 +171,11 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                     <Calendar className="w-7 h-7 text-charcoal" />
                   </div>
 
-                  <h3 className="font-display text-3xl mb-2 text-charcoal">Thursdays</h3>
-                  <p className="text-charcoal/80 text-lg mb-4">Cultural Rotation</p>
+                  <h3 className="font-display text-3xl mb-2 text-charcoal">{nights?.thursday?.title || 'Thursdays'}</h3>
+                  <p className="text-charcoal/80 text-lg mb-4">{nights?.thursday?.subtitle || 'Cultural Rotation'}</p>
                   
                   <p className="text-charcoal/60 mb-6">
-                    Every Thursday brings a different flavour. Not just music - a cultural journey through sound.
+                    {nights?.thursday?.description || 'Every Thursday brings a different flavour. Not just music - a cultural journey through sound.'}
                   </p>
 
                   {/* Expanded content */}
@@ -183,14 +188,14 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <p className="text-xs uppercase tracking-widest text-charcoal/60 mb-4">Monthly Rotation</p>
+                        <p className="text-xs uppercase tracking-widest text-charcoal/60 mb-4">{maidaLive?.monthlyRotation || 'Monthly Rotation'}</p>
                         <div className="grid grid-cols-2 gap-3">
-                          {thursdayThemes.map((item, index) => (
+                          {thursdayThemes.map((item: any, index: number) => (
                             <div 
                               key={index}
                               className="bg-charcoal/5 p-4 hover:bg-charcoal/10 transition-colors"
                             >
-                              <p className="text-charcoal/60 text-sm font-medium">{item.week} Week</p>
+                              <p className="text-charcoal/60 text-sm font-medium">{item.week} {maidaLive?.week || 'Week'}</p>
                               <p className="text-charcoal font-display text-lg">{item.theme}</p>
                               <p className="text-charcoal/50 text-sm">{item.description}</p>
                             </div>
@@ -202,7 +207,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
 
                   {/* Click hint */}
                   <p className="mt-auto pt-4 text-xs text-charcoal/40">
-                    {activeNight === 'thursday' ? 'Click to collapse' : 'Click to see schedule'}
+                    {activeNight === 'thursday' ? (maidaLive?.clickToCollapse || 'Click to collapse') : (maidaLive?.clickToSeeSchedule || 'Click to see schedule')}
                   </p>
                 </div>
               </motion.div>
@@ -219,11 +224,11 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                     <Music className="w-7 h-7 text-charcoal" />
                   </div>
 
-                  <h3 className="font-display text-3xl mb-2 text-charcoal">Fridays</h3>
-                  <p className="text-charcoal/80 text-lg mb-4">Dinner & DJ</p>
+                  <h3 className="font-display text-3xl mb-2 text-charcoal">{nights?.friday?.title || 'Fridays'}</h3>
+                  <p className="text-charcoal/80 text-lg mb-4">{nights?.friday?.subtitle || 'Dinner & DJ'}</p>
                   
                   <p className="text-charcoal/60 mb-6">
-                    The weekend begins. Live DJ sets create the perfect backdrop for dinner and drinks.
+                    {nights?.friday?.description || 'The weekend begins. Live DJ sets create the perfect backdrop for dinner and drinks.'}
                   </p>
 
                   {/* Expanded content */}
@@ -237,19 +242,18 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                         className="overflow-hidden space-y-4"
                       >
                         <div className="bg-charcoal/5 p-6">
-                          <p className="text-charcoal font-display text-xl mb-2">The Vibe</p>
+                          <p className="text-charcoal font-display text-xl mb-2">{maidaLive?.theVibe || 'The Vibe'}</p>
                           <p className="text-charcoal/60">
-                            Not a party - an elevated dinner experience. The music complements your meal, 
-                            the energy builds naturally, and the night unfolds at your pace.
+                            {nights?.friday?.vibeDescription || 'Not a party - an elevated dinner experience. The music complements your meal, the energy builds naturally, and the night unfolds at your pace.'}
                           </p>
                         </div>
                         <div className="flex gap-4">
                           <div className="bg-charcoal/5 p-4 flex-1">
-                            <p className="text-charcoal/60 text-sm">Hours</p>
+                            <p className="text-charcoal/60 text-sm">{maidaLive?.hours || 'Hours'}</p>
                             <p className="text-charcoal font-display text-lg">12:30 - 00:00</p>
                           </div>
                           <div className="bg-charcoal/5 p-4 flex-1">
-                            <p className="text-charcoal/60 text-sm">DJ Sets from</p>
+                            <p className="text-charcoal/60 text-sm">{maidaLive?.djSetsFrom || 'DJ Sets from'}</p>
                             <p className="text-charcoal font-display text-lg">21:00</p>
                           </div>
                         </div>
@@ -259,7 +263,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
 
                   {/* Click hint */}
                   <p className="mt-auto pt-4 text-xs text-charcoal/40">
-                    {activeNight === 'friday' ? 'Click to collapse' : 'Click to learn more'}
+                    {activeNight === 'friday' ? (maidaLive?.clickToCollapse || 'Click to collapse') : (maidaLive?.clickToLearnMore || 'Click to learn more')}
                   </p>
                 </div>
               </motion.div>
@@ -277,11 +281,11 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                   <PartyPopper className="w-7 h-7 text-charcoal" />
                 </div>
 
-                <h3 className="font-display text-3xl mb-2 text-charcoal">Saturdays</h3>
-                <p className="text-charcoal/80 text-lg mb-4">The Full Journey</p>
+                <h3 className="font-display text-3xl mb-2 text-charcoal">{nights?.saturday?.title || 'Saturdays'}</h3>
+                <p className="text-charcoal/80 text-lg mb-4">{nights?.saturday?.subtitle || 'The Full Journey'}</p>
                 
                 <p className="text-charcoal/60 mb-6">
-                  The full journey - dinner, drinks, and dancing until 02:00.
+                  {nights?.saturday?.description || 'The full journey - dinner, drinks, and dancing until 02:00.'}
                 </p>
 
                 {/* Expanded content */}
@@ -296,21 +300,20 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                     >
                       <div className="grid md:grid-cols-2 gap-4">
                         <div className="bg-charcoal/5 p-6">
-                          <p className="text-charcoal font-display text-xl mb-2">The Journey</p>
+                          <p className="text-charcoal font-display text-xl mb-2">{maidaLive?.theJourney || 'The Journey'}</p>
                           <p className="text-charcoal/60">
-                            Start with dinner, stay for the party. Our Saturday nights are legendary - 
-                            the food, the drinks, the music, all building to a peak.
+                            {nights?.saturday?.journeyDescription || 'Start with dinner, stay for the party. Our Saturday nights are legendary - the food, the drinks, the music, all building to a peak.'}
                           </p>
                         </div>
                         <div className="space-y-4">
                           <div className="flex gap-4">
                             <div className="bg-charcoal/5 p-4 flex-1">
-                              <p className="text-charcoal/60 text-sm">Hours</p>
+                              <p className="text-charcoal/60 text-sm">{maidaLive?.hours || 'Hours'}</p>
                               <p className="text-charcoal font-display text-lg">12:30 - 02:00</p>
                             </div>
                             <div className="bg-charcoal/5 p-4 flex-1">
-                              <p className="text-charcoal/60 text-sm">Party Mode</p>
-                              <p className="text-charcoal font-display text-lg">From 23:00</p>
+                              <p className="text-charcoal/60 text-sm">{maidaLive?.partyMode || 'Party Mode'}</p>
+                              <p className="text-charcoal font-display text-lg">{maidaLive?.from || 'From'} 23:00</p>
                             </div>
                           </div>
                         </div>
@@ -321,7 +324,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
 
                 {/* Click hint */}
                 <p className="mt-auto pt-4 text-xs text-charcoal/40">
-                  {activeNight === 'saturday' ? 'Click to collapse' : 'Click to learn more'}
+                  {activeNight === 'saturday' ? (maidaLive?.clickToCollapse || 'Click to collapse') : (maidaLive?.clickToLearnMore || 'Click to learn more')}
                 </p>
               </div>
             </motion.div>
@@ -344,16 +347,16 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
               transition={{ duration: 0.6 }}
             >
               <h2 className="font-display text-2xl md:text-3xl font-medium text-white mb-3">
-                Enjoying <span className="italic text-terracotta">Maída</span> Live?
+                {privateEvents?.title || 'Enjoying'} <span className="italic text-terracotta">Maída</span> Live?
               </h2>
               <p className="text-lg text-sand mb-2">
-                Make it private.
+                {privateEvents?.subtitle || 'Make it private.'}
               </p>
               <p className="text-sand/60 mb-6 text-sm">
-                Host your next celebration, corporate event, or private gathering with us.
+                {privateEvents?.description || 'Host your next celebration, corporate event, or private gathering with us.'}
               </p>
               <Link href={`/${locale}/contact`} className="inline-block bg-warm-white text-charcoal px-6 py-3 text-sm font-medium hover:bg-sand transition-colors">
-                Contact us
+                {privateEvents?.cta || 'Contact us'}
               </Link>
             </motion.div>
 
@@ -369,19 +372,19 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               <h2 className="font-display text-2xl md:text-3xl font-medium text-white mb-3">
-                Are you a DJ?
+                {djApplication?.title || 'Are you a DJ?'}
               </h2>
               <p className="text-lg text-sand mb-2">
-                Join our rotation.
+                {djApplication?.subtitle || 'Join our rotation.'}
               </p>
               <p className="text-sand/60 mb-6 text-sm">
-                If your sound fits our vibe, we want to hear from you.
+                {djApplication?.description || 'If your sound fits our vibe, we want to hear from you.'}
               </p>
               <button
                 onClick={() => setIsDJModalOpen(true)}
                 className="inline-block bg-terracotta text-warm-white px-6 py-3 text-sm font-medium hover:bg-terracotta/90 transition-colors"
               >
-                Apply to play
+                {djApplication?.cta || 'Apply to play'}
               </button>
             </motion.div>
           </div>
@@ -414,7 +417,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-             An evolving atmosphere of food, drinks, <span className="italic">and music</span>
+             {maidaLive?.ctaTitle || 'An evolving atmosphere of food, drinks,'} <span className="italic">{maidaLive?.ctaTitleHighlight || 'and music'}</span>
           </motion.h2>
 
           <motion.p 
@@ -424,7 +427,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            #MeetMeAtMaída
+            {maidaLive?.ctaHashtag || '#MeetMeAtMaída'}
           </motion.p>
 
           <motion.button
@@ -437,7 +440,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
-            Reserve a Table
+            {nav?.bookTable || maidaLive?.ctaButton || 'Reserve a Table'}
           </motion.button>
         </div>
       </section>
@@ -445,14 +448,18 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
       {/* DJ Application Modal */}
       <DJApplicationModal 
         isOpen={isDJModalOpen} 
-        onClose={() => setIsDJModalOpen(false)} 
+        onClose={() => setIsDJModalOpen(false)}
+        translations={{ djForm, djApplication }}
       />
     </div>
   );
 }
 
 // DJ Application Modal Component
-function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+function DJApplicationModal({ isOpen, onClose, translations }: { isOpen: boolean; onClose: () => void; translations: any }) {
+  const djForm = translations?.djForm || {};
+  const djApplication = translations?.djApplication || {};
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -464,6 +471,19 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Genre options for DJ form
+  const genreOptions = [
+    'House',
+    'Deep House',
+    'Techno',
+    'Electronica',
+    'Commercial / Top 40',
+    '80s / 90s / 00s',
+    'Jazz',
+    'World / Arabic',
+    'Funk / Soul',
+  ];
 
   const handleGenreToggle = (genre: string) => {
     setFormData(prev => ({
@@ -482,7 +502,7 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
     // Validation
     if (!formData.name || !formData.email || !formData.phone || formData.genres.length === 0) {
       setStatus('error');
-      setErrorMessage('Please fill in all required fields and select at least one genre.');
+      setErrorMessage(djForm?.validationError || 'Please fill in all required fields and select at least one genre.');
       return;
     }
 
@@ -530,11 +550,11 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
         setStatus('success');
       } else {
         setStatus('error');
-        setErrorMessage(result.message || 'Something went wrong. Please try again.');
+        setErrorMessage(result.message || djForm?.error || 'Something went wrong. Please try again.');
       }
     } catch (error) {
       setStatus('error');
-      setErrorMessage('Network error. Please try again.');
+      setErrorMessage(djForm?.networkError || 'Network error. Please try again.');
     }
   };
 
@@ -577,8 +597,8 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-white/10">
               <div>
-                <h3 className="font-display text-2xl text-white">DJ Application</h3>
-                <p className="text-sand/60 text-sm">Join the <span className="italic text-terracotta">Maída</span> Live rotation</p>
+                <h3 className="font-display text-2xl text-white">{djForm?.modalTitle || 'DJ Application'}</h3>
+                <p className="text-sand/60 text-sm">{djForm?.modalSubtitle || 'Join the'} <span className="italic text-terracotta">Maída</span> Live {djForm?.rotation || 'rotation'}</p>
               </div>
               <button
                 onClick={onClose}
@@ -599,28 +619,28 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                   <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
                     <CheckCircle className="w-10 h-10 text-green-400" />
                   </div>
-                  <h4 className="font-display text-2xl text-white mb-3">Application sent!</h4>
+                  <h4 className="font-display text-2xl text-white mb-3">{djForm?.successTitle || 'Application sent!'}</h4>
                   <p className="text-sand/70 mb-8">
-                    Thanks for your interest! We'll review your application and get back to you if there's a fit.
+                    {djForm?.successMessage || "Thanks for your interest! We'll review your application and get back to you if there's a fit."}
                   </p>
                   <button
                     onClick={() => { resetForm(); onClose(); }}
                     className="btn btn-primary"
                   >
-                    Close
+                    {djForm?.close || 'Close'}
                   </button>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Name */}
                   <div>
-                    <label className="block text-sm text-sand/80 mb-2">Full name *</label>
+                    <label className="block text-sm text-sand/80 mb-2">{djForm?.name || 'Full name'} *</label>
                     <input
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                       className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors"
-                      placeholder="Your name or DJ name"
+                      placeholder={djForm?.namePlaceholder || 'Your name or DJ name'}
                       required
                     />
                   </div>
@@ -628,7 +648,7 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                   {/* Email & Phone */}
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm text-sand/80 mb-2">Email *</label>
+                      <label className="block text-sm text-sand/80 mb-2">{djForm?.email || 'Email'} *</label>
                       <input
                         type="email"
                         value={formData.email}
@@ -639,7 +659,7 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                       />
                     </div>
                     <div>
-                      <label className="block text-sm text-sand/80 mb-2">Phone *</label>
+                      <label className="block text-sm text-sand/80 mb-2">{djForm?.phone || 'Phone'} *</label>
                       <input
                         type="tel"
                         value={formData.phone}
@@ -653,7 +673,7 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
 
                   {/* Genres */}
                   <div>
-                    <label className="block text-sm text-sand/80 mb-3">Genres you play *</label>
+                    <label className="block text-sm text-sand/80 mb-3">{djForm?.genres || 'Genres you play'} *</label>
                     <div className="flex flex-wrap gap-2">
                       {genreOptions.map((genre) => (
                         <button
@@ -676,13 +696,13 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                       value={formData.otherGenre}
                       onChange={(e) => setFormData(prev => ({ ...prev, otherGenre: e.target.value }))}
                       className="mt-3 w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors"
-                      placeholder="Other genres (optional)"
+                      placeholder={djForm?.otherGenresPlaceholder || 'Other genres (optional)'}
                     />
                   </div>
 
                   {/* Music Link */}
                   <div>
-                    <label className="block text-sm text-sand/80 mb-2">Music link (optional)</label>
+                    <label className="block text-sm text-sand/80 mb-2">{djForm?.musicLink || 'Music link (optional)'}</label>
                     <input
                       type="url"
                       value={formData.musicLink}
@@ -690,18 +710,18 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                       className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors"
                       placeholder="SoundCloud, Mixcloud, Spotify, etc."
                     />
-                    <p className="text-xs text-sand/40 mt-1">Share a link to your mixes or music</p>
+                    <p className="text-xs text-sand/40 mt-1">{djForm?.musicLinkHint || 'Share a link to your mixes or music'}</p>
                   </div>
 
                   {/* Message */}
                   <div>
-                    <label className="block text-sm text-sand/80 mb-2">Tell us about yourself (optional)</label>
+                    <label className="block text-sm text-sand/80 mb-2">{djForm?.message || 'Tell us about yourself (optional)'}</label>
                     <textarea
                       value={formData.message}
                       onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
                       rows={3}
                       className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-sand/40 focus:outline-none focus:border-terracotta transition-colors resize-none"
-                      placeholder="Brief bio, experience, why Maída..."
+                      placeholder={djForm?.messagePlaceholder || 'Brief bio, experience, why Maída...'}
                     />
                   </div>
 
@@ -721,19 +741,19 @@ function DJApplicationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                     {status === 'sending' ? (
                       <>
                         <Loader2 className="w-5 h-5 animate-spin" />
-                        Sending...
+                        {djForm?.sending || 'Sending...'}
                       </>
                     ) : (
                       <>
                         <Send className="w-5 h-5" />
-                        Submit application
+                        {djForm?.submit || 'Submit application'}
                       </>
                     )}
                   </button>
 
                   {/* Privacy note */}
                   <p className="text-xs text-sand/40 text-center">
-                    By submitting, you agree to be contacted about DJ opportunities at <span className="italic text-terracotta">Maída</span>.
+                    {djForm?.privacyNote || 'By submitting, you agree to be contacted about DJ opportunities at'} <span className="italic text-terracotta">Maída</span>.
                   </p>
                 </form>
               )}
