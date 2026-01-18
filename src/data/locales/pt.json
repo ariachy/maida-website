@@ -7,9 +7,9 @@
     "events": "Maída Live",
     "blog": "Blog",
     "contact": "Contacto",
-    "reserve": "Reservar Mesa",
+    "reserve": "Reservar",
     "discover": "Descobrir",
-    "bookTable": "Reservar mesa",
+    "bookTable": "Reservar",
     "loading": "A carregar..."
   },
   "hero": {
@@ -18,7 +18,7 @@
     "title1": "Sabores Mediterrânicos.",
     "title2": "Alma Libanesa.",
     "subtitle": "Um lugar de encontro para pratos partilhados, vinhos naturais e noites que se prolongam.",
-    "cta": "Reservar Mesa",
+    "cta": "Reservar",
     "viewMenu": "Ver Menu",
     "scroll": "Scroll"
   },
@@ -104,7 +104,7 @@
   "homeCta": {
     "title": "A sua mesa está à espera",
     "subtitle": "#MeetMeAtMaída",
-    "button": "Reservar Mesa"
+    "button": "Reservar"
   },
   "story": {
     "label": "#DasNossasRaízes",
@@ -437,7 +437,7 @@
   "cta": {
     "title": "A sua mesa está à espera",
     "subtitle": "#MeetMeAtMaida",
-    "button": "Reservar Mesa"
+    "button": "Reservar"
   },
   "footer": {
     "tagline": "Sabores Mediterrânicos. Alma Libanesa.",
@@ -477,7 +477,7 @@
     "foundersToday": "Hoje, encontrá-los-ão onde pertencem: à mesa convosco - garantindo que cada detalhe está certo, cada copo está cheio, e nenhum convidado sai sem uma história para contar.",
     "ctaTitle": "Encontre o seu lugar à mesa",
     "ctaHashtag": "#MeetMeAtMaída",
-    "ctaButton": "Reservar mesa"
+    "ctaButton": "Reservar"
   },
   "contact": {
     "title": "Entre em Contacto",
@@ -542,7 +542,7 @@
     "ctaTitle": "Uma atmosfera em evolução de comida, bebidas,",
     "ctaTitleHighlight": "e música",
     "ctaHashtag": "#MeetMeAtMaída",
-    "ctaButton": "Reservar Mesa",
+    "ctaButton": "Reservar",
     "thursdayThemes": [
       { "week": "1ª", "theme": "Noite das Décadas", "description": "Hits dos anos 80, 90, 00" },
       { "week": "2ª", "theme": "World Music", "description": "Árabe, Francês, Latino e mais" },
@@ -663,6 +663,6 @@
     "subtitle": "Parece que esta página não existe.",
     "cta": "Voltar ao Início",
     "viewMenu": "Ver Menu",
-    "reserve": "Reservar mesa"
+    "reserve": "Reservar"
   }
 }

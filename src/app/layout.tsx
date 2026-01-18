@@ -25,7 +25,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://maida.pt'),
   title: {
-    default: 'Maída – Mediterranean Flavours. Lebanese Soul | Lisbon',
+    default: 'Maída - Mediterranean Flavours. Lebanese Soul | Lisbon',
     template: '%s | Maída',
   },
   description:
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     locale: 'en_GB',
     url: 'https://maida.pt',
     siteName: 'Maída',
-    title: 'Maída – Mediterranean Flavours. Lebanese Soul',
+    title: 'Maída - Mediterranean Flavours. Lebanese Soul',
     description:
       'A gathering place for shared plates, natural wines, and evenings that linger. Cais do Sodré, Lisbon.',
     images: [
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Maída – Mediterranean Flavours. Lebanese Soul',
+    title: 'Maída - Mediterranean Flavours. Lebanese Soul',
     description:
       'A gathering place for shared plates, natural wines, and evenings that linger.',
     images: ['/images/og-image.jpg'],

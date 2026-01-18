@@ -50,12 +50,12 @@ export default async function HomePage({
   const translations = await loadTranslations(locale);
 
   return (
-    <>
+    <div className="overflow-x-hidden">
       <Hero translations={translations} />
       <HeroCTA translations={translations} locale={locale} />
       <Story translations={translations} locale={locale} />
       <MenuHighlights translations={translations} locale={locale} />
       <Visit translations={translations} locale={locale} />
-    </>
+    </div>
   );
 }

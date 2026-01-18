@@ -239,7 +239,7 @@
       },
       "labneh-plus": {
         "name": "Labneh+",
-        "description": "Creamy strained yogurt mixed with diced veggies and olives"
+        "description": "Creamy strained yogurt mixed with diced veggies and olives. Served with saj crackers"
       },
       "marinated-olives": {
         "name": "Marinated Olives",
@@ -265,89 +265,123 @@
         "name": "Tabbouleh",
         "description": "Parsley, tomato, mint, green onion, lemon-oil dressing"
       },
-      "lamb-kebab": {
-        "name": "Lamb Kebab",
-        "description": "Grilled lamb chops with house spices, served with hummus"
+      "caesar": {
+        "name": "Caesar",
+        "description": "Marinated chicken, romaine, parmesan, croutons, caesar dressing"
       },
-      "kafta-mashwiye": {
-        "name": "Kafta Mashwiye",
-        "description": "Grilled spiced minced meat skewers, served with hummus"
+      "shawarma": {
+        "name": "Shawarma",
+        "description": "(Beef) with fries, onion and parsley salad, tomato, pickles, tahini dressing and saj bread"
       },
-      "chicken-taouk": {
-        "name": "Chicken Taouk",
-        "description": "Marinated chicken breast in yogurt and spices, grilled, served with Lebanese garlic sauce"
+      "salmon": {
+        "name": "Salmon",
+        "description": "(Grilled) with tahini sauce mixed with diced red and green bell pepper, coriander, served with sautéed baby potatoes"
       },
-      "picanha": {
-        "name": "Picanha",
-        "description": "Brazilian-style grilled picanha, served with hummus"
+      "chicken-breast": {
+        "name": "Chicken Breast",
+        "description": "House marinated and grilled, served with sautéed baby potatoes, cherry tomatoes and yogurt-herb sauce"
       },
-      "seabass": {
-        "name": "Seabass",
-        "description": "Fresh grilled fish with olive oil, lemon and Mediterranean herbs"
+      "lasagna": {
+        "name": "Lasagna",
+        "description": "(Chili) made with beef and pork ragu, melted parmesan and mozzarella"
       },
-      "kunafa": {
-        "name": "Kunafa",
-        "description": "Traditional dessert with shredded pastry, sweet cheese and orange blossom syrup"
+      "lebanese-burger": {
+        "name": "Lebanese Burger",
+        "description": "Two smash patties, coleslaw, fries, pickles, ketchup & mustard in a toasted bun. Served with fries and coleslaw"
+      },
+      "tiramisu": {
+        "name": "Tiramisu",
+        "description": "(To share) mascarpone, pasteurized eggs, savoiardi, a touch of kahlua, cocoa powder"
       },
       "rice-pudding": {
-        "name": "Lebanese Rice Pudding",
-        "description": "Creamy rice pudding with rose water, cinnamon and pistachios"
+        "name": "Rice Pudding",
+        "description": "Risotto, milk, cinnamon powder"
       },
-      "saj-nutella": {
-        "name": "Saj Nutella",
-        "description": "Warm saj with Nutella and banana"
+      "znoud-el-set": {
+        "name": "Znoud el Set",
+        "description": "Crispy baklava sheets, sweet cream filling (ashta), sugar syrup, pistachio"
       },
-      "saj-zaatar": {
-        "name": "Saj Zaatar",
-        "description": "Traditional zaatar blend with olive oil"
+      "saj-its-thyme": {
+        "name": "It's Thyme",
+        "description": "Zaatar mix, tomato, cucumber, mint, olives"
       },
-      "saj-cheese": {
-        "name": "Saj Cheese",
-        "description": "Melted akkawi cheese"
+      "saj-thyme-cheese": {
+        "name": "Thyme for Cheese",
+        "description": "Zaatar mix, melted white cheese"
       },
-      "saj-halloumi-zaatar": {
-        "name": "Saj Halloumi & Zaatar",
-        "description": "Grilled halloumi with zaatar"
+      "saj-cheesy": {
+        "name": "Cheesy",
+        "description": "Melted white cheese"
       },
-      "saj-labneh": {
-        "name": "Saj Labneh",
-        "description": "Strained yogurt with cucumber and mint"
+      "saj-turkey-cheese": {
+        "name": "Turkey and Cheese",
+        "description": "Smoked turkey, melted cheese, lettuce, tomato, pickles, mayo-mustard dressing"
       },
-      "saj-chicken-shawarma": {
-        "name": "Saj Chicken Shawarma",
-        "description": "Shredded marinated chicken, pickles, garlic sauce"
+      "saj-halloumi-bacon": {
+        "name": "Halloumi Bacon",
+        "description": "Melted halloumi and white cheese, crispy bacon, tomato, pickles, mayo"
       },
-      "saj-kafta": {
-        "name": "Saj Kafta",
-        "description": "Grilled spiced minced meat with onion and tomato"
+      "saj-what-the-feta": {
+        "name": "What the Feta",
+        "description": "Creamy feta, tomato, arugula, onion, basil, zaatar"
+      },
+      "saj-roasted-veggies": {
+        "name": "Roasted Veggies",
+        "description": "Roasted eggplant and zucchini, red pepper paste, sweet potato chips, pomegranate seeds, parsley, tahini dressing"
+      },
+      "saj-nutella-mozzarella": {
+        "name": "Nutella Mozzarella",
+        "description": "Nutella, melted fresh mozzarella"
+      },
+      "saj-nutella-white-cheese": {
+        "name": "Nutella + White Cheese",
+        "description": "Nutella, melted white cheese"
+      },
+      "saj-berry-compote": {
+        "name": "Berry Compote",
+        "description": "Cream cheese, berry compote, strawberries"
+      },
+      "saj-peanut-tahini": {
+        "name": "Peanut Tahini",
+        "description": "Peanut butter, maple tahini, bananas"
+      },
+      "saj-the-og": {
+        "name": "The OG",
+        "description": "Melted butter, sugar"
       },
       "saj-nutella-banana": {
-        "name": "Saj Nutella & Banana",
-        "description": "Nutella with fresh banana"
+        "name": "Nutella + Banana",
+        "description": ""
       },
-      "saj-ashta": {
-        "name": "Saj Ashta",
-        "description": "Traditional Lebanese cream with honey and pistachios"
+      "saj-nutella-strawberry": {
+        "name": "Nutella + Strawberry",
+        "description": ""
       },
+      "cortado": { "name": "Cortado", "description": "" },
       "espresso": { "name": "Espresso", "description": "" },
       "espresso-double": { "name": "Double Espresso", "description": "" },
       "americano": { "name": "Americano", "description": "" },
+      "americano-iced": { "name": "Americano (Iced)", "description": "" },
       "cappuccino": { "name": "Cappuccino", "description": "" },
-      "latte": { "name": "Latte", "description": "" },
       "flat-white": { "name": "Flat White", "description": "" },
-      "mocha": { "name": "Mocha", "description": "" },
-      "lebanese-coffee": { "name": "Lebanese Coffee", "description": "With cardamom" },
       "hot-chocolate": { "name": "Hot Chocolate", "description": "" },
-      "tea-fresh-mint": { "name": "Fresh Mint Tea", "description": "" },
-      "tea-ginger-mint": { "name": "Ginger Mint Tea", "description": "" },
-      "tea-lemon-ginger": { "name": "Lemon Ginger Tea", "description": "" },
-      "tea-english-breakfast": { "name": "English Breakfast", "description": "" },
-      "tea-earl-grey": { "name": "Earl Grey", "description": "" },
-      "tea-chamomile": { "name": "Chamomile", "description": "" },
-      "tea-green": { "name": "Green Tea", "description": "" },
-      "lemonade-classic": { "name": "Classic Lemonade", "description": "" },
+      "hot-chocolate-sweet": { "name": "Hot Chocolate (Sweet)", "description": "" },
+      "latte": { "name": "Latte", "description": "" },
+      "latte-iced": { "name": "Latte (Iced)", "description": "" },
+      "latte-macchiato": { "name": "Latte Macchiato", "description": "" },
+      "lavender-coffee": { "name": "Lavender Coffee", "description": "" },
+      "macchiato": { "name": "Macchiato", "description": "" },
+      "mocha": { "name": "Mocha", "description": "" },
+      "milk": { "name": "Milk", "description": "" },
+      "tea-moroccan": { "name": "Moroccan", "description": "" },
+      "tea-zhourat": { "name": "Zhourat", "description": "" },
+      "tea-maida": { "name": "Maída", "description": "" },
+      "tea-cafe-blanc": { "name": "Cafe Blanc", "description": "" },
+      "tea-other": { "name": "Other", "description": "" },
+      "tea-kombucha": { "name": "Kombucha", "description": "" },
+      "lemonade": { "name": "Lemonade", "description": "" },
       "lemonade-maida": { "name": "Maída Lemonade", "description": "Rose syrup, mastic syrup, lemon" },
-      "lemonade-pitcher": { "name": "Lemonade (pitcher)", "description": "" },
+      "lemonade-pitcher": { "name": "Lemonade (Pitcher)", "description": "" },
       "juice-passion-fruit": { "name": "Passion Fruit & Cinnamon", "description": "" },
       "juice-buzz": { "name": "Buzz", "description": "Carrot, apple, ginger" },
       "milkshake-banana": { "name": "Banana Heaven", "description": "" },
