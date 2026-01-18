@@ -329,33 +329,21 @@
         "name": "Roasted Veggies",
         "description": "Roasted eggplant and zucchini, red pepper paste, sweet potato chips, pomegranate seeds, parsley, tahini dressing"
       },
-      "saj-nutella-mozzarella": {
-        "name": "Nutella Mozzarella",
-        "description": "Nutella, melted fresh mozzarella"
-      },
       "saj-nutella-white-cheese": {
         "name": "Nutella + White Cheese",
         "description": "Nutella, melted white cheese"
-      },
-      "saj-berry-compote": {
-        "name": "Berry Compote",
-        "description": "Cream cheese, berry compote, strawberries"
-      },
-      "saj-peanut-tahini": {
-        "name": "Peanut Tahini",
-        "description": "Peanut butter, maple tahini, bananas"
       },
       "saj-the-og": {
         "name": "The OG",
         "description": "Melted butter, sugar"
       },
-      "saj-nutella-banana": {
-        "name": "Nutella + Banana",
-        "description": ""
+      "saj-nutella": {
+        "name": "Nutella",
+        "description": "Add banana / strawberry"
       },
-      "saj-nutella-strawberry": {
-        "name": "Nutella + Strawberry",
-        "description": ""
+      "saj-butter-jam": {
+        "name": "Butter Jam",
+        "description": "Melted butter, apricot jam"
       },
       "cortado": { "name": "Cortado", "description": "" },
       "espresso": { "name": "Espresso", "description": "" },

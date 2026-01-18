@@ -83,13 +83,10 @@
     { "id": "saj-halloumi-bacon", "categoryId": "saj-wraps", "sortOrder": 5 },
     { "id": "saj-what-the-feta", "categoryId": "saj-wraps", "sortOrder": 6 },
     { "id": "saj-roasted-veggies", "categoryId": "saj-wraps", "sortOrder": 7 },
-    { "id": "saj-nutella-mozzarella", "categoryId": "saj-wraps", "sortOrder": 10 },
-    { "id": "saj-nutella-white-cheese", "categoryId": "saj-wraps", "sortOrder": 11 },
-    { "id": "saj-berry-compote", "categoryId": "saj-wraps", "sortOrder": 12 },
-    { "id": "saj-peanut-tahini", "categoryId": "saj-wraps", "sortOrder": 13 },
-    { "id": "saj-the-og", "categoryId": "saj-wraps", "sortOrder": 14 },
-    { "id": "saj-nutella-banana", "categoryId": "saj-wraps", "sortOrder": 15 },
-    { "id": "saj-nutella-strawberry", "categoryId": "saj-wraps", "sortOrder": 16 },
+    { "id": "saj-nutella-white-cheese", "categoryId": "saj-wraps", "sortOrder": 10 },
+    { "id": "saj-the-og", "categoryId": "saj-wraps", "sortOrder": 11 },
+    { "id": "saj-nutella", "categoryId": "saj-wraps", "sortOrder": 12 },
+    { "id": "saj-butter-jam", "categoryId": "saj-wraps", "sortOrder": 13 },
 
     
     { "id": "cortado", "categoryId": "drinks", "sortOrder": 1 },

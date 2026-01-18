@@ -13,7 +13,7 @@
 
 ### 1. Install Dependencies
 ```bash
-cd maida-website
+cd maida.pt
 npm install
 ```
 
@@ -36,12 +36,9 @@ ls -la out/
 # Should see:
 # - en/
 # - pt/
-# - de/
-# - it/
-# - es/
-# - images/
 # - _next/
-# - index.html (redirects to /en)
+# - images/
+# - index.html
 ```
 
 ---
@@ -52,7 +49,7 @@ ls -la out/
 
 1. **Connect to your server**
    ```
-   Host: ftp.maida.pt (or your server)
+   Host: ftp.maida.pt
    Username: your_ftp_username
    Password: your_ftp_password
    Port: 21
@@ -73,15 +70,6 @@ ls -la out/
    - Check all pages load correctly
    - Test language switching
 
-### Via cPanel File Manager
-
-1. Log into Namecheap cPanel
-2. Open File Manager
-3. Navigate to `public_html`
-4. Upload a ZIP of the `/out` folder
-5. Extract the ZIP
-6. Move contents to `public_html` root
-
 ---
 
 ## ⚙️ Server Configuration
@@ -98,15 +86,19 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Remove trailing slash (except for directories)
+# Remove trailing slash
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [L,R=301]
 
-# Handle clean URLs for Next.js static export
+# Handle clean URLs
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.*)$ $1.html [L]
+
+# Block query parameter spam (soft 404 fix)
+RewriteCond %{QUERY_STRING} ^(MD|ND|.{1,2})$ [NC]
+RewriteRule ^(.*)$ /$1? [R=301,L]
 
 # Custom 404
 ErrorDocument 404 /404.html
@@ -116,6 +108,7 @@ ErrorDocument 404 /404.html
     Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
 # Caching
@@ -123,7 +116,6 @@ ErrorDocument 404 /404.html
     ExpiresActive On
     ExpiresByType image/webp "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
-    ExpiresByType image/jpg "access plus 1 year"
     ExpiresByType image/jpeg "access plus 1 year"
     ExpiresByType text/css "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
@@ -139,133 +131,140 @@ ErrorDocument 404 /404.html
 
 ## 🔄 Update Workflow
 
-### Making Changes
+### Quick Deploy
+```bash
+# 1. Make changes
+# 2. Test locally
+npm run dev
 
-1. **Edit files locally**
-2. **Test locally**
-   ```bash
-   npm run dev
-   # Check http://localhost:3000
-   ```
-3. **Build**
-   ```bash
-   npm run build
-   ```
-4. **Upload changed files**
-   - Only upload files that changed
-   - Or re-upload entire `/out` folder
+# 3. Build
+npm run build
 
-### Quick Checklist
+# 4. Upload /out folder via FTP
+```
+
+### Checklist
 - [ ] Changes tested locally
-- [ ] Build succeeds without errors
+- [ ] Build succeeds
 - [ ] Uploaded to correct directory
-- [ ] Cache cleared if needed
+- [ ] Hard refresh browser (Ctrl+Shift+R)
 - [ ] All pages working
 - [ ] Mobile view tested
 
 ---
 
-## 🌐 Domain Configuration
+## ✅ Post-Deployment Verification
 
-### DNS Settings (if not already configured)
-
-In Namecheap DNS settings:
-```
-Type    Host    Value           TTL
-A       @       [server IP]     Automatic
-CNAME   www     maida.pt        Automatic
+### Run Test Script
+```bash
+node test-site.js
 ```
 
-### SSL Certificate
+### Manual Checks
+- [ ] Homepage loads (`/en`, `/pt`)
+- [ ] All pages accessible
+- [ ] hreflang tags present (View Source → search "hreflang")
+- [ ] Sitemap accessible (`/sitemap.xml`)
+- [ ] Images loading
+- [ ] UMAI widget opens
+- [ ] Mobile responsive
 
-Namecheap usually provides free SSL via:
-- AutoSSL (cPanel)
-- Let's Encrypt
-
-Ensure HTTPS is working before launch.
+### Google Search Console
+After deployment:
+1. Go to Search Console
+2. URL Inspection → test key pages
+3. Sitemaps → resubmit if updated
+4. Request indexing for new/changed pages
 
 ---
 
-## 🐛 Troubleshooting
+## 🔐 Admin Panel Deployment (Future)
 
-### 404 Errors on Routes
-- Check `.htaccess` is uploaded
-- Verify `trailingSlash: true` in next.config.js
+When admin panel is added:
+
+### Environment Variables
+Create `.env.local` on server (never commit):
+```env
+DATABASE_URL="file:./prisma/admin.db"
+NEXTAUTH_SECRET="generate-with-openssl-rand-base64-32"
+NEXTAUTH_URL="https://maida.pt"
+```
+
+### Database Setup
+```bash
+# On first deploy
+npx prisma generate
+npx prisma db push
+npm run setup-admin
+```
+
+### Files to Exclude from Git
+```gitignore
+.env
+.env.local
+prisma/admin.db
+prisma/admin.db-journal
+public/uploads/*
+!public/uploads/.gitkeep
+```
+
+### Admin URL
+```
+https://maida.pt/admin
+```
+
+---
+
+## 🛠 Troubleshooting
+
+### 404 Errors
+- Check `.htaccess` uploaded
+- Verify folder structure matches routes
 - Clear browser cache
 
+### Soft 404 in Search Console
+- Usually spam bots with query params (?MD, ?ND)
+- The .htaccess rule above blocks these
+- Validate fix in Search Console
+
 ### Images Not Loading
-- Check file paths are correct
-- Verify images uploaded to `/public_html/images/`
-- Check file permissions (644 for files)
+- Check paths are lowercase
+- Verify files uploaded to `/images/`
+- Check file permissions (644)
 
-### Styles Not Applying
+### hreflang Not Detected
+- View page source, search for "hreflang"
+- If present in source but tool fails, tool may have issues
+- Google will see it correctly
+
+### Styles Missing
 - Hard refresh (Ctrl+Shift+R)
-- Check `_next` folder uploaded correctly
-- Verify CSS files exist
-
-### Language Routes Not Working
-- Ensure all `/en/`, `/pt/` etc. folders uploaded
-- Check `.htaccess` rules
+- Check `_next` folder uploaded
+- Clear CDN cache if using Cloudflare
 
 ---
 
-## 📊 Post-Deployment Checks
+## 📊 Performance Targets
 
-### Functionality
-- [ ] Homepage loads
-- [ ] All language versions work
-- [ ] Menu page and filtering works
-- [ ] Navigation works
-- [ ] Mobile menu works
-- [ ] UMAI reservation widget opens
-- [ ] Contact links work
-- [ ] Social links work
+| Metric | Target |
+|--------|--------|
+| Mobile PageSpeed | 60+ |
+| Desktop PageSpeed | 80+ |
+| LCP | < 2.5s |
+| FID | < 100ms |
+| CLS | < 0.1 |
 
-### Performance
-- [ ] Run Lighthouse audit (aim for 90+)
-- [ ] Check Core Web Vitals
-- [ ] Test on slow connection (3G)
-
-### SEO
-- [ ] Title tags correct
-- [ ] Meta descriptions present
-- [ ] Open Graph images working
-- [ ] Robots.txt accessible
-- [ ] Sitemap.xml uploaded (if created)
+Test at: https://pagespeed.web.dev
 
 ---
 
-## 🔮 Future: CI/CD Setup
+## 🔗 Important URLs
 
-When ready for automated deployments:
-
-### Option 1: GitHub Actions + FTP
-```yaml
-# .github/workflows/deploy.yml
-name: Deploy to Namecheap
-on:
-  push:
-    branches: [main]
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - run: npm install
-      - run: npm run build
-      - uses: SamKirkland/FTP-Deploy-Action@v4
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./out/
-```
-
-### Option 2: Move to VPS
-For backend features, consider:
-- DigitalOcean
-- Linode
-- Vultr
-
-With proper Node.js hosting for API routes.
+| URL | Purpose |
+|-----|---------|
+| https://maida.pt | Live site |
+| https://maida.pt/sitemap.xml | Sitemap |
+| https://maida.pt/en | English homepage |
+| https://maida.pt/pt | Portuguese homepage |
+| https://search.google.com/search-console | Search Console |
+| https://pagespeed.web.dev | Performance testing |

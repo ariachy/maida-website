@@ -7,9 +7,9 @@
     "events": "Maída Live",
     "blog": "Blog",
     "contact": "Contacto",
-    "reserve": "Reservar",
+    "reserve": "Reservar Mesa",
     "discover": "Descobrir",
-    "bookTable": "Reservar",
+    "bookTable": "Reservar mesa",
     "loading": "A carregar..."
   },
   "hero": {
@@ -18,7 +18,7 @@
     "title1": "Sabores Mediterrânicos.",
     "title2": "Alma Libanesa.",
     "subtitle": "Um lugar de encontro para pratos partilhados, vinhos naturais e noites que se prolongam.",
-    "cta": "Reservar",
+    "cta": "Reservar Mesa",
     "viewMenu": "Ver Menu",
     "scroll": "Scroll"
   },
@@ -104,7 +104,7 @@
   "homeCta": {
     "title": "A sua mesa está à espera",
     "subtitle": "#MeetMeAtMaída",
-    "button": "Reservar"
+    "button": "Reservar Mesa"
   },
   "story": {
     "label": "#DasNossasRaízes",
@@ -294,8 +294,48 @@
         "description": "Arroz doce cremoso com água de rosas, canela e pistácios"
       },
       "saj-nutella": {
-        "name": "Saj Nutella",
-        "description": "Saj quente com Nutella e banana"
+        "name": "Nutella",
+        "description": "Adicionar banana / morango"
+      },
+      "saj-its-thyme": {
+        "name": "It's Thyme",
+        "description": "Mistura de zaatar, tomate, pepino, hortelã, azeitonas"
+      },
+      "saj-thyme-cheese": {
+        "name": "Thyme for Cheese",
+        "description": "Mistura de zaatar, queijo branco derretido"
+      },
+      "saj-cheesy": {
+        "name": "Cheesy",
+        "description": "Queijo branco derretido"
+      },
+      "saj-turkey-cheese": {
+        "name": "Turkey & Cheese",
+        "description": "Peru fumado, queijo derretido, alface, tomate, pickles, molho de maionese e mostarda"
+      },
+      "saj-halloumi-bacon": {
+        "name": "Halloumi Bacon",
+        "description": "Halloumi e queijo branco derretidos, bacon crocante, tomate, pickles, maionese"
+      },
+      "saj-what-the-feta": {
+        "name": "What the Feta",
+        "description": "Feta cremoso, tomate, rúcula, cebola, manjericão, zaatar"
+      },
+      "saj-roasted-veggies": {
+        "name": "Roasted Veggies",
+        "description": "Beringela e curgete assadas, pasta de pimento vermelho, chips de batata-doce, sementes de romã, salsa, molho tahini"
+      },
+      "saj-nutella-white-cheese": {
+        "name": "Nutella + Queijo Branco",
+        "description": "Nutella, queijo branco derretido"
+      },
+      "saj-the-og": {
+        "name": "The OG",
+        "description": "Manteiga derretida, açúcar"
+      },
+      "saj-butter-jam": {
+        "name": "Butter Jam",
+        "description": "Manteiga derretida, compota de alperce"
       },
       "saj-zaatar": {
         "name": "Saj Zaatar",
@@ -320,10 +360,6 @@
       "saj-kafta": {
         "name": "Saj Kafta",
         "description": "Carne picada especiada grelhada com cebola e tomate"
-      },
-      "saj-nutella-banana": {
-        "name": "Saj Nutella e Banana",
-        "description": "Nutella com banana fresca"
       },
       "saj-ashta": {
         "name": "Saj Ashta",
@@ -437,7 +473,7 @@
   "cta": {
     "title": "A sua mesa está à espera",
     "subtitle": "#MeetMeAtMaida",
-    "button": "Reservar"
+    "button": "Reservar Mesa"
   },
   "footer": {
     "tagline": "Sabores Mediterrânicos. Alma Libanesa.",
@@ -477,7 +513,7 @@
     "foundersToday": "Hoje, encontrá-los-ão onde pertencem: à mesa convosco - garantindo que cada detalhe está certo, cada copo está cheio, e nenhum convidado sai sem uma história para contar.",
     "ctaTitle": "Encontre o seu lugar à mesa",
     "ctaHashtag": "#MeetMeAtMaída",
-    "ctaButton": "Reservar"
+    "ctaButton": "Reservar mesa"
   },
   "contact": {
     "title": "Entre em Contacto",
@@ -542,7 +578,7 @@
     "ctaTitle": "Uma atmosfera em evolução de comida, bebidas,",
     "ctaTitleHighlight": "e música",
     "ctaHashtag": "#MeetMeAtMaída",
-    "ctaButton": "Reservar",
+    "ctaButton": "Reservar Mesa",
     "thursdayThemes": [
       { "week": "1ª", "theme": "Noite das Décadas", "description": "Hits dos anos 80, 90, 00" },
       { "week": "2ª", "theme": "World Music", "description": "Árabe, Francês, Latino e mais" },
@@ -663,6 +699,6 @@
     "subtitle": "Parece que esta página não existe.",
     "cta": "Voltar ao Início",
     "viewMenu": "Ver Menu",
-    "reserve": "Reservar"
+    "reserve": "Reservar mesa"
   }
 }

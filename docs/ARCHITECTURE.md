@@ -5,28 +5,27 @@
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        FRONTEND                                  │
-│                    (Next.js Static)                             │
+│                    (Next.js 14)                                 │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│   ┌─────────────┐  ┌─────────────┐  ┌─────────────┐           │
-│   │    Pages    │  │ Components  │  │   Styles    │           │
-│   │  (App Router)│  │  (React)   │  │ (Tailwind)  │           │
-│   └─────────────┘  └─────────────┘  └─────────────┘           │
+│   ┌─────────────┐  ┌─────────────┐  ┌─────────────┐            │
+│   │ Public Site │  │ Admin Panel │  │   Styles    │            │
+│   │  [lang]/*   │  │   /admin/*  │  │ (Tailwind)  │            │
+│   └─────────────┘  └─────────────┘  └─────────────┘            │
 │                                                                 │
-│   ┌─────────────┐  ┌─────────────┐  ┌─────────────┐           │
-│   │    Data     │  │    Lib      │  │   Hooks     │           │
-│   │   (JSON)    │  │ (Utilities) │  │  (Custom)   │           │
-│   └─────────────┘  └─────────────┘  └─────────────┘           │
+│   ┌─────────────┐  ┌─────────────┐  ┌─────────────┐            │
+│   │    Data     │  │    Lib      │  │   Prisma    │            │
+│   │   (JSON)    │  │ (Auth/Utils)│  │  (SQLite)   │            │
+│   └─────────────┘  └─────────────┘  └─────────────┘            │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
                               │
-                              │ Static Export
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                       HOSTING                                    │
 │                    (Namecheap FTP)                              │
 │                                                                 │
-│   /out folder → public_html                                     │
+│   Static export (public site) + API routes (admin)              │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -36,7 +35,7 @@
 ## 📁 Directory Structure
 
 ```
-maida-website/
+maida.pt/
 │
 ├── public/                     # Static assets
 │   ├── images/
@@ -44,85 +43,91 @@ maida-website/
 │   │   ├── food/              # Food photography
 │   │   ├── drinks/            # Beverage photography
 │   │   ├── atmosphere/        # Restaurant ambiance
-│   │   ├── catering/          # Catering/events
+│   │   ├── blog/              # Blog post images
+│   │   ├── 404/               # 404 page images
 │   │   └── brand/             # Logos, icons
-│   └── fonts/                 # Custom fonts (if any)
+│   └── uploads/               # User-uploaded images (gitignored)
 │
 ├── src/
-│   ├── app/                   # Next.js App Router
-│   │   ├── [lang]/           # Dynamic locale routes
+│   ├── app/
+│   │   ├── [lang]/            # Public site (localized)
+│   │   │   ├── page.tsx       # Homepage
 │   │   │   ├── menu/
-│   │   │   ├── about/
+│   │   │   ├── story/
 │   │   │   ├── contact/
-│   │   │   ├── layout.tsx    # Locale layout
-│   │   │   └── page.tsx      # Homepage
-│   │   ├── layout.tsx        # Root layout
-│   │   └── page.tsx          # Redirect to default locale
+│   │   │   ├── maida-live/
+│   │   │   ├── maida-saj/
+│   │   │   ├── coffee-tea/
+│   │   │   └── blog/
+│   │   │
+│   │   ├── admin/             # Admin panel (protected)
+│   │   │   ├── page.tsx       # Login
+│   │   │   ├── layout.tsx     # Admin layout with auth
+│   │   │   ├── dashboard/
+│   │   │   ├── content/       # Edit translations
+│   │   │   │   ├── homepage/
+│   │   │   │   ├── menu/
+│   │   │   │   ├── story/
+│   │   │   │   └── contact/
+│   │   │   ├── blog/          # Manage blog posts
+│   │   │   ├── media/         # Upload images
+│   │   │   ├── users/         # Manage admins
+│   │   │   └── settings/      # Change password
+│   │   │
+│   │   └── api/
+│   │       └── admin/         # Admin API routes
+│   │           ├── auth/
+│   │           │   ├── login/
+│   │           │   ├── logout/
+│   │           │   └── session/
+│   │           ├── content/
+│   │           ├── upload/
+│   │           └── users/
 │   │
 │   ├── components/
-│   │   ├── layout/           # Layout components
-│   │   │   ├── Navbar.tsx
-│   │   │   ├── Footer.tsx
-│   │   │   ├── CustomCursor.tsx
-│   │   │   ├── ScrollProgress.tsx
-│   │   │   └── LanguageSwitcher.tsx
-│   │   │
-│   │   ├── sections/         # Page sections
-│   │   │   ├── Hero.tsx
-│   │   │   ├── Story.tsx
-│   │   │   ├── Philosophy.tsx
-│   │   │   ├── MenuPreview.tsx
-│   │   │   ├── DrinksPreview.tsx
-│   │   │   ├── Visit.tsx
-│   │   │   └── CTASection.tsx
-│   │   │
-│   │   ├── ui/               # Reusable UI
-│   │   │   ├── Button.tsx
-│   │   │   ├── Card.tsx
-│   │   │   ├── CategoryCard.tsx
-│   │   │   ├── MenuItem.tsx
-│   │   │   └── Modal.tsx
-│   │   │
-│   │   └── menu/             # Menu-specific
-│   │       └── MenuClient.tsx
+│   │   ├── layout/            # Navbar, Footer, etc.
+│   │   ├── sections/          # Page sections
+│   │   ├── ui/                # Buttons, Cards, etc.
+│   │   ├── menu/              # Menu components
+│   │   ├── blog/              # Blog components
+│   │   └── admin/             # Admin-specific components
 │   │
 │   ├── data/
-│   │   ├── locales/          # Translation files
+│   │   ├── locales/           # Translation files
 │   │   │   ├── en.json
-│   │   │   ├── pt.json
-│   │   │   ├── de.json
-│   │   │   ├── it.json
-│   │   │   └── es.json
-│   │   ├── menu.json         # Menu data
-│   │   └── site.json         # Site configuration
+│   │   │   └── pt.json
+│   │   ├── menu.json          # Menu items
+│   │   └── blog.json          # Blog posts
 │   │
 │   ├── lib/
-│   │   ├── i18n.ts           # Internationalization
-│   │   ├── utils.ts          # Utility functions
-│   │   └── constants.ts      # App constants
-│   │
-│   ├── hooks/
-│   │   ├── useTranslation.ts
-│   │   ├── useScrollProgress.ts
-│   │   └── useMediaQuery.ts
+│   │   ├── i18n.ts            # Internationalization
+│   │   ├── seo.ts             # SEO utilities (hreflang)
+│   │   ├── auth.ts            # Authentication helpers
+│   │   ├── prisma.ts          # Database client
+│   │   ├── session.ts         # Session management
+│   │   └── audit.ts           # Audit logging
 │   │
 │   └── styles/
-│       ├── globals.css       # Global styles, Tailwind
-│       ├── components/       # Component-specific CSS
-│       └── pages/            # Page-specific CSS
+│       └── globals.css        # Global styles, Tailwind
 │
-├── docs/                      # Documentation
-│   ├── ROADMAP.md
-│   ├── ARCHITECTURE.md
-│   ├── DESIGN-SYSTEM.md
-│   ├── DEPLOYMENT.md
-│   └── CHANGELOG.md
+├── prisma/
+│   ├── schema.prisma          # Database schema
+│   └── admin.db               # SQLite database (gitignored)
 │
+├── docs/
+│   ├── ARCHITECTURE.md        # This file
+│   ├── DEPLOYMENT.md          # Deployment guide
+│   ├── CHANGELOG.md           # Version history
+│   ├── DESIGN-SYSTEM.md       # UI guidelines
+│   ├── ADMIN-SETUP.md         # Admin panel setup
+│   └── SECURITY.md            # Security documentation
+│
+├── .env.local                 # Secrets (gitignored)
+├── .gitignore
 ├── next.config.js
 ├── tailwind.config.js
 ├── tsconfig.json
-├── package.json
-└── README.md
+└── package.json
 ```
 
 ---
@@ -131,11 +136,8 @@ maida-website/
 
 ### URL Structure
 ```
-maida.pt/en/          → English
-maida.pt/pt/          → Portuguese (default)
-maida.pt/de/          → German
-maida.pt/it/          → Italian
-maida.pt/es/          → Spanish
+maida.pt/en/          → English (default)
+maida.pt/pt/          → Portuguese
 ```
 
 ### Translation Flow
@@ -147,21 +149,95 @@ maida.pt/es/          → Spanish
 5. Components render localized content
 ```
 
-### Translation File Structure
-```json
-{
-  "locale": "en",
-  "nav": { ... },
-  "hero": { ... },
-  "menu": {
-    "categories": {
-      "mezze": { "name": "...", "description": "..." }
-    },
-    "items": {
-      "hummus-beiruti": { "name": "...", "description": "..." }
-    }
-  }
+### SEO: hreflang Tags
+Each page includes proper hreflang tags via `generatePageMetadata()`:
+```html
+<link rel="alternate" hreflang="en" href="https://maida.pt/en/menu" />
+<link rel="alternate" hreflang="pt" href="https://maida.pt/pt/menu" />
+<link rel="alternate" hreflang="x-default" href="https://maida.pt/en/menu" />
+```
+
+---
+
+## 🔐 Admin Panel Architecture
+
+### Authentication Flow
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   Login     │────▶│   Verify    │────▶│  Create     │
+│   Form      │     │  Password   │     │  Session    │
+└─────────────┘     └─────────────┘     └─────────────┘
+                           │                    │
+                           ▼                    ▼
+                    ┌─────────────┐     ┌─────────────┐
+                    │   Bcrypt    │     │  HTTP-only  │
+                    │   Compare   │     │   Cookie    │
+                    └─────────────┘     └─────────────┘
+```
+
+### Session Security
+- **HTTP-only cookies** - JavaScript cannot access
+- **Secure flag** - HTTPS only
+- **SameSite=strict** - CSRF protection
+- **30-minute timeout** - Auto-logout on inactivity
+- **Sliding expiration** - Extends on activity
+
+### Database Schema
+```prisma
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  passwordHash  String    // Bcrypt (12 rounds)
+  isPrimary     Boolean   @default(false)  // Cannot be deleted
+  createdAt     DateTime  @default(now())
+  lastLogin     DateTime?
+  
+  sessions      Session[]
+  auditLogs     AuditLog[]
 }
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(...)
+  token        String   @unique
+  expiresAt    DateTime
+  ipAddress    String?
+  userAgent    String?
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(...)
+  action    String   // "UPDATE_MENU", "CREATE_USER", etc.
+  target    String   // "en.json", "menu.json", etc.
+  details   String?  // JSON of changes
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
+```
+
+### API Routes
+```
+POST /api/admin/auth/login     → Authenticate user
+POST /api/admin/auth/logout    → Destroy session
+GET  /api/admin/auth/session   → Validate current session
+
+GET  /api/admin/content/:file  → Get JSON file content
+PUT  /api/admin/content/:file  → Update JSON file
+
+POST /api/admin/upload         → Upload image
+GET  /api/admin/media          → List uploaded images
+DELETE /api/admin/media/:id    → Delete image
+
+GET  /api/admin/users          → List admins
+POST /api/admin/users          → Create admin
+PUT  /api/admin/users/:id      → Update admin
+DELETE /api/admin/users/:id    → Delete admin (not primary)
+
+GET  /api/admin/audit          → View audit logs
 ```
 
 ---
@@ -169,61 +245,49 @@ maida.pt/es/          → Spanish
 ## 🎨 Component Architecture
 
 ### Layout Components
-Wrap all pages, provide consistent structure:
-- `Navbar` - Navigation, language switcher, reserve button
-- `Footer` - Links, social, contact info
-- `CustomCursor` - Desktop-only decorative cursor
-- `ScrollProgress` - Reading progress indicator
+- `Navbar` - Navigation, language switcher
+- `Footer` - Links, social, contact
+- `AdminLayout` - Admin panel wrapper with auth check
 
-### Section Components
-Self-contained page sections:
+### Section Components (Public Site)
+- `Hero`, `Story`, `MenuHighlights`, `Visit`, etc.
 - Receive translations as props
-- Handle their own animations
-- Responsive by default
+- Handle own animations
 
-### UI Components
-Reusable primitives:
-- `Button` - Primary, ghost, light variants
-- `CategoryCard` - Menu category with image
-- `MenuItem` - Traditional menu item line
+### Admin Components
+- `AdminSidebar` - Navigation menu
+- `ContentEditor` - JSON editing forms
+- `MediaUploader` - Image upload with preview
+- `UserManager` - Admin user CRUD
 
 ---
 
 ## 🔄 Data Flow
 
-### Menu Data
+### Public Site
 ```
-menu.json
-    │
-    ├── categories[] ─────► CategoryCard components
-    │   ├── id
-    │   ├── slug
-    │   ├── image
-    │   └── sortOrder
-    │
-    └── items[] ──────────► MenuItem components
-        ├── id
-        ├── categoryId
-        ├── price
-        ├── tags[]
-        └── sortOrder
-
-Translations (en.json, pt.json, etc.)
-    │
-    └── menu.items[id].name/description
-```
-
-### Translation Flow
-```
-Server Component
+JSON Files (en.json, menu.json)
     │
     ├── loadTranslations(locale)
     │
-    └── Pass to Client Component as prop
+    └── Server Component renders page
             │
-            └── useTranslation(translations)
-                    │
-                    └── t("menu.items.hummus-beiruti.name")
+            └── Client Components receive as props
+```
+
+### Admin Panel
+```
+Admin UI
+    │
+    ├── API Request (with session cookie)
+    │
+    ├── Validate Session
+    │
+    ├── Read/Write JSON Files
+    │
+    ├── Log to Audit Trail
+    │
+    └── Return Response
 ```
 
 ---
@@ -237,50 +301,40 @@ npm run dev          # Start dev server on :3000
 
 ### Production Build
 ```bash
-npm run build        # Build + static export to /out
+npm run build        # Build for production
 ```
 
-### Deployment
+### Database Setup (First Time)
 ```bash
-# 1. Build the project
-npm run build
-
-# 2. Connect to Namecheap via FTP
-# 3. Upload /out/* to public_html/
-# 4. Done!
+npx prisma generate  # Generate Prisma client
+npx prisma db push   # Create database tables
+npm run setup-admin  # Create initial super admin
 ```
 
 ---
 
-## 🔮 Future: Backend Integration
+## 📊 Integrations
 
-When backend is added:
+| Service | Purpose |
+|---------|---------|
+| UMAI | Reservation widget |
+| Google Tag Manager | Analytics (GTM-MZ83M6VJ) |
+| Google Analytics 4 | Tracking (G-4J9BRDE61S) |
+| reCAPTCHA Enterprise | Form protection |
+| Google Maps | Contact page embed |
 
-```
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│   Frontend  │────►│   API       │────►│  Database   │
-│  (Next.js)  │     │ (Node/PHP)  │     │ (PostgreSQL)│
-└─────────────┘     └─────────────┘     └─────────────┘
-                           │
-                           ▼
-                    ┌─────────────┐
-                    │   Admin     │
-                    │   Panel     │
-                    └─────────────┘
-```
+---
 
-### API Endpoints (Planned)
-```
-GET  /api/menu              # All menu data
-GET  /api/menu/:category    # Items by category
-GET  /api/translations/:locale
-POST /api/contact           # Contact form
-```
+## 🔒 Security Measures
 
-### Database Schema (Planned)
-```sql
-categories (id, slug, icon, sort_order)
-category_translations (category_id, locale, name, description)
-menu_items (id, category_id, price, image, sort_order)
-menu_item_translations (item_id, locale, name, description)
-```
+| Layer | Protection |
+|-------|------------|
+| Passwords | Bcrypt hash (12 rounds) |
+| Sessions | HTTP-only, Secure, SameSite cookies |
+| API | Auth check on all admin routes |
+| Input | Validation & sanitization |
+| Files | Type whitelist, size limits, renamed |
+| Audit | All changes logged with user/IP |
+| Headers | X-Frame-Options, CSP, etc. |
+
+See `SECURITY.md` for full details.

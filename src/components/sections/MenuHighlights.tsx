@@ -224,7 +224,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             onScroll={checkFoodScroll}
             className="flex gap-5 md:gap-6 overflow-x-auto overflow-y-hidden pb-4 -mx-6 px-6 snap-x snap-mandatory scrollbar-hide scroll-pl-6"
             style={{ 
-              touchAction: 'pan-x',
+              touchAction: 'pan-x pan-y',
               overscrollBehaviorX: 'contain',
               WebkitOverflowScrolling: 'touch'
             }}
@@ -320,7 +320,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
             onScroll={checkDrinksScroll}
             className="flex gap-5 md:gap-6 overflow-x-auto overflow-y-hidden pb-4 -mx-6 px-6 snap-x snap-mandatory scrollbar-hide scroll-pl-6"
             style={{ 
-              touchAction: 'pan-x',
+              touchAction: 'pan-x pan-y',
               overscrollBehaviorX: 'contain',
               WebkitOverflowScrolling: 'touch'
             }}
