@@ -20,7 +20,7 @@
     "loading": "Loading..."
   },
   "hero": {
-    "badge": "Restaurant-bar",
+    "badge": "Restaurant-bar1",
     "location": "Cais do Sodré, Lisboa",
     "title1": "Mediterranean Flavours.",
     "title2": "Lebanese Soul.",
@@ -762,7 +762,7 @@
     "info": {
       "title": "Contact",
       "address": "Rua da Boavista 66",
-      "city": "1200-068 Lisboa",
+      "city": "1200-067 Lisboa",
       "phone": "+351 961 111 383",
       "email": "info@maida.pt"
     },

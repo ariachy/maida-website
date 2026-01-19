@@ -4,7 +4,8 @@ const nextConfig = {
   trailingSlash: true,
   //basePath: '/new',
   images: {
-    unoptimized: true, // Required for static export
+    remotePatterns: [],
+    unoptimized: true,
   },
   // Disable x-powered-by header
   poweredByHeader: false,

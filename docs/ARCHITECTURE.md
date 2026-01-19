@@ -5,7 +5,7 @@
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        FRONTEND                                  │
-│                    (Next.js 14)                                 │
+│                    (Next.js 14.2.35)                            │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │   ┌─────────────┐  ┌─────────────┐  ┌─────────────┐            │
@@ -23,9 +23,9 @@
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                       HOSTING                                    │
-│                    (Namecheap FTP)                              │
+│              (Namecheap Node.js v20.19.4)                       │
 │                                                                 │
-│   Static export (public site) + API routes (admin)              │
+│   Full Next.js server (public site + admin + API routes)        │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -46,7 +46,11 @@ maida.pt/
 │   │   ├── blog/              # Blog post images
 │   │   ├── 404/               # 404 page images
 │   │   └── brand/             # Logos, icons
-│   └── uploads/               # User-uploaded images (gitignored)
+│   ├── uploads/               # User-uploaded images (gitignored)
+│   ├── favicon.ico
+│   ├── sitemap.xml
+│   ├── robots.txt
+│   └── google*.html           # Search Console verification
 │
 ├── src/
 │   ├── app/
@@ -61,28 +65,29 @@ maida.pt/
 │   │   │   └── blog/
 │   │   │
 │   │   ├── admin/             # Admin panel (protected)
-│   │   │   ├── page.tsx       # Login
-│   │   │   ├── layout.tsx     # Admin layout with auth
-│   │   │   ├── dashboard/
-│   │   │   ├── content/       # Edit translations
-│   │   │   │   ├── homepage/
-│   │   │   │   ├── menu/
-│   │   │   │   ├── story/
-│   │   │   │   └── contact/
-│   │   │   ├── blog/          # Manage blog posts
-│   │   │   ├── media/         # Upload images
-│   │   │   ├── users/         # Manage admins
-│   │   │   └── settings/      # Change password
+│   │   │   ├── page.tsx       # Login page ✅
+│   │   │   └── (protected)/   # Auth-protected routes
+│   │   │       ├── layout.tsx     # Admin layout with sidebar ✅
+│   │   │       ├── dashboard/     # Dashboard ✅
+│   │   │       ├── content/       # Content editors ✅
+│   │   │       │   ├── homepage/  ✅
+│   │   │       │   ├── menu/      ✅
+│   │   │       │   ├── story/     ✅
+│   │   │       │   ├── contact/   ✅
+│   │   │       │   └── maida-live/ ✅
+│   │   │       ├── media/         # Image upload ✅
+│   │   │       ├── users/         # User management (Phase 3)
+│   │   │       └── settings/      # Account settings (Phase 3)
 │   │   │
 │   │   └── api/
 │   │       └── admin/         # Admin API routes
 │   │           ├── auth/
-│   │           │   ├── login/
-│   │           │   ├── logout/
-│   │           │   └── session/
-│   │           ├── content/
-│   │           ├── upload/
-│   │           └── users/
+│   │           │   ├── login/     # ✅ Working
+│   │           │   ├── logout/    # ✅ Working
+│   │           │   └── session/   # ✅ Working
+│   │           ├── content/       # ✅ Working
+│   │           │   └── [...file]/ # Read/write JSON files
+│   │           └── upload/        # ✅ Working
 │   │
 │   ├── components/
 │   │   ├── layout/            # Navbar, Footer, etc.
@@ -90,43 +95,37 @@ maida.pt/
 │   │   ├── ui/                # Buttons, Cards, etc.
 │   │   ├── menu/              # Menu components
 │   │   ├── blog/              # Blog components
-│   │   └── admin/             # Admin-specific components
+│   │   ├── integrations/      # Third-party integrations
+│   │   │   └── UmaiLoader.tsx # Deferred UMAI widget loading
+│   │   └── admin/             # Admin components
+│   │       └── AdminSidebar.tsx   # ✅ Working
 │   │
 │   ├── data/
 │   │   ├── locales/           # Translation files
-│   │   │   ├── en.json
-│   │   │   └── pt.json
-│   │   ├── menu.json          # Menu items
+│   │   │   ├── en.json        # English (~690 lines)
+│   │   │   └── pt.json        # Portuguese (~704 lines)
+│   │   ├── menu.json          # Menu structure (~150 items)
 │   │   └── blog.json          # Blog posts
 │   │
 │   ├── lib/
 │   │   ├── i18n.ts            # Internationalization
 │   │   ├── seo.ts             # SEO utilities (hreflang)
-│   │   ├── auth.ts            # Authentication helpers
-│   │   ├── prisma.ts          # Database client
-│   │   ├── session.ts         # Session management
-│   │   └── audit.ts           # Audit logging
+│   │   ├── auth.ts            # Authentication ✅
+│   │   └── prisma.ts          # Database client ✅
 │   │
 │   └── styles/
 │       └── globals.css        # Global styles, Tailwind
 │
 ├── prisma/
-│   ├── schema.prisma          # Database schema
-│   └── admin.db               # SQLite database (gitignored)
+│   ├── schema.prisma          # Database schema ✅
+│   └── admin.db               # SQLite database (gitignored) ✅
 │
-├── docs/
-│   ├── ARCHITECTURE.md        # This file
-│   ├── DEPLOYMENT.md          # Deployment guide
-│   ├── CHANGELOG.md           # Version history
-│   ├── DESIGN-SYSTEM.md       # UI guidelines
-│   ├── ADMIN-SETUP.md         # Admin panel setup
-│   └── SECURITY.md            # Security documentation
+├── scripts/
+│   └── setup-admin.ts         # Create primary admin ✅
 │
-├── .env.local                 # Secrets (gitignored)
-├── .gitignore
-├── next.config.js
-├── tailwind.config.js
-├── tsconfig.json
+├── server.js                  # Custom Node.js server entry
+├── .env                       # Environment variables
+├── next.config.js             # Next.js configuration
 └── package.json
 ```
 
@@ -134,32 +133,63 @@ maida.pt/
 
 ## 🌍 Internationalization (i18n)
 
+### Current Languages
+| Code | Language | Status |
+|------|----------|--------|
+| `en` | English | ✅ Complete |
+| `pt` | Portuguese | ✅ Complete |
+| `de` | German | 🔮 Phase 4 |
+| `it` | Italian | 🔮 Phase 4 |
+| `es` | Spanish | 🔮 Phase 4 |
+
 ### URL Structure
 ```
 maida.pt/en/          → English (default)
 maida.pt/pt/          → Portuguese
 ```
 
-### Translation Flow
-```
-1. User visits /en/menu
-2. [lang] param = "en"
-3. loadTranslations("en") loads /data/locales/en.json
-4. Translations passed to components as props
-5. Components render localized content
-```
-
-### SEO: hreflang Tags
-Each page includes proper hreflang tags via `generatePageMetadata()`:
-```html
-<link rel="alternate" hreflang="en" href="https://maida.pt/en/menu" />
-<link rel="alternate" hreflang="pt" href="https://maida.pt/pt/menu" />
-<link rel="alternate" hreflang="x-default" href="https://maida.pt/en/menu" />
+### Translation Files Structure
+```json
+// src/data/locales/en.json
+{
+  "locale": "en",
+  "nav": { ... },
+  "hero": { ... },
+  "homeStory": { ... },
+  "homeMenu": { ... },
+  "menu": {
+    "categories": { ... },
+    "subCategories": { ... },
+    "items": {
+      "honey-roasted-halloumi": {
+        "name": "Honey Roasted Halloumi",
+        "description": "With roasted cherry tomatoes..."
+      },
+      // ... 100+ items
+    }
+  },
+  "story": { ... },
+  "contact": { ... },
+  "maidaLive": { ... }
+}
 ```
 
 ---
 
 ## 🔐 Admin Panel Architecture
+
+### Implementation Status
+| Feature | Status |
+|---------|--------|
+| Login page | ✅ Complete |
+| Session auth (cookies) | ✅ Complete |
+| Dashboard | ✅ Complete |
+| Sidebar navigation | ✅ Complete |
+| Logout | ✅ Complete |
+| Content editors | ✅ Complete |
+| Image upload | ✅ Complete |
+| User management | 🔮 Phase 3 |
+| Dynamic languages | 🔮 Phase 4 |
 
 ### Authentication Flow
 ```
@@ -175,153 +205,130 @@ Each page includes proper hreflang tags via `generatePageMetadata()`:
                     └─────────────┘     └─────────────┘
 ```
 
-### Session Security
-- **HTTP-only cookies** - JavaScript cannot access
-- **Secure flag** - HTTPS only
-- **SameSite=strict** - CSRF protection
-- **30-minute timeout** - Auto-logout on inactivity
-- **Sliding expiration** - Extends on activity
-
-### Database Schema
+### Database Schema (Prisma + SQLite)
 ```prisma
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  name          String?
-  passwordHash  String    // Bcrypt (12 rounds)
-  isPrimary     Boolean   @default(false)  // Cannot be deleted
-  createdAt     DateTime  @default(now())
-  lastLogin     DateTime?
-  
-  sessions      Session[]
-  auditLogs     AuditLog[]
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String?
+  passwordHash String    // Bcrypt (12 rounds)
+  isPrimary    Boolean   @default(false)  // Cannot be deleted
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  lastLogin    DateTime?
+  sessions     Session[]
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  userId       String
-  user         User     @relation(...)
-  token        String   @unique
-  expiresAt    DateTime
-  ipAddress    String?
-  userAgent    String?
-}
-
-model AuditLog {
   id        String   @id @default(cuid())
   userId    String
   user      User     @relation(...)
-  action    String   // "UPDATE_MENU", "CREATE_USER", etc.
-  target    String   // "en.json", "menu.json", etc.
-  details   String?  // JSON of changes
+  token     String   @unique
+  expiresAt DateTime
   ipAddress String?
+  userAgent String?
   createdAt DateTime @default(now())
 }
 ```
 
 ### API Routes
-```
-POST /api/admin/auth/login     → Authenticate user
-POST /api/admin/auth/logout    → Destroy session
-GET  /api/admin/auth/session   → Validate current session
-
-GET  /api/admin/content/:file  → Get JSON file content
-PUT  /api/admin/content/:file  → Update JSON file
-
-POST /api/admin/upload         → Upload image
-GET  /api/admin/media          → List uploaded images
-DELETE /api/admin/media/:id    → Delete image
-
-GET  /api/admin/users          → List admins
-POST /api/admin/users          → Create admin
-PUT  /api/admin/users/:id      → Update admin
-DELETE /api/admin/users/:id    → Delete admin (not primary)
-
-GET  /api/admin/audit          → View audit logs
-```
+| Route | Method | Status | Purpose |
+|-------|--------|--------|---------|
+| `/api/admin/auth/login` | POST | ✅ | Authenticate user |
+| `/api/admin/auth/logout` | POST | ✅ | Destroy session |
+| `/api/admin/auth/session` | GET | ✅ | Validate session |
+| `/api/admin/content/[...file]` | GET | ✅ | Get JSON content |
+| `/api/admin/content/[...file]` | PUT | ✅ | Update JSON content |
+| `/api/admin/upload` | POST | ✅ | Upload image |
+| `/api/admin/upload` | GET | ✅ | List images |
+| `/api/admin/upload` | DELETE | ✅ | Delete image |
 
 ---
 
-## 🎨 Component Architecture
+## 🚀 Deployment Architecture
 
-### Layout Components
-- `Navbar` - Navigation, language switcher
-- `Footer` - Links, social, contact
-- `AdminLayout` - Admin panel wrapper with auth check
+### Server Configuration
+| Component | Value |
+|-----------|-------|
+| **Hosting** | Namecheap cPanel |
+| **Node.js** | v20.19.4 |
+| **App Root** | `/home/thehlxvx/maida.pt` |
+| **Startup File** | `server.js` |
+| **Database** | SQLite at `prisma/admin.db` |
 
-### Section Components (Public Site)
-- `Hero`, `Story`, `MenuHighlights`, `Visit`, etc.
-- Receive translations as props
-- Handle own animations
+### Key Paths
+```
+/home/thehlxvx/maida.pt/                    # App root
+/home/thehlxvx/maida.pt/.next/              # Built Next.js
+/home/thehlxvx/maida.pt/prisma/admin.db     # Database
+/home/thehlxvx/maida.pt/public_html/.htaccess  # Security headers
+/home/thehlxvx/nodevenv/maida.pt/20/lib/node_modules/  # Node modules
+```
 
-### Admin Components
-- `AdminSidebar` - Navigation menu
-- `ContentEditor` - JSON editing forms
-- `MediaUploader` - Image upload with preview
-- `UserManager` - Admin user CRUD
+### Environment Variables (cPanel)
+| Name | Value |
+|------|-------|
+| `DATABASE_URL` | `file:/home/thehlxvx/maida.pt/prisma/admin.db` |
 
 ---
 
-## 🔄 Data Flow
+## 🚀 Development Phases
 
-### Public Site
-```
-JSON Files (en.json, menu.json)
-    │
-    ├── loadTranslations(locale)
-    │
-    └── Server Component renders page
-            │
-            └── Client Components receive as props
-```
+### Phase 1: Foundation ✅ COMPLETE
+- [x] Prisma + SQLite setup
+- [x] User & Session models
+- [x] Login/logout API routes
+- [x] Session cookie management
+- [x] Admin login page (styled)
+- [x] Dashboard page
+- [x] Sidebar navigation
+- [x] Protected route layout
 
-### Admin Panel
-```
-Admin UI
-    │
-    ├── API Request (with session cookie)
-    │
-    ├── Validate Session
-    │
-    ├── Read/Write JSON Files
-    │
-    ├── Log to Audit Trail
-    │
-    └── Return Response
-```
+### Phase 2: Content Management ✅ COMPLETE
+- [x] Content API routes (read/write JSON)
+- [x] Homepage editor (EN/PT tabs)
+- [x] Menu editor (EN/PT tabs)
+- [x] Story page editor
+- [x] Contact page editor
+- [x] Maída Live editor
+- [x] Image upload with Sharp optimization
+- [x] Production deployment on Namecheap
 
----
+### Phase 3: User Management (Next)
+- [ ] List admin users
+- [ ] Create new admin
+- [ ] Delete admin (protect primary)
+- [ ] Change password
+- [ ] Account settings
 
-## 🚀 Build & Deployment
-
-### Development
-```bash
-npm run dev          # Start dev server on :3000
-```
-
-### Production Build
-```bash
-npm run build        # Build for production
-```
-
-### Database Setup (First Time)
-```bash
-npx prisma generate  # Generate Prisma client
-npx prisma db push   # Create database tables
-npm run setup-admin  # Create initial super admin
-```
+### Phase 4: Dynamic Languages
+- [ ] Language management UI
+- [ ] Add/enable/disable languages
+- [ ] Auto-generate locale files
+- [ ] Frontend language switcher from DB
+- [ ] Translation status indicators
 
 ---
 
 ## 📊 Integrations
 
-| Service | Purpose |
-|---------|---------|
-| UMAI | Reservation widget |
-| Google Tag Manager | Analytics (GTM-MZ83M6VJ) |
-| Google Analytics 4 | Tracking (G-4J9BRDE61S) |
-| reCAPTCHA Enterprise | Form protection |
-| Google Maps | Contact page embed |
+| Service | Purpose | Status |
+|---------|---------|--------|
+| UMAI | Reservation widget | ✅ Deferred loading |
+| Google Tag Manager | Analytics (GTM-MZ83M6VJ) | ✅ |
+| Google Analytics 4 | Tracking (G-4J9BRDE61S) | ✅ |
+| reCAPTCHA Enterprise | Form protection | ✅ |
+| Google Maps | Contact page embed | ✅ |
 
 ---
 
@@ -332,9 +339,35 @@ npm run setup-admin  # Create initial super admin
 | Passwords | Bcrypt hash (12 rounds) |
 | Sessions | HTTP-only, Secure, SameSite cookies |
 | API | Auth check on all admin routes |
-| Input | Validation & sanitization |
-| Files | Type whitelist, size limits, renamed |
-| Audit | All changes logged with user/IP |
-| Headers | X-Frame-Options, CSP, etc. |
+| Cookies | 30-min sliding expiration |
+| Headers | HSTS, X-Frame-Options, CSP |
+| Database | File permissions (666) |
 
-See `SECURITY.md` for full details.
+---
+
+## 📝 Important Notes
+
+### Prisma Binary Targets
+For Namecheap deployment, `schema.prisma` must include:
+```prisma
+binaryTargets = ["native", "debian-openssl-1.0.x"]
+```
+
+### Database Path
+The `DATABASE_URL` in cPanel must use absolute path:
+```
+file:/home/thehlxvx/maida.pt/prisma/admin.db
+```
+
+### UMAI Widget
+- Deferred loading for PageSpeed optimization
+- Excluded from `/admin/*` pages
+- Loads after user interaction (scroll, click, etc.)
+
+### File Locations
+| File | Purpose |
+|------|---------|
+| `src/data/locales/en.json` | English translations |
+| `src/data/locales/pt.json` | Portuguese translations |
+| `src/data/menu.json` | Menu structure (no translations) |
+| `prisma/admin.db` | Admin users & sessions |

@@ -68,7 +68,7 @@ ErrorDocument 404 /404.html
     Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
 
     # -------------------------------------------
-    # CSP (Content Security Policy) - NEW
+    # CSP (Content Security Policy) - FIXED FOR UMAI
     # -------------------------------------------
     # Controls which resources the browser can load
     # Protects against: XSS (Cross-Site Scripting) attacks
@@ -105,7 +105,9 @@ ErrorDocument 404 /404.html
             https://maps.gstatic.com \
             https://www.gstatic.com \
             https://*.google.com \
-            https://*.googleapis.com; \
+            https://*.googleapis.com \
+            https://widget.letsumai.com \
+            https://*.googleadservices.com; \
         font-src 'self' \
             https://fonts.gstatic.com; \
         connect-src 'self' \
@@ -115,6 +117,7 @@ ErrorDocument 404 /404.html
             https://maps.googleapis.com \
             https://widget.letsumai.com \
             https://api.letsumai.com \
+            https://letsumai.com \
             https://*.stripe.com \
             https://www.google.com; \
         frame-src 'self' \
@@ -125,6 +128,7 @@ ErrorDocument 404 /404.html
             https://js.stripe.com \
             https://hooks.stripe.com \
             https://www.googletagmanager.com; \
+        worker-src 'self' blob:; \
         frame-ancestors 'self'; \
         base-uri 'self'; \
         form-action 'self';"

@@ -1,11 +1,4 @@
 {
-  "404": {
-    "title": "Página Não Encontrada",
-    "subtitle": "Parece que esta página não existe.",
-    "cta": "Voltar ao Início",
-    "viewMenu": "Ver Menu",
-    "reserve": "Reservar mesa"
-  },
   "locale": "pt",
   "nav": {
     "home": "Início",
@@ -372,306 +365,76 @@
         "name": "Saj Ashta",
         "description": "Creme libanês tradicional com mel e pistácios"
       },
-      "espresso": {
-        "name": "Espresso",
-        "description": ""
-      },
-      "espresso-double": {
-        "name": "Espresso Duplo",
-        "description": ""
-      },
-      "americano": {
-        "name": "Americano",
-        "description": ""
-      },
-      "cappuccino": {
-        "name": "Cappuccino",
-        "description": ""
-      },
-      "latte": {
-        "name": "Latte",
-        "description": ""
-      },
-      "flat-white": {
-        "name": "Flat White",
-        "description": ""
-      },
-      "mocha": {
-        "name": "Mocha",
-        "description": ""
-      },
-      "lebanese-coffee": {
-        "name": "Café Libanês",
-        "description": "Com cardamomo"
-      },
-      "hot-chocolate": {
-        "name": "Chocolate Quente",
-        "description": ""
-      },
-      "tea-fresh-mint": {
-        "name": "Chá de Hortelã Fresca",
-        "description": ""
-      },
-      "tea-ginger-mint": {
-        "name": "Chá de Gengibre e Hortelã",
-        "description": ""
-      },
-      "tea-lemon-ginger": {
-        "name": "Chá de Limão e Gengibre",
-        "description": ""
-      },
-      "tea-english-breakfast": {
-        "name": "Chá English Breakfast",
-        "description": ""
-      },
-      "tea-earl-grey": {
-        "name": "Chá Earl Grey",
-        "description": ""
-      },
-      "tea-chamomile": {
-        "name": "Chá de Camomila",
-        "description": ""
-      },
-      "tea-green": {
-        "name": "Chá Verde",
-        "description": ""
-      },
-      "lemonade-classic": {
-        "name": "Limonada Clássica",
-        "description": ""
-      },
-      "lemonade-maida": {
-        "name": "Limonada Maída",
-        "description": "Xarope de rosas, xarope de mástique, limão"
-      },
-      "lemonade-pitcher": {
-        "name": "Limonada (jarro)",
-        "description": ""
-      },
-      "juice-passion-fruit": {
-        "name": "Maracujá e Canela",
-        "description": ""
-      },
-      "juice-buzz": {
-        "name": "Buzz",
-        "description": "Cenoura, maçã, gengibre"
-      },
-      "milkshake-banana": {
-        "name": "Banana Heaven",
-        "description": ""
-      },
-      "cola": {
-        "name": "Cola",
-        "description": ""
-      },
-      "cola-zero": {
-        "name": "Cola Zero",
-        "description": ""
-      },
-      "kombucha": {
-        "name": "Kombucha",
-        "description": ""
-      },
-      "ice-tea": {
-        "name": "Ice Tea",
-        "description": ""
-      },
-      "fritz-spritz": {
-        "name": "Fritz Spritz",
-        "description": ""
-      },
-      "fritz-limo": {
-        "name": "Fritz Limo",
-        "description": ""
-      },
-      "pink-grapefruit": {
-        "name": "Toranja Rosa",
-        "description": "Fever-tree"
-      },
-      "still-water": {
-        "name": "Água Sem Gás",
-        "description": ""
-      },
-      "sparkling-water": {
-        "name": "Água Com Gás",
-        "description": ""
-      },
-      "tonic-water": {
-        "name": "Água Tónica",
-        "description": "Fever-tree"
-      },
-      "soda-water": {
-        "name": "Água Com Gás",
-        "description": ""
-      },
-      "ginger-beer": {
-        "name": "Ginger Beer",
-        "description": ""
-      },
-      "ginger-ale": {
-        "name": "Ginger Ale",
-        "description": ""
-      },
-      "mocktail-paloma": {
-        "name": "Paloma Picante",
-        "description": ""
-      },
-      "mocktail-kombucha-mojito": {
-        "name": "Kombucha Mojito",
-        "description": ""
-      },
-      "cocktail-fatouch-rocks": {
-        "name": "Fatouch on the Rocks",
-        "description": "Bourbon, melaço de romã, hortelã, limão"
-      },
-      "cocktail-maida-martini": {
-        "name": "Maída Martini",
-        "description": "Gin, vermute, flor de laranjeira"
-      },
-      "cocktail-mediterranean-gt": {
-        "name": "G&T Mediterrânico",
-        "description": "Gin mediterrânico, lillet, lima, água tónica"
-      },
-      "cocktail-warda": {
-        "name": "Warda",
-        "description": "Bourbon, compota de rosas, gengibre"
-      },
-      "cocktail-thyme-margarita": {
-        "name": "Thyme for Margarita",
-        "description": "Tequila, licor de laranja, tomilho, sumac"
-      },
-      "cocktail-azeitona-cafe": {
-        "name": "Azeitona Cafe",
-        "description": "Vodka, licor de café, espresso, azeite, azeitonas"
-      },
-      "cocktail-marie-antoinette": {
-        "name": "Marie-Antoinette",
-        "description": "Vodka, maracujá, St. Germain, baunilha, fava tonka"
-      },
-      "cocktail-soraya": {
-        "name": "Soraya",
-        "description": "Arak, rum, limão, espuma de ginjinha"
-      },
-      "cocktail-mimosa": {
-        "name": "Mimosa",
-        "description": "Espumante, laranja"
-      },
-      "cocktail-manhattan": {
-        "name": "Manhattan",
-        "description": "Bourbon, vermute, bitter"
-      },
-      "cocktail-gin-basil-smash": {
-        "name": "Gin Basil Smash",
-        "description": "Gin, manjericão, limão"
-      },
-      "cocktail-daiquiri": {
-        "name": "Daiquiri",
-        "description": "Rum branco, lima"
-      },
-      "cocktail-negroni": {
-        "name": "Negroni",
-        "description": "Gin, campari, vermute"
-      },
-      "cocktail-naked-famous": {
-        "name": "Naked & Famous",
-        "description": "Mezcal, chartreuse, aperol, lima"
-      },
-      "cocktail-caipirinha": {
-        "name": "Caipirinha de Limão",
-        "description": "Cachaça, açúcar demerara, lima"
-      },
-      "cocktail-espresso-martini": {
-        "name": "Espresso Martini",
-        "description": "Vodka, licor de café, espresso"
-      },
-      "cocktail-aperol-spritz": {
-        "name": "Aperol Spritz",
-        "description": "Prosecco, aperol, água com gás"
-      },
-      "cocktail-moscow-mule": {
-        "name": "Moscow Mule",
-        "description": "Vodka, gengibre, limão, bitter"
-      },
-      "cocktail-margarita": {
-        "name": "Margarita",
-        "description": "Tequila, licor de laranja, limão"
-      },
-      "cocktail-new-york-sour": {
-        "name": "New York Sour",
-        "description": "Bourbon, limão, bitter, vinho tinto"
-      },
-      "wine-2160-white": {
-        "name": "2160",
-        "description": "Branco - Douro"
-      },
-      "wine-infinitude-white": {
-        "name": "Infinitude",
-        "description": "Branco - Sintra"
-      },
-      "wine-altitudes-white": {
-        "name": "Altitudes Ixsir",
-        "description": "Branco - Líbano"
-      },
-      "wine-cameleao-green": {
-        "name": "Camaleão Alvarinho",
-        "description": "Verde - Amarante"
-      },
-      "wine-memorias-rose": {
-        "name": "Memórias",
-        "description": "Rosé - Dão"
-      },
-      "wine-anexo-red": {
-        "name": "Anexo",
-        "description": "Tinto - Alentejo"
-      },
-      "wine-biaia-red": {
-        "name": "Biaia Colheita",
-        "description": "Tinto - Beira"
-      },
-      "wine-sparkling": {
-        "name": "Espumante",
-        "description": ""
-      },
-      "beer-clay-cold": {
-        "name": "Clay Cold",
-        "description": "Loira, limão, sal. Servida em copo de barro frio"
-      },
-      "beer-draft-25": {
-        "name": "Imperial (25cl)",
-        "description": ""
-      },
-      "beer-draft-50": {
-        "name": "Caneca (50cl)",
-        "description": ""
-      },
-      "beer-superbock": {
-        "name": "Superbock",
-        "description": ""
-      },
-      "beer-musa-apa": {
-        "name": "Musa (APA)",
-        "description": ""
-      },
-      "shawarma": {
-        "name": "Shawarma",
-        "description": "(Carne de vaca) com batatas fritas, salada de cebola e salsa, tomate, pickles, molho de tahini e pão saj"
-      },
-      "salmon": {
-        "name": "Salmão",
-        "description": "(Grelhado) com molho de tahini misturado com pimento vermelho e verde picado, coentros, servido com batatas baby salteadas"
-      },
-      "chicken-breast": {
-        "name": "Frango [Peito]",
-        "description": "Marinado e grelhado à moda da casa, servido com batatas baby salteadas, tomate cherry e molho de iogurte com ervas"
-      },
-      "lasagna": {
-        "name": "Lasagna",
-        "description": "(Chili) com ragu de carne de vaca e porco, parmesão e mozzarella derretidos"
-      },
-      "lebanese-burger": {
-        "name": "Hambúrguer Libanês",
-        "description": "Duas medalhas de hambúrguer smash, coleslaw, batatas fritas, pickles, ketchup e mostarda em pão tostado. Servido com batatas fritas e coleslaw"
-      }
+      "espresso": { "name": "Espresso", "description": "" },
+      "espresso-double": { "name": "Espresso Duplo", "description": "" },
+      "americano": { "name": "Americano", "description": "" },
+      "cappuccino": { "name": "Cappuccino", "description": "" },
+      "latte": { "name": "Latte", "description": "" },
+      "flat-white": { "name": "Flat White", "description": "" },
+      "mocha": { "name": "Mocha", "description": "" },
+      "lebanese-coffee": { "name": "Café Libanês", "description": "Com cardamomo" },
+      "hot-chocolate": { "name": "Chocolate Quente", "description": "" },
+      "tea-fresh-mint": { "name": "Chá de Hortelã Fresca", "description": "" },
+      "tea-ginger-mint": { "name": "Chá de Gengibre e Hortelã", "description": "" },
+      "tea-lemon-ginger": { "name": "Chá de Limão e Gengibre", "description": "" },
+      "tea-english-breakfast": { "name": "Chá English Breakfast", "description": "" },
+      "tea-earl-grey": { "name": "Chá Earl Grey", "description": "" },
+      "tea-chamomile": { "name": "Chá de Camomila", "description": "" },
+      "tea-green": { "name": "Chá Verde", "description": "" },
+      "lemonade-classic": { "name": "Limonada Clássica", "description": "" },
+      "lemonade-maida": { "name": "Limonada Maída", "description": "Xarope de rosas, xarope de mástique, limão" },
+      "lemonade-pitcher": { "name": "Limonada (jarro)", "description": "" },
+      "juice-passion-fruit": { "name": "Maracujá e Canela", "description": "" },
+      "juice-buzz": { "name": "Buzz", "description": "Cenoura, maçã, gengibre" },
+      "milkshake-banana": { "name": "Banana Heaven", "description": "" },
+      "cola": { "name": "Cola", "description": "" },
+      "cola-zero": { "name": "Cola Zero", "description": "" },
+      "kombucha": { "name": "Kombucha", "description": "" },
+      "ice-tea": { "name": "Ice Tea", "description": "" },
+      "fritz-spritz": { "name": "Fritz Spritz", "description": "" },
+      "fritz-limo": { "name": "Fritz Limo", "description": "" },
+      "pink-grapefruit": { "name": "Toranja Rosa", "description": "Fever-tree" },
+      "still-water": { "name": "Água Sem Gás", "description": "" },
+      "sparkling-water": { "name": "Água Com Gás", "description": "" },
+      "tonic-water": { "name": "Água Tónica", "description": "Fever-tree" },
+      "soda-water": { "name": "Água Com Gás", "description": "" },
+      "ginger-beer": { "name": "Ginger Beer", "description": "" },
+      "ginger-ale": { "name": "Ginger Ale", "description": "" },
+      "mocktail-paloma": { "name": "Paloma Picante", "description": "" },
+      "mocktail-kombucha-mojito": { "name": "Kombucha Mojito", "description": "" },
+      "cocktail-fatouch-rocks": { "name": "Fatouch on the Rocks", "description": "Bourbon, melaço de romã, hortelã, limão" },
+      "cocktail-maida-martini": { "name": "Maída Martini", "description": "Gin, vermute, flor de laranjeira" },
+      "cocktail-mediterranean-gt": { "name": "G&T Mediterrânico", "description": "Gin mediterrânico, lillet, lima, água tónica" },
+      "cocktail-warda": { "name": "Warda", "description": "Bourbon, compota de rosas, gengibre" },
+      "cocktail-thyme-margarita": { "name": "Thyme for Margarita", "description": "Tequila, licor de laranja, tomilho, sumac" },
+      "cocktail-azeitona-cafe": { "name": "Azeitona Cafe", "description": "Vodka, licor de café, espresso, azeite, azeitonas" },
+      "cocktail-marie-antoinette": { "name": "Marie-Antoinette", "description": "Vodka, maracujá, St. Germain, baunilha, fava tonka" },
+      "cocktail-soraya": { "name": "Soraya", "description": "Arak, rum, limão, espuma de ginjinha" },
+      "cocktail-mimosa": { "name": "Mimosa", "description": "Espumante, laranja" },
+      "cocktail-manhattan": { "name": "Manhattan", "description": "Bourbon, vermute, bitter" },
+      "cocktail-gin-basil-smash": { "name": "Gin Basil Smash", "description": "Gin, manjericão, limão" },
+      "cocktail-daiquiri": { "name": "Daiquiri", "description": "Rum branco, lima" },
+      "cocktail-negroni": { "name": "Negroni", "description": "Gin, campari, vermute" },
+      "cocktail-naked-famous": { "name": "Naked & Famous", "description": "Mezcal, chartreuse, aperol, lima" },
+      "cocktail-caipirinha": { "name": "Caipirinha de Limão", "description": "Cachaça, açúcar demerara, lima" },
+      "cocktail-espresso-martini": { "name": "Espresso Martini", "description": "Vodka, licor de café, espresso" },
+      "cocktail-aperol-spritz": { "name": "Aperol Spritz", "description": "Prosecco, aperol, água com gás" },
+      "cocktail-moscow-mule": { "name": "Moscow Mule", "description": "Vodka, gengibre, limão, bitter" },
+      "cocktail-margarita": { "name": "Margarita", "description": "Tequila, licor de laranja, limão" },
+      "cocktail-new-york-sour": { "name": "New York Sour", "description": "Bourbon, limão, bitter, vinho tinto" },
+      "wine-2160-white": { "name": "2160", "description": "Branco - Douro" },
+      "wine-infinitude-white": { "name": "Infinitude", "description": "Branco - Sintra" },
+      "wine-altitudes-white": { "name": "Altitudes Ixsir", "description": "Branco - Líbano" },
+      "wine-cameleao-green": { "name": "Camaleão Alvarinho", "description": "Verde - Amarante" },
+      "wine-memorias-rose": { "name": "Memórias", "description": "Rosé - Dão" },
+      "wine-anexo-red": { "name": "Anexo", "description": "Tinto - Alentejo" },
+      "wine-biaia-red": { "name": "Biaia Colheita", "description": "Tinto - Beira" },
+      "wine-sparkling": { "name": "Espumante", "description": "" },
+      "beer-clay-cold": { "name": "Clay Cold", "description": "Loira, limão, sal. Servida em copo de barro frio" },
+      "beer-draft-25": { "name": "Imperial (25cl)", "description": "" },
+      "beer-draft-50": { "name": "Caneca (50cl)", "description": "" },
+      "beer-superbock": { "name": "Superbock", "description": "" },
+      "beer-musa-apa": { "name": "Musa (APA)", "description": "" }
     },
     "tags": {
       "vegetarian": "V",
@@ -817,26 +580,10 @@
     "ctaHashtag": "#MeetMeAtMaída",
     "ctaButton": "Reservar Mesa",
     "thursdayThemes": [
-      {
-        "week": "1ª",
-        "theme": "Noite das Décadas",
-        "description": "Hits dos anos 80, 90, 00"
-      },
-      {
-        "week": "2ª",
-        "theme": "World Music",
-        "description": "Árabe, Francês, Latino e mais"
-      },
-      {
-        "week": "3ª",
-        "theme": "Noite de Jazz",
-        "description": "Jazz suave, vibes soulful"
-      },
-      {
-        "week": "4ª",
-        "theme": "A Anunciar",
-        "description": "Siga-nos para surpresas"
-      }
+      { "week": "1ª", "theme": "Noite das Décadas", "description": "Hits dos anos 80, 90, 00" },
+      { "week": "2ª", "theme": "World Music", "description": "Árabe, Francês, Latino e mais" },
+      { "week": "3ª", "theme": "Noite de Jazz", "description": "Jazz suave, vibes soulful" },
+      { "week": "4ª", "theme": "A Anunciar", "description": "Siga-nos para surpresas" }
     ],
     "nights": {
       "thursday": {
@@ -946,5 +693,12 @@
     "accept": "Aceitar",
     "decline": "Recusar",
     "learnMore": "Saber mais"
+  },
+  "404": {
+    "title": "Página Não Encontrada",
+    "subtitle": "Parece que esta página não existe.",
+    "cta": "Voltar ao Início",
+    "viewMenu": "Ver Menu",
+    "reserve": "Reservar mesa"
   }
 }

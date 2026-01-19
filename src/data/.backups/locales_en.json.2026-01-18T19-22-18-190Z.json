@@ -1,11 +1,4 @@
 {
-  "404": {
-    "title": "Page Not Found",
-    "subtitle": "Looks like this page doesn't exist.",
-    "cta": "Back to Home",
-    "viewMenu": "View Menu",
-    "reserve": "Reserve a table"
-  },
   "locale": "en",
   "nav": {
     "home": "Home",
@@ -352,310 +345,82 @@
         "name": "Butter Jam",
         "description": "Melted butter, apricot jam"
       },
-      "cortado": {
-        "name": "Cortado",
-        "description": ""
-      },
-      "espresso": {
-        "name": "Espresso",
-        "description": ""
-      },
-      "espresso-double": {
-        "name": "Double Espresso",
-        "description": ""
-      },
-      "americano": {
-        "name": "Americano",
-        "description": ""
-      },
-      "americano-iced": {
-        "name": "Americano (Iced)",
-        "description": ""
-      },
-      "cappuccino": {
-        "name": "Cappuccino",
-        "description": ""
-      },
-      "flat-white": {
-        "name": "Flat White",
-        "description": ""
-      },
-      "hot-chocolate": {
-        "name": "Hot Chocolate",
-        "description": ""
-      },
-      "hot-chocolate-sweet": {
-        "name": "Hot Chocolate (Sweet)",
-        "description": ""
-      },
-      "latte": {
-        "name": "Latte",
-        "description": ""
-      },
-      "latte-iced": {
-        "name": "Latte (Iced)",
-        "description": ""
-      },
-      "latte-macchiato": {
-        "name": "Latte Macchiato",
-        "description": ""
-      },
-      "lavender-coffee": {
-        "name": "Lavender Coffee",
-        "description": ""
-      },
-      "macchiato": {
-        "name": "Macchiato",
-        "description": ""
-      },
-      "mocha": {
-        "name": "Mocha",
-        "description": ""
-      },
-      "milk": {
-        "name": "Milk",
-        "description": ""
-      },
-      "tea-moroccan": {
-        "name": "Moroccan",
-        "description": ""
-      },
-      "tea-zhourat": {
-        "name": "Zhourat",
-        "description": ""
-      },
-      "tea-maida": {
-        "name": "Maída",
-        "description": ""
-      },
-      "tea-cafe-blanc": {
-        "name": "Cafe Blanc",
-        "description": ""
-      },
-      "tea-other": {
-        "name": "Other",
-        "description": ""
-      },
-      "tea-kombucha": {
-        "name": "Kombucha",
-        "description": ""
-      },
-      "lemonade": {
-        "name": "Lemonade",
-        "description": ""
-      },
-      "lemonade-maida": {
-        "name": "Maída Lemonade",
-        "description": "Rose syrup, mastic syrup, lemon"
-      },
-      "lemonade-pitcher": {
-        "name": "Lemonade (Pitcher)",
-        "description": ""
-      },
-      "juice-passion-fruit": {
-        "name": "Passion Fruit & Cinnamon",
-        "description": ""
-      },
-      "juice-buzz": {
-        "name": "Buzz",
-        "description": "Carrot, apple, ginger"
-      },
-      "milkshake-banana": {
-        "name": "Banana Heaven",
-        "description": ""
-      },
-      "cola": {
-        "name": "Cola",
-        "description": ""
-      },
-      "cola-zero": {
-        "name": "Cola Zero",
-        "description": ""
-      },
-      "kombucha": {
-        "name": "Kombucha",
-        "description": ""
-      },
-      "ice-tea": {
-        "name": "Ice Tea",
-        "description": ""
-      },
-      "fritz-spritz": {
-        "name": "Fritz Spritz",
-        "description": ""
-      },
-      "fritz-limo": {
-        "name": "Fritz Limo",
-        "description": ""
-      },
-      "pink-grapefruit": {
-        "name": "Pink Grapefruit",
-        "description": "Fever-tree"
-      },
-      "still-water": {
-        "name": "Still Water",
-        "description": ""
-      },
-      "sparkling-water": {
-        "name": "Sparkling Water",
-        "description": ""
-      },
-      "tonic-water": {
-        "name": "Tonic Water",
-        "description": "Fever-tree"
-      },
-      "soda-water": {
-        "name": "Soda Water",
-        "description": ""
-      },
-      "ginger-beer": {
-        "name": "Ginger Beer",
-        "description": ""
-      },
-      "ginger-ale": {
-        "name": "Ginger Ale",
-        "description": ""
-      },
-      "mocktail-paloma": {
-        "name": "Paloma Picante",
-        "description": ""
-      },
-      "mocktail-kombucha-mojito": {
-        "name": "Kombucha Mojito",
-        "description": ""
-      },
-      "cocktail-fatouch-rocks": {
-        "name": "Fatouch on the Rocks",
-        "description": "Bourbon, pomegranate molasses, mint, lemon"
-      },
-      "cocktail-maida-martini": {
-        "name": "Maída Martini",
-        "description": "Gin, vermouth, orange blossom"
-      },
-      "cocktail-mediterranean-gt": {
-        "name": "Mediterranean G&T",
-        "description": "Mediterranean gin, lillet, lime, tonic water"
-      },
-      "cocktail-warda": {
-        "name": "Warda",
-        "description": "Bourbon, rose jam, ginger"
-      },
-      "cocktail-thyme-margarita": {
-        "name": "Thyme for Margarita",
-        "description": "Tequila, orange liqueur, thyme, sumac"
-      },
-      "cocktail-azeitona-cafe": {
-        "name": "Azeitona Cafe",
-        "description": "Vodka, coffee liqueur, espresso, olive oil, olives"
-      },
-      "cocktail-marie-antoinette": {
-        "name": "Marie-Antoinette",
-        "description": "Vodka, passion fruit, St. Germain, vanilla, tonka beans"
-      },
-      "cocktail-soraya": {
-        "name": "Soraya",
-        "description": "Arak, rum, lemon, ginjinha foam"
-      },
-      "cocktail-mimosa": {
-        "name": "Mimosa",
-        "description": "Sparkling wine, orange"
-      },
-      "cocktail-manhattan": {
-        "name": "Manhattan",
-        "description": "Bourbon, vermouth, bitter"
-      },
-      "cocktail-gin-basil-smash": {
-        "name": "Gin Basil Smash",
-        "description": "Gin, basil, lemon"
-      },
-      "cocktail-daiquiri": {
-        "name": "Daiquiri",
-        "description": "White rum, lime"
-      },
-      "cocktail-negroni": {
-        "name": "Negroni",
-        "description": "Gin, campari, vermouth"
-      },
-      "cocktail-naked-famous": {
-        "name": "Naked & Famous",
-        "description": "Mezcal, chartreuse, aperol, lime"
-      },
-      "cocktail-caipirinha": {
-        "name": "Caipirinha de Limão",
-        "description": "Cachaça, demerara sugar, lime"
-      },
-      "cocktail-espresso-martini": {
-        "name": "Espresso Martini",
-        "description": "Vodka, coffee liqueur, espresso"
-      },
-      "cocktail-aperol-spritz": {
-        "name": "Aperol Spritz",
-        "description": "Prosecco, aperol, soda water"
-      },
-      "cocktail-moscow-mule": {
-        "name": "Moscow Mule",
-        "description": "Vodka, ginger, lemon, bitter"
-      },
-      "cocktail-margarita": {
-        "name": "Margarita",
-        "description": "Tequila, orange liqueur, lemon"
-      },
-      "cocktail-new-york-sour": {
-        "name": "New York Sour",
-        "description": "Bourbon, lemon, bitter, red wine"
-      },
-      "wine-2160-white": {
-        "name": "2160",
-        "description": "White - Douro"
-      },
-      "wine-infinitude-white": {
-        "name": "Infinitude",
-        "description": "White - Sintra"
-      },
-      "wine-altitudes-white": {
-        "name": "Altitudes Ixsir",
-        "description": "White - Lebanon"
-      },
-      "wine-cameleao-green": {
-        "name": "Camaleão Alvarinho",
-        "description": "Green - Amarante"
-      },
-      "wine-memorias-rose": {
-        "name": "Memórias",
-        "description": "Rosé - Dão"
-      },
-      "wine-anexo-red": {
-        "name": "Anexo",
-        "description": "Red - Alentejo"
-      },
-      "wine-biaia-red": {
-        "name": "Biaia Colheita",
-        "description": "Red - Beira"
-      },
-      "wine-sparkling": {
-        "name": "Sparkling Wine",
-        "description": ""
-      },
-      "beer-clay-cold": {
-        "name": "Clay Cold",
-        "description": "Blonde, lemon, salt. Served in a cold clay cup"
-      },
-      "beer-draft-25": {
-        "name": "Draft Beer (25cl)",
-        "description": ""
-      },
-      "beer-draft-50": {
-        "name": "Draft Beer (50cl)",
-        "description": ""
-      },
-      "beer-superbock": {
-        "name": "Superbock",
-        "description": ""
-      },
-      "beer-musa-apa": {
-        "name": "Musa (APA)",
-        "description": ""
-      }
+      "cortado": { "name": "Cortado", "description": "" },
+      "espresso": { "name": "Espresso", "description": "" },
+      "espresso-double": { "name": "Double Espresso", "description": "" },
+      "americano": { "name": "Americano", "description": "" },
+      "americano-iced": { "name": "Americano (Iced)", "description": "" },
+      "cappuccino": { "name": "Cappuccino", "description": "" },
+      "flat-white": { "name": "Flat White", "description": "" },
+      "hot-chocolate": { "name": "Hot Chocolate", "description": "" },
+      "hot-chocolate-sweet": { "name": "Hot Chocolate (Sweet)", "description": "" },
+      "latte": { "name": "Latte", "description": "" },
+      "latte-iced": { "name": "Latte (Iced)", "description": "" },
+      "latte-macchiato": { "name": "Latte Macchiato", "description": "" },
+      "lavender-coffee": { "name": "Lavender Coffee", "description": "" },
+      "macchiato": { "name": "Macchiato", "description": "" },
+      "mocha": { "name": "Mocha", "description": "" },
+      "milk": { "name": "Milk", "description": "" },
+      "tea-moroccan": { "name": "Moroccan", "description": "" },
+      "tea-zhourat": { "name": "Zhourat", "description": "" },
+      "tea-maida": { "name": "Maída", "description": "" },
+      "tea-cafe-blanc": { "name": "Cafe Blanc", "description": "" },
+      "tea-other": { "name": "Other", "description": "" },
+      "tea-kombucha": { "name": "Kombucha", "description": "" },
+      "lemonade": { "name": "Lemonade", "description": "" },
+      "lemonade-maida": { "name": "Maída Lemonade", "description": "Rose syrup, mastic syrup, lemon" },
+      "lemonade-pitcher": { "name": "Lemonade (Pitcher)", "description": "" },
+      "juice-passion-fruit": { "name": "Passion Fruit & Cinnamon", "description": "" },
+      "juice-buzz": { "name": "Buzz", "description": "Carrot, apple, ginger" },
+      "milkshake-banana": { "name": "Banana Heaven", "description": "" },
+      "cola": { "name": "Cola", "description": "" },
+      "cola-zero": { "name": "Cola Zero", "description": "" },
+      "kombucha": { "name": "Kombucha", "description": "" },
+      "ice-tea": { "name": "Ice Tea", "description": "" },
+      "fritz-spritz": { "name": "Fritz Spritz", "description": "" },
+      "fritz-limo": { "name": "Fritz Limo", "description": "" },
+      "pink-grapefruit": { "name": "Pink Grapefruit", "description": "Fever-tree" },
+      "still-water": { "name": "Still Water", "description": "" },
+      "sparkling-water": { "name": "Sparkling Water", "description": "" },
+      "tonic-water": { "name": "Tonic Water", "description": "Fever-tree" },
+      "soda-water": { "name": "Soda Water", "description": "" },
+      "ginger-beer": { "name": "Ginger Beer", "description": "" },
+      "ginger-ale": { "name": "Ginger Ale", "description": "" },
+      "mocktail-paloma": { "name": "Paloma Picante", "description": "" },
+      "mocktail-kombucha-mojito": { "name": "Kombucha Mojito", "description": "" },
+      "cocktail-fatouch-rocks": { "name": "Fatouch on the Rocks", "description": "Bourbon, pomegranate molasses, mint, lemon" },
+      "cocktail-maida-martini": { "name": "Maída Martini", "description": "Gin, vermouth, orange blossom" },
+      "cocktail-mediterranean-gt": { "name": "Mediterranean G&T", "description": "Mediterranean gin, lillet, lime, tonic water" },
+      "cocktail-warda": { "name": "Warda", "description": "Bourbon, rose jam, ginger" },
+      "cocktail-thyme-margarita": { "name": "Thyme for Margarita", "description": "Tequila, orange liqueur, thyme, sumac" },
+      "cocktail-azeitona-cafe": { "name": "Azeitona Cafe", "description": "Vodka, coffee liqueur, espresso, olive oil, olives" },
+      "cocktail-marie-antoinette": { "name": "Marie-Antoinette", "description": "Vodka, passion fruit, St. Germain, vanilla, tonka beans" },
+      "cocktail-soraya": { "name": "Soraya", "description": "Arak, rum, lemon, ginjinha foam" },
+      "cocktail-mimosa": { "name": "Mimosa", "description": "Sparkling wine, orange" },
+      "cocktail-manhattan": { "name": "Manhattan", "description": "Bourbon, vermouth, bitter" },
+      "cocktail-gin-basil-smash": { "name": "Gin Basil Smash", "description": "Gin, basil, lemon" },
+      "cocktail-daiquiri": { "name": "Daiquiri", "description": "White rum, lime" },
+      "cocktail-negroni": { "name": "Negroni", "description": "Gin, campari, vermouth" },
+      "cocktail-naked-famous": { "name": "Naked & Famous", "description": "Mezcal, chartreuse, aperol, lime" },
+      "cocktail-caipirinha": { "name": "Caipirinha de Limão", "description": "Cachaça, demerara sugar, lime" },
+      "cocktail-espresso-martini": { "name": "Espresso Martini", "description": "Vodka, coffee liqueur, espresso" },
+      "cocktail-aperol-spritz": { "name": "Aperol Spritz", "description": "Prosecco, aperol, soda water" },
+      "cocktail-moscow-mule": { "name": "Moscow Mule", "description": "Vodka, ginger, lemon, bitter" },
+      "cocktail-margarita": { "name": "Margarita", "description": "Tequila, orange liqueur, lemon" },
+      "cocktail-new-york-sour": { "name": "New York Sour", "description": "Bourbon, lemon, bitter, red wine" },
+      "wine-2160-white": { "name": "2160", "description": "White - Douro" },
+      "wine-infinitude-white": { "name": "Infinitude", "description": "White - Sintra" },
+      "wine-altitudes-white": { "name": "Altitudes Ixsir", "description": "White - Lebanon" },
+      "wine-cameleao-green": { "name": "Camaleão Alvarinho", "description": "Green - Amarante" },
+      "wine-memorias-rose": { "name": "Memórias", "description": "Rosé - Dão" },
+      "wine-anexo-red": { "name": "Anexo", "description": "Red - Alentejo" },
+      "wine-biaia-red": { "name": "Biaia Colheita", "description": "Red - Beira" },
+      "wine-sparkling": { "name": "Sparkling Wine", "description": "" },
+      "beer-clay-cold": { "name": "Clay Cold", "description": "Blonde, lemon, salt. Served in a cold clay cup" },
+      "beer-draft-25": { "name": "Draft Beer (25cl)", "description": "" },
+      "beer-draft-50": { "name": "Draft Beer (50cl)", "description": "" },
+      "beer-superbock": { "name": "Superbock", "description": "" },
+      "beer-musa-apa": { "name": "Musa (APA)", "description": "" }
     },
     "tags": {
       "vegetarian": "V",
@@ -762,7 +527,7 @@
     "info": {
       "title": "Contact",
       "address": "Rua da Boavista 66",
-      "city": "1200-068 Lisboa",
+      "city": "1200-067 Lisboa",
       "phone": "+351 961 111 383",
       "email": "info@maida.pt"
     },
@@ -801,26 +566,10 @@
     "ctaHashtag": "#MeetMeAtMaída",
     "ctaButton": "Reserve a Table",
     "thursdayThemes": [
-      {
-        "week": "1st",
-        "theme": "Decades Night",
-        "description": "80s, 90s, 00s hits"
-      },
-      {
-        "week": "2nd",
-        "theme": "World Music",
-        "description": "Arabic, French, Latin & more"
-      },
-      {
-        "week": "3rd",
-        "theme": "Jazz Night",
-        "description": "Smooth jazz, soulful vibes"
-      },
-      {
-        "week": "4th",
-        "theme": "To Be Announced",
-        "description": "Follow us for surprises"
-      }
+      { "week": "1st", "theme": "Decades Night", "description": "80s, 90s, 00s hits" },
+      { "week": "2nd", "theme": "World Music", "description": "Arabic, French, Latin & more" },
+      { "week": "3rd", "theme": "Jazz Night", "description": "Smooth jazz, soulful vibes" },
+      { "week": "4th", "theme": "To Be Announced", "description": "Follow us for surprises" }
     ],
     "nights": {
       "thursday": {
@@ -930,5 +679,12 @@
     "accept": "Accept",
     "decline": "Decline",
     "learnMore": "Learn more"
+  },
+  "404": {
+    "title": "Page Not Found",
+    "subtitle": "Looks like this page doesn't exist.",
+    "cta": "Back to Home",
+    "viewMenu": "View Menu",
+    "reserve": "Reserve a table"
   }
 }

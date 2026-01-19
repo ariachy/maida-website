@@ -4,6 +4,69 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.0.0] - 2026-01-19
+
+### 🎉 Admin Panel Complete & Deployed
+
+#### Added - Production Deployment
+- **Namecheap Node.js hosting** - Full server deployment (not static export)
+- **Custom server.js** - Entry point for Node.js app
+- **Linux Prisma binaries** - `debian-openssl-1.0.x` target for server compatibility
+- **Absolute database path** - Environment variable in cPanel for SQLite
+
+#### Added - Admin Panel Phase 2
+- **Content editors** for all pages (Homepage, Menu, Story, Contact, Maída Live)
+- **Menu editor** with EN/PT language tabs, category management
+- **Media library** for image uploads with Sharp optimization
+- **Image upload API** with WebP conversion and thumbnail generation
+
+#### Added - UX Improvements
+- **UMAI widget** - Deferred loading (loads after user interaction for better PageSpeed)
+- **Admin exclusion** - UMAI widget doesn't load on /admin/* pages
+
+#### Fixed
+- **Prisma deployment** - Linux binary compatibility for Namecheap
+- **Database path** - Absolute path required in cPanel environment variables
+- **Build configuration** - Removed `output: 'export'` for server mode
+
+#### Technical Notes
+- Deployment requires uploading Prisma binaries to `/home/thehlxvx/nodevenv/maida.pt/20/lib/node_modules/`
+- DATABASE_URL must be set in cPanel environment variables (not just .env file)
+- Binary transfer mode required for FTP uploads
+
+---
+
+## [1.0.0-alpha] - 2026-01-18
+
+### Added - Admin Panel Phase 1 ✅
+- **Login system** with Maída branding and terracotta color scheme
+- **Session authentication** using HTTP-only cookies (30-min sliding expiration)
+- **Dashboard** with quick actions and content section overview
+- **Sidebar navigation** with expandable content menu
+- **Logout functionality** with session cleanup
+
+### Added - Database
+- **Prisma ORM** with SQLite for local development
+- **User model** with bcrypt password hashing (12 rounds)
+- **Session model** with token-based auth and IP/user-agent logging
+- **Primary admin protection** (cannot be deleted)
+
+### Added - API Routes
+- `POST /api/admin/auth/login` - Authenticate and create session
+- `POST /api/admin/auth/logout` - Destroy session and clear cookie
+- `GET /api/admin/auth/session` - Validate current session
+
+### Added - Scripts
+- `setup-admin.ts` - Interactive CLI to create primary admin user
+
+### Dependencies Added
+- `@prisma/client@6` - Database ORM
+- `prisma@6` - CLI and schema management
+- `bcryptjs` - Password hashing
+- `tsx` - TypeScript execution for scripts
+
+---
+
 ## [0.9.0] - 2026-01-18
 
 ### Added - SEO Improvements
@@ -13,8 +76,8 @@ All notable changes to this project will be documented in this file.
 - **x-default** hreflang pointing to English version
 
 ### Added - Menu Updates
-- **Descriptions** added for all Mains items (Shawarma, Salmon, Chicken Breast, Lasagna, Lebanese Burger)
-- **Descriptions** added for all Desserts (Tiramisu, Rice Pudding, Znoud el Set)
+- **Descriptions** added for all Mains items
+- **Descriptions** added for all Desserts
 - **Descriptions** added for all SAJ Wraps (14 items)
 - **Pain Perdu** removed from desserts menu
 
@@ -174,6 +237,8 @@ All notable changes to this project will be documented in this file.
 
 | Version | Date | Summary |
 |---------|------|---------|
+| **1.0.0** | **2026-01-19** | **Admin panel deployed on Namecheap Node.js** |
+| 1.0.0-alpha | 2026-01-18 | Admin panel Phase 1 (auth) |
 | 0.9.0 | 2026-01-18 | SEO hreflang, menu descriptions |
 | 0.8.0 | 2026-01-17 | Full translation system |
 | 0.7.1 | 2026-01-09 | 404 page, mobile fixes |
@@ -189,14 +254,21 @@ All notable changes to this project will be documented in this file.
 
 ## Upcoming
 
-### v1.0.0 - Admin Panel
-- Secure login system
-- Content editing (translations, menu)
-- Image upload management
-- User management (super admins)
-- Audit logging
+### v1.1.0 - User Management (Phase 3)
+- List admin users
+- Create new admin
+- Delete admin (protect primary)
+- Change password
+- Account settings
 
-### v1.1.0 - Performance
-- Lighthouse 95+ optimization
-- Image optimization audit
-- Bundle size analysis
+### v1.2.0 - Dynamic Languages (Phase 4)
+- Add/enable/disable languages from admin
+- Translation status dashboard
+- Frontend language switcher from database
+- Support for German, Italian, Spanish
+
+### v1.3.0 - Enhanced Features
+- Audit logging for all changes
+- Content revision history
+- Scheduled publishing
+- Draft/preview mode

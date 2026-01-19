@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import Script from 'next/script';
 
 const UMAI_API_KEY = 'd541f212-d5ca-4839-ab2b-7f9c99e1c96c';
@@ -12,6 +13,10 @@ interface UmaiLoaderProps {
 export default function UmaiLoader({ children }: UmaiLoaderProps) {
   const [shouldLoad, setShouldLoad] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const pathname = usePathname();
+
+  // Don't load UMAI on admin pages
+  const isAdminPage = pathname?.startsWith('/admin');
 
   // Trigger loading on any user interaction
   const triggerLoad = useCallback(() => {
@@ -21,6 +26,9 @@ export default function UmaiLoader({ children }: UmaiLoaderProps) {
   }, [shouldLoad]);
 
   useEffect(() => {
+    // Don't set up listeners on admin pages
+    if (isAdminPage) return;
+
     // Events that trigger UMAI loading
     const events = [
       'scroll',
@@ -47,7 +55,7 @@ export default function UmaiLoader({ children }: UmaiLoaderProps) {
       });
       clearTimeout(timeout);
     };
-  }, [triggerLoad]);
+  }, [triggerLoad, isAdminPage]);
 
   const handleScriptLoad = () => {
     setIsLoaded(true);
@@ -55,7 +63,7 @@ export default function UmaiLoader({ children }: UmaiLoaderProps) {
 
   return (
     <>
-      {shouldLoad && (
+      {shouldLoad && !isAdminPage && (
         <Script
           src="https://widget.letsumai.com/dist/embed.min.js"
           data-api-key={UMAI_API_KEY}

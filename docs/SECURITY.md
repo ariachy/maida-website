@@ -6,26 +6,27 @@ This document outlines security measures for the Maída admin panel.
 
 ---
 
-## 🔐 Authentication
+## 🔑 Authentication
 
 ### Password Security
 | Measure | Implementation |
 |---------|----------------|
 | Hashing | Bcrypt with 12 salt rounds |
-| Minimum length | 12 characters |
-| Requirements | Uppercase, lowercase, number, special char |
+| Minimum length | 8 characters |
 | Storage | Only hash stored, never plain text |
 
-### Password Validation
+### Password Hashing (auth.ts)
 ```typescript
-function validatePassword(password: string) {
-  const errors = [];
-  if (password.length < 12) errors.push('Min 12 characters');
-  if (!/[A-Z]/.test(password)) errors.push('Need uppercase');
-  if (!/[a-z]/.test(password)) errors.push('Need lowercase');
-  if (!/[0-9]/.test(password)) errors.push('Need number');
-  if (!/[^A-Za-z0-9]/.test(password)) errors.push('Need special char');
-  return { valid: errors.length === 0, errors };
+import bcrypt from 'bcryptjs';
+
+const BCRYPT_ROUNDS = 12;
+
+export async function hashPassword(password: string): Promise<string> {
+  return bcrypt.hash(password, BCRYPT_ROUNDS);
+}
+
+export async function verifyPassword(password: string, hash: string): Promise<boolean> {
+  return bcrypt.compare(password, hash);
 }
 ```
 
@@ -37,174 +38,142 @@ function validatePassword(password: string) {
 | Setting | Value | Purpose |
 |---------|-------|---------|
 | `httpOnly` | `true` | Prevents JavaScript access |
-| `secure` | `true` | HTTPS only |
+| `secure` | `true` (prod) | HTTPS only in production |
 | `sameSite` | `strict` | CSRF protection |
-| `path` | `/admin` | Only sent to admin routes |
-| `maxAge` | 30 minutes | Auto-expiration |
+| `path` | `/` | Sent to all routes |
+| `maxAge` | 1800 (30 min) | Auto-expiration |
+
+### Implementation (auth.ts)
+```typescript
+export function getSessionCookieOptions() {
+  return {
+    name: 'maida_admin_session',
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict' as const,
+    maxAge: 30 * 60, // 30 minutes in seconds
+    path: '/',
+  };
+}
+```
 
 ### Session Features
-- **Sliding expiration** - Extends on activity
-- **Single token** - One active session per login
+- **Sliding expiration** - Session extends on each validated request
+- **Secure tokens** - 32-byte random hex strings
 - **IP logging** - Track session origin
 - **User agent logging** - Track device info
+- **Database-backed** - Sessions stored in SQLite, can be invalidated server-side
+
+### Token Generation
+```typescript
+import { randomBytes } from 'crypto';
+
+function generateSessionToken(): string {
+  return randomBytes(32).toString('hex');
+}
+```
 
 ---
 
 ## 🛡️ API Security
 
-### Every Admin Route Must:
+### Protected Route Pattern
+All admin API routes validate the session:
+
 ```typescript
-export async function PUT(request: Request) {
-  // 1. Validate session
-  const user = await validateSession();
-  if (!user) {
-    return Response.json({ error: 'Unauthorized' }, { status: 401 });
+// src/app/api/admin/auth/session/route.ts
+import { validateSession } from '@/lib/auth';
+
+export async function GET() {
+  const result = await validateSession();
+
+  if (!result.success) {
+    return NextResponse.json(
+      { success: false, error: result.error },
+      { status: 401 }
+    );
   }
-  
-  // 2. Validate input
-  const data = await request.json();
-  const validated = schema.safeParse(data);
-  if (!validated.success) {
-    return Response.json({ error: 'Invalid input' }, { status: 400 });
-  }
-  
-  // 3. Perform action
-  // ...
-  
-  // 4. Log to audit trail
-  await logAudit(user.id, 'UPDATE_CONTENT', 'en.json', request);
-  
-  return Response.json({ success: true });
+
+  return NextResponse.json({
+    success: true,
+    user: result.user,
+  });
 }
 ```
 
-### Rate Limiting
-| Endpoint | Limit |
-|----------|-------|
-| Login | 5 attempts per 15 min |
-| API calls | 100 per minute |
-| File uploads | 10 per minute |
-
----
-
-## 📁 File Upload Security
-
-### Allowed Types
-```typescript
-const ALLOWED_TYPES = [
-  'image/jpeg',
-  'image/png', 
-  'image/webp',
-  'image/gif'
-];
+### Session Validation Flow
 ```
-
-### Size Limits
-| File Type | Max Size |
-|-----------|----------|
-| Images | 5 MB |
-| Total storage | 500 MB |
-
-### Security Measures
-1. **Whitelist file types** - Only allow specific MIME types
-2. **Validate magic bytes** - Check actual file content, not just extension
-3. **Rename files** - Use UUID, remove original filename
-4. **Store outside webroot** - Move to safe location first
-5. **Scan for malware** - Optional integration with ClamAV
-
-### Safe Upload Flow
-```typescript
-async function handleUpload(file: File) {
-  // 1. Validate type
-  if (!ALLOWED_TYPES.includes(file.type)) {
-    throw new Error('Invalid file type');
-  }
-  
-  // 2. Validate size
-  if (file.size > 5 * 1024 * 1024) {
-    throw new Error('File too large');
-  }
-  
-  // 3. Generate safe filename
-  const ext = file.type.split('/')[1];
-  const safeName = `${crypto.randomUUID()}.${ext}`;
-  
-  // 4. Save to uploads folder
-  const path = `/public/uploads/${safeName}`;
-  await saveFile(file, path);
-  
-  // 5. Return public URL
-  return `/uploads/${safeName}`;
-}
+1. Extract token from cookie
+2. Look up session in database
+3. Check if expired
+4. If valid: extend expiration, return user
+5. If invalid: return 401 Unauthorized
 ```
 
 ---
 
 ## 🗄️ Database Security
 
-### SQLite File
+### SQLite File Protection
 | Measure | Implementation |
 |---------|----------------|
 | Location | `prisma/admin.db` |
 | Git | Added to `.gitignore` |
-| Permissions | 600 (owner read/write only) |
-| Backups | Daily automated backups |
+| Access | Server-side only |
 
-### Sensitive Data
-- Passwords: Bcrypt hashed
-- Sessions: Random tokens, not sequential
-- Audit logs: IP addresses stored for security
+### Gitignore Entries
+```gitignore
+# Database
+prisma/admin.db
+prisma/admin.db-journal
+```
+
+### Sensitive Data Handling
+- **Passwords**: Bcrypt hashed, never stored plain
+- **Sessions**: Random 64-character hex tokens
+- **User data**: Only email, name, timestamps stored
 
 ---
 
-## 🔑 Environment Variables
+## 🔐 Environment Variables
 
-### Required Secrets
+### Required Variables
 ```env
-# .env.local (NEVER COMMIT)
-
-# Database
+# .env (committed - non-sensitive)
 DATABASE_URL="file:./prisma/admin.db"
-
-# Auth - generate: openssl rand -base64 32
-NEXTAUTH_SECRET="your-32-char-random-secret"
-NEXTAUTH_URL="https://maida.pt"
-
-# Initial admin (first setup only)
-INIT_ADMIN_EMAIL="your-email@example.com"
 ```
 
 ### Security Rules
-- ❌ Never commit `.env.local`
-- ❌ Never log secrets
-- ❌ Never expose in client code
-- ✅ Use different secrets per environment
-- ✅ Rotate secrets annually
+- ✅ Database URL can be committed (file path, not credentials)
+- ❌ Never commit actual credentials
+- ❌ Never log sensitive data
+- ✅ Use `.env.local` for any secrets (auto-gitignored by Next.js)
 
 ---
 
-## 📝 Audit Logging
+## 🛡️ Primary Admin Protection
 
-### What's Logged
-| Action | Details Captured |
-|--------|------------------|
-| Login | User, IP, timestamp, success/fail |
-| Logout | User, IP, timestamp |
-| Content edit | User, file, changes, IP, timestamp |
-| User create | Admin who created, new user email |
-| User delete | Admin who deleted, deleted user |
-| Upload | User, filename, size, IP |
+The first admin created is marked as "primary" and cannot be deleted:
 
-### Log Retention
-- Keep logs for 90 days
-- Older logs archived monthly
-- GDPR: Can export/delete on request
+```prisma
+model User {
+  // ...
+  isPrimary Boolean @default(false)  // Cannot be deleted
+}
+```
+
+```typescript
+// In user deletion logic (Phase 3)
+if (user.isPrimary) {
+  return { error: 'Cannot delete primary admin' };
+}
+```
 
 ---
 
 ## 🌐 HTTP Security Headers
 
-### next.config.js
+### Recommended Headers (next.config.js)
 ```javascript
 const securityHeaders = [
   {
@@ -222,56 +191,72 @@ const securityHeaders = [
   {
     key: 'Referrer-Policy',
     value: 'strict-origin-when-cross-origin'
-  },
-  {
-    key: 'Content-Security-Policy',
-    value: "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
   }
 ];
+
+module.exports = {
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
+    ];
+  },
+};
 ```
 
 ---
 
 ## ✅ Security Checklist
 
-### Before Launch
-- [ ] Strong `NEXTAUTH_SECRET` generated
-- [ ] `.env.local` in `.gitignore`
-- [ ] `prisma/admin.db` in `.gitignore`
-- [ ] HTTPS enforced
-- [ ] Security headers configured
-- [ ] Rate limiting enabled
-- [ ] Primary admin created
+### Phase 1 (Complete) ✅
+- [x] Bcrypt password hashing (12 rounds)
+- [x] HTTP-only session cookies
+- [x] Secure flag in production
+- [x] SameSite=strict for CSRF protection
+- [x] 30-minute session timeout
+- [x] Sliding session expiration
+- [x] Database-backed sessions
+- [x] Primary admin protection
+- [x] Database file gitignored
+
+### Phase 2 (Content Editors)
+- [ ] Input validation on content updates
+- [ ] File type validation for uploads
+- [ ] File size limits
+- [ ] Sanitize filenames
+
+### Phase 3 (User Management)
+- [ ] Password strength requirements
+- [ ] Prevent primary admin deletion
+- [ ] Session invalidation on password change
 
 ### Ongoing
-- [ ] Monitor failed login attempts
-- [ ] Review audit logs weekly
-- [ ] Update dependencies monthly
-- [ ] Rotate secrets annually
-- [ ] Backup database daily
+- [ ] Keep dependencies updated
+- [ ] Monitor for security advisories
+- [ ] Regular password rotation (recommended)
 
 ---
 
 ## 🚨 Incident Response
 
-### If Credentials Compromised
-1. Immediately rotate `NEXTAUTH_SECRET`
-2. Delete all sessions from database
-3. Force password reset for all users
-4. Review audit logs for unauthorized access
-5. Check for unauthorized content changes
+### If Admin Credentials Compromised
+1. Log into admin panel
+2. Change password immediately
+3. (Phase 3) Invalidate all sessions
+4. Review for unauthorized changes
 
-### If Database Compromised
-1. Take site offline
-2. Restore from backup
-3. Rotate all secrets
-4. Reset all passwords
-5. Review and patch vulnerability
+### If Database File Exposed
+1. Rotate all admin passwords
+2. Delete and recreate sessions table
+3. Review access logs
+4. Consider credential exposure (hashed, but still rotate)
 
 ---
 
-## 📚 Resources
+## 📚 Security Resources
 
-- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
-- [Next.js Security](https://nextjs.org/docs/advanced-features/security-headers)
-- [Prisma Security](https://www.prisma.io/docs/concepts/components/prisma-client/security)
+- [OWASP Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)
+- [Next.js Security Headers](https://nextjs.org/docs/advanced-features/security-headers)
+- [Bcrypt Best Practices](https://auth0.com/blog/hashing-in-action-understanding-bcrypt/)

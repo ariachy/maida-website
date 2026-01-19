@@ -1,270 +1,335 @@
 # Maída Website - Deployment Guide
 
-## 🚀 Deployment to Namecheap
+## 🚀 Deployment Overview
 
-### Prerequisites
-- FTP client (FileZilla, Cyberduck, etc.)
-- Node.js 18+ installed locally
-- Namecheap hosting credentials
+The Maída website runs as a **full Next.js server** on Namecheap hosting with Node.js support.
+
+| Component | Technology | Location |
+|-----------|------------|----------|
+| **Public Site** | Next.js SSG | maida.pt/* |
+| **Admin Panel** | Next.js Server | maida.pt/admin/* |
+| **API Routes** | Next.js API | maida.pt/api/* |
+| **Database** | SQLite + Prisma | prisma/admin.db |
 
 ---
 
-## 📦 Build Process
+## 📦 Namecheap Node.js Deployment
 
-### 1. Install Dependencies
-```bash
-cd maida.pt
-npm install
+### Prerequisites
+- Namecheap hosting with Node.js support (cPanel)
+- FTP client (FileZilla)
+- Node.js 18+ installed locally
+- Terminal/SSH access to server
+
+### Server Structure
+
+```
+/home/thehlxvx/maida.pt/           ← Node.js app root
+├── .next/                          ← Built Next.js output
+├── public/                         ← Static assets
+│   ├── images/
+│   ├── favicon.ico
+│   ├── sitemap.xml
+│   ├── robots.txt
+│   └── google*.html               ← Search Console verification
+├── prisma/
+│   ├── schema.prisma
+│   └── admin.db                   ← SQLite database
+├── src/
+│   └── data/                      ← JSON content files
+│       ├── locales/
+│       │   ├── en.json
+│       │   └── pt.json
+│       ├── menu.json
+│       └── blog.json
+├── node_modules/                   ← Installed via NPM Install
+├── package.json
+├── package-lock.json
+├── next.config.js
+├── tsconfig.json
+├── server.js                      ← Custom server entry point
+└── .env                           ← Environment variables
+
+/home/thehlxvx/maida.pt/public_html/
+└── .htaccess                      ← Security headers only
+
+/home/thehlxvx/nodevenv/maida.pt/20/lib/node_modules/
+├── .prisma/                       ← Prisma client (with Linux binaries)
+└── @prisma/
 ```
 
-### 2. Build for Production
+---
+
+## 🔧 Initial Setup
+
+### 1. Build Locally
+
 ```bash
+# Ensure next.config.js does NOT have output: 'export'
+
+# Install dependencies
+npm install
+
+# Generate Prisma client with Linux binary
+npx prisma generate
+
+# Build for production
 npm run build
 ```
 
-This command:
-- Compiles TypeScript
-- Bundles and optimizes JavaScript
-- Generates static HTML for all routes
-- Outputs to `/out` directory
+### 2. Prisma Configuration
 
-### 3. Verify Build
-```bash
-# Check the output
-ls -la out/
+In `prisma/schema.prisma`, include the Linux binary target:
 
-# Should see:
-# - en/
-# - pt/
-# - _next/
-# - images/
-# - index.html
+```prisma
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.0.x"]
+}
 ```
 
----
+### 3. Create server.js
 
-## 📤 Upload to Namecheap
+```javascript
+const { createServer } = require('http');
+const { parse } = require('url');
+const next = require('next');
 
-### Via FTP (FileZilla)
+const dev = false;
+const hostname = '0.0.0.0';
+const port = process.env.PORT || 3000;
 
-1. **Connect to your server**
-   ```
-   Host: ftp.maida.pt
-   Username: your_ftp_username
-   Password: your_ftp_password
-   Port: 21
-   ```
+const app = next({ dev, hostname, port });
+const handle = app.getRequestHandler();
 
-2. **Navigate to public_html**
-   ```
-   Remote site: /public_html
-   ```
+app.prepare().then(() => {
+  createServer(async (req, res) => {
+    try {
+      const parsedUrl = parse(req.url, true);
+      await handle(req, res, parsedUrl);
+    } catch (err) {
+      console.error('Error occurred handling', req.url, err);
+      res.statusCode = 500;
+      res.end('internal server error');
+    }
+  }).listen(port, (err) => {
+    if (err) throw err;
+    console.log(`> Ready on http://${hostname}:${port}`);
+  });
+});
+```
 
-3. **Upload the /out folder contents**
-   - Select all files/folders inside `/out`
-   - Drag to `/public_html`
-   - Overwrite existing files when prompted
+### 4. Upload via FTP (FileZilla)
 
-4. **Verify upload**
-   - Visit https://maida.pt
-   - Check all pages load correctly
-   - Test language switching
+**Important:** Set transfer mode to **Binary** (Transfer → Transfer Type → Binary)
 
----
+Upload to `/home/thehlxvx/maida.pt/`:
+- `.next/` folder
+- `public/` folder
+- `prisma/` folder (including admin.db)
+- `src/data/` folder
+- `package.json`
+- `package-lock.json`
+- `next.config.js`
+- `tsconfig.json`
+- `server.js`
+- `.env`
 
-## ⚙️ Server Configuration
+Upload to `/home/thehlxvx/maida.pt/public_html/`:
+- `.htaccess`
 
-### .htaccess (Apache)
+**Do NOT upload:** `node_modules/`, `.git/`, `out/`
 
-Create `/public_html/.htaccess`:
+### 5. Upload Prisma Binaries
 
-```apache
-# Enable rewrite engine
-RewriteEngine On
+The Prisma client needs Linux binaries. Upload from your local machine:
 
-# Redirect HTTP to HTTPS
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+```
+node_modules/.prisma/  →  /home/thehlxvx/nodevenv/maida.pt/20/lib/node_modules/.prisma/
+node_modules/@prisma/  →  /home/thehlxvx/nodevenv/maida.pt/20/lib/node_modules/@prisma/
+```
 
-# Remove trailing slash
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)/$ /$1 [L,R=301]
+### 6. Configure Node.js App in cPanel
 
-# Handle clean URLs
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^(.*)$ $1.html [L]
+1. Go to **cPanel → Node.js**
+2. Click **CREATE APPLICATION**
+3. Settings:
+   - **Node.js version:** 20.x
+   - **Application mode:** Production
+   - **Application root:** `/home/thehlxvx/maida.pt`
+   - **Application URL:** `maida.pt`
+   - **Startup file:** `server.js`
+4. Click **CREATE**
+5. Click **Run NPM Install**
+6. Add **Environment Variables**:
+   - `DATABASE_URL` = `file:/home/thehlxvx/maida.pt/prisma/admin.db`
+7. Click **START APP**
 
-# Block query parameter spam (soft 404 fix)
-RewriteCond %{QUERY_STRING} ^(MD|ND|.{1,2})$ [NC]
-RewriteRule ^(.*)$ /$1? [R=301,L]
+### 7. Set Permissions
 
-# Custom 404
-ErrorDocument 404 /404.html
-
-# Security headers
-<IfModule mod_headers.c>
-    Header set X-Content-Type-Options "nosniff"
-    Header set X-Frame-Options "SAMEORIGIN"
-    Header set X-XSS-Protection "1; mode=block"
-    Header set Referrer-Policy "strict-origin-when-cross-origin"
-</IfModule>
-
-# Caching
-<IfModule mod_expires.c>
-    ExpiresActive On
-    ExpiresByType image/webp "access plus 1 year"
-    ExpiresByType image/png "access plus 1 year"
-    ExpiresByType image/jpeg "access plus 1 year"
-    ExpiresByType text/css "access plus 1 month"
-    ExpiresByType application/javascript "access plus 1 month"
-</IfModule>
-
-# Compression
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
-</IfModule>
+In cPanel Terminal:
+```bash
+chmod 777 /home/thehlxvx/maida.pt/prisma/
+chmod 666 /home/thehlxvx/maida.pt/prisma/admin.db
 ```
 
 ---
 
 ## 🔄 Update Workflow
 
-### Quick Deploy
+### Content Updates (JSON files)
 ```bash
-# 1. Make changes
-# 2. Test locally
-npm run dev
-
-# 3. Build
-npm run build
-
-# 4. Upload /out folder via FTP
+# 1. Edit locally
+# 2. Upload changed files via FTP:
+#    - src/data/locales/en.json
+#    - src/data/locales/pt.json
+#    - src/data/menu.json
+# 3. Changes take effect on next request (no restart needed for static data)
 ```
 
-### Checklist
-- [ ] Changes tested locally
-- [ ] Build succeeds
-- [ ] Uploaded to correct directory
-- [ ] Hard refresh browser (Ctrl+Shift+R)
-- [ ] All pages working
-- [ ] Mobile view tested
+### Code Updates
+```bash
+# 1. Make changes locally
+# 2. Test: npm run dev
+# 3. Build: npm run build
+# 4. Delete .next on server: rm -rf /home/thehlxvx/maida.pt/.next
+# 5. Upload new .next/ folder
+# 6. Restart app in cPanel
+```
+
+### Prisma Schema Updates
+```bash
+# 1. Update prisma/schema.prisma
+# 2. Run: npx prisma generate
+# 3. Upload:
+#    - node_modules/.prisma/ → /home/thehlxvx/nodevenv/maida.pt/20/lib/node_modules/
+#    - node_modules/@prisma/ → /home/thehlxvx/nodevenv/maida.pt/20/lib/node_modules/
+#    - prisma/admin.db (if schema changed, run migrations first)
+# 4. Restart app in cPanel
+```
 
 ---
 
-## ✅ Post-Deployment Verification
+## ⚙️ Environment Variables
 
-### Run Test Script
-```bash
-node test-site.js
-```
-
-### Manual Checks
-- [ ] Homepage loads (`/en`, `/pt`)
-- [ ] All pages accessible
-- [ ] hreflang tags present (View Source → search "hreflang")
-- [ ] Sitemap accessible (`/sitemap.xml`)
-- [ ] Images loading
-- [ ] UMAI widget opens
-- [ ] Mobile responsive
-
-### Google Search Console
-After deployment:
-1. Go to Search Console
-2. URL Inspection → test key pages
-3. Sitemaps → resubmit if updated
-4. Request indexing for new/changed pages
-
----
-
-## 🔐 Admin Panel Deployment (Future)
-
-When admin panel is added:
-
-### Environment Variables
-Create `.env.local` on server (never commit):
+### Local (.env)
 ```env
 DATABASE_URL="file:./prisma/admin.db"
-NEXTAUTH_SECRET="generate-with-openssl-rand-base64-32"
-NEXTAUTH_URL="https://maida.pt"
+SMTP_HOST=maida.pt
+SMTP_PORT=465
+SMTP_SECURE=ssl
+SMTP_USERNAME=noreply@maida.pt
+SMTP_PASSWORD=your_password
+CONTACT_TO_EMAIL=info@maida.pt
+CONTACT_FROM_EMAIL=noreply@maida.pt
+RECAPTCHA_SITE_KEY=your_key
+RECAPTCHA_API_KEY=your_key
+RECAPTCHA_PROJECT_ID=your_project
+NEXT_PUBLIC_SITE_URL=https://maida.pt
 ```
 
-### Database Setup
-```bash
-# On first deploy
-npx prisma generate
-npx prisma db push
-npm run setup-admin
-```
+### Server (cPanel Environment Variables)
+| Name | Value |
+|------|-------|
+| `DATABASE_URL` | `file:/home/thehlxvx/maida.pt/prisma/admin.db` |
 
-### Files to Exclude from Git
-```gitignore
-.env
-.env.local
-prisma/admin.db
-prisma/admin.db-journal
-public/uploads/*
-!public/uploads/.gitkeep
-```
+**Important:** The `DATABASE_URL` in cPanel must use the **absolute path**.
 
-### Admin URL
-```
-https://maida.pt/admin
+---
+
+## 🛡️ .htaccess Configuration
+
+The `.htaccess` file in `public_html/` handles security headers only (Node.js handles routing):
+
+```apache
+# HTTPS Redirect
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Block sensitive files
+<FilesMatch "\.(env|db|log)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+Options -Indexes
 ```
 
 ---
 
-## 🛠 Troubleshooting
+## 🐛 Troubleshooting
 
-### 404 Errors
-- Check `.htaccess` uploaded
-- Verify folder structure matches routes
-- Clear browser cache
+### "Cannot find module 'next'"
+- Run **NPM Install** in cPanel Node.js app
+- Ensure `package.json` was uploaded
 
-### Soft 404 in Search Console
-- Usually spam bots with query params (?MD, ?ND)
-- The .htaccess rule above blocks these
-- Validate fix in Search Console
+### "Prisma Client could not locate the Query Engine"
+- Upload Prisma binaries to `/home/thehlxvx/nodevenv/maida.pt/20/lib/node_modules/`
+- Ensure `binaryTargets` includes `debian-openssl-1.0.x` in schema.prisma
 
-### Images Not Loading
-- Check paths are lowercase
-- Verify files uploaded to `/images/`
-- Check file permissions (644)
+### "Error code 14: Unable to open database file"
+1. Check `DATABASE_URL` in cPanel environment variables (must be absolute path)
+2. Check file permissions: `chmod 666 prisma/admin.db`
+3. Check folder permissions: `chmod 777 prisma/`
+4. Restart the app in cPanel
 
-### hreflang Not Detected
-- View page source, search for "hreflang"
-- If present in source but tool fails, tool may have issues
-- Google will see it correctly
+### "404 for static chunks (_next/static/...)"
+- Build hashes mismatch - delete `.next` on server and re-upload fresh build
+- Ensure all files in `.next/static/chunks/` were uploaded
 
-### Styles Missing
-- Hard refresh (Ctrl+Shift+R)
-- Check `_next` folder uploaded
-- Clear CDN cache if using Cloudflare
+### "503 Service Unavailable"
+- Check `stderr.log` in `/home/thehlxvx/maida.pt/`
+- Usually means app crashed - check for missing files or errors
+
+### View Error Logs
+```bash
+# In cPanel Terminal:
+cat /home/thehlxvx/maida.pt/stderr.log
+tail -50 /home/thehlxvx/maida.pt/stderr.log
+```
+
+---
+
+## ✅ Post-Deployment Checklist
+
+### Public Site
+- [ ] Homepage loads (`/en`, `/pt`)
+- [ ] All pages accessible
+- [ ] Images loading
+- [ ] UMAI widget opens
+- [ ] Contact form works
+- [ ] Mobile responsive
+
+### Admin Panel
+- [ ] Login page accessible (`/admin`)
+- [ ] Can log in with credentials
+- [ ] Dashboard loads
+- [ ] Session persists on refresh
+- [ ] Logout works
+- [ ] Content editors work
+- [ ] Media upload works
 
 ---
 
 ## 📊 Performance Targets
 
-| Metric | Target |
-|--------|--------|
-| Mobile PageSpeed | 60+ |
-| Desktop PageSpeed | 80+ |
-| LCP | < 2.5s |
-| FID | < 100ms |
-| CLS | < 0.1 |
+| Metric | Target | Current |
+|--------|--------|---------|
+| Mobile PageSpeed | 60+ | 66 |
+| Desktop PageSpeed | 80+ | 90+ |
+| LCP | < 2.5s | ✅ |
+| FID | < 100ms | ✅ |
+| CLS | < 0.1 | ✅ |
 
 Test at: https://pagespeed.web.dev
-
----
-
-## 🔗 Important URLs
-
-| URL | Purpose |
-|-----|---------|
-| https://maida.pt | Live site |
-| https://maida.pt/sitemap.xml | Sitemap |
-| https://maida.pt/en | English homepage |
-| https://maida.pt/pt | Portuguese homepage |
-| https://search.google.com/search-console | Search Console |
-| https://pagespeed.web.dev | Performance testing |
