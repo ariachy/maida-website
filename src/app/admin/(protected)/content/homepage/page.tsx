@@ -1,103 +1,69 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import LanguageTabs from '@/components/admin/LanguageTabs';
-import { ToastContainer, useToast } from '@/components/admin/Toast';
+import ContentField from '@/components/admin/ContentField';
 
 interface LocaleData {
   [key: string]: any;
 }
 
-// Required fields for validation
-const REQUIRED_FIELDS: Record<string, string[][]> = {
-  hero: [
-    ['hero', 'title1'],
-    ['hero', 'title2'],
-    ['hero', 'subtitle'],
-  ],
-  homeStory: [
-    ['homeStory', 'title'],
-    ['homeStory', 'text'],
-  ],
-  homeCta: [
-    ['homeCta', 'title'],
-    ['homeCta', 'button'],
-  ],
-};
-
 export default function HomepageEditorPage() {
-  const toast = useToast();
-  
   const [enData, setEnData] = useState<LocaleData | null>(null);
   const [ptData, setPtData] = useState<LocaleData | null>(null);
+  const [activeLanguage, setActiveLanguage] = useState<'en' | 'pt'>('en');
+  const [activeSection, setActiveSection] = useState('hero');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [activeLanguage, setActiveLanguage] = useState('en');
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
-  const [validationErrors, setValidationErrors] = useState<Set<string>>(new Set());
+  const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
+  // Sections for navigation
+  const sections = [
+    { id: 'hero', label: 'Hero Section', description: 'Main banner and tagline' },
+    { id: 'homeStory', label: 'Story Preview', description: 'About section preview' },
+    { id: 'homeMenu', label: 'Menu Preview', description: 'Featured dishes section' },
+    { id: 'homeVisit', label: 'Visit Section', description: 'Location and hours' },
+    { id: 'cta', label: 'Call to Action', description: 'Bottom reservation banner' },
+  ];
+
+  // Load data on mount
   useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [enRes, ptRes] = await Promise.all([
+          fetch('/api/admin/content/locales/en.json'),
+          fetch('/api/admin/content/locales/pt.json'),
+        ]);
+
+        if (enRes.ok && ptRes.ok) {
+          const enJson = await enRes.json();
+          const ptJson = await ptRes.json();
+          setEnData(enJson.data);
+          setPtData(ptJson.data);
+        }
+      } catch (error) {
+        console.error('Failed to load data:', error);
+        showToast('error', 'Failed to load content');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     loadData();
   }, []);
 
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (hasUnsavedChanges) {
-        e.preventDefault();
-        e.returnValue = '';
-      }
-    };
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [hasUnsavedChanges]);
-
-  const loadData = async () => {
-    setLoading(true);
-    try {
-      const [enRes, ptRes] = await Promise.all([
-        fetch('/api/admin/content/locales/en.json'),
-        fetch('/api/admin/content/locales/pt.json'),
-      ]);
-
-      if (!enRes.ok || !ptRes.ok) throw new Error('Failed to load data');
-
-      const [enJson, ptJson] = await Promise.all([enRes.json(), ptRes.json()]);
-      setEnData(enJson.data);
-      setPtData(ptJson.data);
-    } catch (error) {
-      console.error('Load error:', error);
-      toast.error('Failed to load homepage data');
-    } finally {
-      setLoading(false);
-    }
+  // Toast helper
+  const showToast = (type: 'success' | 'error', message: string) => {
+    setToast({ type, message });
+    setTimeout(() => setToast(null), 3000);
   };
 
+  // Save data
   const saveData = async () => {
-    if (!enData || !ptData) return;
-
-    // Validate required fields
-    const errors = new Set<string>();
-    Object.entries(REQUIRED_FIELDS).forEach(([section, fields]) => {
-      fields.forEach((path) => {
-        const enValue = getValueFromData(enData, path);
-        const ptValue = getValueFromData(ptData, path);
-        if (!enValue || !ptValue) {
-          errors.add(path.join('.'));
-        }
-      });
-    });
-
-    if (errors.size > 0) {
-      setValidationErrors(errors);
-      toast.error('Please fill in all required fields in both languages');
-      return;
-    }
-
-    setValidationErrors(new Set());
     setSaving(true);
     try {
-      const results = await Promise.all([
+      const [enRes, ptRes] = await Promise.all([
         fetch('/api/admin/content/locales/en.json', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -110,143 +76,76 @@ export default function HomepageEditorPage() {
         }),
       ]);
 
-      if (!results.every((r) => r.ok)) throw new Error('Failed to save');
-
-      setHasUnsavedChanges(false);
-      toast.success('Homepage saved successfully!');
+      if (enRes.ok && ptRes.ok) {
+        setHasUnsavedChanges(false);
+        showToast('success', 'Homepage saved successfully');
+      } else {
+        showToast('error', 'Failed to save changes');
+      }
     } catch (error) {
       console.error('Save error:', error);
-      toast.error('Failed to save homepage');
+      showToast('error', 'Failed to save homepage');
     } finally {
       setSaving(false);
     }
   };
 
-  // Helper to get value from specific data object
-  const getValueFromData = (data: LocaleData, path: string[]): string => {
-    let current: any = data;
-    for (const key of path) {
-      if (current === undefined || current === null) return '';
-      current = current[key];
-    }
-    return current || '';
-  };
-
-  const updateField = (path: string[], value: string) => {
+  // Memoized update function to prevent unnecessary re-renders
+  const updateField = useCallback((path: string[], value: string) => {
     const setData = activeLanguage === 'en' ? setEnData : setPtData;
-    
+
     setData((prev) => {
       if (!prev) return prev;
-      
+
       const newData = JSON.parse(JSON.stringify(prev));
       let current = newData;
-      
+
       for (let i = 0; i < path.length - 1; i++) {
         if (!current[path[i]]) current[path[i]] = {};
         current = current[path[i]];
       }
-      
+
       current[path[path.length - 1]] = value;
       return newData;
     });
-    
-    setHasUnsavedChanges(true);
-  };
 
-  const getValue = (path: string[]): string => {
+    setHasUnsavedChanges(true);
+  }, [activeLanguage]);
+
+  // Helper to get value from nested path
+  const getValue = useCallback((path: string[]): string => {
     const data = activeLanguage === 'en' ? enData : ptData;
     if (!data) return '';
-    
+
     let current: any = data;
     for (const key of path) {
       if (current === undefined || current === null) return '';
       current = current[key];
     }
-    return current || '';
-  };
+    return typeof current === 'string' ? current : '';
+  }, [activeLanguage, enData, ptData]);
 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#C4A484]" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#C4A484]"></div>
       </div>
     );
   }
-
-  if (!enData || !ptData) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-[#6B6B6B]">Failed to load data</p>
-        <button onClick={loadData} className="mt-4 px-4 py-2 bg-[#C4A484] text-white rounded-md">
-          Retry
-        </button>
-      </div>
-    );
-  }
-
-  const sections = [
-    { id: 'hero', label: 'Hero Section', description: 'The main banner visitors see first' },
-    { id: 'homeStory', label: 'Story Preview', description: 'Brief intro to your story on homepage' },
-    { id: 'homeMenu', label: 'Menu Preview', description: 'Featured dishes & drinks section' },
-    { id: 'homeVisit', label: 'Visit Section', description: 'Hours and location info' },
-    { id: 'homeCta', label: 'Final Call-to-Action', description: 'Bottom reservation prompt' },
-  ];
-
-  const Field = ({ 
-    label, 
-    description, 
-    path, 
-    multiline = false,
-    placeholder = '',
-    required = false
-  }: { 
-    label: string; 
-    description: string; 
-    path: string[];
-    multiline?: boolean;
-    placeholder?: string;
-    required?: boolean;
-  }) => {
-    const value = getValue(path);
-    const isEmpty = required && !value.trim();
-    
-    return (
-      <div className="mb-5">
-        <label className="block text-sm font-medium text-[#2C2C2C] mb-1">
-          {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
-        </label>
-        <p className="text-xs text-[#9CA3AF] mb-2">{description}</p>
-        {multiline ? (
-          <textarea
-            value={value}
-            onChange={(e) => updateField(path, e.target.value)}
-            placeholder={placeholder}
-            rows={3}
-            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#C4A484] text-sm resize-none ${
-              isEmpty ? 'border-red-300 bg-red-50' : 'border-[#D4C4B5]'
-            }`}
-          />
-        ) : (
-          <input
-            type="text"
-            value={value}
-            onChange={(e) => updateField(path, e.target.value)}
-            placeholder={placeholder}
-            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#C4A484] text-sm ${
-              isEmpty ? 'border-red-300 bg-red-50' : 'border-[#D4C4B5]'
-            }`}
-          />
-        )}
-        {isEmpty && (
-          <p className="text-xs text-red-500 mt-1">This field is required</p>
-        )}
-      </div>
-    );
-  };
 
   return (
     <div>
+      {/* Toast Notification */}
+      {toast && (
+        <div
+          className={`fixed top-4 right-4 z-50 px-4 py-3 rounded-lg shadow-lg ${
+            toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+          } text-white`}
+        >
+          {toast.message}
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -316,19 +215,62 @@ export default function HomepageEditorPage() {
                   <p className="text-sm text-[#6B6B6B] mt-1">The main banner at the top of the homepage with your tagline</p>
                 </div>
 
-                <Field label="Badge Text" description="Small label above the main title (e.g., 'Restaurant-bar')" path={['hero', 'badge']} />
-                <Field label="Location" description="Location shown below the badge (e.g., 'Cais do Sodré, Lisboa')" path={['hero', 'location']} />
+                <ContentField
+                  label="Badge Text"
+                  description="Small label above the main title (e.g., 'Restaurant-bar')"
+                  value={getValue(['hero', 'badge'])}
+                  onChange={(val) => updateField(['hero', 'badge'], val)}
+                />
+                <ContentField
+                  label="Location"
+                  description="Location shown below the badge (e.g., 'Cais do Sodré, Lisboa')"
+                  value={getValue(['hero', 'location'])}
+                  onChange={(val) => updateField(['hero', 'location'], val)}
+                />
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Main Title - Line 1" description="First line of the big headline" path={['hero', 'title1']} placeholder="Mediterranean Flavours." required />
-                  <Field label="Main Title - Line 2" description="Second line of the big headline" path={['hero', 'title2']} placeholder="Lebanese Soul." required />
+                  <ContentField
+                    label="Main Title - Line 1"
+                    description="First line of the big headline"
+                    value={getValue(['hero', 'title1'])}
+                    onChange={(val) => updateField(['hero', 'title1'], val)}
+                    placeholder="Mediterranean Flavours."
+                    required
+                  />
+                  <ContentField
+                    label="Main Title - Line 2"
+                    description="Second line of the big headline"
+                    value={getValue(['hero', 'title2'])}
+                    onChange={(val) => updateField(['hero', 'title2'], val)}
+                    placeholder="Lebanese Soul."
+                    required
+                  />
                 </div>
 
-                <Field label="Subtitle" description="Descriptive text below the main title" path={['hero', 'subtitle']} multiline required />
+                <ContentField
+                  label="Subtitle"
+                  description="Descriptive text below the main title"
+                  value={getValue(['hero', 'subtitle'])}
+                  onChange={(val) => updateField(['hero', 'subtitle'], val)}
+                  multiline
+                  required
+                />
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Primary Button Text" description="Main call-to-action button" path={['hero', 'cta']} placeholder="Reserve a Table" />
-                  <Field label="Secondary Button Text" description="Link to menu page" path={['hero', 'viewMenu']} placeholder="View Menu" />
+                  <ContentField
+                    label="Primary Button Text"
+                    description="Main call-to-action button"
+                    value={getValue(['hero', 'cta'])}
+                    onChange={(val) => updateField(['hero', 'cta'], val)}
+                    placeholder="Reserve a Table"
+                  />
+                  <ContentField
+                    label="Secondary Button Text"
+                    description="Link to menu page"
+                    value={getValue(['hero', 'viewMenu'])}
+                    onChange={(val) => updateField(['hero', 'viewMenu'], val)}
+                    placeholder="View Menu"
+                  />
                 </div>
               </>
             )}
@@ -342,18 +284,61 @@ export default function HomepageEditorPage() {
                 </div>
 
                 <div className="grid grid-cols-3 gap-4">
-                  <Field label="Headline Word 1" description="First word in stacked headline" path={['homeStory', 'headline1']} placeholder="FROM" />
-                  <Field label="Headline Word 2" description="Second word" path={['homeStory', 'headline2']} placeholder="OUR" />
-                  <Field label="Headline Word 3" description="Third word" path={['homeStory', 'headline3']} placeholder="ROOTS" />
+                  <ContentField
+                    label="Headline Word 1"
+                    description="First word in stacked headline"
+                    value={getValue(['homeStory', 'headline1'])}
+                    onChange={(val) => updateField(['homeStory', 'headline1'], val)}
+                    placeholder="FROM"
+                  />
+                  <ContentField
+                    label="Headline Word 2"
+                    description="Second word"
+                    value={getValue(['homeStory', 'headline2'])}
+                    onChange={(val) => updateField(['homeStory', 'headline2'], val)}
+                    placeholder="OUR"
+                  />
+                  <ContentField
+                    label="Headline Word 3"
+                    description="Third word"
+                    value={getValue(['homeStory', 'headline3'])}
+                    onChange={(val) => updateField(['homeStory', 'headline3'], val)}
+                    placeholder="ROOTS"
+                  />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Title (regular part)" description="Normal text part of title" path={['homeStory', 'title']} placeholder="Where every meal is" />
-                  <Field label="Title (highlighted part)" description="Emphasized part shown in accent color" path={['homeStory', 'titleHighlight']} placeholder="an invitation" />
+                  <ContentField
+                    label="Title (regular part)"
+                    description="Normal text part of title"
+                    value={getValue(['homeStory', 'title'])}
+                    onChange={(val) => updateField(['homeStory', 'title'], val)}
+                    placeholder="Where every meal is"
+                  />
+                  <ContentField
+                    label="Title (highlighted part)"
+                    description="Emphasized part shown in accent color"
+                    value={getValue(['homeStory', 'titleHighlight'])}
+                    onChange={(val) => updateField(['homeStory', 'titleHighlight'], val)}
+                    placeholder="an invitation"
+                  />
                 </div>
 
-                <Field label="Story Text" description="Main paragraph explaining your concept" path={['homeStory', 'text']} multiline required />
-                <Field label="Button Text" description="Link to full story page" path={['homeStory', 'cta']} placeholder="Read Our Story" />
+                <ContentField
+                  label="Story Text"
+                  description="Main paragraph explaining your concept"
+                  value={getValue(['homeStory', 'text'])}
+                  onChange={(val) => updateField(['homeStory', 'text'], val)}
+                  multiline
+                  required
+                />
+                <ContentField
+                  label="Button Text"
+                  description="Link to full story page"
+                  value={getValue(['homeStory', 'cta'])}
+                  onChange={(val) => updateField(['homeStory', 'cta'], val)}
+                  placeholder="Read Our Story"
+                />
               </>
             )}
 
@@ -366,23 +351,59 @@ export default function HomepageEditorPage() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Section Title - Line 1" description="First line of section heading" path={['homeMenu', 'title1']} placeholder="A TASTE" />
-                  <Field label="Section Title - Line 2" description="Second line of section heading" path={['homeMenu', 'title2']} placeholder="OF MAÍDA" />
+                  <ContentField
+                    label="Section Title - Line 1"
+                    description="First line of section heading"
+                    value={getValue(['homeMenu', 'title1'])}
+                    onChange={(val) => updateField(['homeMenu', 'title1'], val)}
+                    placeholder="A TASTE"
+                  />
+                  <ContentField
+                    label="Section Title - Line 2"
+                    description="Second line of section heading"
+                    value={getValue(['homeMenu', 'title2'])}
+                    onChange={(val) => updateField(['homeMenu', 'title2'], val)}
+                    placeholder="OF MAÍDA"
+                  />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Kitchen Tab Label" description="Label for food items tab" path={['homeMenu', 'fromKitchen']} placeholder="From our kitchen" />
-                  <Field label="Bar Tab Label" description="Label for drinks tab" path={['homeMenu', 'fromBar']} placeholder="From our bar" />
+                  <ContentField
+                    label="Kitchen Tab Label"
+                    description="Label for food items tab"
+                    value={getValue(['homeMenu', 'fromKitchen'])}
+                    onChange={(val) => updateField(['homeMenu', 'fromKitchen'], val)}
+                    placeholder="From our kitchen"
+                  />
+                  <ContentField
+                    label="Bar Tab Label"
+                    description="Label for drinks tab"
+                    value={getValue(['homeMenu', 'fromBar'])}
+                    onChange={(val) => updateField(['homeMenu', 'fromBar'], val)}
+                    placeholder="From our bar"
+                  />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Menu Button Text" description="Link to full menu page" path={['homeMenu', 'fullMenu']} placeholder="Full Menu" />
-                  <Field label="Image Placeholder Text" description="Shown when dish image is missing" path={['homeMenu', 'imageComingSoon']} placeholder="Image coming soon" />
+                  <ContentField
+                    label="Menu Button Text"
+                    description="Link to full menu page"
+                    value={getValue(['homeMenu', 'fullMenu'])}
+                    onChange={(val) => updateField(['homeMenu', 'fullMenu'], val)}
+                    placeholder="Full Menu"
+                  />
+                  <ContentField
+                    label="Image Placeholder Text"
+                    description="Shown when dish image is missing"
+                    value={getValue(['homeMenu', 'imageComingSoon'])}
+                    onChange={(val) => updateField(['homeMenu', 'imageComingSoon'], val)}
+                    placeholder="Image coming soon"
+                  />
                 </div>
 
                 <div className="mt-6 p-4 bg-[#F9F9F9] rounded-lg">
                   <p className="text-sm text-[#6B6B6B]">
-                    <strong>Note:</strong> Featured dishes and drinks are configured separately in the Menu Editor. 
+                    <strong>Note:</strong> Featured dishes and drinks are configured separately in the Menu Editor.
                     This section only controls the labels and headings.
                   </p>
                 </div>
@@ -398,51 +419,112 @@ export default function HomepageEditorPage() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Section Title - Word 1" description="First word of heading" path={['homeVisit', 'headline1']} placeholder="FIND" />
-                  <Field label="Section Title - Word 2" description="Second word of heading" path={['homeVisit', 'headline2']} placeholder="US" />
+                  <ContentField
+                    label="Section Title - Word 1"
+                    description="First word of heading"
+                    value={getValue(['homeVisit', 'headline1'])}
+                    onChange={(val) => updateField(['homeVisit', 'headline1'], val)}
+                    placeholder="FIND"
+                  />
+                  <ContentField
+                    label="Section Title - Word 2"
+                    description="Second word of heading"
+                    value={getValue(['homeVisit', 'headline2'])}
+                    onChange={(val) => updateField(['homeVisit', 'headline2'], val)}
+                    placeholder="US"
+                  />
                 </div>
 
                 <div className="mt-6 mb-4">
                   <h3 className="text-sm font-medium text-[#2C2C2C] mb-3">Opening Hours</h3>
                 </div>
 
-                <Field label="Mon/Wed/Thu/Sun Hours" description="Opening hours for these days" path={['homeVisit', 'hours', 'monWedThuSun']} placeholder="Mon, Wed, Thu, Sun: 12:30 – 23:00" />
-                <Field label="Friday Hours" description="Opening hours for Friday" path={['homeVisit', 'hours', 'friday']} placeholder="Friday: 12:30 – 01:00" />
-                <Field label="Saturday Hours" description="Opening hours for Saturday" path={['homeVisit', 'hours', 'saturday']} placeholder="Saturday: 12:30 – 01:00" />
-                <Field label="Closed Day" description="Which day you're closed" path={['homeVisit', 'hours', 'closed']} placeholder="Tuesday: Closed" />
-                <Field label="Kitchen Note" description="Note about kitchen closing time" path={['homeVisit', 'hours', 'kitchenCloses']} placeholder="Kitchen closes" />
+                <ContentField
+                  label="Mon/Wed/Thu/Sun Hours"
+                  description="Opening hours for these days"
+                  value={getValue(['homeVisit', 'hours', 'monWedThuSun'])}
+                  onChange={(val) => updateField(['homeVisit', 'hours', 'monWedThuSun'], val)}
+                  placeholder="Mon, Wed, Thu, Sun: 12:30 – 23:00"
+                />
+                <ContentField
+                  label="Friday/Saturday Hours"
+                  description="Opening hours for weekend"
+                  value={getValue(['homeVisit', 'hours', 'friSat'])}
+                  onChange={(val) => updateField(['homeVisit', 'hours', 'friSat'], val)}
+                  placeholder="Fri, Sat: 12:30 – 01:00"
+                />
+                <ContentField
+                  label="Closed Days"
+                  description="Days the restaurant is closed"
+                  value={getValue(['homeVisit', 'hours', 'closed'])}
+                  onChange={(val) => updateField(['homeVisit', 'hours', 'closed'], val)}
+                  placeholder="Closed Tuesday"
+                />
 
                 <div className="mt-6 mb-4">
-                  <h3 className="text-sm font-medium text-[#2C2C2C] mb-3">Address</h3>
+                  <h3 className="text-sm font-medium text-[#2C2C2C] mb-3">Address & Contact</h3>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <Field label="Street Address" description="Street name and number" path={['homeVisit', 'address', 'street']} placeholder="Rua da Boavista 66" />
-                  <Field label="Postal Code & City" description="Postal code and city" path={['homeVisit', 'address', 'postal']} placeholder="1200-068 Lisboa" />
-                </div>
-
-                <Field label="Directions Button Text" description="Text for directions link" path={['homeVisit', 'directions']} placeholder="Directions" />
+                <ContentField
+                  label="Street Address"
+                  description="Restaurant street address"
+                  value={getValue(['homeVisit', 'address', 'street'])}
+                  onChange={(val) => updateField(['homeVisit', 'address', 'street'], val)}
+                  placeholder="Rua da Boavista 66"
+                />
+                <ContentField
+                  label="City/Area"
+                  description="City or neighborhood"
+                  value={getValue(['homeVisit', 'address', 'city'])}
+                  onChange={(val) => updateField(['homeVisit', 'address', 'city'], val)}
+                  placeholder="Cais do Sodré, Lisboa"
+                />
+                <ContentField
+                  label="Directions Button Text"
+                  description="Text for the directions link"
+                  value={getValue(['homeVisit', 'directions'])}
+                  onChange={(val) => updateField(['homeVisit', 'directions'], val)}
+                  placeholder="Get Directions"
+                />
               </>
             )}
 
-            {/* HOME CTA SECTION */}
-            {activeSection === 'homeCta' && (
+            {/* CTA SECTION */}
+            {activeSection === 'cta' && (
               <>
                 <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
-                  <h2 className="text-lg font-medium text-[#2C2C2C]">Final Call-to-Action</h2>
-                  <p className="text-sm text-[#6B6B6B] mt-1">Bottom section prompting visitors to make a reservation</p>
+                  <h2 className="text-lg font-medium text-[#2C2C2C]">Call to Action Section</h2>
+                  <p className="text-sm text-[#6B6B6B] mt-1">Bottom banner encouraging reservations</p>
                 </div>
 
-                <Field label="Title" description="Main text encouraging reservation" path={['homeCta', 'title']} placeholder="Your table is waiting" required />
-                <Field label="Hashtag / Subtitle" description="Branded hashtag shown below title" path={['homeCta', 'subtitle']} placeholder="#MeetMeAtMaída" />
-                <Field label="Button Text" description="Reservation button text" path={['homeCta', 'button']} placeholder="Reserve a Table" />
+                <ContentField
+                  label="CTA Title"
+                  description="Main heading for the call-to-action"
+                  value={getValue(['cta', 'title'])}
+                  onChange={(val) => updateField(['cta', 'title'], val)}
+                  placeholder="Join Us at the Table"
+                  required
+                />
+                <ContentField
+                  label="CTA Subtitle"
+                  description="Supporting text below the title"
+                  value={getValue(['cta', 'subtitle'])}
+                  onChange={(val) => updateField(['cta', 'subtitle'], val)}
+                  multiline
+                  placeholder="Experience Mediterranean flavours..."
+                />
+                <ContentField
+                  label="Button Text"
+                  description="Reservation button text"
+                  value={getValue(['cta', 'button'])}
+                  onChange={(val) => updateField(['cta', 'button'], val)}
+                  placeholder="Reserve a Table"
+                />
               </>
             )}
           </div>
         </div>
       </div>
-
-      <ToastContainer toasts={toast.toasts} onClose={toast.removeToast} />
     </div>
   );
 }

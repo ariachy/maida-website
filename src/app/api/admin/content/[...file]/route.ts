@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateSession } from '@/lib/auth';
+import { revalidatePath } from 'next/cache';
 import { promises as fs } from 'fs';
 import path from 'path';
 
@@ -19,7 +20,7 @@ const DATA_DIR = path.join(process.cwd(), 'src', 'data');
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { file: string[] } }
+  { params }: { params: Promise<{ file: string[] }> }
 ) {
   try {
     // Validate session
@@ -32,7 +33,8 @@ export async function GET(
     }
 
     // Get file path from params
-    const filePath = params.file.join('/');
+    const { file } = await params;
+    const filePath = file.join('/');
     
     // Validate file is allowed
     if (!ALLOWED_FILES.includes(filePath)) {
@@ -75,7 +77,7 @@ export async function GET(
  */
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { file: string[] } }
+  { params }: { params: Promise<{ file: string[] }> }
 ) {
   try {
     // Validate session
@@ -88,7 +90,8 @@ export async function PUT(
     }
 
     // Get file path from params
-    const filePath = params.file.join('/');
+    const { file } = await params;
+    const filePath = file.join('/');
     
     // Validate file is allowed
     if (!ALLOWED_FILES.includes(filePath)) {
@@ -140,6 +143,22 @@ export async function PUT(
     // Write new content with pretty formatting
     const newContent = JSON.stringify(data, null, 2);
     await fs.writeFile(fullPath, newContent, 'utf-8');
+
+    // CRITICAL: Revalidate cache so changes appear on the public site
+    // This tells Next.js to regenerate pages that depend on this data
+    try {
+      // Revalidate all locale-based pages
+      revalidatePath('/en', 'layout');
+      revalidatePath('/pt', 'layout');
+      
+      // Also revalidate the root layout to catch everything
+      revalidatePath('/', 'layout');
+      
+      console.log('Cache revalidated for all pages');
+    } catch (revalidateError) {
+      console.warn('Cache revalidation warning:', revalidateError);
+      // Don't fail the request if revalidation has issues
+    }
 
     return NextResponse.json({
       success: true,

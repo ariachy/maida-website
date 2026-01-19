@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import LanguageTabs from '@/components/admin/LanguageTabs';
+import ContentField from '@/components/admin/ContentField';
 import { ToastContainer, useToast } from '@/components/admin/Toast';
 
 interface LocaleData {
@@ -85,7 +86,8 @@ export default function StoryEditorPage() {
     }
   };
 
-  const updateField = (path: string[], value: string) => {
+  // Memoized update function to prevent unnecessary re-renders
+  const updateField = useCallback((path: string[], value: string) => {
     const setData = activeLanguage === 'en' ? setEnData : setPtData;
     
     setData((prev) => {
@@ -104,9 +106,10 @@ export default function StoryEditorPage() {
     });
     
     setHasUnsavedChanges(true);
-  };
+  }, [activeLanguage]);
 
-  const getValue = (path: string[]): string => {
+  // Helper to get value from nested path
+  const getValue = useCallback((path: string[]): string => {
     const data = activeLanguage === 'en' ? enData : ptData;
     if (!data) return '';
     
@@ -115,8 +118,13 @@ export default function StoryEditorPage() {
       if (current === undefined || current === null) return '';
       current = current[key];
     }
-    return current || '';
-  };
+    return typeof current === 'string' ? current : '';
+  }, [activeLanguage, enData, ptData]);
+
+  // Helper to create onChange handler for a specific path
+  const createOnChange = useCallback((path: string[]) => {
+    return (value: string) => updateField(path, value);
+  }, [updateField]);
 
   if (loading) {
     return (
@@ -141,59 +149,6 @@ export default function StoryEditorPage() {
     { id: 'story', label: 'Introduction', description: 'Opening section with your concept' },
     { id: 'about', label: 'Our Journey', description: 'From Beirut to Lisboa + Founders' },
   ];
-
-  const Field = ({ 
-    label, 
-    description, 
-    path, 
-    multiline = false,
-    placeholder = '',
-    required = false
-  }: { 
-    label: string; 
-    description: string; 
-    path: string[];
-    multiline?: boolean;
-    placeholder?: string;
-    required?: boolean;
-  }) => {
-    const value = getValue(path);
-    const isEmpty = required && !value.trim();
-    
-    return (
-      <div className="mb-5">
-        <label className="block text-sm font-medium text-[#2C2C2C] mb-1">
-          {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
-        </label>
-        <p className="text-xs text-[#9CA3AF] mb-2">{description}</p>
-        {multiline ? (
-          <textarea
-            value={value}
-            onChange={(e) => updateField(path, e.target.value)}
-            placeholder={placeholder}
-            rows={3}
-            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#C4A484] text-sm resize-none ${
-              isEmpty ? 'border-red-300 bg-red-50' : 'border-[#D4C4B5]'
-            }`}
-          />
-        ) : (
-          <input
-            type="text"
-            value={value}
-            onChange={(e) => updateField(path, e.target.value)}
-            placeholder={placeholder}
-            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#C4A484] text-sm ${
-              isEmpty ? 'border-red-300 bg-red-50' : 'border-[#D4C4B5]'
-            }`}
-          />
-        )}
-        {isEmpty && (
-          <p className="text-xs text-red-500 mt-1">This field is required</p>
-        )}
-      </div>
-    );
-  };
 
   return (
     <div>
@@ -232,256 +187,281 @@ export default function StoryEditorPage() {
         </div>
       </div>
 
-      <div className="flex gap-6">
-        {/* Section Navigation */}
-        <div className="w-56 flex-shrink-0">
-          <div className="bg-white rounded-lg shadow-sm border border-[#E5E5E5] p-2">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => setActiveSection(section.id)}
-                className={`w-full text-left px-3 py-2.5 rounded-md transition-colors ${
-                  activeSection === section.id
-                    ? 'bg-[#C4A484]/10 text-[#C4A484]'
-                    : 'text-[#6B6B6B] hover:bg-[#F5F1EB]'
-                }`}
-              >
-                <span className="block text-sm font-medium">{section.label}</span>
-                <span className="block text-xs text-[#9CA3AF] mt-0.5">{section.description}</span>
-              </button>
-            ))}
-          </div>
-        </div>
+      {/* Language Tabs */}
+      <div className="mb-6">
+        <LanguageTabs
+          activeLanguage={activeLanguage}
+          onLanguageChange={setActiveLanguage}
+        />
+      </div>
 
-        {/* Editor Area */}
-        <div className="flex-1 bg-white rounded-lg shadow-sm border border-[#E5E5E5]">
-          <LanguageTabs activeLanguage={activeLanguage} onLanguageChange={setActiveLanguage} />
+      {/* Section Navigation */}
+      <div className="flex gap-2 mb-6">
+        {sections.map((section) => (
+          <button
+            key={section.id}
+            onClick={() => setActiveSection(section.id)}
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              activeSection === section.id
+                ? 'bg-[#C4A484] text-white'
+                : 'bg-white text-[#6B6B6B] hover:bg-[#F5F1EB]'
+            }`}
+          >
+            {section.label}
+          </button>
+        ))}
+      </div>
 
-          <div className="p-6">
-            {/* STORY INTRO SECTION */}
-            {activeSection === 'story' && (
-              <>
-                <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
-                  <h2 className="text-lg font-medium text-[#2C2C2C]">Introduction Section</h2>
-                  <p className="text-sm text-[#6B6B6B] mt-1">The opening text explaining what Maída is about</p>
-                </div>
+      {/* Content Area */}
+      <div className="bg-white rounded-lg shadow-sm border border-[#E5E5E5]">
+        <div className="p-6">
+          {/* STORY / INTRODUCTION SECTION */}
+          {activeSection === 'story' && (
+            <>
+              <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
+                <h2 className="text-lg font-medium text-[#2C2C2C]">Introduction Section</h2>
+                <p className="text-sm text-[#6B6B6B] mt-1">The opening text explaining what Maída is about</p>
+              </div>
 
-                <Field 
-                  label="Section Label" 
-                  description="Small hashtag label above title (e.g., '#FromOurRoots')"
-                  path={['story', 'label']}
-                  placeholder="#FromOurRoots"
-                />
+              <ContentField 
+                label="Section Label" 
+                description="Small hashtag label above title (e.g., '#FromOurRoots')"
+                value={getValue(['story', 'label'])}
+                onChange={createOnChange(['story', 'label'])}
+                placeholder="#FromOurRoots"
+              />
 
-                <div className="grid grid-cols-2 gap-4">
-                  <Field 
-                    label="Title (regular part)" 
-                    description="Normal text part of title"
-                    path={['story', 'title']}
-                    placeholder="Where every meal is"
-                    required
-                  />
-                  <Field 
-                    label="Title (highlighted part)" 
-                    description="Emphasized text in accent color"
-                    path={['story', 'titleHighlight']}
-                    placeholder="an invitation"
-                    required
-                  />
-                </div>
-
-                <Field 
-                  label="First Paragraph" 
-                  description="Opening statement about Maída"
-                  path={['story', 'text1']}
-                  multiline
-                  placeholder="Maída is more than a restaurant..."
+              <div className="grid grid-cols-2 gap-4">
+                <ContentField 
+                  label="Title (regular part)" 
+                  description="Normal text part of title"
+                  value={getValue(['story', 'title'])}
+                  onChange={createOnChange(['story', 'title'])}
+                  placeholder="Where every meal is"
                   required
                 />
-
-                <Field 
-                  label="Second Paragraph" 
-                  description="Explanation of the name and concept"
-                  path={['story', 'text2']}
-                  multiline
-                  placeholder="The word مائدة (ma'ida) means..."
+                <ContentField 
+                  label="Title (highlighted part)" 
+                  description="Emphasized text in accent color"
+                  value={getValue(['story', 'titleHighlight'])}
+                  onChange={createOnChange(['story', 'titleHighlight'])}
+                  placeholder="an invitation"
                   required
                 />
+              </div>
 
-                <Field 
+              <ContentField 
+                label="First Paragraph" 
+                description="Opening statement about Maída"
+                value={getValue(['story', 'text1'])}
+                onChange={createOnChange(['story', 'text1'])}
+                multiline
+                placeholder="Maída is more than a restaurant..."
+                required
+              />
+
+              <ContentField 
+                label="Second Paragraph" 
+                description="Explanation of the name and concept"
+                value={getValue(['story', 'text2'])}
+                onChange={createOnChange(['story', 'text2'])}
+                multiline
+                placeholder="The word مائدة (ma'ida) means..."
+                required
+              />
+
+              <ContentField 
+                label="Button Text" 
+                description="Call-to-action (if used)"
+                value={getValue(['story', 'cta'])}
+                onChange={createOnChange(['story', 'cta'])}
+                placeholder="Read Our Story"
+              />
+
+              <div className="mt-6 mb-4">
+                <h3 className="text-sm font-medium text-[#2C2C2C] mb-3">Arabic Word Feature</h3>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <ContentField 
+                  label="Arabic Word" 
+                  description="The Arabic word displayed"
+                  value={getValue(['story', 'arabicWord'])}
+                  onChange={createOnChange(['story', 'arabicWord'])}
+                  placeholder="مائدة"
+                />
+                <ContentField 
+                  label="Arabic Meaning" 
+                  description="Translation of the Arabic word"
+                  value={getValue(['story', 'arabicMeaning'])}
+                  onChange={createOnChange(['story', 'arabicMeaning'])}
+                  placeholder="The Gathering Table"
+                />
+              </div>
+            </>
+          )}
+
+          {/* ABOUT / JOURNEY SECTION */}
+          {activeSection === 'about' && (
+            <>
+              <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
+                <h2 className="text-lg font-medium text-[#2C2C2C]">Our Journey - From Beirut to Lisboa</h2>
+                <p className="text-sm text-[#6B6B6B] mt-1">The story of how Maída came to be</p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-4">
+                <ContentField 
+                  label="Headline Word 1" 
+                  description="First word"
+                  value={getValue(['about', 'rootsHeadline1'])}
+                  onChange={createOnChange(['about', 'rootsHeadline1'])}
+                  placeholder="FROM"
+                />
+                <ContentField 
+                  label="Headline Word 2" 
+                  description="Second word"
+                  value={getValue(['about', 'rootsHeadline2'])}
+                  onChange={createOnChange(['about', 'rootsHeadline2'])}
+                  placeholder="BEIRUT TO"
+                />
+                <ContentField 
+                  label="Headline Word 3" 
+                  description="Third word"
+                  value={getValue(['about', 'rootsHeadline3'])}
+                  onChange={createOnChange(['about', 'rootsHeadline3'])}
+                  placeholder="LISBOA"
+                />
+              </div>
+
+              <ContentField 
+                label="Journey Text - Paragraph 1" 
+                description="About Lebanese dining culture"
+                value={getValue(['about', 'rootsText1'])}
+                onChange={createOnChange(['about', 'rootsText1'])}
+                multiline
+                placeholder="In Lebanon, meals are never rushed..."
+                required
+              />
+
+              <ContentField 
+                label="Journey Text - Paragraph 2" 
+                description="Discovery of Portuguese similarity"
+                value={getValue(['about', 'rootsText2'])}
+                onChange={createOnChange(['about', 'rootsText2'])}
+                multiline
+                placeholder="When we arrived in Lisbon..."
+                required
+              />
+
+              <ContentField 
+                label="Journey Text - Paragraph 3" 
+                description="What Maída represents"
+                value={getValue(['about', 'rootsText3'])}
+                onChange={createOnChange(['about', 'rootsText3'])}
+                multiline
+                placeholder="That's how two worlds became one..."
+                required
+              />
+
+              <div className="mt-6 mb-4 pt-4 border-t border-[#E5E5E5]">
+                <h3 className="text-sm font-medium text-[#2C2C2C] mb-3">Founders Section</h3>
+              </div>
+
+              <ContentField 
+                label="Section Label" 
+                description="Label above founders names"
+                value={getValue(['about', 'foundersLabel'])}
+                onChange={createOnChange(['about', 'foundersLabel'])}
+                placeholder="Who we are"
+              />
+
+              <div className="grid grid-cols-2 gap-4">
+                <ContentField 
+                  label="Founders Headline 1" 
+                  description="First part of names"
+                  value={getValue(['about', 'foundersHeadline1'])}
+                  onChange={createOnChange(['about', 'foundersHeadline1'])}
+                  placeholder="ANNA &"
+                />
+                <ContentField 
+                  label="Founders Headline 2" 
+                  description="Second part"
+                  value={getValue(['about', 'foundersHeadline2'])}
+                  onChange={createOnChange(['about', 'foundersHeadline2'])}
+                  placeholder="ANTHONY"
+                />
+              </div>
+
+              <ContentField 
+                label="About Anna" 
+                description="Description of Anna"
+                value={getValue(['about', 'foundersAnna'])}
+                onChange={createOnChange(['about', 'foundersAnna'])}
+                multiline
+                placeholder="is a culinary and animation director by heart..."
+                required
+              />
+
+              <ContentField 
+                label="About Anthony" 
+                description="Description of Anthony"
+                value={getValue(['about', 'foundersAnthony'])}
+                onChange={createOnChange(['about', 'foundersAnthony'])}
+                multiline
+                placeholder="is an electrical engineer and consultant by trade..."
+                required
+              />
+
+              <ContentField 
+                label="Their Story" 
+                description="How they started Maída"
+                value={getValue(['about', 'foundersStory'])}
+                onChange={createOnChange(['about', 'foundersStory'])}
+                multiline
+                placeholder="After opening The Happy Salad..."
+                required
+              />
+
+              <ContentField 
+                label="Today" 
+                description="Where they are now"
+                value={getValue(['about', 'foundersToday'])}
+                onChange={createOnChange(['about', 'foundersToday'])}
+                multiline
+                placeholder="Today, you'll find them where they belong..."
+                required
+              />
+
+              <div className="mt-6 mb-4 pt-4 border-t border-[#E5E5E5]">
+                <h3 className="text-sm font-medium text-[#2C2C2C] mb-3">Final Call-to-Action</h3>
+              </div>
+
+              <ContentField 
+                label="CTA Title" 
+                description="Main call-to-action text"
+                value={getValue(['about', 'ctaTitle'])}
+                onChange={createOnChange(['about', 'ctaTitle'])}
+                placeholder="Find your place at the table"
+              />
+
+              <div className="grid grid-cols-2 gap-4">
+                <ContentField 
+                  label="Hashtag" 
+                  description="Branded hashtag"
+                  value={getValue(['about', 'ctaHashtag'])}
+                  onChange={createOnChange(['about', 'ctaHashtag'])}
+                  placeholder="#MeetMeAtMaída"
+                />
+                <ContentField 
                   label="Button Text" 
-                  description="Call-to-action (if used)"
-                  path={['story', 'cta']}
-                  placeholder="Read Our Story"
+                  description="Reservation button"
+                  value={getValue(['about', 'ctaButton'])}
+                  onChange={createOnChange(['about', 'ctaButton'])}
+                  placeholder="Book a table"
                 />
-
-                <div className="mt-6 mb-4">
-                  <h3 className="text-sm font-medium text-[#2C2C2C] mb-3">Arabic Word Feature</h3>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <Field 
-                    label="Arabic Word" 
-                    description="The Arabic word displayed"
-                    path={['story', 'arabicWord']}
-                    placeholder="مائدة"
-                  />
-                  <Field 
-                    label="Arabic Meaning" 
-                    description="Translation of the Arabic word"
-                    path={['story', 'arabicMeaning']}
-                    placeholder="The Gathering Table"
-                  />
-                </div>
-              </>
-            )}
-
-            {/* ABOUT / JOURNEY SECTION */}
-            {activeSection === 'about' && (
-              <>
-                <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
-                  <h2 className="text-lg font-medium text-[#2C2C2C]">Our Journey - From Beirut to Lisboa</h2>
-                  <p className="text-sm text-[#6B6B6B] mt-1">The story of how Maída came to be</p>
-                </div>
-
-                <div className="grid grid-cols-3 gap-4">
-                  <Field 
-                    label="Headline Word 1" 
-                    description="First word"
-                    path={['about', 'rootsHeadline1']}
-                    placeholder="FROM"
-                  />
-                  <Field 
-                    label="Headline Word 2" 
-                    description="Second word"
-                    path={['about', 'rootsHeadline2']}
-                    placeholder="BEIRUT TO"
-                  />
-                  <Field 
-                    label="Headline Word 3" 
-                    description="Third word"
-                    path={['about', 'rootsHeadline3']}
-                    placeholder="LISBOA"
-                  />
-                </div>
-
-                <Field 
-                  label="Journey Text - Paragraph 1" 
-                  description="About Lebanese dining culture"
-                  path={['about', 'rootsText1']}
-                  multiline
-                  placeholder="In Lebanon, meals are never rushed..."
-                  required
-                />
-
-                <Field 
-                  label="Journey Text - Paragraph 2" 
-                  description="Discovery of Portuguese similarity"
-                  path={['about', 'rootsText2']}
-                  multiline
-                  placeholder="When we arrived in Lisbon..."
-                  required
-                />
-
-                <Field 
-                  label="Journey Text - Paragraph 3" 
-                  description="What Maída represents"
-                  path={['about', 'rootsText3']}
-                  multiline
-                  placeholder="That's how two worlds became one..."
-                  required
-                />
-
-                <div className="mt-6 mb-4 pt-4 border-t border-[#E5E5E5]">
-                  <h3 className="text-sm font-medium text-[#2C2C2C] mb-3">Founders Section</h3>
-                </div>
-
-                <Field 
-                  label="Section Label" 
-                  description="Label above founders names"
-                  path={['about', 'foundersLabel']}
-                  placeholder="Who we are"
-                />
-
-                <div className="grid grid-cols-2 gap-4">
-                  <Field 
-                    label="Founders Headline 1" 
-                    description="First part of names"
-                    path={['about', 'foundersHeadline1']}
-                    placeholder="ANNA &"
-                  />
-                  <Field 
-                    label="Founders Headline 2" 
-                    description="Second part"
-                    path={['about', 'foundersHeadline2']}
-                    placeholder="ANTHONY"
-                  />
-                </div>
-
-                <Field 
-                  label="About Anna" 
-                  description="Description of Anna"
-                  path={['about', 'foundersAnna']}
-                  multiline
-                  placeholder="is a culinary and animation director by heart..."
-                  required
-                />
-
-                <Field 
-                  label="About Anthony" 
-                  description="Description of Anthony"
-                  path={['about', 'foundersAnthony']}
-                  multiline
-                  placeholder="is an electrical engineer and consultant by trade..."
-                  required
-                />
-
-                <Field 
-                  label="Their Story" 
-                  description="How they started Maída"
-                  path={['about', 'foundersStory']}
-                  multiline
-                  placeholder="After opening The Happy Salad..."
-                  required
-                />
-
-                <Field 
-                  label="Today" 
-                  description="Where they are now"
-                  path={['about', 'foundersToday']}
-                  multiline
-                  placeholder="Today, you'll find them where they belong..."
-                  required
-                />
-
-                <div className="mt-6 mb-4 pt-4 border-t border-[#E5E5E5]">
-                  <h3 className="text-sm font-medium text-[#2C2C2C] mb-3">Final Call-to-Action</h3>
-                </div>
-
-                <Field 
-                  label="CTA Title" 
-                  description="Main call-to-action text"
-                  path={['about', 'ctaTitle']}
-                  placeholder="Find your place at the table"
-                />
-
-                <div className="grid grid-cols-2 gap-4">
-                  <Field 
-                    label="Hashtag" 
-                    description="Branded hashtag"
-                    path={['about', 'ctaHashtag']}
-                    placeholder="#MeetMeAtMaída"
-                  />
-                  <Field 
-                    label="Button Text" 
-                    description="Reservation button"
-                    path={['about', 'ctaButton']}
-                    placeholder="Book a table"
-                  />
-                </div>
-              </>
-            )}
-          </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
 

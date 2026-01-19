@@ -41,7 +41,7 @@ export default function Visit({ translations, locale }: VisitProps) {
           transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
         >
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3113.2051841654997!2d-9.145889823529052!3d38.70678895765498!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd193479e0e3a7c1%3A0x5c1b7e9a8a7b6c5d!2sRua%20da%20Boavista%2066%2C%201200-068%20Lisboa!5e0!3m2!1sen!2spt!4v1705000000000!5m2!1sen!2spt"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2849.8846023983865!2d-9.15119542455817!3d38.70891275780444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd193332b934a279%3A0x3191bb53cc89ae9!2sma%C3%ADda%20%7C%20Mediterranean%20Flavours%2C%20Lebanese%20Soul!5e1!3m2!1sen!2slb!4v1768845671958!5m2!1sen!2slb"
             width="100%"
             height="100%"
             style={{ border: 0 }}

@@ -1,66 +1,68 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import LanguageTabs from '@/components/admin/LanguageTabs';
-import { ToastContainer, useToast } from '@/components/admin/Toast';
+import ContentField from '@/components/admin/ContentField';
 
 interface LocaleData {
   [key: string]: any;
 }
 
 export default function ContactEditorPage() {
-  const toast = useToast();
-  
   const [enData, setEnData] = useState<LocaleData | null>(null);
   const [ptData, setPtData] = useState<LocaleData | null>(null);
+  const [activeLanguage, setActiveLanguage] = useState<'en' | 'pt'>('en');
+  const [activeSection, setActiveSection] = useState('header');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [activeLanguage, setActiveLanguage] = useState('en');
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [activeSection, setActiveSection] = useState('header');
+  const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
+  // Sections for navigation
+  const sections = [
+    { id: 'header', label: 'Page Header', description: 'Title and subtitle' },
+    { id: 'form', label: 'Contact Form', description: 'Form labels and messages' },
+    { id: 'info', label: 'Contact Info', description: 'Address, phone, email' },
+    { id: 'hours', label: 'Opening Hours', description: 'Schedule display' },
+  ];
+
+  // Load data on mount
   useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [enRes, ptRes] = await Promise.all([
+          fetch('/api/admin/content/locales/en.json'),
+          fetch('/api/admin/content/locales/pt.json'),
+        ]);
+
+        if (enRes.ok && ptRes.ok) {
+          const enJson = await enRes.json();
+          const ptJson = await ptRes.json();
+          setEnData(enJson.data);
+          setPtData(ptJson.data);
+        }
+      } catch (error) {
+        console.error('Failed to load data:', error);
+        showToast('error', 'Failed to load content');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     loadData();
   }, []);
 
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (hasUnsavedChanges) {
-        e.preventDefault();
-        e.returnValue = '';
-      }
-    };
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [hasUnsavedChanges]);
-
-  const loadData = async () => {
-    setLoading(true);
-    try {
-      const [enRes, ptRes] = await Promise.all([
-        fetch('/api/admin/content/locales/en.json'),
-        fetch('/api/admin/content/locales/pt.json'),
-      ]);
-
-      if (!enRes.ok || !ptRes.ok) throw new Error('Failed to load data');
-
-      const [enJson, ptJson] = await Promise.all([enRes.json(), ptRes.json()]);
-      setEnData(enJson.data);
-      setPtData(ptJson.data);
-    } catch (error) {
-      console.error('Load error:', error);
-      toast.error('Failed to load contact data');
-    } finally {
-      setLoading(false);
-    }
+  // Toast helper
+  const showToast = (type: 'success' | 'error', message: string) => {
+    setToast({ type, message });
+    setTimeout(() => setToast(null), 3000);
   };
 
+  // Save data
   const saveData = async () => {
-    if (!enData || !ptData) return;
-
     setSaving(true);
     try {
-      const results = await Promise.all([
+      const [enRes, ptRes] = await Promise.all([
         fetch('/api/admin/content/locales/en.json', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -73,139 +75,81 @@ export default function ContactEditorPage() {
         }),
       ]);
 
-      if (!results.every((r) => r.ok)) throw new Error('Failed to save');
-
-      setHasUnsavedChanges(false);
-      toast.success('Contact page saved successfully!');
+      if (enRes.ok && ptRes.ok) {
+        setHasUnsavedChanges(false);
+        showToast('success', 'Contact page saved successfully');
+      } else {
+        showToast('error', 'Failed to save changes');
+      }
     } catch (error) {
       console.error('Save error:', error);
-      toast.error('Failed to save contact page');
+      showToast('error', 'Failed to save contact page');
     } finally {
       setSaving(false);
     }
   };
 
-  const updateField = (path: string[], value: string) => {
+  // Memoized update function to prevent unnecessary re-renders
+  const updateField = useCallback((path: string[], value: string) => {
     const setData = activeLanguage === 'en' ? setEnData : setPtData;
-    
+
     setData((prev) => {
       if (!prev) return prev;
-      
+
       const newData = JSON.parse(JSON.stringify(prev));
       let current = newData;
-      
+
       for (let i = 0; i < path.length - 1; i++) {
         if (!current[path[i]]) current[path[i]] = {};
         current = current[path[i]];
       }
-      
+
       current[path[path.length - 1]] = value;
       return newData;
     });
-    
-    setHasUnsavedChanges(true);
-  };
 
-  const getValue = (path: string[]): string => {
+    setHasUnsavedChanges(true);
+  }, [activeLanguage]);
+
+  // Helper to get value from nested path
+  const getValue = useCallback((path: string[]): string => {
     const data = activeLanguage === 'en' ? enData : ptData;
     if (!data) return '';
-    
+
     let current: any = data;
     for (const key of path) {
       if (current === undefined || current === null) return '';
       current = current[key];
     }
-    return current || '';
-  };
+    return typeof current === 'string' ? current : '';
+  }, [activeLanguage, enData, ptData]);
 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#C4A484]" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#C4A484]"></div>
       </div>
     );
   }
-
-  if (!enData || !ptData) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-[#6B6B6B]">Failed to load data</p>
-        <button onClick={loadData} className="mt-4 px-4 py-2 bg-[#C4A484] text-white rounded-md">
-          Retry
-        </button>
-      </div>
-    );
-  }
-
-  const sections = [
-    { id: 'header', label: 'Page Header', description: 'Title and subtitle at top' },
-    { id: 'form', label: 'Contact Form', description: 'Form labels and messages' },
-    { id: 'subjects', label: 'Subject Options', description: 'Dropdown options for subject' },
-    { id: 'info', label: 'Contact Info', description: 'Address, phone, email' },
-    { id: 'hours', label: 'Opening Hours', description: 'Business hours display' },
-    { id: 'location', label: 'Location', description: 'Map section labels' },
-  ];
-
-  const Field = ({ 
-    label, 
-    description, 
-    path, 
-    multiline = false,
-    placeholder = '',
-    required = false
-  }: { 
-    label: string; 
-    description: string; 
-    path: string[];
-    multiline?: boolean;
-    placeholder?: string;
-    required?: boolean;
-  }) => {
-    const value = getValue(path);
-    const isEmpty = required && !value.trim();
-    
-    return (
-      <div className="mb-5">
-        <label className="block text-sm font-medium text-[#2C2C2C] mb-1">
-          {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
-        </label>
-        <p className="text-xs text-[#9CA3AF] mb-2">{description}</p>
-        {multiline ? (
-          <textarea
-            value={value}
-            onChange={(e) => updateField(path, e.target.value)}
-            placeholder={placeholder}
-            rows={3}
-            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#C4A484] text-sm resize-none ${
-              isEmpty ? 'border-red-300 bg-red-50' : 'border-[#D4C4B5]'
-            }`}
-          />
-        ) : (
-          <input
-            type="text"
-            value={value}
-            onChange={(e) => updateField(path, e.target.value)}
-            placeholder={placeholder}
-            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#C4A484] text-sm ${
-              isEmpty ? 'border-red-300 bg-red-50' : 'border-[#D4C4B5]'
-            }`}
-          />
-        )}
-        {isEmpty && (
-          <p className="text-xs text-red-500 mt-1">This field is required</p>
-        )}
-      </div>
-    );
-  };
 
   return (
     <div>
+      {/* Toast Notification */}
+      {toast && (
+        <div
+          className={`fixed top-4 right-4 z-50 px-4 py-3 rounded-lg shadow-lg ${
+            toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+          } text-white`}
+        >
+          {toast.message}
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-3xl font-serif text-[#2C2C2C]">Contact Page Editor</h1>
-          <p className="text-[#6B6B6B] mt-1">Edit the Contact page labels and information</p>
+          <h1 className="text-3xl font-serif text-[#2C2C2C]">Contact Editor</h1>
+          <p className="text-[#6B6B6B] mt-1">Edit the contact page content</p>
         </div>
         <div className="flex items-center gap-3">
           <a
@@ -270,8 +214,21 @@ export default function ContactEditorPage() {
                   <p className="text-sm text-[#6B6B6B] mt-1">Main title and subtitle at the top of the contact page</p>
                 </div>
 
-                <Field label="Page Title" description="Main heading (e.g., 'Get in Touch')" path={['contact', 'title']} placeholder="Get in Touch" required />
-                <Field label="Page Subtitle" description="Text below the title" path={['contact', 'subtitle']} placeholder="We'd love to hear from you" />
+                <ContentField
+                  label="Page Title"
+                  description="Main heading (e.g., 'Get in Touch')"
+                  value={getValue(['contact', 'title'])}
+                  onChange={(val) => updateField(['contact', 'title'], val)}
+                  placeholder="Get in Touch"
+                  required
+                />
+                <ContentField
+                  label="Page Subtitle"
+                  description="Text below the title"
+                  value={getValue(['contact', 'subtitle'])}
+                  onChange={(val) => updateField(['contact', 'subtitle'], val)}
+                  placeholder="We'd love to hear from you"
+                />
               </>
             )}
 
@@ -283,41 +240,78 @@ export default function ContactEditorPage() {
                   <p className="text-sm text-[#6B6B6B] mt-1">Labels and messages for the contact form</p>
                 </div>
 
-                <Field label="Form Title" description="Heading above the form" path={['contact', 'form', 'title']} placeholder="Send us a message" />
+                <ContentField
+                  label="Form Title"
+                  description="Heading above the form"
+                  value={getValue(['contact', 'form', 'title'])}
+                  onChange={(val) => updateField(['contact', 'form', 'title'], val)}
+                  placeholder="Send us a message"
+                />
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Name Field Label" description="Label for name input" path={['contact', 'form', 'name']} placeholder="Your name" />
-                  <Field label="Email Field Label" description="Label for email input" path={['contact', 'form', 'email']} placeholder="Email address" />
+                  <ContentField
+                    label="Name Field Label"
+                    description="Label for name input"
+                    value={getValue(['contact', 'form', 'name'])}
+                    onChange={(val) => updateField(['contact', 'form', 'name'], val)}
+                    placeholder="Your name"
+                  />
+                  <ContentField
+                    label="Email Field Label"
+                    description="Label for email input"
+                    value={getValue(['contact', 'form', 'email'])}
+                    onChange={(val) => updateField(['contact', 'form', 'email'], val)}
+                    placeholder="Email address"
+                  />
                 </div>
 
-                <Field label="Subject Field Label" description="Label for subject dropdown" path={['contact', 'form', 'subject']} placeholder="Subject" />
-                <Field label="Message Field Label" description="Label for message textarea" path={['contact', 'form', 'message']} placeholder="Message" />
-                <Field label="Message Placeholder" description="Placeholder text in the message field" path={['contact', 'form', 'placeholder']} placeholder="How can we help you?" />
+                <ContentField
+                  label="Subject Field Label"
+                  description="Label for subject dropdown"
+                  value={getValue(['contact', 'form', 'subject'])}
+                  onChange={(val) => updateField(['contact', 'form', 'subject'], val)}
+                  placeholder="Subject"
+                />
+                <ContentField
+                  label="Message Field Label"
+                  description="Label for message textarea"
+                  value={getValue(['contact', 'form', 'message'])}
+                  onChange={(val) => updateField(['contact', 'form', 'message'], val)}
+                  placeholder="Message"
+                />
+                <ContentField
+                  label="Message Placeholder"
+                  description="Placeholder text in the message field"
+                  value={getValue(['contact', 'form', 'placeholder'])}
+                  onChange={(val) => updateField(['contact', 'form', 'placeholder'], val)}
+                  placeholder="How can we help you?"
+                />
+                <ContentField
+                  label="Submit Button Text"
+                  description="Text on the send button"
+                  value={getValue(['contact', 'form', 'send'])}
+                  onChange={(val) => updateField(['contact', 'form', 'send'], val)}
+                  placeholder="Send Message"
+                />
 
-                <div className="grid grid-cols-2 gap-4">
-                  <Field label="Submit Button Text" description="Text on the send button" path={['contact', 'form', 'send']} placeholder="Send message" />
-                  <Field label="Sending State Text" description="Text while form is submitting" path={['contact', 'form', 'sending']} placeholder="Sending..." />
+                <div className="mt-6 mb-4 pt-4 border-t border-[#E5E5E5]">
+                  <h3 className="text-sm font-medium text-[#2C2C2C] mb-3">Form Messages</h3>
                 </div>
 
-                <Field label="Success Message" description="Shown after form is submitted successfully" path={['contact', 'form', 'success']} multiline placeholder="Thank you! Your message has been sent..." />
-                <Field label="Error Message" description="Shown if form submission fails" path={['contact', 'form', 'error']} placeholder="Something went wrong. Please try again." />
-              </>
-            )}
-
-            {/* SUBJECT OPTIONS */}
-            {activeSection === 'subjects' && (
-              <>
-                <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
-                  <h2 className="text-lg font-medium text-[#2C2C2C]">Subject Dropdown Options</h2>
-                  <p className="text-sm text-[#6B6B6B] mt-1">Options in the subject dropdown menu</p>
-                </div>
-
-                <Field label="Default Option (Placeholder)" description="First option prompting user to select" path={['contact', 'subjects', 'select']} placeholder="Select a topic" />
-                <Field label="Option 1 - General Inquiry" description="Option for general questions" path={['contact', 'subjects', 'general']} placeholder="General inquiry" />
-                <Field label="Option 2 - Large Group Reservation" description="Option for group bookings" path={['contact', 'subjects', 'reservation']} placeholder="Large group reservation (6+)" />
-                <Field label="Option 3 - Private Event" description="Option for event inquiries" path={['contact', 'subjects', 'event']} placeholder="Private event" />
-                <Field label="Option 4 - Feedback" description="Option for feedback" path={['contact', 'subjects', 'feedback']} placeholder="Feedback" />
-                <Field label="Option 5 - Other" description="Catch-all option" path={['contact', 'subjects', 'other']} placeholder="Other" />
+                <ContentField
+                  label="Success Message"
+                  description="Shown after successful submission"
+                  value={getValue(['contact', 'form', 'success'])}
+                  onChange={(val) => updateField(['contact', 'form', 'success'], val)}
+                  placeholder="Thank you! We'll be in touch soon."
+                />
+                <ContentField
+                  label="Error Message"
+                  description="Shown if submission fails"
+                  value={getValue(['contact', 'form', 'error'])}
+                  onChange={(val) => updateField(['contact', 'form', 'error'], val)}
+                  placeholder="Something went wrong. Please try again."
+                />
               </>
             )}
 
@@ -326,14 +320,75 @@ export default function ContactEditorPage() {
               <>
                 <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
                   <h2 className="text-lg font-medium text-[#2C2C2C]">Contact Information</h2>
-                  <p className="text-sm text-[#6B6B6B] mt-1">Your address, phone, and email details</p>
+                  <p className="text-sm text-[#6B6B6B] mt-1">Address, phone, and email displayed on the page</p>
                 </div>
 
-                <Field label="Section Title" description="Heading for contact info section" path={['contact', 'info', 'title']} placeholder="Contact" />
-                <Field label="Street Address" description="Your street address" path={['contact', 'info', 'address']} placeholder="Rua da Boavista 66" />
-                <Field label="City & Postal Code" description="City and postal code" path={['contact', 'info', 'city']} placeholder="1200-067 Lisboa" />
-                <Field label="Phone Number" description="Contact phone number" path={['contact', 'info', 'phone']} placeholder="+351 961 111 383" />
-                <Field label="Email Address" description="Contact email" path={['contact', 'info', 'email']} placeholder="info@maida.pt" />
+                <ContentField
+                  label="Info Section Title"
+                  description="Heading for contact info section"
+                  value={getValue(['contact', 'info', 'title'])}
+                  onChange={(val) => updateField(['contact', 'info', 'title'], val)}
+                  placeholder="Contact Information"
+                />
+
+                <div className="mt-4 mb-4">
+                  <h3 className="text-sm font-medium text-[#2C2C2C] mb-3">Address</h3>
+                </div>
+
+                <ContentField
+                  label="Address Label"
+                  description="Label for address section"
+                  value={getValue(['contact', 'info', 'addressLabel'])}
+                  onChange={(val) => updateField(['contact', 'info', 'addressLabel'], val)}
+                  placeholder="Address"
+                />
+                <ContentField
+                  label="Street Address"
+                  description="Street and number"
+                  value={getValue(['contact', 'info', 'address', 'street'])}
+                  onChange={(val) => updateField(['contact', 'info', 'address', 'street'], val)}
+                  placeholder="Rua da Boavista 66"
+                />
+                <ContentField
+                  label="City"
+                  description="City and area"
+                  value={getValue(['contact', 'info', 'address', 'city'])}
+                  onChange={(val) => updateField(['contact', 'info', 'address', 'city'], val)}
+                  placeholder="Cais do Sodré, Lisboa"
+                />
+
+                <div className="mt-6 mb-4">
+                  <h3 className="text-sm font-medium text-[#2C2C2C] mb-3">Phone & Email</h3>
+                </div>
+
+                <ContentField
+                  label="Phone Label"
+                  description="Label for phone number"
+                  value={getValue(['contact', 'info', 'phoneLabel'])}
+                  onChange={(val) => updateField(['contact', 'info', 'phoneLabel'], val)}
+                  placeholder="Phone"
+                />
+                <ContentField
+                  label="Phone Number"
+                  description="Restaurant phone number"
+                  value={getValue(['contact', 'info', 'phone'])}
+                  onChange={(val) => updateField(['contact', 'info', 'phone'], val)}
+                  placeholder="+351 XXX XXX XXX"
+                />
+                <ContentField
+                  label="Email Label"
+                  description="Label for email address"
+                  value={getValue(['contact', 'info', 'emailLabel'])}
+                  onChange={(val) => updateField(['contact', 'info', 'emailLabel'], val)}
+                  placeholder="Email"
+                />
+                <ContentField
+                  label="Email Address"
+                  description="Restaurant email"
+                  value={getValue(['contact', 'info', 'email'])}
+                  onChange={(val) => updateField(['contact', 'info', 'email'], val)}
+                  placeholder="hello@maida.pt"
+                />
               </>
             )}
 
@@ -342,36 +397,71 @@ export default function ContactEditorPage() {
               <>
                 <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
                   <h2 className="text-lg font-medium text-[#2C2C2C]">Opening Hours</h2>
-                  <p className="text-sm text-[#6B6B6B] mt-1">Business hours displayed on contact page</p>
+                  <p className="text-sm text-[#6B6B6B] mt-1">Schedule displayed on the contact page</p>
                 </div>
 
-                <Field label="Section Title" description="Heading for hours section" path={['contact', 'hours', 'title']} placeholder="Opening Hours" />
-                <Field label="Closed Days Label" description="Word for 'Closed'" path={['contact', 'hours', 'closedText']} placeholder="Closed" />
-                <Field label="Monday-Tuesday Hours" description="Hours for closed days" path={['contact', 'hours', 'closed']} placeholder="Monday - Tuesday: Closed" />
-                <Field label="Midweek Hours" description="Wed/Thu/Sun hours" path={['contact', 'hours', 'midweek']} placeholder="Wed, Thu, Sun: 12:30 - 23:00" />
-                <Field label="Midweek Kitchen Note" description="Kitchen closing for midweek" path={['contact', 'hours', 'midweekKitchen']} placeholder="Kitchen closes 22:30" />
-                <Field label="Weekend Hours" description="Fri/Sat hours" path={['contact', 'hours', 'weekend']} placeholder="Fri - Sat: 12:30 - 01:00" />
-                <Field label="Weekend Kitchen Note" description="Kitchen closing for weekend" path={['contact', 'hours', 'weekendKitchen']} placeholder="Kitchen closes 23:30" />
-              </>
-            )}
+                <ContentField
+                  label="Hours Section Title"
+                  description="Heading for hours section"
+                  value={getValue(['contact', 'hours', 'title'])}
+                  onChange={(val) => updateField(['contact', 'hours', 'title'], val)}
+                  placeholder="Opening Hours"
+                />
 
-            {/* LOCATION */}
-            {activeSection === 'location' && (
-              <>
-                <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
-                  <h2 className="text-lg font-medium text-[#2C2C2C]">Location Section</h2>
-                  <p className="text-sm text-[#6B6B6B] mt-1">Map section labels</p>
-                </div>
-
-                <Field label="Section Title" description="Heading above the map" path={['contact', 'location', 'title']} placeholder="Location" />
-                <Field label="Directions Link Text" description="Text for Google Maps link" path={['contact', 'location', 'directions']} placeholder="Get Directions →" />
+                <ContentField
+                  label="Monday"
+                  description="Monday hours or 'Closed'"
+                  value={getValue(['contact', 'hours', 'monday'])}
+                  onChange={(val) => updateField(['contact', 'hours', 'monday'], val)}
+                  placeholder="Closed"
+                />
+                <ContentField
+                  label="Tuesday"
+                  description="Tuesday hours or 'Closed'"
+                  value={getValue(['contact', 'hours', 'tuesday'])}
+                  onChange={(val) => updateField(['contact', 'hours', 'tuesday'], val)}
+                  placeholder="Closed"
+                />
+                <ContentField
+                  label="Wednesday"
+                  description="Wednesday hours"
+                  value={getValue(['contact', 'hours', 'wednesday'])}
+                  onChange={(val) => updateField(['contact', 'hours', 'wednesday'], val)}
+                  placeholder="12:30 – 23:00"
+                />
+                <ContentField
+                  label="Thursday"
+                  description="Thursday hours"
+                  value={getValue(['contact', 'hours', 'thursday'])}
+                  onChange={(val) => updateField(['contact', 'hours', 'thursday'], val)}
+                  placeholder="12:30 – 23:00"
+                />
+                <ContentField
+                  label="Friday"
+                  description="Friday hours"
+                  value={getValue(['contact', 'hours', 'friday'])}
+                  onChange={(val) => updateField(['contact', 'hours', 'friday'], val)}
+                  placeholder="12:30 – 01:00"
+                />
+                <ContentField
+                  label="Saturday"
+                  description="Saturday hours"
+                  value={getValue(['contact', 'hours', 'saturday'])}
+                  onChange={(val) => updateField(['contact', 'hours', 'saturday'], val)}
+                  placeholder="12:30 – 01:00"
+                />
+                <ContentField
+                  label="Sunday"
+                  description="Sunday hours"
+                  value={getValue(['contact', 'hours', 'sunday'])}
+                  onChange={(val) => updateField(['contact', 'hours', 'sunday'], val)}
+                  placeholder="12:30 – 23:00"
+                />
               </>
             )}
           </div>
         </div>
       </div>
-
-      <ToastContainer toasts={toast.toasts} onClose={toast.removeToast} />
     </div>
   );
 }

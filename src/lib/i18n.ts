@@ -1,6 +1,6 @@
 // Supported languages - LIMITED TO EN/PT FOR NOW
 export const locales = ['en', 'pt'] as const;
-export type Locale = typeof locales[number];
+export type Locale = (typeof locales)[number];
 
 export const defaultLocale: Locale = 'en';
 
@@ -25,17 +25,17 @@ function normalizeValue(value: any): any {
   if (value === null || value === undefined) {
     return value;
   }
-  
+
   // Strings pass through
   if (typeof value === 'string') {
     return value;
   }
-  
+
   // Arrays: normalize each item
   if (Array.isArray(value)) {
-    return value.map(item => normalizeValue(item));
+    return value.map((item) => normalizeValue(item));
   }
-  
+
   // Objects: check for {label, value} format or recurse
   if (typeof value === 'object') {
     // Handle {label, value} format - extract the string
@@ -45,7 +45,7 @@ function normalizeValue(value: any): any {
     if ('label' in value && typeof value.label === 'string') {
       return value.label;
     }
-    
+
     // Regular nested object - recurse
     const normalized: Record<string, any> = {};
     for (const key in value) {
@@ -55,7 +55,7 @@ function normalizeValue(value: any): any {
     }
     return normalized;
   }
-  
+
   // Numbers, booleans, etc. pass through
   return value;
 }
@@ -65,20 +65,25 @@ export function getNestedValue(obj: any, path: string): string {
   const value = path.split('.').reduce((current, key) => {
     return current && current[key] !== undefined ? current[key] : path;
   }, obj);
-  
+
   // Normalize in case it's an object
   const normalized = normalizeValue(value);
   return typeof normalized === 'string' ? normalized : path;
 }
 
-// Load translations for a locale
-export async function loadTranslations(locale: Locale): Promise<Record<string, any>> {
+/**
+ * Load translations for a locale
+ * IMPORTANT: Uses dynamic import() which works in both server and client contexts
+ * Do NOT use 'fs' module here as this file is imported by client components
+ */
+export async function loadTranslations(
+  locale: Locale
+): Promise<Record<string, any>> {
   try {
-    // In a real app, this would fetch from an API
-    // For now, we import the JSON files
+    // Use dynamic import - works in both server and client contexts
     const translations = await import(`@/data/locales/${locale}.json`);
     const raw = translations.default || translations;
-    
+
     // CRITICAL FIX: Normalize all values to handle {label, value} format
     return normalizeValue(raw);
   } catch (error) {
@@ -100,11 +105,11 @@ export function isValidLocale(locale: string): locale is Locale {
 export function getLocaleFromPathname(pathname: string): Locale {
   const segments = pathname.split('/').filter(Boolean);
   const potentialLocale = segments[0];
-  
+
   if (potentialLocale && isValidLocale(potentialLocale)) {
     return potentialLocale;
   }
-  
+
   return defaultLocale;
 }
 
@@ -112,11 +117,11 @@ export function getLocaleFromPathname(pathname: string): Locale {
 export function removeLocaleFromPathname(pathname: string): string {
   const segments = pathname.split('/').filter(Boolean);
   const potentialLocale = segments[0];
-  
+
   if (potentialLocale && isValidLocale(potentialLocale)) {
     return '/' + segments.slice(1).join('/') || '/';
   }
-  
+
   return pathname;
 }
 
@@ -127,11 +132,17 @@ export function addLocaleToPathname(pathname: string, locale: Locale): string {
 }
 
 // Get alternate URLs for all locales (for SEO)
-export function getAlternateUrls(pathname: string, baseUrl: string): Record<Locale, string> {
+export function getAlternateUrls(
+  pathname: string,
+  baseUrl: string
+): Record<Locale, string> {
   const cleanPath = removeLocaleFromPathname(pathname);
-  
-  return locales.reduce((acc, locale) => {
-    acc[locale] = `${baseUrl}/${locale}${cleanPath === '/' ? '' : cleanPath}`;
-    return acc;
-  }, {} as Record<Locale, string>);
+
+  return locales.reduce(
+    (acc, locale) => {
+      acc[locale] = `${baseUrl}/${locale}${cleanPath === '/' ? '' : cleanPath}`;
+      return acc;
+    },
+    {} as Record<Locale, string>
+  );
 }

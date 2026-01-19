@@ -26,7 +26,7 @@ const IMAGE_USAGE_MAP: Record<string, string[]> = {
   '/images/hero/maida-bar.webp': ['Contact Page Hero'],
   '/images/hero/maida-saj-setup.webp': ['SAJ Page Hero'],
   '/images/hero/maida-sign.webp': ['Story Page'],
-  
+
   // Food images
   '/images/food/halloumi.webp': ['Menu - To Start', 'Homepage Menu Highlights'],
   '/images/food/hummus.webp': ['Menu - To Start'],
@@ -38,33 +38,34 @@ const IMAGE_USAGE_MAP: Record<string, string[]> = {
   '/images/food/shish-barak.webp': ['Menu - Mains'],
   '/images/food/feta-brulee.webp': ['Menu - To Start'],
   '/images/food/gratin.webp': ['Menu - Mains'],
-  
+
   // Drinks images
   '/images/drinks/zhourat-tea.webp': ['Menu - Hot Drinks', 'Coffee & Tea Page'],
   '/images/drinks/coffee-cortado.webp': ['Coffee & Tea Page'],
   '/images/drinks/manhattan.webp': ['Menu - Cocktails'],
   '/images/drinks/bartender.webp': ['Maída Live Page'],
-  
+
   // Atmosphere images
   '/images/atmosphere/dj.webp': ['Maída Live Page'],
   '/images/atmosphere/gathering-table.webp': ['Homepage Story Section'],
   '/images/atmosphere/private-event.webp': ['Maída Live - Private Events'],
-  
+
   // About images
   '/images/about/anna-anthony.webp': ['Story Page - Founders'],
-  
-  // SAJ images
-  '/images/saj/wraps.webp': ['SAJ Page', 'Menu - SAJ Section'],
-  '/images/saj/dough-ball.webp': ['SAJ Page'],
-  
-  // Brand images
-  '/images/brand/logo.svg': ['Navbar', 'Footer', 'Favicon'],
-  '/images/brand/emblem.svg': ['Page Loader'],
 };
+
+// Ensure uploads directory exists
+async function ensureUploadDir() {
+  try {
+    await fs.access(UPLOAD_DIR);
+  } catch {
+    await fs.mkdir(UPLOAD_DIR, { recursive: true });
+  }
+}
 
 /**
  * POST /api/admin/upload
- * Upload and optimize an image
+ * Upload a new image or replace an existing one
  */
 export async function POST(request: NextRequest) {
   try {
@@ -77,10 +78,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get form data
+    // Ensure uploads directory exists
+    await ensureUploadDir();
+
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
-    const folder = (formData.get('folder') as string) || 'general';
+    const folder = formData.get('folder') as string | null;
     const replacePath = formData.get('replacePath') as string | null;
 
     if (!file) {
@@ -93,7 +96,7 @@ export async function POST(request: NextRequest) {
     // Validate file type
     if (!ALLOWED_TYPES.includes(file.type)) {
       return NextResponse.json(
-        { success: false, error: 'Invalid file type. Allowed: JPEG, PNG, WebP, GIF' },
+        { success: false, error: 'Invalid file type. Allowed: JPG, PNG, WebP, GIF' },
         { status: 400 }
       );
     }
@@ -101,156 +104,118 @@ export async function POST(request: NextRequest) {
     // Validate file size
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
-        { success: false, error: 'File too large. Maximum size: 5MB' },
+        { success: false, error: 'File too large. Maximum: 5MB' },
         { status: 400 }
       );
     }
 
-    // Read file buffer
+    // Convert file to buffer
     const buffer = Buffer.from(await file.arrayBuffer());
 
     // If replacing an existing image
     if (replacePath) {
-      // Security check
-      if (replacePath.includes('..') || (!replacePath.startsWith('/images/') && !replacePath.startsWith('/uploads/'))) {
+      // Security: prevent path traversal
+      if (replacePath.includes('..')) {
         return NextResponse.json(
-          { success: false, error: 'Invalid replace path' },
+          { success: false, error: 'Invalid path' },
           { status: 400 }
         );
       }
 
-      const fullPath = path.join(PUBLIC_DIR, replacePath);
-      const ext = path.extname(replacePath).toLowerCase();
+      const targetPath = path.join(PUBLIC_DIR, replacePath);
 
-      // Process and replace the image
-      if (ext === '.webp') {
-        await sharp(buffer)
-          .webp({ quality: 85 })
-          .resize(IMAGE_SIZES.large.width, IMAGE_SIZES.large.height, {
-            fit: 'inside',
-            withoutEnlargement: true,
-          })
-          .toFile(fullPath);
-      } else if (ext === '.jpg' || ext === '.jpeg') {
-        await sharp(buffer)
-          .jpeg({ quality: 85 })
-          .resize(IMAGE_SIZES.large.width, IMAGE_SIZES.large.height, {
-            fit: 'inside',
-            withoutEnlargement: true,
-          })
-          .toFile(fullPath);
-      } else if (ext === '.png') {
-        await sharp(buffer)
-          .png({ quality: 85 })
-          .resize(IMAGE_SIZES.large.width, IMAGE_SIZES.large.height, {
-            fit: 'inside',
-            withoutEnlargement: true,
-          })
-          .toFile(fullPath);
-      } else {
-        // For other formats, just write the buffer
-        await fs.writeFile(fullPath, buffer);
-      }
-
-      // Get updated file info
-      const stats = await fs.stat(fullPath);
-      let metadata;
-      try {
-        metadata = await sharp(fullPath).metadata();
-      } catch {
-        metadata = {};
-      }
+      // Optimize and save
+      await sharp(buffer)
+        .resize(IMAGE_SIZES.large.width, IMAGE_SIZES.large.height, {
+          fit: 'inside',
+          withoutEnlargement: true,
+        })
+        .webp({ quality: 85 })
+        .toFile(targetPath);
 
       return NextResponse.json({
         success: true,
-        replaced: true,
-        file: {
-          filename: path.basename(replacePath),
-          path: replacePath,
-          size: stats.size,
-          width: metadata.width,
-          height: metadata.height,
-          uploadedAt: new Date().toISOString(),
-        },
+        path: replacePath,
+        message: 'Image replaced successfully',
       });
     }
 
-    // New upload - determine target directory
-    const isImagesFolder = folder.startsWith('images/') || ['hero', 'food', 'drinks', 'atmosphere', 'about', 'saj', 'brand', 'catering', '404', 'home'].includes(folder);
-    const baseDir = isImagesFolder ? IMAGES_DIR : UPLOAD_DIR;
-    const subFolder = isImagesFolder ? folder.replace('images/', '') : folder;
-    const uploadPath = path.join(baseDir, subFolder);
+    // New upload
+    const targetFolder = folder || 'general';
+    const folderPath = path.join(UPLOAD_DIR, targetFolder);
 
-    // Create directory if needed
-    await fs.mkdir(uploadPath, { recursive: true });
+    // Create folder if it doesn't exist
+    try {
+      await fs.access(folderPath);
+    } catch {
+      await fs.mkdir(folderPath, { recursive: true });
+    }
 
     // Generate unique filename
-    const ext = 'webp'; // Always convert to WebP for new uploads
-    const uniqueId = randomUUID().split('-')[0];
-    const originalName = file.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9-_]/g, '-');
-    const filename = `${originalName}-${uniqueId}.${ext}`;
-    const filepath = path.join(uploadPath, filename);
+    const ext = '.webp'; // Always save as WebP
+    const filename = `${randomUUID()}${ext}`;
+    const filePath = path.join(folderPath, filename);
+    const thumbPath = path.join(folderPath, `${randomUUID()}-thumb${ext}`);
 
-    // Process with Sharp - optimize and convert to WebP
+    // Optimize and save main image
     await sharp(buffer)
-      .webp({ quality: 85 })
       .resize(IMAGE_SIZES.large.width, IMAGE_SIZES.large.height, {
         fit: 'inside',
         withoutEnlargement: true,
       })
-      .toFile(filepath);
+      .webp({ quality: 85 })
+      .toFile(filePath);
 
-    // Generate thumbnail
-    const thumbFilename = `${originalName}-${uniqueId}-thumb.${ext}`;
-    const thumbPath = path.join(uploadPath, thumbFilename);
-    
+    // Create thumbnail
     await sharp(buffer)
-      .webp({ quality: 80 })
       .resize(IMAGE_SIZES.thumbnail.width, IMAGE_SIZES.thumbnail.height, {
         fit: 'cover',
       })
+      .webp({ quality: 70 })
       .toFile(thumbPath);
 
-    // Get file info
-    const stats = await fs.stat(filepath);
-    const metadata = await sharp(filepath).metadata();
+    // Return the web path
+    const webPath = `/uploads/${targetFolder}/${filename}`;
 
-    // Determine the public path
-    const publicPath = isImagesFolder 
-      ? `/images/${subFolder}/${filename}`
-      : `/uploads/${subFolder}/${filename}`;
-    const thumbPublicPath = isImagesFolder
-      ? `/images/${subFolder}/${thumbFilename}`
-      : `/uploads/${subFolder}/${thumbFilename}`;
-
-    // Return success with file info
     return NextResponse.json({
       success: true,
-      file: {
-        filename,
-        originalName: file.name,
-        path: publicPath,
-        thumbnailPath: thumbPublicPath,
-        size: stats.size,
-        width: metadata.width,
-        height: metadata.height,
-        type: 'image/webp',
-        folder: subFolder,
-        uploadedAt: new Date().toISOString(),
-      },
+      path: webPath,
+      message: 'Image uploaded successfully',
     });
   } catch (error) {
     console.error('Upload error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to upload file' },
+      { success: false, error: 'Failed to upload image' },
       { status: 500 }
     );
   }
 }
 
+// Helper to get unique folders from images
+function getUniqueFolders(images: ImageInfo[]): string[] {
+  const folders = new Set<string>();
+  images.forEach((img) => {
+    if (img.folder) folders.add(img.folder);
+  });
+  return Array.from(folders).sort();
+}
+
+interface ImageInfo {
+  filename: string;
+  path: string;
+  thumbnailPath: string | null;
+  folder: string;
+  size: number;
+  width?: number;
+  height?: number;
+  uploadedAt: string;
+  usedIn?: string[];
+  isSystemImage: boolean;
+}
+
 /**
  * GET /api/admin/upload
- * List all images from both /images and /uploads directories
+ * List all images (both system images from /images and uploaded from /uploads)
  */
 export async function GET(request: NextRequest) {
   try {
@@ -263,36 +228,33 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { searchParams } = new URL(request.url);
-    const source = searchParams.get('source') || 'all'; // 'all', 'images', 'uploads'
+    // Ensure uploads directory exists
+    await ensureUploadDir();
 
     const images: ImageInfo[] = [];
 
-    // Get images from /images directory
-    if (source === 'all' || source === 'images') {
-      const imagesFromDir = await getImagesFromDirectory(IMAGES_DIR, '/images');
-      images.push(...imagesFromDir);
-    }
+    // Get system images from /images
+    const systemImages = await getImagesFromDirectory(IMAGES_DIR, '/images');
+    systemImages.forEach((img) => {
+      img.isSystemImage = true;
+      img.usedIn = IMAGE_USAGE_MAP[img.path] || [];
+    });
+    images.push(...systemImages);
 
-    // Get images from /uploads directory
-    if (source === 'all' || source === 'uploads') {
-      try {
-        await fs.mkdir(UPLOAD_DIR, { recursive: true });
-      } catch {
-        // Directory might already exist
-      }
-      const uploadsFromDir = await getImagesFromDirectory(UPLOAD_DIR, '/uploads');
-      images.push(...uploadsFromDir);
-    }
+    // Get uploaded images from /uploads
+    const uploadedImages = await getImagesFromDirectory(UPLOAD_DIR, '/uploads');
+    uploadedImages.forEach((img) => {
+      img.isSystemImage = false;
+    });
+    images.push(...uploadedImages);
 
-    // Add usage information
-    const imagesWithUsage = images.map(img => ({
+    // Add usage info to images
+    const imagesWithUsage = images.map((img) => ({
       ...img,
-      usedIn: IMAGE_USAGE_MAP[img.path] || [],
-      isSystemImage: img.path.startsWith('/images/'),
+      usedIn: IMAGE_USAGE_MAP[img.path] || img.usedIn || [],
     }));
 
-    // Sort: images folder first, then by folder, then by filename
+    // Sort: system images first (by folder), then uploads
     imagesWithUsage.sort((a, b) => {
       if (a.isSystemImage !== b.isSystemImage) return a.isSystemImage ? -1 : 1;
       if (a.folder !== b.folder) return a.folder.localeCompare(b.folder);
@@ -341,7 +303,10 @@ export async function DELETE(request: NextRequest) {
     // Security: only allow deleting from /uploads, not /images (system images)
     if (!imagePath.startsWith('/uploads/')) {
       return NextResponse.json(
-        { success: false, error: 'Cannot delete system images. Use replace instead.' },
+        { 
+          success: false, 
+          error: 'Cannot delete system images from /images folder. Use "Replace Image" instead to update them.' 
+        },
         { status: 400 }
       );
     }
@@ -356,14 +321,14 @@ export async function DELETE(request: NextRequest) {
 
     // Build full path
     const fullPath = path.join(PUBLIC_DIR, imagePath);
-    
+
     // Normalize and verify it's within uploads directory
     const normalizedPath = path.normalize(fullPath);
     const normalizedUploadDir = path.normalize(UPLOAD_DIR);
-    
+
     if (!normalizedPath.startsWith(normalizedUploadDir)) {
       return NextResponse.json(
-        { success: false, error: 'Invalid path' },
+        { success: false, error: 'Invalid path - must be within uploads directory' },
         { status: 400 }
       );
     }
@@ -373,48 +338,90 @@ export async function DELETE(request: NextRequest) {
       await fs.access(fullPath);
     } catch {
       return NextResponse.json(
-        { success: false, error: 'File not found' },
+        { success: false, error: `File not found: ${imagePath}` },
         { status: 404 }
       );
     }
 
+    // Helper function to delete with retry (handles Windows file locking)
+    const deleteWithRetry = async (filePath: string, maxRetries = 3): Promise<void> => {
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          await fs.unlink(filePath);
+          return; // Success
+        } catch (err: any) {
+          if (err.code === 'EBUSY' && attempt < maxRetries) {
+            // Wait a bit and retry (file might be locked by image optimization)
+            await new Promise(resolve => setTimeout(resolve, 500 * attempt));
+            continue;
+          }
+          throw err;
+        }
+      }
+    };
+
     // Delete main file
-    await fs.unlink(fullPath);
+    try {
+      await deleteWithRetry(fullPath);
+    } catch (err: any) {
+      if (err.code === 'EBUSY') {
+        return NextResponse.json(
+          { 
+            success: false, 
+            error: 'File is currently in use. Please close any image previews and try again, or restart the dev server.' 
+          },
+          { status: 409 }
+        );
+      }
+      throw err;
+    }
 
     // Try to delete thumbnail if exists
     const ext = path.extname(fullPath);
     const thumbPath = fullPath.replace(ext, `-thumb${ext}`);
     try {
       await fs.access(thumbPath);
-      await fs.unlink(thumbPath);
+      await deleteWithRetry(thumbPath);
     } catch {
-      // Thumbnail might not exist
+      // Thumbnail might not exist or is locked, that's okay
     }
 
     return NextResponse.json({
       success: true,
-      message: 'Image deleted',
+      message: 'Image deleted successfully',
     });
   } catch (error) {
     console.error('Delete error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to delete image' },
+      { success: false, error: `Failed to delete image: ${error instanceof Error ? error.message : 'Unknown error'}` },
       { status: 500 }
     );
   }
 }
 
 // Helper function to get images from a directory
-async function getImagesFromDirectory(baseDir: string, basePath: string): Promise<ImageInfo[]> {
+async function getImagesFromDirectory(
+  baseDir: string,
+  basePath: string
+): Promise<ImageInfo[]> {
   const images: ImageInfo[] = [];
 
   async function scanDirectory(dir: string, relativePath: string) {
+    try {
+      await fs.access(dir);
+    } catch {
+      // Directory doesn't exist, return empty
+      return;
+    }
+
     try {
       const entries = await fs.readdir(dir, { withFileTypes: true });
 
       for (const entry of entries) {
         const fullEntryPath = path.join(dir, entry.name);
-        const entryRelativePath = relativePath ? `${relativePath}/${entry.name}` : entry.name;
+        const entryRelativePath = relativePath
+          ? `${relativePath}/${entry.name}`
+          : entry.name;
 
         if (entry.isDirectory()) {
           await scanDirectory(fullEntryPath, entryRelativePath);
@@ -422,7 +429,7 @@ async function getImagesFromDirectory(baseDir: string, basePath: string): Promis
           const ext = path.extname(entry.name).toLowerCase();
           if (['.webp', '.jpg', '.jpeg', '.png', '.gif', '.svg'].includes(ext)) {
             const stats = await fs.stat(fullEntryPath);
-            
+
             // Try to get dimensions (skip for SVG)
             let width: number | undefined;
             let height: number | undefined;
@@ -437,7 +444,10 @@ async function getImagesFromDirectory(baseDir: string, basePath: string): Promis
             }
 
             // Check for thumbnail
-            const thumbName = entry.name.replace(/\.[^/.]+$/, '-thumb.webp');
+            const thumbName = entry.name.replace(
+              /\.[^/.]+$/,
+              `-thumb${ext}`
+            );
             const thumbFullPath = path.join(dir, thumbName);
             let thumbnailPath: string | null = null;
             try {
@@ -447,8 +457,9 @@ async function getImagesFromDirectory(baseDir: string, basePath: string): Promis
               // No thumbnail
             }
 
-            // Get folder name
-            const folder = relativePath || 'root';
+            // Determine folder from path
+            const pathParts = entryRelativePath.split('/');
+            const folder = pathParts.length > 1 ? pathParts[0] : 'root';
 
             images.push({
               filename: entry.name,
@@ -459,41 +470,16 @@ async function getImagesFromDirectory(baseDir: string, basePath: string): Promis
               width,
               height,
               uploadedAt: stats.mtime.toISOString(),
+              isSystemImage: basePath === '/images',
             });
           }
         }
       }
     } catch (error) {
-      console.error('Error scanning directory:', dir, error);
+      console.error(`Error scanning directory ${dir}:`, error);
     }
   }
 
-  try {
-    await fs.access(baseDir);
-    await scanDirectory(baseDir, '');
-  } catch {
-    // Directory doesn't exist
-  }
-
+  await scanDirectory(baseDir, '');
   return images;
-}
-
-// Helper to get unique folders
-function getUniqueFolders(images: ImageInfo[]): string[] {
-  const folders = new Set<string>();
-  images.forEach(img => folders.add(img.folder));
-  return Array.from(folders).sort();
-}
-
-interface ImageInfo {
-  filename: string;
-  path: string;
-  thumbnailPath: string | null;
-  folder: string;
-  size: number;
-  width?: number;
-  height?: number;
-  uploadedAt: string;
-  usedIn?: string[];
-  isSystemImage?: boolean;
 }
