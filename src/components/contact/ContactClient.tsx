@@ -163,18 +163,25 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                 <h3 className="font-display text-xl text-charcoal mb-4">{hours?.title || 'Opening Hours'}</h3>
                 <div className="space-y-3 text-charcoal/70 text-sm">
                   <div>
-                    <p className="text-charcoal font-medium">Wed – Mon</p>
-                    <p>17:00 - 23:00</p>
-                    <p className="text-xs text-stone">Kitchen closes 22:30</p>
+                    <p className="text-charcoal font-medium">
+                      {hours?.midweek || 'Wed – Mon: 18:00 – 23:30'}
+                    </p>
+                    <p className="text-xs text-stone">
+                      {hours?.midweekKitchen || 'Kitchen closes 23:00'}
+                    </p>
                   </div>
                   <div>
-                    <p className="text-charcoal font-medium">Fri &amp; Sat</p>
-                    <p>17:00 - 01:00</p>
-                    <p className="text-xs text-stone">Kitchen closes 23:00</p>
+                    <p className="text-charcoal font-medium">
+                      {hours?.weekend || 'Fri – Sat: 18:00 till late (02:00)'}
+                    </p>
+                    <p className="text-xs text-stone">
+                      {hours?.weekendKitchen || 'Kitchen closes 23:30'}
+                    </p>
                   </div>
                   <div>
-                    <p className="text-charcoal font-medium">Tue</p>
-                    <p>Closed</p>
+                    <p className="text-charcoal font-medium">
+                      {hours?.closed || 'Tuesday: Closed'}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -184,7 +191,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                 <h3 className="font-display text-xl text-charcoal mb-4">{location?.title || 'Location'}</h3>
                 <p className="text-charcoal/70 text-sm">
                   {info?.address || 'Rua da Boavista 66'}<br />
-                  {info?.city || '1200-067 Lisboa'}<br />
+                  {info?.city || '1200-068 Lisboa'}<br />
                   Cais do Sodré
                 </p>
                 <a
@@ -281,7 +288,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                     >
                       <option value="">{subjects?.select || 'Select a topic'}</option>
                       <option value="General Inquiry">{subjects?.general || 'General inquiry'}</option>
-                      <option value="Large Group Reservation">{subjects?.reservation || 'Large group reservation (6+)'}</option>
+                      <option value="Large Group Reservation">{subjects?.reservation || 'Large group reservation (8+)'}</option>
                       <option value="Private Event">{subjects?.event || 'Private event'}</option>
                       <option value="Feedback">{subjects?.feedback || 'Feedback'}</option>
                       <option value="Other">{subjects?.other || 'Other'}</option>

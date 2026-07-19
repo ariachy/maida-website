@@ -53,13 +53,19 @@ export default function ReserveClient({
     title: isPt ? 'RESERVAR' : 'RESERVE',
     cta: isPt ? 'Reservar mesa' : 'Book a table',
     loading: isPt ? 'A abrir…' : 'Opening…',
-    hoursWeekdays: isPt ? 'Qua – Seg · 17:00 – 23:00' : 'Wed – Mon · 17:00 – 23:00',
-    hoursWeekend: isPt ? 'Sex & Sáb · 17:00 – 01:00' : 'Fri & Sat · 17:00 – 01:00',
+    hoursWeekdays: isPt ? 'Qua – Seg · 18:00 – 23:30' : 'Wed – Mon · 18:00 – 23:30',
+    hoursWeekend: isPt
+      ? 'Sex & Sáb · 18:00 até tarde (02:00)'
+      : 'Fri & Sat · 18:00 till late (02:00)',
+    kitchenWeekdays: isPt ? 'Cozinha fecha às 23:00' : 'Kitchen closes 23:00',
+    kitchenWeekend: isPt ? 'Cozinha fecha às 23:30' : 'Kitchen closes 23:30',
     djPill: 'Maída DJ Sessions',
     closedChip: isPt ? 'Ter · Fechado' : 'Tue · Closed',
+    // Large-group threshold aligned with the contact form. It disagreed on both sides
+    // before: this box said one number, contact.subjects.reservation said another.
     phoneBoxLabel: isPt
-      ? 'Grupos de 10+, eventos privados ou outros pedidos'
-      : 'Groups of 10+, private events or other requests',
+      ? 'Grupos de 8+, eventos privados ou outros pedidos'
+      : 'Groups of 8+, private events or other requests',
     directions: isPt ? 'Como chegar' : 'Directions',
     unavailable: isPt
       ? 'O sistema de reservas demorou a responder. Tente novamente ou ligue-nos.'
@@ -99,7 +105,9 @@ export default function ReserveClient({
           <p className="text-sm text-charcoal whitespace-nowrap">
             {t.hoursWeekdays} <span className="text-stone mx-1">|</span> {t.closedChip}
           </p>
+          <p className="text-xs text-stone mt-0.5">{t.kitchenWeekdays}</p>
           <p className="text-sm text-charcoal mt-2">{t.hoursWeekend}</p>
+          <p className="text-xs text-stone mt-0.5">{t.kitchenWeekend}</p>
           <p className="font-display italic text-rust text-xs mt-0.5">
             {t.djPill}
           </p>

@@ -1,9 +1,10 @@
+// src/app/(site)/[lang]/menu/page.tsx
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { isValidLocale } from '@/lib/i18n';
 import { getServerTranslations } from '@/lib/translations';
 import { generatePageMetadata } from '@/lib/seo';
-import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
+import { BreadcrumbJsonLd, MenuJsonLd } from '@/components/seo/JsonLd';
 import MenuClient from '@/components/menu/MenuClient';
 import { getMenuData } from '@/lib/content';
 
@@ -56,13 +57,17 @@ export default async function MenuPage({
   ]);
 
   const breadcrumbs = [
-    { name: 'Maída', url: `https://maida.pt/${locale}` },
-    { name: 'Menu', url: `https://maida.pt/${locale}/menu` },
+    { name: 'Maída', url: `https://maida.pt/${locale}/` },
+    { name: 'Menu', url: `https://maida.pt/${locale}/menu/` },
   ];
 
   return (
     <>
       <BreadcrumbJsonLd items={breadcrumbs} />
+      {/* Full Menu -> MenuSection -> MenuItem graph in this page's language, generated
+          from the same menuData + translations the page renders, so the markup can never
+          describe a menu different from the visible one. */}
+      <MenuJsonLd menuData={menuData} translations={translations} locale={locale} />
       <MenuClient translations={translations} menuData={menuData} locale={locale} />
     </>
   );

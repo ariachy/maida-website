@@ -158,14 +158,14 @@
   ],
   "items": [
     {
-      "id": "honey-roasted-halloumi",
+      "id": "gambas-al-ajillo",
       "categoryId": "to-start",
       "sortOrder": 10,
       "subCategory": "starters",
       "active": true
     },
     {
-      "id": "shrimp-saj-crostini",
+      "id": "coriander-lemon-wings",
       "categoryId": "to-start",
       "sortOrder": 12,
       "subCategory": "starters",
@@ -193,7 +193,7 @@
       "active": true
     },
     {
-      "id": "falafel-bites",
+      "id": "charred-corn",
       "categoryId": "to-start",
       "sortOrder": 13,
       "subCategory": "starters",
@@ -214,7 +214,7 @@
       "active": true
     },
     {
-      "id": "spinach-artichoke-gratin",
+      "id": "hummus-picanha",
       "categoryId": "to-start",
       "sortOrder": 5,
       "subCategory": "dips",
@@ -242,7 +242,7 @@
       "active": true
     },
     {
-      "id": "labneh-plus",
+      "id": "baba-ghanouj",
       "categoryId": "to-start",
       "sortOrder": 6,
       "subCategory": "dips",
@@ -267,15 +267,7 @@
       "categoryId": "mains",
       "sortOrder": 6,
       "subCategory": "sides",
-      "active": true,
-      "en": {
-        "name": "SAJ bread or crackers",
-        "description": ""
-      },
-      "pt": {
-        "name": "SAJ pão our crackers",
-        "description": ""
-      }
+      "active": true
     },
     {
       "id": "fatoush",
@@ -292,7 +284,7 @@
       "active": true
     },
     {
-      "id": "caesar",
+      "id": "zaatar-burrata",
       "categoryId": "to-start",
       "sortOrder": 16,
       "subCategory": "salads",
@@ -305,7 +297,7 @@
       "active": true
     },
     {
-      "id": "salmon",
+      "id": "fish-of-the-day",
       "categoryId": "mains",
       "sortOrder": 1,
       "active": true
@@ -317,7 +309,7 @@
       "active": true
     },
     {
-      "id": "lasagna",
+      "id": "pasta-pomodoro",
       "categoryId": "mains",
       "sortOrder": 5,
       "active": true
@@ -335,7 +327,7 @@
       "active": true
     },
     {
-      "id": "rice-pudding",
+      "id": "sorbet",
       "categoryId": "to-end",
       "sortOrder": 3,
       "active": true
@@ -862,10 +854,6 @@
       "categoryId": "wines",
       "sortOrder": 40,
       "subCategory": "white-wine",
-      "en": {
-        "name": "2160",
-        "description": "Light, fresh, and easy to drink."
-      },
       "active": true
     },
     {
@@ -873,10 +861,6 @@
       "categoryId": "wines",
       "sortOrder": 41,
       "subCategory": "white-wine",
-      "en": {
-        "name": "Infinitude (Sintra - Colares)",
-        "description": "Dry, crisp, and refreshing with a hint of minerals."
-      },
       "active": true
     },
     {
@@ -884,10 +868,6 @@
       "categoryId": "wines",
       "sortOrder": 42,
       "subCategory": "white-wine",
-      "en": {
-        "name": "Altitudes Ixsir (Lebanon - Batroun)",
-        "description": "Floral, fruity, and aromatic with a lively finish."
-      },
       "active": true
     },
     {
@@ -895,10 +875,6 @@
       "categoryId": "wines",
       "sortOrder": 70,
       "subCategory": "green-wine",
-      "en": {
-        "name": "Camaleão Alvarinho (Amarante)",
-        "description": "Light, and fruity."
-      },
       "active": true
     },
     {
@@ -906,10 +882,6 @@
       "categoryId": "wines",
       "sortOrder": 50,
       "subCategory": "rose-wine",
-      "en": {
-        "name": "Memórias (Dão)",
-        "description": "Delicate, fruity, and refreshing."
-      },
       "active": true
     },
     {
@@ -917,10 +889,6 @@
       "categoryId": "wines",
       "sortOrder": 60,
       "subCategory": "red-wine",
-      "en": {
-        "name": "Anexo (Alentejo)",
-        "description": "Full-bodied, rich and warming with deep fruit flavours."
-      },
       "active": true
     },
     {
@@ -928,10 +896,6 @@
       "categoryId": "wines",
       "sortOrder": 61,
       "subCategory": "red-wine",
-      "en": {
-        "name": "Biaia Colheita (Beira)",
-        "description": "Light, fruity, and easy-drinking."
-      },
       "active": true
     },
     {
@@ -939,10 +903,6 @@
       "categoryId": "wines",
       "sortOrder": 80,
       "subCategory": "sparkling-wine",
-      "en": {
-        "name": "Mar Salgado Bruto",
-        "description": "Dry and crisp."
-      },
       "active": true
     },
     {
@@ -976,87 +936,101 @@
       "active": true
     },
     {
-      "id": "roastedpotatoes",
+      "id": "roasted-baby-potatoes",
       "categoryId": "mains",
       "sortOrder": 7,
-      "subCategory": "sides"
+      "subCategory": "sides",
+      "active": true
     },
     {
-      "id": "yogurtmix",
+      "id": "yogurt-mix",
       "categoryId": "mains",
       "sortOrder": 9,
-      "subCategory": "sides"
+      "subCategory": "sides",
+      "active": true
     },
     {
       "id": "rice",
       "categoryId": "mains",
       "sortOrder": 10,
-      "subCategory": "sides"
+      "subCategory": "sides",
+      "active": true
     },
     {
-      "id": "lupinstremocos",
+      "id": "lupins-tremocos",
       "categoryId": "to-start",
       "sortOrder": 3,
-      "subCategory": "couvert"
+      "subCategory": "couvert",
+      "active": true
     },
     {
-      "id": "alcoholfreebeer",
+      "id": "alcohol-free-beer",
       "categoryId": "beers",
-      "sortOrder": 19
+      "sortOrder": 19,
+      "active": true
     },
     {
-      "id": "redfruits",
+      "id": "red-fruits",
       "categoryId": "drinks",
       "sortOrder": 11,
-      "subCategory": "milkshakes"
+      "subCategory": "milkshakes",
+      "active": true
     },
     {
-      "id": "s",
+      "id": "strawberry-banana",
       "categoryId": "drinks",
       "sortOrder": 12,
-      "subCategory": "milkshakes"
+      "subCategory": "milkshakes",
+      "active": true
     },
     {
-      "id": "dateescapte",
+      "id": "date-escape",
       "categoryId": "drinks",
       "sortOrder": 13,
-      "subCategory": "milkshakes"
+      "subCategory": "milkshakes",
+      "active": true
     },
     {
-      "id": "coffeeshake",
+      "id": "coffee-shake",
       "categoryId": "drinks",
       "sortOrder": 14,
-      "subCategory": "milkshakes"
+      "subCategory": "milkshakes",
+      "active": true
     },
     {
-      "id": "pomegranatejuice",
+      "id": "pomegranate-juice",
       "categoryId": "drinks",
       "sortOrder": 5,
-      "subCategory": "juices"
+      "subCategory": "juices",
+      "active": true
     },
     {
-      "id": "applejuice",
+      "id": "apple-juice",
       "categoryId": "drinks",
       "sortOrder": 6,
-      "subCategory": "juices"
+      "subCategory": "juices",
+      "active": true
     },
     {
-      "id": "orangejuice",
+      "id": "orange-juice",
       "categoryId": "drinks",
       "sortOrder": 7,
-      "subCategory": "juices"
+      "subCategory": "juices",
+      "active": true
     },
     {
-      "id": "carrotjuice",
+      "id": "carrot-juice",
       "categoryId": "drinks",
       "sortOrder": 8,
-      "subCategory": "juices"
+      "subCategory": "juices",
+      "active": true
     },
     {
-      "id": "ayrandrink",
+      "id": "ayran",
       "categoryId": "drinks",
       "sortOrder": 9,
-      "subCategory": "juices"
+      "subCategory": "juices",
+      "active": true
     }
   ]
 }

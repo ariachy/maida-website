@@ -54,7 +54,7 @@
       },
       {
         "id": "kebab-pistachio",
-        "name": "Kebab Pistácio",
+        "name": "Kebab Pistachio",
         "description": "Carne picada com pistácios e especiarias da casa, salteada em melaço de romã. Servido com hummus.",
         "image": "/images/food/kebab.webp"
       },
@@ -96,9 +96,9 @@
     "headline1": "ENCONTRE",
     "headline2": "-NOS",
     "hours": {
-      "monWedThuSun": "Qua – Seg: 17:00 – 23:00",
-      "friday": "Sex – Sáb: 17:00 – 01:00",
-      "saturday": "Sex & Sáb até à 01:00",
+      "monWedThuSun": "Qua – Seg: 18:00 – 23:30",
+      "friday": "Sex – Sáb: 18:00 até tarde (02:00)",
+      "saturday": "Sex & Sáb até tarde (02:00)",
       "closed": "Terça: Fechado",
       "kitchenCloses": "Cozinha fecha"
     },
@@ -178,6 +178,10 @@
       "wines": {
         "name": "VINHOS",
         "description": ""
+      },
+      "beers": {
+        "name": "CERVEJAS",
+        "description": "Cervejas de pressão e garrafa"
       }
     },
     "subCategories": {
@@ -194,10 +198,8 @@
       "milkshakes": "SMOOTHIES & BATIDOS",
       "soft-drinks": "REFRIGERANTES",
       "mocktails": "MOCKTAILS",
-      "signatures": "MAÍDA'S",
+      "signatures": "CRIAÇÕES DA MAÍDA",
       "classics": "CLÁSSICOS",
-      "wines": "Vinhos",
-      "beers": "Cervejas",
       "white-wine": "BRANCO",
       "rose-wine": "ROSÉ",
       "red-wine": "TINTO",
@@ -206,11 +208,11 @@
       "sides": "ACOMPANHAMENTOS"
     },
     "items": {
-      "honey-roasted-halloumi": {
+      "gambas-al-ajillo": {
         "name": "GAMBAS AL AJILLO",
         "description": "gambas, alho, malagueta calabresa e malagueta fresca, vinho branco, salsa. Servidas com pão de massa mãe torrado."
       },
-      "shrimp-saj-crostini": {
+      "coriander-lemon-wings": {
         "name": "CORIANDER LEMON WINGS",
         "description": "asas de frango tostadas, alho, coentros, limão."
       },
@@ -223,10 +225,10 @@
         "description": "carne picada com especiarias da casa, pistácio, melaço de romã, húmus."
       },
       "chicken-rolls": {
-        "name": "CHICKEN ROLLS (mousakhan)",
+        "name": "CHICKEN ROLLS (musakhan)",
         "description": "frango temperado, cebola caramelizada, sumagre, saj estaladiço."
       },
-      "falafel-bites": {
+      "charred-corn": {
         "name": "CHARRED CORN",
         "description": "milho na brasa, labneh batido, sumagre, hortelã."
       },
@@ -238,7 +240,7 @@
         "name": "BATATA FRITA",
         "description": ""
       },
-      "spinach-artichoke-gratin": {
+      "hummus-picanha": {
         "name": "HUMMUS PICANHA",
         "description": "húmus, picanha selada, melaço de romã, pinhões."
       },
@@ -254,7 +256,7 @@
         "name": "FETA BRÛLÉE",
         "description": "creme de feta, malagueta suave, crosta de açúcar — queimada na hora."
       },
-      "labneh-plus": {
+      "baba-ghanouj": {
         "name": "BABA GHANOUJ",
         "description": "beringela fumada, tahine, hortelã, salsa, chalotas fritas."
       },
@@ -302,7 +304,7 @@
         "name": "Kunafa",
         "description": "Sobremesa tradicional com massa desfiada, queijo doce e calda de flor de laranjeira"
       },
-      "rice-pudding": {
+      "sorbet": {
         "name": "Sorbet (1 bola)",
         "description": "sabores sazonais, sem açúcar adicionado: chocolate negro 85%, limão ou pistácio"
       },
@@ -544,7 +546,7 @@
       },
       "cocktail-thyme-margarita": {
         "name": "THYME FOR MARGARITA",
-        "description": "tequila, licor de laranja, tomilho, sumac."
+        "description": "tequila, licor de laranja, tomilho, sumagre."
       },
       "cocktail-azeitona-cafe": {
         "name": "AZEITONA CAFE",
@@ -607,36 +609,36 @@
         "description": "Bourbon, limão, bitter, vinho tinto"
       },
       "wine-2160-white": {
-        "name": "2160",
-        "description": "Branco - Douro"
+        "name": "2160 (Douro)",
+        "description": "Leve, fresco e fácil de beber."
       },
       "wine-infinitude-white": {
-        "name": "Infinitude",
-        "description": "Branco - Sintra"
+        "name": "Infinitude (Sintra - Colares)",
+        "description": "Seco, vivo e refrescante, com um toque mineral."
       },
       "wine-altitudes-white": {
-        "name": "Altitudes Ixsir",
-        "description": "Branco - Líbano"
+        "name": "Altitudes Ixsir (Líbano - Batroun)",
+        "description": "Floral, frutado e aromático, com final vibrante."
       },
       "wine-cameleao-green": {
-        "name": "Camaleão Alvarinho",
-        "description": "Verde - Amarante"
+        "name": "Camaleão Alvarinho (Amarante)",
+        "description": "Leve e frutado."
       },
       "wine-memorias-rose": {
-        "name": "Memórias",
-        "description": "Rosé - Dão"
+        "name": "Memórias (Dão)",
+        "description": "Delicado, frutado e refrescante."
       },
       "wine-anexo-red": {
-        "name": "Anexo",
-        "description": "Tinto - Alentejo"
+        "name": "Anexo (Alentejo)",
+        "description": "Encorpado, rico e envolvente, com fruta profunda."
       },
       "wine-biaia-red": {
-        "name": "Biaia Colheita",
-        "description": "Tinto - Beira"
+        "name": "Biaia Colheita (Beira)",
+        "description": "Leve, frutado e fácil de beber."
       },
       "wine-sparkling": {
-        "name": "Espumante",
-        "description": ""
+        "name": "Mar Salgado Bruto",
+        "description": "Seco e fresco."
       },
       "beer-clay-cold": {
         "name": "CLAY COLD",
@@ -662,7 +664,7 @@
         "name": "SHAWARMA",
         "description": "carne de vaca assada lentamente, batata frita, tomate, pickles, salada de cebola e salsa, tahine. Servido com pão saj."
       },
-      "salmon": {
+      "fish-of-the-day": {
         "name": "PEIXE DO DIA",
         "description": "salteado na frigideira, molho de alcaparras e limão. Servido com batatas assadas."
       },
@@ -670,7 +672,7 @@
         "name": "FRANGO DA CASA",
         "description": "peito de frango grelhado, batatas baby, tomate cherry, molho de iogurte e ervas, salada verde."
       },
-      "lasagna": {
+      "pasta-pomodoro": {
         "name": "PASTA POMODORO",
         "description": "molho de três tomates, manjericão, parmesão."
       },
@@ -679,18 +681,18 @@
         "description": "dois hambúrgueres smash, coleslaw, tomate, pickles, batata frita — em pão torrado. Servido com batata frita."
       },
       "tiramisu": {
-        "name": "TIRAMISU *(favorito dos clientes)",
+        "name": "TIRAMISU (favorito dos clientes)",
         "description": "mascarpone, ovos pasteurizados, savoiardi, um toque de Kahlúa, cacau em pó. Para partilhar"
       },
       "znoud-el-set": {
         "name": "Znoud el Set",
         "description": "a nossa versão do clássico: rolos de baklava estaladiços, creme ashta doce, pistácio, calda de açúcar."
       },
-      "roastedpotatoes": {
+      "roasted-baby-potatoes": {
         "name": "BATATAS BABY ASSADAS",
         "description": ""
       },
-      "yogurtmix": {
+      "yogurt-mix": {
         "name": "MISTURA DE IOGURTE",
         "description": "pepino, alho, hortelã seca."
       },
@@ -698,16 +700,16 @@
         "name": "ARROZ",
         "description": ""
       },
-      "lupinstremocos": {
+      "lupins-tremocos": {
         "name": "TREMOÇOS",
         "description": ""
       },
-      "caesar": {
+      "zaatar-burrata": {
         "name": "ZA'ATAR BURRATA",
         "description": "tomate coração-de-boi, tomate cherry, manjericão, za'atar, azeite. Servido com pão de massa mãe torrado."
       },
-      "alcoholfreebeer": {
-        "name": "ONZE (ALCOHOL FREE)",
+      "alcohol-free-beer": {
+        "name": "ONZE (SEM ÁLCOOL)",
         "description": ""
       },
       "cortado": {
@@ -715,7 +717,7 @@
         "description": ""
       },
       "americano-iced": {
-        "name": "Americano (Iced)",
+        "name": "Americano (Gelado)",
         "description": ""
       },
       "hot-chocolate-sweet": {
@@ -755,47 +757,51 @@
         "description": ""
       },
       "tea-cafe-blanc": {
-        "name": "Cafe Blanc",
+        "name": "Café Blanc",
         "description": ""
       },
       "tea-other": {
         "name": "Seleção de chás - pergunte-nos pelas opções do dia",
         "description": ""
       },
-      "redfruits": {
+      "red-fruits": {
         "name": "RED FRUITS",
         "description": "frutos vermelhos, iogurte, mel."
       },
-      "s": {
+      "strawberry-banana": {
         "name": "STRAWBERRY BANANA",
         "description": "morango, banana, iogurte, mel."
       },
-      "dateescapte": {
+      "date-escape": {
         "name": "DATE ESCAPE",
         "description": "leite, banana, baunilha, pasta de tâmara, espirulina verde."
       },
-      "coffeeshake": {
+      "coffee-shake": {
         "name": "COFFEE SHAKE",
         "description": "leite, banana, baunilha, espresso."
       },
-      "pomegranatejuice": {
+      "pomegranate-juice": {
         "name": "Romã (sumo)",
         "description": ""
       },
-      "applejuice": {
+      "apple-juice": {
         "name": "Maçã (sumo)",
         "description": ""
       },
-      "orangejuice": {
+      "orange-juice": {
         "name": "Laranja (sumo)",
         "description": ""
       },
-      "carrotjuice": {
+      "carrot-juice": {
         "name": "Cenoura (sumo)",
         "description": ""
       },
-      "ayrandrink": {
+      "ayran": {
         "name": "AYRAN (bebida de iogurte)",
+        "description": ""
+      },
+      "lemonade": {
+        "name": "Limonada",
         "description": ""
       }
     },
@@ -812,7 +818,7 @@
     "title": "Cocktails com",
     "titleHighlight": "alma libanesa",
     "tagline": "8 bebidas. 8 histórias. Caminhos diferentes que nos trouxeram aqui.",
-    "text": "O nosso bar conta a mesma história que a nossa cozinha. Cada cocktail vem de casa: água de rosas, flor de laranjeira, sumac, arak.",
+    "text": "O nosso bar conta a mesma história que a nossa cozinha. Cada cocktail vem de casa: água de rosas, flor de laranjeira, sumagre, arak.",
     "cta": "Ver Menu de Bebidas"
   },
   "visit": {
@@ -825,7 +831,7 @@
     },
     "hours": {
       "label": "Horário",
-      "value": "Qua – Seg: 17:00 – 23:00 · Sex & Sáb até à 01:00"
+      "value": "Qua – Seg: 18:00 – 23:30 · Sex & Sáb até tarde (02:00)"
     },
     "contact": {
       "label": "Contacto",
@@ -843,7 +849,7 @@
     "navigate": "Navegação",
     "discover": "Descobrir",
     "hours": "Horário",
-    "hoursValue": "Ter – Sáb: 19h – 00h",
+    "hoursValue": "Qua – Seg: 18:00 – 23:30 · Sex & Sáb até tarde (02:00)",
     "closed": "Terça: Fechado",
     "contact": "Contacto",
     "reservations": "Reservas",
@@ -851,7 +857,8 @@
     "copyright": "© 2026 maída",
     "location": "Cais do Sodré, Lisboa",
     "whatIsSaj": "O que é SAJ?",
-    "coffeeTea": "Café e Chá"
+    "coffeeTea": "Café e Chá",
+    "joinUs": "Junta-te a nós"
   },
   "about": {
     "heroTitle": "A Nossa História",
@@ -896,7 +903,7 @@
     "subjects": {
       "select": "Selecione um tópico",
       "general": "Questão geral",
-      "reservation": "Reserva de grupo grande (6+)",
+      "reservation": "Reserva de grupo grande (8+)",
       "event": "Evento privado",
       "feedback": "Feedback",
       "other": "Outro"
@@ -904,18 +911,18 @@
     "info": {
       "title": "Contacto",
       "address": "Rua da Boavista 66",
-      "city": "1200-067 Lisboa",
-      "phone": "+351 961 111 383",
+      "city": "1200-068 Lisboa",
+      "phone": "+351 966 604 674",
       "email": "info@maida.pt"
     },
     "hours": {
       "title": "Horário de Funcionamento",
       "closedText": "Fechado",
       "closed": "Terça: Fechado",
-      "midweek": "Qua – Seg: 17:00 – 23:00",
-      "midweekKitchen": "Cozinha fecha às 22:30",
-      "weekend": "Sex – Sáb: 17:00 – 01:00",
-      "weekendKitchen": "Cozinha fecha às 23:00"
+      "midweek": "Qua – Seg: 18:00 – 23:30",
+      "midweekKitchen": "Cozinha fecha às 23:00",
+      "weekend": "Sex – Sáb: 18:00 até tarde (02:00)",
+      "weekendKitchen": "Cozinha fecha às 23:30"
     },
     "location": {
       "title": "Localização",
@@ -974,13 +981,15 @@
         "title": "Sextas",
         "subtitle": "Jantar & DJ",
         "description": "O fim de semana começa. Sets de DJ ao vivo criam o cenário perfeito para jantar e drinks.",
-        "vibeDescription": "Não é uma festa - é uma experiência de jantar elevada. A música complementa a sua refeição, a energia cresce naturalmente, e a noite desenrola-se ao seu ritmo."
+        "vibeDescription": "Não é uma festa - é uma experiência de jantar elevada. A música complementa a sua refeição, a energia cresce naturalmente, e a noite desenrola-se ao seu ritmo.",
+        "hoursValue": "18:00 – 02:00"
       },
       "saturday": {
         "title": "Sábados",
         "subtitle": "A Jornada Completa",
         "description": "A jornada completa - jantar, drinks e dança até às 02:00.",
-        "journeyDescription": "Comece com jantar, fique para a festa. As nossas noites de sábado são lendárias - a comida, as bebidas, a música, tudo a construir para um pico."
+        "journeyDescription": "Comece com jantar, fique para a festa. As nossas noites de sábado são lendárias - a comida, as bebidas, a música, tudo a construir para um pico.",
+        "hoursValue": "18:00 – 02:00"
       }
     },
     "privateEvents": {
@@ -1078,8 +1087,8 @@
     "cta": "Reservar agora",
     "loading": "A abrir…",
     "hoursOpen": "Aberto todos os dias exceto terça",
-    "hoursTime": "17:00 – 23:00",
-    "hoursWeekend": "Sex & Sáb até à 01:00",
+    "hoursTime": "18:00 – 23:30",
+    "hoursWeekend": "Sex & Sáb até tarde (02:00)",
     "djPill": "Maída DJ Sessions",
     "phoneBoxLabel": "Grupos de 8+, eventos privados ou reservas para o próprio dia",
     "directions": "Como chegar",

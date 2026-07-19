@@ -67,7 +67,10 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   }, [categories]);
 
   // ---- Visibility ----
-  const isVisible = (item: MenuItem) => item.active !== false;
+  // Strict: an item must opt IN. Every live item now carries `active: true`
+  // explicitly (menu.json), so a new item cannot leak onto the page just because
+  // someone forgot the flag.
+  const isVisible = (item: MenuItem) => item.active === true;
 
   // ---- Grouping helpers ----
   const itemsInCategory = (categoryId: string) =>
@@ -105,15 +108,29 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       .filter((i) => i.categoryId === categoryId && !i.subCategory && isVisible(i))
       .sort((a, b) => a.sortOrder - b.sortOrder);
 
-  // Name/description: inline translation first, then locale file, then humanized id.
-  const getName = (item: MenuItem) => {
-    const inline = (item as any)[locale]?.name || item.en?.name;
-    return inline || menu?.items?.[item.id]?.name || item.id.replace(/-/g, ' ');
+  // Resolution order, per field, independently:
+  //   1. item[locale]              — a deliberate per-item override for THIS locale
+  //   2. translations[locale].items — the locale dictionary (the normal source)
+  //   3. item.en                    — last resort only, so an English string can never
+  //                                   silently win on the Portuguese page
+  //   4. humanised id               — visible-broken, better than blank
+  //
+  // The old order was item[locale] -> item.en -> dictionary, which let a stale
+  // per-item override shadow a corrected translation, and let English render on /pt.
+  // `name` and `description` resolve separately so a pt.name override cannot drag an
+  // en.description along with it.
+  const resolveField = (item: MenuItem, field: 'name' | 'description'): string | undefined => {
+    const own = (item as any)[locale]?.[field];
+    if (own) return own;
+    const dict = menu?.items?.[item.id]?.[field];
+    if (dict) return dict;
+    return item.en?.[field];
   };
-  const getDescription = (item: MenuItem) => {
-    const inline = (item as any)[locale]?.description || item.en?.description;
-    return inline || menu?.items?.[item.id]?.description || '';
-  };
+
+  const getName = (item: MenuItem) =>
+    resolveField(item, 'name') || item.id.replace(/-/g, ' ');
+
+  const getDescription = (item: MenuItem) => resolveField(item, 'description') || '';
   const subCategoryName = (subId: string) =>
     menu?.subCategories?.[subId] || subId.replace(/-/g, ' ');
 
@@ -152,7 +169,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
             const name = getName(item);
             const description = getDescription(item);
             return (
-              <span key={item.id} className="text-charcoal text-sm capitalize py-1">
+              <span key={item.id} className="text-charcoal text-sm py-1">
                 {name}
                 {description && <span className="text-stone text-xs ml-1">({description})</span>}
               </span>
@@ -168,7 +185,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           const description = getDescription(item);
           return (
             <div key={item.id} className="py-1.5 text-center">
-              <h3 className="font-display text-base md:text-lg text-charcoal font-medium capitalize">
+              <h3 className="font-display text-base md:text-lg text-charcoal font-medium">
                 {name}
               </h3>
               {description && (
@@ -206,7 +223,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         <div className="border border-terracotta/25 px-4 py-3">
           <p className="text-center text-charcoal text-sm leading-relaxed">
             {couvertItems.map((item, index) => (
-              <span key={item.id} className="capitalize whitespace-nowrap inline-block">
+              <span key={item.id} className="whitespace-nowrap inline-block">
                 {index > 0 && <span className="text-terracotta/40 mx-2">·</span>}
                 {getName(item)}
               </span>

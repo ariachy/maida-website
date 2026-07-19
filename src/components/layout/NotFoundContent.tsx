@@ -1,5 +1,9 @@
 'use client';
 
+// The animated 404 body. Rendered by src/app/not-found.tsx, which supplies <html>/<body>
+// (required now that the app has two root layouts — see the note in that file).
+// Moved here from src/app/not-found.tsx unchanged apart from the title handling.
+
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -42,7 +46,7 @@ const variations = [
   },
 ];
 
-export default function NotFound() {
+export default function NotFoundContent() {
   const [variation, setVariation] = useState(variations[0]);
   const { openWidget } = useBooking();
 
@@ -50,9 +54,9 @@ export default function NotFound() {
     // Randomly select a variation on mount
     const randomIndex = Math.floor(Math.random() * variations.length);
     setVariation(variations[randomIndex]);
-    
-    // Set fun page title
-    document.title = "404 | This page went to grab more hummus | Maída";
+    // NOTE: document.title used to be set here. It now lives in the `metadata` export of
+    // src/app/not-found.tsx, so the title is in the server-rendered HTML rather than
+    // being applied after hydration.
   }, []);
 
   const handleReserveClick = () => openWidget('button');

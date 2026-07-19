@@ -14,6 +14,7 @@ interface FooterProps {
 export default function Footer({ translations, locale }: FooterProps) {
   const nav = translations?.nav || {};
   const footer = translations?.footer || {};
+  const contact = translations?.contact || {};
   
   // TheFork booking hook
   const { openWidget: openReservation, isOpening: isReservationOpening } = useBooking(locale);
@@ -26,7 +27,20 @@ export default function Footer({ translations, locale }: FooterProps) {
     if (typeof value === 'object' && value.label) return value.label;
     return fallback;
   };
-  
+
+  // Opening hours are single-sourced from contact.hours in the locale dictionaries, so
+  // the footer, the contact page and the reserve page cannot drift apart again. This
+  // block used to hardcode the old evening times in English on BOTH locales, and was the
+  // origin of the contradiction with the JSON-LD.
+  const hoursSrc = contact?.hours || {};
+  const hours = {
+    midweek: getLabel(hoursSrc, 'midweek', 'Wed – Mon: 18:00 – 23:30'),
+    midweekKitchen: getLabel(hoursSrc, 'midweekKitchen', 'Kitchen closes 23:00'),
+    weekend: getLabel(hoursSrc, 'weekend', 'Fri – Sat: 18:00 till late (02:00)'),
+    weekendKitchen: getLabel(hoursSrc, 'weekendKitchen', 'Kitchen closes 23:30'),
+    closed: getLabel(hoursSrc, 'closed', 'Tuesday: Closed'),
+  };
+
   return (
     <footer className="bg-charcoal text-warm-white">
       <div className="max-w-7xl mx-auto px-6 md:px-8 pt-6 md:pt-10 pb-4 md:pb-6">
@@ -86,7 +100,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                   href={`/${locale}`}
                   className="text-warm-white/70 text-sm hover:text-warm-white transition-colors"
                 >
-                  Home
+                  {getLabel(nav, 'home', 'Home')}
                 </Link>
               </li>
               <li>
@@ -127,7 +141,7 @@ export default function Footer({ translations, locale }: FooterProps) {
           {/* Discover */}
           <div>
             <span className="block text-sm tracking-[0.15em] uppercase text-terracotta-light mb-3 font-medium">
-              Discover
+              {getLabel(footer, 'discover', 'Discover')}
             </span>
             <ul className="space-y-1.5">
               <li>
@@ -135,7 +149,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                   href={`/${locale}/maida-saj`}
                   className="text-warm-white/70 text-sm hover:text-warm-white transition-colors"
                 >
-                  What is SAJ?
+                  {getLabel(footer, 'whatIsSaj', 'What is SAJ?')}
                 </Link>
               </li>
               <li>
@@ -143,7 +157,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                   href={`/${locale}/coffee-tea`}
                   className="text-warm-white/70 text-sm hover:text-warm-white transition-colors"
                 >
-                  Coffee & Tea
+                  {getLabel(footer, 'coffeeTea', 'Coffee & Tea')}
                 </Link>
               </li>
               <li>
@@ -151,7 +165,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                   href={`/${locale}/blog`}
                   className="text-warm-white/70 text-sm hover:text-warm-white transition-colors"
                 >
-                  Blog
+                  {getLabel(nav, 'blog', 'Blog')}
                 </Link>
               </li>
               {/* Join Us — visually separated from the rest with a subtle divider */}
@@ -160,7 +174,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                   href={`/${locale}/join-us`}
                   className="text-warm-white/70 text-sm hover:text-warm-white transition-colors"
                 >
-                  Join Us
+                  {getLabel(footer, 'joinUs', 'Join Us')}
                 </Link>
               </li>
             </ul>
@@ -173,8 +187,10 @@ export default function Footer({ translations, locale }: FooterProps) {
             </span>
             {/* Opening hours - matched to the reserve page wording */}
             <ul className="text-sm">
-              <li className="text-warm-white">Wed – Mon · 17:00 – 23:00</li>
-              <li className="mt-3 text-terracotta-light font-medium">Fri &amp; Sat till 01:00</li>
+              <li className="text-warm-white">{hours.midweek}</li>
+              <li className="text-warm-white/60 text-xs mt-0.5">{hours.midweekKitchen}</li>
+              <li className="mt-3 text-terracotta-light font-medium">{hours.weekend}</li>
+              <li className="text-warm-white/60 text-xs mt-0.5">{hours.weekendKitchen}</li>
               <li className="mt-1.5">
                 <span className="inline-block bg-terracotta-light/10 text-terracotta-light text-[9px] tracking-[0.15em] uppercase px-2.5 py-0.5 rounded-full">
                   Maída DJ Sessions
@@ -182,7 +198,7 @@ export default function Footer({ translations, locale }: FooterProps) {
               </li>
               <li className="mt-3">
                 <span className="inline-block bg-white/10 text-warm-white/70 text-[10px] tracking-[0.05em] px-2.5 py-1 rounded">
-                  Tue · Closed
+                  {hours.closed}
                 </span>
               </li>
             </ul>
@@ -215,7 +231,9 @@ export default function Footer({ translations, locale }: FooterProps) {
                   disabled={isReservationOpening}
                   className="text-terracotta-light text-sm hover:text-warm-white transition-colors disabled:opacity-70"
                 >
-                  {isReservationOpening ? 'Loading...' : 'Book a table'}
+                  {isReservationOpening
+                    ? getLabel(nav, 'loading', 'Loading...')
+                    : getLabel(nav, 'bookTable', 'Book a table')}
                 </button>
               </li>
             </ul>

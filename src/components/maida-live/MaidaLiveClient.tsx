@@ -244,7 +244,9 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                         <div className="flex gap-4">
                           <div className="bg-charcoal/5 p-4 flex-1">
                             <p className="text-charcoal/60 text-sm">{maidaLive?.hours || 'Hours'}</p>
-                            <p className="text-charcoal font-display text-lg">12:30 - 00:00</p>
+                            <p className="text-charcoal font-display text-lg">
+                              {nights?.friday?.hoursValue || '18:00 – 02:00'}
+                            </p>
                           </div>
                           <div className="bg-charcoal/5 p-4 flex-1">
                             <p className="text-charcoal/60 text-sm">{maidaLive?.djSetsFrom || 'DJ Sets from'}</p>
@@ -303,7 +305,9 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                           <div className="flex gap-4">
                             <div className="bg-charcoal/5 p-4 flex-1">
                               <p className="text-charcoal/60 text-sm">{maidaLive?.hours || 'Hours'}</p>
-                              <p className="text-charcoal font-display text-lg">12:30 - 02:00</p>
+                              <p className="text-charcoal font-display text-lg">
+                                {nights?.saturday?.hoursValue || '18:00 – 02:00'}
+                              </p>
                             </div>
                             <div className="bg-charcoal/5 p-4 flex-1">
                               <p className="text-charcoal/60 text-sm">{maidaLive?.partyMode || 'Party Mode'}</p>

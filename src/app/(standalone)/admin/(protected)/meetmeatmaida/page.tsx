@@ -799,7 +799,7 @@ export default function MeetMeAtMaidaAdminPage() {
                       value={settings.footer_hours || ''}
                       onChange={(e) => setSettings({ ...settings, footer_hours: e.target.value })}
                       className="w-full px-3 py-2 border border-sand rounded-lg text-sm"
-                      placeholder="Wed – Mon: 12:00 – 23:00 · Fri – Sat: 12:00 – 01:00"
+                      placeholder="Wed – Mon: 18:00 – 23:30 · Fri – Sat: 18:00 till late (02:00)"
                     />
                     <p className="text-xs text-stone mt-2">Use · (middle dot) to separate different schedules</p>
                   </div>

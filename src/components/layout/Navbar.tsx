@@ -104,7 +104,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
     { href: `/${locale}/maida-saj`, label: tf('whatIsSaj', 'What is SAJ?'), segment: 'maida-saj', divider: false },
     { href: `/${locale}/coffee-tea`, label: tf('coffeeTea', 'Coffee & Tea'), segment: 'coffee-tea', divider: false },
     { href: `/${locale}/blog`, label: t('blog', 'Blog'), segment: 'blog', divider: false },
-    { href: `/${locale}/join-us`, label: 'Join Us', segment: 'join-us', divider: true },
+    { href: `/${locale}/join-us`, label: tf('joinUs', 'Join Us'), segment: 'join-us', divider: true },
   ];
   
   const isActiveLink = (segment: string) => {

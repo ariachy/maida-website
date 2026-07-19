@@ -68,7 +68,7 @@ const DEFAULT_SETTINGS: Settings = {
   footer_contact_text: 'Contact',
   footer_contact_text_pt: 'Contacto',
   footer_contact_url: 'mailto:info@maida.pt',
-  footer_hours: 'Wed – Mon: 12:00 – 23:00 · Fri – Sat: 12:00 – 01:00',
+  footer_hours: 'Wed – Mon: 18:00 – 23:30 · Fri – Sat: 18:00 till late (02:00)',
   footer_address_text: 'Rua da Boavista 66, 1200-068, Lisboa',
   footer_address_url: 'https://maps.google.com/?q=Rua+da+Boavista+66+1200-068+Lisboa',
   wifi_network: 'Maida-Guest',

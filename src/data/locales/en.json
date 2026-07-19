@@ -49,7 +49,7 @@
       {
         "id": "shish-barak",
         "name": "Shish Barak",
-        "description": "Fried minced beef dumplings sautéed in chili paste, served over garlicky yogurt and caramelized onions with roasted almonds.",
+        "description": "Fried minced beef dumplings sautéed in chilli paste, served over garlicky yogurt and caramelised onions with roasted almonds.",
         "image": "/images/food/shish-barak.webp"
       },
       {
@@ -61,7 +61,7 @@
       {
         "id": "muhamara",
         "name": "Muhamara",
-        "description": "Roasted red pepper dip, walnuts, tahini, pomegranate molasses and a hint of chili.",
+        "description": "Roasted red pepper dip, walnuts, tahini, pomegranate molasses and a hint of chilli.",
         "image": "/images/food/muhamara.webp"
       },
       {
@@ -96,9 +96,9 @@
     "headline1": "FIND",
     "headline2": "US",
     "hours": {
-      "monWedThuSun": "Wed – Mon: 17:00 – 23:00",
-      "friday": "Fri – Sat: 17:00 – 01:00",
-      "saturday": "Fri & Sat till 01:00",
+      "monWedThuSun": "Wed – Mon: 18:00 – 23:30",
+      "friday": "Fri – Sat: 18:00 till late (02:00)",
+      "saturday": "Fri & Sat till late (02:00)",
       "closed": "Tuesday: Closed",
       "kitchenCloses": "Kitchen closes"
     },
@@ -177,7 +177,7 @@
       },
       "beers": {
         "name": "BEERS",
-        "description": ""
+        "description": "Draft and bottled beers"
       },
       "wines": {
         "name": "WINES",
@@ -186,7 +186,7 @@
     },
     "subCategories": {
       "starters": "SMALL PLATES",
-      "dips": "DIPS (SERVED WITH CRACKERS)",
+      "dips": "DIPS (SERVED WITH SAJ CRACKERS)",
       "couvert": "COUVERT",
       "salads": "SALADS",
       "savoury": "Savoury",
@@ -200,8 +200,6 @@
       "mocktails": "MOCKTAILS",
       "signatures": "MAÍDA'S",
       "classics": "CLASSICS",
-      "wines": "Wines",
-      "beers": "Beers",
       "white-wine": "WHITE",
       "rose-wine": "ROSÉ",
       "red-wine": "RED",
@@ -210,11 +208,11 @@
       "sides": "SIDES"
     },
     "items": {
-      "honey-roasted-halloumi": {
+      "gambas-al-ajillo": {
         "name": "GAMBAS AL AJILLO",
-        "description": "king prawns, garlic, calabrian & fresh chili, white wine, parsley. Served with toasted sourdough."
+        "description": "king prawns, garlic, calabrian & fresh chilli, white wine, parsley. Served with toasted sourdough."
       },
-      "shrimp-saj-crostini": {
+      "coriander-lemon-wings": {
         "name": "CORIANDER LEMON WINGS",
         "description": "charred chicken wings, garlic, coriander, lemon."
       },
@@ -227,10 +225,10 @@
         "description": "minced meat with house spices, pistachio, pomegranate molasses, hummus."
       },
       "chicken-rolls": {
-        "name": "CHICKEN ROLLS (mousakhan)",
-        "description": "spiced chicken, caramelized onions, sumac, crispy saj."
+        "name": "CHICKEN ROLLS (musakhan)",
+        "description": "spiced chicken, caramelised onions, sumac, crispy saj."
       },
-      "falafel-bites": {
+      "charred-corn": {
         "name": "CHARRED CORN",
         "description": "whipped labneh, sumac, mint."
       },
@@ -242,13 +240,13 @@
         "name": "FRIES",
         "description": ""
       },
-      "spinach-artichoke-gratin": {
+      "hummus-picanha": {
         "name": "HUMMUS PICANHA",
         "description": "hummus, seared picanha (top sirloin cap), pomegranate molasses, pine nuts."
       },
       "muhamara": {
         "name": "MUHAMARA",
-        "description": "roasted red pepper, walnuts, tahini, chili, pomegranate molasses"
+        "description": "roasted red pepper, walnuts, tahini, chilli, pomegranate molasses"
       },
       "hummus": {
         "name": "HUMMUS",
@@ -256,9 +254,9 @@
       },
       "feta-brulee": {
         "name": "FETA BRÛLÉE",
-        "description": "creamy feta mix, mild chili, sugar crust - torched to order."
+        "description": "creamy feta mix, mild chilli, sugar crust - torched to order."
       },
-      "labneh-plus": {
+      "baba-ghanouj": {
         "name": "BABA GHANOUJ",
         "description": "smoked aubergine, tahini, mint, parsley, fried shallots."
       },
@@ -271,7 +269,7 @@
         "description": ""
       },
       "zaatar-mix-crackers": {
-        "name": "ZA'ATAR MIX with crackers",
+        "name": "ZA'ATAR MIX with saj crackers",
         "description": ""
       },
       "fatoush": {
@@ -282,7 +280,7 @@
         "name": "TABBOULEH",
         "description": "parsley, tomato, mint, green onion, lemon-oil dressing."
       },
-      "caesar": {
+      "zaatar-burrata": {
         "name": "ZA'ATAR BURRATA",
         "description": "heirloom tomatoes, cherry tomatoes, basil, za'atar, olive oil. Served with toasted sourdough."
       },
@@ -290,7 +288,7 @@
         "name": "SHAWARMA",
         "description": "slow-roasted beef, fries, tomato, pickles, onion parsley salad, tahini. Served with saj bread."
       },
-      "salmon": {
+      "fish-of-the-day": {
         "name": "FISH OF THE DAY",
         "description": "pan-seared, caper-lemon sauce. Served with roasted potatoes."
       },
@@ -298,7 +296,7 @@
         "name": "HOUSE CHICKEN",
         "description": "grilled chicken breast, baby potatoes, cherry tomatoes, yogurt-herb sauce, green salad."
       },
-      "lasagna": {
+      "pasta-pomodoro": {
         "name": "PASTA POMODORO",
         "description": "three-tomato sauce, basil, parmesan."
       },
@@ -307,10 +305,10 @@
         "description": "two smash patties, coleslaw, tomato, pickles, fries - in toasted bun. Served with fries."
       },
       "tiramisu": {
-        "name": "TIRAMISU *(guest favorite)",
-        "description": "mascarpone, pasteurized eggs, savoiardi, a touch of kahlua, cocoa powder. To share"
+        "name": "TIRAMISU (guest favourite)",
+        "description": "mascarpone, pasteurised eggs, savoiardi, a touch of kahlua, cocoa powder. To share"
       },
-      "rice-pudding": {
+      "sorbet": {
         "name": "SORBET (1 scoop)",
         "description": "seasonal flavours, no added sugar: dark chocolate 85%, lemon, or pistachio"
       },
@@ -340,7 +338,7 @@
       },
       "saj-what-the-feta": {
         "name": "WHAT THE FETA",
-        "description": "creamy feta, tomato, arugula, onion, basil, za'atar."
+        "description": "creamy feta, tomato, rocket, onion, basil, za'atar."
       },
       "saj-roasted-veggies": {
         "name": "ROASTED VEGGIES",
@@ -379,7 +377,7 @@
         "description": ""
       },
       "americano-iced": {
-        "name": "Americano (Gelado)",
+        "name": "Americano (Iced)",
         "description": ""
       },
       "cappuccino": {
@@ -439,7 +437,7 @@
         "description": ""
       },
       "tea-cafe-blanc": {
-        "name": "Cafe Blanc",
+        "name": "Café Blanc",
         "description": ""
       },
       "tea-other": {
@@ -540,7 +538,7 @@
       },
       "cocktail-mediterranean-gt": {
         "name": "MEDITERRANEAN G&T",
-        "description": "gin (mare), lillet, lime, tonic water"
+        "description": "gin Mare, lillet, lime, tonic water"
       },
       "cocktail-warda": {
         "name": "WARDA",
@@ -611,36 +609,36 @@
         "description": "Bourbon, lemon, bitter, red wine"
       },
       "wine-2160-white": {
-        "name": "2160",
-        "description": "White - Douro"
+        "name": "2160 (Douro)",
+        "description": "Light, fresh, and easy to drink."
       },
       "wine-infinitude-white": {
-        "name": "Infinitude",
-        "description": "White - Sintra"
+        "name": "Infinitude (Sintra - Colares)",
+        "description": "Dry, crisp, and refreshing with a hint of minerals."
       },
       "wine-altitudes-white": {
-        "name": "Altitudes Ixsir",
-        "description": "White - Lebanon"
+        "name": "Altitudes Ixsir (Lebanon - Batroun)",
+        "description": "Floral, fruity, and aromatic with a lively finish."
       },
       "wine-cameleao-green": {
-        "name": "Camaleão Alvarinho",
-        "description": "Green - Amarante"
+        "name": "Camaleão Alvarinho (Amarante)",
+        "description": "Light, and fruity."
       },
       "wine-memorias-rose": {
-        "name": "Memórias",
-        "description": "Rosé - Dão"
+        "name": "Memórias (Dão)",
+        "description": "Delicate, fruity, and refreshing."
       },
       "wine-anexo-red": {
-        "name": "Anexo",
-        "description": "Red - Alentejo"
+        "name": "Anexo (Alentejo)",
+        "description": "Full-bodied, rich and warming with deep fruit flavours."
       },
       "wine-biaia-red": {
-        "name": "Biaia Colheita",
-        "description": "Red - Beira"
+        "name": "Biaia Colheita (Beira)",
+        "description": "Light, fruity, and easy-drinking."
       },
       "wine-sparkling": {
-        "name": "Sparkling Wine",
-        "description": ""
+        "name": "Mar Salgado Bruto",
+        "description": "Dry and crisp."
       },
       "beer-clay-cold": {
         "name": "CLAY COLD",
@@ -662,11 +660,11 @@
         "name": "IPA",
         "description": ""
       },
-      "roastedpotatoes": {
+      "roasted-baby-potatoes": {
         "name": "ROASTED BABY POTATOES",
         "description": ""
       },
-      "yogurtmix": {
+      "yogurt-mix": {
         "name": "YOGURT MIX",
         "description": "cucumber, garlic, dried mint."
       },
@@ -674,47 +672,47 @@
         "name": "RICE",
         "description": ""
       },
-      "lupinstremocos": {
+      "lupins-tremocos": {
         "name": "LUPINS (TREMOÇOS)",
         "description": ""
       },
-      "alcoholfreebeer": {
+      "alcohol-free-beer": {
         "name": "ONZE (ALCOHOL FREE)",
         "description": ""
       },
-      "redfruits": {
+      "red-fruits": {
         "name": "RED FRUITS",
         "description": "red fruits, yogurt, honey."
       },
-      "s": {
+      "strawberry-banana": {
         "name": "STRAWBERRY BANANA",
         "description": "strawberry, banana, yogurt, honey."
       },
-      "dateescapte": {
+      "date-escape": {
         "name": "DATE ESCAPE",
         "description": "milk, banana, vanilla, date paste, green spirulina."
       },
-      "coffeeshake": {
+      "coffee-shake": {
         "name": "COFFEE SHAKE",
         "description": "milk, banana, vanilla, espresso."
       },
-      "pomegranatejuice": {
+      "pomegranate-juice": {
         "name": "Pomegranate (juice)",
         "description": ""
       },
-      "applejuice": {
+      "apple-juice": {
         "name": "Apple (juice)",
         "description": ""
       },
-      "orangejuice": {
+      "orange-juice": {
         "name": "Orange (juice)",
         "description": ""
       },
-      "carrotjuice": {
+      "carrot-juice": {
         "name": "Carrot (juice)",
         "description": ""
       },
-      "ayrandrink": {
+      "ayran": {
         "name": "AYRAN (yogurt drink)",
         "description": ""
       }
@@ -745,7 +743,7 @@
     },
     "hours": {
       "label": "Hours",
-      "value": "Wed – Mon: 17:00 – 23:00 · Fri & Sat till 01:00"
+      "value": "Wed – Mon: 18:00 – 23:30 · Fri & Sat till late (02:00)"
     },
     "contact": {
       "label": "Contact",
@@ -763,7 +761,7 @@
     "navigate": "Navigate",
     "discover": "Discover",
     "hours": "Hours",
-    "hoursValue": "Tue – Sat: 19h – 00h",
+    "hoursValue": "Wed – Mon: 18:00 – 23:30 · Fri & Sat till late (02:00)",
     "closed": "Tuesday: Closed",
     "contact": "Contact",
     "reservations": "Reservations",
@@ -771,7 +769,8 @@
     "copyright": "© 2026 maída",
     "location": "Cais do Sodré, Lisboa",
     "whatIsSaj": "What is SAJ?",
-    "coffeeTea": "Coffee & Tea"
+    "coffeeTea": "Coffee & Tea",
+    "joinUs": "Join Us"
   },
   "about": {
     "heroTitle": "Our Story",
@@ -816,7 +815,7 @@
     "subjects": {
       "select": "Select a topic",
       "general": "General inquiry",
-      "reservation": "Large group reservation (6+)",
+      "reservation": "Large group reservation (8+)",
       "event": "Private event",
       "feedback": "Feedback",
       "other": "Other"
@@ -825,17 +824,17 @@
       "title": "Contact",
       "address": "Rua da Boavista 66",
       "city": "1200-068 Lisboa",
-      "phone": "+351 961 111 383",
+      "phone": "+351 966 604 674",
       "email": "info@maida.pt"
     },
     "hours": {
       "title": "Opening Hours",
       "closedText": "Closed",
       "closed": "Tuesday: Closed",
-      "midweek": "Wed – Mon: 17:00 – 23:00",
-      "midweekKitchen": "Kitchen closes 22:30",
-      "weekend": "Fri – Sat: 17:00 – 01:00",
-      "weekendKitchen": "Kitchen closes 23:00"
+      "midweek": "Wed – Mon: 18:00 – 23:30",
+      "midweekKitchen": "Kitchen closes 23:00",
+      "weekend": "Fri – Sat: 18:00 till late (02:00)",
+      "weekendKitchen": "Kitchen closes 23:30"
     },
     "location": {
       "title": "Location",
@@ -894,13 +893,15 @@
         "title": "Fridays",
         "subtitle": "Dinner & DJ",
         "description": "The weekend begins. Live DJ sets create the perfect backdrop for dinner and drinks.",
-        "vibeDescription": "Not a party - an elevated dinner experience. The music complements your meal, the energy builds naturally, and the night unfolds at your pace."
+        "vibeDescription": "Not a party - an elevated dinner experience. The music complements your meal, the energy builds naturally, and the night unfolds at your pace.",
+        "hoursValue": "18:00 – 02:00"
       },
       "saturday": {
         "title": "Saturdays",
         "subtitle": "The Full Journey",
         "description": "The full journey - dinner, drinks, and dancing until 02:00.",
-        "journeyDescription": "Start with dinner, stay for the party. Our Saturday nights are legendary - the food, the drinks, the music, all building to a peak."
+        "journeyDescription": "Start with dinner, stay for the party. Our Saturday nights are legendary - the food, the drinks, the music, all building to a peak.",
+        "hoursValue": "18:00 – 02:00"
       }
     },
     "privateEvents": {
@@ -998,8 +999,8 @@
     "cta": "Reserve now",
     "loading": "Opening…",
     "hoursOpen": "Open daily except Tuesday",
-    "hoursTime": "17:00 – 23:00",
-    "hoursWeekend": "Fri & Sat till 01:00",
+    "hoursTime": "18:00 – 23:30",
+    "hoursWeekend": "Fri & Sat till late (02:00)",
     "djPill": "Maída DJ Sessions",
     "phoneBoxLabel": "Groups of 8+, private events or same-day requests",
     "directions": "Directions",
