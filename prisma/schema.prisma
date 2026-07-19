@@ -40,3 +40,107 @@ model Session {
   @@index([userId])
   @@map("sessions")
 }
+
+// Customer Feedback from tablets/review page
+model Feedback {
+  id              String   @id @default(cuid())
+  
+  // Ratings (1-5)
+  foodRating      Int
+  serviceRating   Int
+  atmosphereRating Int
+  
+  // Optional fields
+  message         String?
+  name            String?
+  email           String?
+  
+  // Auto-captured metadata
+  submittedAt     DateTime @default(now())
+  dayOfWeek       String   // "Monday", "Tuesday", etc.
+  mealPeriod      String   // "breakfast", "lunch", "dinner", etc.
+  
+  // Analytics
+  ipAddress       String?
+  userAgent       String?
+
+  @@index([submittedAt])
+  @@index([mealPeriod])
+  @@index([dayOfWeek])
+  @@map("feedback")
+}
+
+// Review platforms configuration (Google, TripAdvisor, etc.)
+model ReviewPlatform {
+  id        String   @id @default(cuid())
+  name      String   // "Google", "TripAdvisor", "TheFork"
+  url       String   // Review URL
+  icon      String   @default("star") // "google", "tripadvisor", "thefork"
+  isActive  Boolean  @default(true)
+  isPrimary Boolean  @default(false) // Shown prominently
+  order     Int      @default(0)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("review_platforms")
+}
+
+// ===========================================
+// MEET ME AT MAÍDA - Link Page
+// ===========================================
+
+// Section (grouping of items)
+model MeetSection {
+  id        String     @id @default(cuid())
+  title     String     // "Connect With Us", "Explore", etc. (EN)
+  titlePt   String?    // Portuguese title
+  order     Int        @default(0)
+  isActive  Boolean    @default(true)
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  
+  items     MeetItem[]
+
+  @@map("meet_sections")
+}
+
+// Item (buttons, cards, events, etc.)
+model MeetItem {
+  id          String      @id @default(cuid())
+  sectionId   String
+  section     MeetSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  
+  type        String      // "button", "wifi", "event", "icon", "info", "separator", "review"
+  title       String      // English title (default)
+  titlePt     String?     // Portuguese title
+  subtitle    String?     // English subtitle
+  subtitlePt  String?     // Portuguese subtitle
+  url         String?
+  icon        String?     // emoji or icon name
+  image       String?     // for event cards
+  color       String      @default("terracotta") // preset name or hex
+  order       Int         @default(0)
+  isActive    Boolean     @default(true)
+  metadata    String?     // JSON for extra data (wifi password, dates, etc.)
+  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([sectionId])
+  @@index([order])
+  @@map("meet_items")
+}
+
+// Page Settings (footer, background, etc.)
+model MeetSettings {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   // JSON or simple string
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("meet_settings")
+}

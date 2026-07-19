@@ -1,6 +1,99 @@
 {
   "posts": [
     {
+      "id": "fattoush-salad-case-debate",
+      "slug": "fattoush-salad-case-debate",
+      "title": "The Great Lebanese Salad Debate (Part 2)",
+      "subtitle": "The case for fattoush — and why ours might just win you over",
+      "excerpt": "If tabbouleh is the salad that demands precision, fattoush is the one that demands you relax. No sacred ratios. No arguments about whether the parsley is chopped fine enough. Fattoush is generous, seasonal, and built on one principle that most salads ignore: texture is everything.",
+      "image": "/images/catering/fattouch.webp",
+      "date": "2026-02-25",
+      "readTime": "3 min read",
+      "tags": ["Tradition", "The Debate", "At the Table"],
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "If tabbouleh is the salad that demands precision, fattoush is the one that demands you relax."
+        },
+        {
+          "type": "paragraph",
+          "text": "No sacred ratios. No arguments about whether the parsley is chopped fine enough. Fattoush is generous, seasonal, and built on one principle that most salads ignore: *texture is everything.*"
+        },
+        {
+          "type": "paragraph",
+          "text": "In <a href=\"/{{locale}}/blog/the-great-lebanese-salad-debate-part-1\">Part 1</a> of this debate, we made the case for tabbouleh — its mountain origins and the purity of a parsley salad done right. Now it is time for the other side."
+        },
+        {
+          "type": "heading",
+          "text": "It Starts with the Bread"
+        },
+        {
+          "type": "paragraph",
+          "text": "The word fattoush comes from *fatt*, meaning to crumble or break bread. That tells you where the soul of this salad lives. It is not really about the greens, the tomatoes, or even the dressing. *It is about the bread.* Crispy, golden, scattered across the top so that every bite has something to shatter between your teeth."
+        },
+        {
+          "type": "paragraph",
+          "text": "Most versions use day-old pita, fried or baked until it crisps. At Maída, the bread in the fattoush is made from <a href=\"/{{locale}}/menu\">the same saj that comes off our custom griddle</a> every day. Torn by hand, fried until it holds its own against the dressing, and tossed in right before serving so it never goes soft. Saj is thinner and lighter than pita, so the crunch is sharper, almost delicate. It catches the tang of sumac and lemon in every fold."
+        },
+        {
+          "type": "callout",
+          "text": "Tabbouleh asks you to respect it. Fattoush asks you to enjoy it."
+        },
+        {
+          "type": "heading",
+          "text": "The Dressing"
+        },
+        {
+          "type": "paragraph",
+          "text": "And then there is the dressing. In most kitchens, fattoush gets a simple lemon and olive oil vinaigrette with sumac stirred in. We make ours in-house, and it is the kind of thing that makes people ask what is in it before they have finished the plate. We will keep the details to ourselves, but the balance of tartness and depth is what holds the whole salad together."
+        },
+        {
+          "type": "heading",
+          "text": "A Salad Without Rules"
+        },
+        {
+          "type": "paragraph",
+          "text": "The vegetables are generous rather than precise. Romaine, parsley, mint, tomato, cucumber, bell pepper, green onion, radish. Whatever is fresh and good. *Fattoush does not have a fixed recipe the way tabbouleh does.* It is a framework, and every home, every kitchen, every grandmother makes it a little differently depending on what the season brings. In a culture built around hospitality and abundance, that flexibility is the point."
+        },
+        {
+          "type": "highlight",
+          "text": "One is precise. The other is generous. Together, they are the foundation of a mezze spread done right."
+        },
+        {
+          "type": "heading",
+          "text": "So Who Wins?"
+        },
+        {
+          "type": "paragraph",
+          "text": "There is a reason both salads show up together at every Lebanese table. They are not competing. One is about the herb, the other is about the crunch."
+        },
+        {
+          "type": "paragraph",
+          "text": "But if you made us choose?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Order both. That is what the table is for."
+        },
+        {
+          "type": "cta",
+          "text": "#MeetMeAtMaída and settle the debate yourself. The fattoush is ready, the bread is still warm, and your table is waiting."
+        }
+      ],
+      "relatedPosts": [
+        {
+          "title": "The Great Lebanese Salad Debate (Part 1)",
+          "subtitle": "The case for tabbouleh",
+          "slug": "the-great-lebanese-salad-debate-part-1"
+        },
+        {
+          "title": "Hummus: The Great Unifier",
+          "subtitle": "Coming Soon",
+          "slug": null
+        }
+      ]
+    },
+    {
       "id": "the-great-lebanese-salad-debate-part-1",
       "slug": "the-great-lebanese-salad-debate-part-1",
       "title": "The Great Lebanese Salad Debate (Part 1)",
@@ -33,7 +126,7 @@
         },
         {
           "type": "paragraph",
-          "text": "So while we wait for the fattoush post to make its case, let's talk about why this little parsley salad deserves its moment."
+          "text": "So while the <a href=\"/{{locale}}/blog/fattoush-salad-case-debate\">fattoush post</a> makes its own case, let's talk about why this little parsley salad deserves its moment."
         },
         {
           "type": "heading",
@@ -143,8 +236,8 @@
       "relatedPosts": [
         {
           "title": "The Case for Fattoush",
-          "subtitle": "Part 2 - Coming Soon",
-          "slug": null
+          "subtitle": "Part 2 of The Great Lebanese Salad Debate",
+          "slug": "fattoush-salad-case-debate"
         },
         {
           "title": "Hummus: The Great Unifier",

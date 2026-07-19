@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { isValidLocale, loadTranslations, Locale } from '@/lib/i18n';
+import { isValidLocale } from '@/lib/i18n';
 import { generatePageMetadata } from '@/lib/seo';
+import { getServerTranslations } from '@/lib/translations';
 
 // Components
 import Hero from '@/components/sections/Hero';
@@ -10,22 +11,25 @@ import Story from '@/components/sections/Story';
 import MenuHighlights from '@/components/sections/MenuHighlights';
 import Visit from '@/components/sections/Visit';
 
-// Generate metadata with hreflang
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: { lang: string } 
+// Static + on-demand revalidation. A translations/all publish busts the [lang]
+// layout (which includes this page); hourly is the safety-net fallback.
+export const revalidate = 3600;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: string };
 }): Promise<Metadata> {
   const locale = params.lang;
-  
+
   if (!isValidLocale(locale)) {
     return {};
   }
 
   const isPortuguese = locale === 'pt';
-  
+
   return generatePageMetadata({
-    title: isPortuguese 
+    title: isPortuguese
       ? 'Maída – Sabores Mediterrânicos. Alma Libanesa | Lisboa'
       : 'Maída – Mediterranean Flavours. Lebanese Soul | Lisbon',
     description: isPortuguese
@@ -47,7 +51,7 @@ export default async function HomePage({
     notFound();
   }
 
-  const translations = await loadTranslations(locale);
+  const translations = await getServerTranslations(locale);
 
   return (
     <div className="overflow-x-hidden">

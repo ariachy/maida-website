@@ -15,15 +15,20 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
+  rectSortingStrategy,
 } from '@dnd-kit/sortable';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 import LanguageTabs from '@/components/admin/LanguageTabs';
 import Modal, { ConfirmModal } from '@/components/admin/Modal';
 import { ToastContainer, useToast } from '@/components/admin/Toast';
+import RebuildModal from '@/components/admin/RebuildModal';
 import MenuItemEditor from './MenuItemEditor';
 import CategoryEditor from './CategoryEditor';
 import SortableItem from './SortableItem';
+import SubCategoryEditor from './SubCategoryEditor';
+import SortableSubCategory from './SortableSubCategory';
+import SortableCategory from './SortableCategory';
 
 // Types
 interface Category {
@@ -38,10 +43,18 @@ interface MenuItem {
   categoryId: string;
   sortOrder: number;
   subCategory?: string;
+  active?: boolean;
+}
+
+interface SubCategoryRecord {
+  id: string;
+  categoryId: string;
+  sortOrder: number;
 }
 
 interface MenuData {
   categories: Category[];
+  subCategories?: SubCategoryRecord[];
   items: MenuItem[];
 }
 
@@ -85,7 +98,10 @@ export default function MenuEditorClient() {
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [showAddItem, setShowAddItem] = useState(false);
   const [showAddCategory, setShowAddCategory] = useState(false);
+  const [showAddSubCategory, setShowAddSubCategory] = useState(false);
+  const [editingSubCategory, setEditingSubCategory] = useState<{ id: string; categoryId: string } | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<{ type: 'item' | 'category'; id: string } | null>(null);
+  const [showRebuildModal, setShowRebuildModal] = useState(false);
 
   // DnD sensors
   const sensors = useSensors(
@@ -151,8 +167,8 @@ export default function MenuEditorClient() {
     }
   };
 
-  const saveAllData = async () => {
-    if (!menuData || !enData || !ptData) return;
+  const saveAllData = async (): Promise<boolean> => {
+    if (!menuData || !enData || !ptData) return false;
 
     setSaving(true);
     try {
@@ -180,12 +196,20 @@ export default function MenuEditorClient() {
       }
 
       setHasUnsavedChanges(false);
-      toast.success('Menu saved successfully!');
+      return true;
     } catch (error) {
       console.error('Save error:', error);
       toast.error('Failed to save menu');
+      return false;
     } finally {
       setSaving(false);
+    }
+  };
+
+  const saveAndPublish = async () => {
+    const saved = await saveAllData();
+    if (saved) {
+      setShowRebuildModal(true);
     }
   };
 
@@ -289,35 +313,248 @@ export default function MenuEditorClient() {
     setHasUnsavedChanges(true);
   };
 
-  // Handle drag end for reordering
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
+  // ---- Sub-category management (Phase 2) ----
 
-    if (over && active.id !== over.id) {
-      const filteredItems = getFilteredItems();
-      const oldIndex = filteredItems.findIndex((i) => i.id === active.id);
-      const newIndex = filteredItems.findIndex((i) => i.id === over.id);
+  const slugify = (name: string) =>
+    name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-      if (oldIndex !== -1 && newIndex !== -1) {
-        const reorderedFiltered = arrayMove(filteredItems, oldIndex, newIndex);
-        
-        setMenuData((prev) => {
-          if (!prev) return prev;
-          
-          const newItems = prev.items.map((item) => {
-            const newPosition = reorderedFiltered.findIndex((f) => f.id === item.id);
-            if (newPosition !== -1) {
-              return { ...item, sortOrder: newPosition + 1 };
-            }
-            return item;
-          });
+  // Ordered sub-categories for a category as {id, name}. Prefers the subCategories
+  // records (so empty ones still show); falls back to deriving from items.
+  const getCategorySubCategories = (categoryId: string): Array<{ id: string; name: string }> => {
+    if (!menuData || !enData) return [];
+    const records = menuData.subCategories
+      ? menuData.subCategories.filter((s) => s.categoryId === categoryId)
+      : [];
+    let ids: string[];
+    if (records.length) {
+      ids = [...records].sort((a, b) => a.sortOrder - b.sortOrder).map((s) => s.id);
+    } else {
+      ids = Array.from(
+        new Set(
+          menuData.items
+            .filter((i) => i.categoryId === categoryId)
+            .map((i) => i.subCategory)
+            .filter(Boolean) as string[]
+        )
+      );
+    }
+    return ids.map((id) => ({ id, name: enData.menu.subCategories[id] || id }));
+  };
 
-          return { ...prev, items: newItems };
-        });
-
-        setHasUnsavedChanges(true);
+  // Map categoryId -> { subId: enName }, for the item editor's filtered dropdown.
+  const subCatsByCategory: Record<string, Record<string, string>> = (() => {
+    const map: Record<string, Record<string, string>> = {};
+    if (!menuData) return map;
+    for (const cat of menuData.categories) {
+      map[cat.id] = {};
+      for (const sub of getCategorySubCategories(cat.id)) {
+        map[cat.id][sub.id] = sub.name;
       }
     }
+    return map;
+  })();
+
+  const addSubCategory = (categoryId: string, enName: string, ptName: string) => {
+    if (!menuData || !enData) return;
+    const base = slugify(enName) || 'subcategory';
+    const existing = new Set([
+      ...Object.keys(enData.menu.subCategories || {}),
+      ...((menuData.subCategories || []).map((sc) => sc.id)),
+    ]);
+    let id = base;
+    let n = 2;
+    while (existing.has(id)) {
+      id = `${base}-${n}`;
+      n++;
+    }
+
+    const recs = (menuData.subCategories || []).filter((sc) => sc.categoryId === categoryId);
+    const maxOrder = Math.max(0, ...recs.map((sc) => sc.sortOrder));
+
+    setMenuData((prev) => {
+      if (!prev) return prev;
+      const subCategories = prev.subCategories ? [...prev.subCategories] : [];
+      subCategories.push({ id, categoryId, sortOrder: maxOrder + 1 });
+      return { ...prev, subCategories };
+    });
+    setEnData((prev) =>
+      prev ? { ...prev, menu: { ...prev.menu, subCategories: { ...prev.menu.subCategories, [id]: enName } } } : prev
+    );
+    setPtData((prev) =>
+      prev ? { ...prev, menu: { ...prev.menu, subCategories: { ...prev.menu.subCategories, [id]: ptName || enName } } } : prev
+    );
+    setHasUnsavedChanges(true);
+    toast.success('Sub-category added');
+  };
+
+  const updateSubCategoryName = (subId: string, enName: string, ptName: string) => {
+    setEnData((prev) =>
+      prev ? { ...prev, menu: { ...prev.menu, subCategories: { ...prev.menu.subCategories, [subId]: enName } } } : prev
+    );
+    setPtData((prev) =>
+      prev ? { ...prev, menu: { ...prev.menu, subCategories: { ...prev.menu.subCategories, [subId]: ptName || enName } } } : prev
+    );
+    setHasUnsavedChanges(true);
+    toast.success('Sub-category updated');
+  };
+
+  const deleteSubCategory = (subId: string) => {
+    setMenuData((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        subCategories: (prev.subCategories || []).filter((sc) => sc.id !== subId),
+        items: prev.items.map((i) => (i.subCategory === subId ? { ...i, subCategory: undefined } : i)),
+      };
+    });
+    setEnData((prev) => {
+      if (!prev) return prev;
+      const next = { ...prev.menu.subCategories };
+      delete next[subId];
+      return { ...prev, menu: { ...prev.menu, subCategories: next } };
+    });
+    setPtData((prev) => {
+      if (!prev) return prev;
+      const next = { ...prev.menu.subCategories };
+      delete next[subId];
+      return { ...prev, menu: { ...prev.menu, subCategories: next } };
+    });
+    setHasUnsavedChanges(true);
+    toast.success('Sub-category removed; its items moved to no sub-category');
+  };
+
+  // Renumber a category's items so sortOrder runs: ungrouped first, then each
+  // sub-category in record order, items kept in their existing order (or an
+  // override for the group just dragged). Keeps admin list and public site in sync.
+  const renumberCategoryItems = (
+    data: MenuData,
+    categoryId: string,
+    override?: { subId: string | undefined; orderIds: string[] }
+  ): MenuData => {
+    const subRecs = (data.subCategories || [])
+      .filter((s) => s.categoryId === categoryId)
+      .sort((a, b) => a.sortOrder - b.sortOrder);
+    const orderedSubIds = subRecs.map((s) => s.id);
+    const catItems = data.items.filter((i) => i.categoryId === categoryId);
+
+    const bucketFor = (subId: string | undefined): MenuItem[] => {
+      const arr = catItems.filter((i) => i.subCategory === subId);
+      if (override && override.subId === subId) {
+        const byId = new Map(arr.map((i) => [i.id, i]));
+        const ordered = override.orderIds
+          .map((id) => byId.get(id))
+          .filter((x): x is MenuItem => Boolean(x));
+        const rest = arr.filter((i) => !override.orderIds.includes(i.id));
+        return [...ordered, ...rest];
+      }
+      return [...arr].sort((a, b) => a.sortOrder - b.sortOrder);
+    };
+
+    const buckets: MenuItem[][] = [];
+    buckets.push(bucketFor(undefined)); // ungrouped first
+    for (const sid of orderedSubIds) buckets.push(bucketFor(sid));
+    const known = new Set(orderedSubIds);
+    const orphanIds = Array.from(
+      new Set(catItems.map((i) => i.subCategory).filter((sc) => sc && !known.has(sc)) as string[])
+    );
+    for (const sid of orphanIds) buckets.push(bucketFor(sid));
+
+    const newOrder: Record<string, number> = {};
+    let counter = 1;
+    for (const b of buckets) for (const it of b) newOrder[it.id] = counter++;
+
+    return {
+      ...data,
+      items: data.items.map((i) =>
+        i.categoryId === categoryId && newOrder[i.id] !== undefined
+          ? { ...i, sortOrder: newOrder[i.id] }
+          : i
+      ),
+    };
+  };
+
+  // Handle item drag — reorder ONLY within the same category + sub-category.
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id || !menuData) return;
+
+    const activeItem = menuData.items.find((i) => i.id === active.id);
+    const overItem = menuData.items.find((i) => i.id === over.id);
+    if (!activeItem || !overItem) return;
+
+    // Ignore drops that cross a category or sub-category boundary.
+    if (
+      activeItem.categoryId !== overItem.categoryId ||
+      activeItem.subCategory !== overItem.subCategory
+    ) {
+      return;
+    }
+
+    const group = menuData.items
+      .filter(
+        (i) => i.categoryId === activeItem.categoryId && i.subCategory === activeItem.subCategory
+      )
+      .sort((a, b) => a.sortOrder - b.sortOrder);
+    const oldIndex = group.findIndex((i) => i.id === active.id);
+    const newIndex = group.findIndex((i) => i.id === over.id);
+    if (oldIndex === -1 || newIndex === -1) return;
+
+    const orderIds = arrayMove(group, oldIndex, newIndex).map((i) => i.id);
+
+    setMenuData((prev) =>
+      prev
+        ? renumberCategoryItems(prev, activeItem.categoryId, {
+            subId: activeItem.subCategory,
+            orderIds,
+          })
+        : prev
+    );
+    setHasUnsavedChanges(true);
+  };
+
+  // Handle sub-category (group) drag — reorder the groups within a category.
+  const handleSubCategoryDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id || !menuData || selectedCategory === 'all') return;
+
+    const recs = (menuData.subCategories || [])
+      .filter((s) => s.categoryId === selectedCategory)
+      .sort((a, b) => a.sortOrder - b.sortOrder);
+    const oldIndex = recs.findIndex((s) => s.id === active.id);
+    const newIndex = recs.findIndex((s) => s.id === over.id);
+    if (oldIndex === -1 || newIndex === -1) return;
+
+    const newRecs = arrayMove(recs, oldIndex, newIndex).map((r, idx) => ({
+      ...r,
+      sortOrder: idx + 1,
+    }));
+
+    setMenuData((prev) => {
+      if (!prev) return prev;
+      const others = (prev.subCategories || []).filter((s) => s.categoryId !== selectedCategory);
+      const withRecs: MenuData = { ...prev, subCategories: [...others, ...newRecs] };
+      return renumberCategoryItems(withRecs, selectedCategory);
+    });
+    setHasUnsavedChanges(true);
+  };
+
+  // Handle category (tab) drag — reorder the top-level categories.
+  const handleCategoryDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id || !menuData) return;
+
+    const sorted = [...menuData.categories].sort((a, b) => a.sortOrder - b.sortOrder);
+    const oldIndex = sorted.findIndex((c) => c.id === active.id);
+    const newIndex = sorted.findIndex((c) => c.id === over.id);
+    if (oldIndex === -1 || newIndex === -1) return;
+
+    const reordered = arrayMove(sorted, oldIndex, newIndex).map((c, idx) => ({
+      ...c,
+      sortOrder: idx + 1,
+    }));
+
+    setMenuData((prev) => (prev ? { ...prev, categories: reordered } : prev));
+    setHasUnsavedChanges(true);
   };
 
   // Add new item
@@ -416,6 +653,20 @@ export default function MenuEditorClient() {
   const canDeleteCategory = (categoryId: string) => {
     if (!menuData) return false;
     return !menuData.items.some((item) => item.categoryId === categoryId);
+  };
+
+  // Toggle an item's active (visible-on-menu) state
+  const toggleItemActive = (itemId: string) => {
+    setMenuData((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        items: prev.items.map((i) =>
+          i.id === itemId ? { ...i, active: i.active === false ? true : false } : i
+        ),
+      };
+    });
+    setHasUnsavedChanges(true);
   };
 
   // Add new category
@@ -545,6 +796,12 @@ export default function MenuEditorClient() {
 
   return (
     <div>
+      {/* Rebuild Modal */}
+      <RebuildModal 
+        isOpen={showRebuildModal} 
+        onClose={() => setShowRebuildModal(false)} 
+      />
+
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -553,35 +810,39 @@ export default function MenuEditorClient() {
             Edit menu items, categories, and descriptions in English and Portuguese
           </p>
         </div>
-        <button
-          onClick={saveAllData}
-          disabled={saving || !hasUnsavedChanges}
-          className={`relative flex items-center gap-2 px-6 py-2.5 rounded-md font-medium transition-colors ${
-            hasUnsavedChanges
-              ? 'bg-[#C4A484] hover:bg-[#B8956F] text-white'
-              : 'bg-[#E5E5E5] text-[#9CA3AF] cursor-not-allowed'
-          }`}
-        >
-          {saving ? (
-            <>
-              <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-              </svg>
-              Saving...
-            </>
-          ) : (
-            <>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              Save Changes
-            </>
-          )}
-          {hasUnsavedChanges && !saving && (
-            <span className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full" />
-          )}
-        </button>
+        <div className="flex items-center gap-3">
+          {/* Save Draft Button */}
+          <button
+            onClick={saveAllData}
+            disabled={saving || !hasUnsavedChanges}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-md font-medium transition-colors border ${
+              hasUnsavedChanges
+                ? 'border-[#C4A484] text-[#C4A484] hover:bg-[#C4A484]/10'
+                : 'border-[#E5E5E5] text-[#9CA3AF] cursor-not-allowed'
+            }`}
+          >
+            {saving ? 'Saving...' : 'Save Draft'}
+          </button>
+
+          {/* Save & Publish Button */}
+          <button
+            onClick={saveAndPublish}
+            disabled={saving || !hasUnsavedChanges}
+            className={`relative flex items-center gap-2 px-6 py-2.5 rounded-md font-medium transition-colors ${
+              hasUnsavedChanges
+                ? 'bg-[#C4A484] hover:bg-[#B8956F] text-white'
+                : 'bg-[#E5E5E5] text-[#9CA3AF] cursor-not-allowed'
+            }`}
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            {saving ? 'Saving...' : 'Save & Publish'}
+            {hasUnsavedChanges && !saving && (
+              <span className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full" />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Filters & Actions */}
@@ -673,44 +934,87 @@ export default function MenuEditorClient() {
           <h2 className="text-lg font-medium text-[#2C2C2C]">Categories</h2>
         </div>
         <div className="p-4">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-            {menuData.categories.sort((a, b) => a.sortOrder - b.sortOrder).map((cat) => (
-              <div
-                key={cat.id}
-                className={`p-3 border rounded-lg cursor-pointer transition-colors ${
-                  selectedCategory === cat.id
-                    ? 'border-[#C4A484] bg-[#C4A484]/5'
-                    : 'border-[#E5E5E5] hover:border-[#D4C4B5]'
-                }`}
-                onClick={() => {
-                  setSelectedCategory(cat.id);
-                  setSelectedSubCategory('all');
-                }}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-medium text-[#2C2C2C] truncate">
-                    {enData.menu.categories[cat.id]?.name || cat.id}
-                  </span>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setEditingCategory(cat);
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleCategoryDragEnd}
+          >
+            <SortableContext
+              items={[...menuData.categories].sort((a, b) => a.sortOrder - b.sortOrder).map((c) => c.id)}
+              strategy={rectSortingStrategy}
+            >
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                {[...menuData.categories].sort((a, b) => a.sortOrder - b.sortOrder).map((cat) => (
+                  <SortableCategory
+                    key={cat.id}
+                    id={cat.id}
+                    name={enData.menu.categories[cat.id]?.name || cat.id}
+                    itemCount={menuData.items.filter((i) => i.categoryId === cat.id).length}
+                    isSelected={selectedCategory === cat.id}
+                    onSelect={() => {
+                      setSelectedCategory(cat.id);
+                      setSelectedSubCategory('all');
                     }}
-                    className="p-1 text-[#9CA3AF] hover:text-[#C4A484] transition-colors"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                    </svg>
-                  </button>
-                </div>
-                <span className="text-xs text-[#9CA3AF]">
-                  {menuData.items.filter((i) => i.categoryId === cat.id).length} items
-                </span>
+                    onEdit={() => setEditingCategory(cat)}
+                  />
+                ))}
               </div>
-            ))}
-          </div>
+            </SortableContext>
+          </DndContext>
         </div>
       </div>
+
+      {/* Sub-category management (Phase 2) */}
+      {selectedCategory !== 'all' && (
+        <div className="bg-white rounded-lg shadow-sm border border-[#E5E5E5] mb-6">
+          <div className="p-4 border-b border-[#E5E5E5] flex items-center justify-between">
+            <h2 className="text-lg font-medium text-[#2C2C2C]">
+              Sub-categories in {enData.menu.categories[selectedCategory]?.name || selectedCategory}
+            </h2>
+            <button
+              onClick={() => setShowAddSubCategory(true)}
+              className="px-3 py-1.5 text-sm font-medium text-white bg-[#C4A484] hover:bg-[#B8956F] rounded-md transition-colors"
+            >
+              + Add sub-category
+            </button>
+          </div>
+          <div className="p-4">
+            {getCategorySubCategories(selectedCategory).length === 0 ? (
+              <p className="text-sm text-[#9CA3AF]">
+                No sub-categories yet. Items without one show directly under the category.
+              </p>
+            ) : (
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleSubCategoryDragEnd}
+                modifiers={[restrictToVerticalAxis]}
+              >
+                <SortableContext
+                  items={getCategorySubCategories(selectedCategory).map((s) => s.id)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  <div className="space-y-2 max-w-md">
+                    {getCategorySubCategories(selectedCategory).map((sub) => (
+                      <SortableSubCategory
+                        key={sub.id}
+                        id={sub.id}
+                        name={sub.name}
+                        onRename={() => setEditingSubCategory({ id: sub.id, categoryId: selectedCategory })}
+                        onDelete={() => {
+                          if (window.confirm(`Delete sub-category "${sub.name}"? Items in it will move to no sub-category.`)) {
+                            deleteSubCategory(sub.id);
+                          }
+                        }}
+                      />
+                    ))}
+                  </div>
+                </SortableContext>
+              </DndContext>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Items List with Drag & Drop */}
       <div className="bg-white rounded-lg shadow-sm border border-[#E5E5E5]">
@@ -723,7 +1027,7 @@ export default function MenuEditorClient() {
           </h2>
           {filteredItems.length > 1 && (
             <span className="text-xs text-[#9CA3AF]">
-              Drag items to reorder
+              Drag items to reorder within a group
             </span>
           )}
         </div>
@@ -744,20 +1048,35 @@ export default function MenuEditorClient() {
               strategy={verticalListSortingStrategy}
             >
               <div className="divide-y divide-[#E5E5E5]">
-                {filteredItems.map((item) => {
+                {filteredItems.map((item, index) => {
                   const enTrans = getItemTranslation(item.id, 'en');
                   const ptTrans = getItemTranslation(item.id, 'pt');
-                  
+                  const prevItem = index > 0 ? filteredItems[index - 1] : null;
+                  const showHeader =
+                    selectedCategory !== 'all' &&
+                    selectedSubCategory === 'all' &&
+                    (!prevItem || prevItem.subCategory !== item.subCategory);
+                  const headerLabel = item.subCategory
+                    ? enData.menu.subCategories[item.subCategory] || item.subCategory
+                    : 'No sub-category';
+
                   return (
-                    <SortableItem
-                      key={item.id}
-                      item={item}
-                      enTranslation={enTrans}
-                      ptTranslation={ptTrans}
-                      subCategoryName={item.subCategory ? enData.menu.subCategories[item.subCategory] : undefined}
-                      onEdit={() => setEditingItem(item)}
-                      onDelete={() => setDeleteConfirm({ type: 'item', id: item.id })}
-                    />
+                    <div key={item.id}>
+                      {showHeader && (
+                        <div className="px-4 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-[#C4A484] bg-[#FCFAF7]">
+                          {headerLabel}
+                        </div>
+                      )}
+                      <SortableItem
+                        item={item}
+                        enTranslation={enTrans}
+                        ptTranslation={ptTrans}
+                        subCategoryName={item.subCategory ? enData.menu.subCategories[item.subCategory] : undefined}
+                        onEdit={() => setEditingItem(item)}
+                        onDelete={() => setDeleteConfirm({ type: 'item', id: item.id })}
+                        onToggleActive={() => toggleItemActive(item.id)}
+                      />
+                    </div>
                   );
                 })}
               </div>
@@ -774,7 +1093,7 @@ export default function MenuEditorClient() {
           enTranslation={getItemTranslation(editingItem.id, 'en')}
           ptTranslation={getItemTranslation(editingItem.id, 'pt')}
           categoryTranslations={enData.menu.categories}
-          subCategories={enData.menu.subCategories}
+          subCategoriesByCategory={subCatsByCategory}
           onSave={(updates) => {
             if (updates.categoryId || updates.subCategory !== undefined) {
               setMenuData((prev) => {
@@ -836,7 +1155,7 @@ export default function MenuEditorClient() {
           enTranslation={{ name: '', description: '' }}
           ptTranslation={{ name: '', description: '' }}
           categoryTranslations={enData.menu.categories}
-          subCategories={enData.menu.subCategories}
+          subCategoriesByCategory={subCatsByCategory}
           defaultCategoryId={selectedCategory !== 'all' ? selectedCategory : menuData.categories[0]?.id}
           onSave={(updates) => {
             if (updates.newItemId) {
@@ -855,6 +1174,36 @@ export default function MenuEditorClient() {
             setShowAddItem(false);
           }}
           onClose={() => setShowAddItem(false)}
+        />
+      )}
+
+      {/* Add Sub-category Modal (Phase 2) */}
+      {showAddSubCategory && selectedCategory !== 'all' && (
+        <SubCategoryEditor
+          mode="add"
+          categoryName={enData.menu.categories[selectedCategory]?.name || selectedCategory}
+          initialEnName=""
+          initialPtName=""
+          onSave={({ enName, ptName }) => {
+            addSubCategory(selectedCategory, enName, ptName);
+            setShowAddSubCategory(false);
+          }}
+          onClose={() => setShowAddSubCategory(false)}
+        />
+      )}
+
+      {/* Edit Sub-category Modal (Phase 2) */}
+      {editingSubCategory && (
+        <SubCategoryEditor
+          mode="edit"
+          categoryName={enData.menu.categories[editingSubCategory.categoryId]?.name || editingSubCategory.categoryId}
+          initialEnName={enData.menu.subCategories[editingSubCategory.id] || ''}
+          initialPtName={ptData.menu.subCategories[editingSubCategory.id] || ''}
+          onSave={({ enName, ptName }) => {
+            updateSubCategoryName(editingSubCategory.id, enName, ptName);
+            setEditingSubCategory(null);
+          }}
+          onClose={() => setEditingSubCategory(null)}
         />
       )}
 

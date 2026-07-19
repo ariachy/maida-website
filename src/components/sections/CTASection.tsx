@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { useUmaiWidget } from '@/components/integrations/UmaiLoader';
+import { useBooking } from '@/hooks/useBooking';
 
 interface CTASectionProps {
   translations: any;
@@ -13,7 +13,7 @@ export default function CTASection({ translations }: CTASectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   
-  const { openWidget, isOpening } = useUmaiWidget();
+  const { openWidget, isOpening } = useBooking();
   
   return (
     <section 
@@ -54,7 +54,7 @@ export default function CTASection({ translations }: CTASectionProps) {
         </motion.p>
         
         <motion.button
-          onClick={openWidget}
+          onClick={() => openWidget('button')}
           disabled={isOpening}
           className="btn bg-charcoal text-warm-white hover:bg-warm-white hover:text-charcoal disabled:opacity-70"
           initial={{ opacity: 0, y: 30 }}

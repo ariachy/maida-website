@@ -207,7 +207,14 @@
       "gluten-free": "GF"
     },
     "glass": "glass",
-    "bottle": "bottle"
+    "bottle": "bottle",
+    "subCategories": {
+      "white-wine": "Weiß",
+      "rose-wine": "Rosé",
+      "red-wine": "Rot",
+      "green-wine": "Vinho Verde",
+      "sparkling-wine": "Schaumwein"
+    }
   },
   "drinks": {
     "label": "From Our Roots",
@@ -227,7 +234,7 @@
     },
     "hours": {
       "label": "Hours",
-      "value": "Tue – Sat: 19:00 – 00:00"
+      "value": "Mi – Mo: 17:00 – 23:00 · Fr & Sa bis 01:00"
     },
     "contact": {
       "label": "Contact",
@@ -245,7 +252,7 @@
     "navigate": "Navigate",
     "hours": "Hours",
     "hoursValue": "Tue – Sat: 19h – 00h",
-    "closed": "Sun – Mon: Closed",
+    "closed": "Dienstag: Geschlossen",
     "contact": "Contact",
     "reservations": "Reservations",
     "giftCards": "Gift Cards",
@@ -281,11 +288,11 @@
     },
     "hours": {
       "title": "Öffnungszeiten",
-      "closed": "Montag - Dienstag: Geschlossen",
-      "midweek": "Mi, Do, So: 12:30 - 23:00",
+      "closed": "Dienstag: Geschlossen",
+      "midweek": "Mi – Mo: 17:00 – 23:00",
       "midweekKitchen": "Küche schließt 22:30",
-      "weekend": "Fr - Sa: 12:30 - 01:00",
-      "weekendKitchen": "Küche schließt 23:30"
+      "weekend": "Fr – Sa: 17:00 – 01:00",
+      "weekendKitchen": "Küche schließt 23:00"
     }
   },
   "common": {

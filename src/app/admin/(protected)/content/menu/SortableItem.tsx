@@ -8,6 +8,7 @@ interface MenuItem {
   categoryId: string;
   sortOrder: number;
   subCategory?: string;
+  active?: boolean; // undefined or true = visible; false = hidden from the public menu
 }
 
 interface TranslationItem {
@@ -22,6 +23,7 @@ interface SortableItemProps {
   subCategoryName?: string;
   onEdit: () => void;
   onDelete: () => void;
+  onToggleActive?: () => void;
 }
 
 export default function SortableItem({
@@ -31,6 +33,7 @@ export default function SortableItem({
   subCategoryName,
   onEdit,
   onDelete,
+  onToggleActive,
 }: SortableItemProps) {
   const {
     attributes,
@@ -40,6 +43,8 @@ export default function SortableItem({
     transition,
     isDragging,
   } = useSortable({ id: item.id });
+
+  const isActive = item.active !== false;
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -53,7 +58,7 @@ export default function SortableItem({
       style={style}
       className={`p-4 flex items-center gap-4 hover:bg-[#F9F9F9] transition-colors ${
         isDragging ? 'bg-[#F5F1EB] shadow-lg rounded-lg z-10' : ''
-      }`}
+      } ${!isActive ? 'opacity-60' : ''}`}
     >
       {/* Drag handle */}
       <button
@@ -69,7 +74,7 @@ export default function SortableItem({
       {/* Item info */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="font-medium text-[#2C2C2C]">
+          <span className={`font-medium ${isActive ? 'text-[#2C2C2C]' : 'text-[#9CA3AF] line-through'}`}>
             {enTranslation.name || <span className="text-[#9CA3AF] italic">Unnamed</span>}
           </span>
           {subCategoryName && (
@@ -77,11 +82,15 @@ export default function SortableItem({
               {subCategoryName}
             </span>
           )}
+          {!isActive && (
+            <span className="px-2 py-0.5 text-xs bg-[#FEE2E2] text-[#B91C1C] rounded">
+              Hidden
+            </span>
+          )}
         </div>
         <p className="text-sm text-[#9CA3AF] truncate">
           {enTranslation.description || <span className="italic">No description</span>}
         </p>
-        {/* PT indicator */}
         {(!ptTranslation.name || !ptTranslation.description) && (
           <span className="inline-flex items-center gap-1 mt-1 text-xs text-orange-500">
             <span>🇵🇹</span> Missing translation
@@ -91,6 +100,24 @@ export default function SortableItem({
 
       {/* Actions */}
       <div className="flex items-center gap-2">
+        {/* Active / Hidden toggle */}
+        {onToggleActive && (
+          <button
+            onClick={onToggleActive}
+            title={isActive ? 'Visible on the menu — click to hide' : 'Hidden from the menu — click to show'}
+            aria-pressed={isActive}
+            className={`relative inline-flex h-6 w-11 flex-shrink-0 items-center rounded-full transition-colors ${
+              isActive ? 'bg-[#7A9B6E]' : 'bg-[#D4C4B5]'
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${
+                isActive ? 'translate-x-6' : 'translate-x-1'
+              }`}
+            />
+          </button>
+        )}
+
         <button
           onClick={onEdit}
           className="p-2 text-[#6B6B6B] hover:text-[#C4A484] hover:bg-[#F5F1EB] rounded-md transition-colors"

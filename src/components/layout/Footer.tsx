@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Instagram, Facebook } from 'lucide-react';
 import { Locale } from '@/lib/i18n';
-import { useUmaiWidget, useUmaiGiftCard } from '@/components/integrations/UmaiLoader';
+import { useBooking } from '@/hooks/useBooking';
 
 interface FooterProps {
   translations: any;
@@ -15,9 +15,8 @@ export default function Footer({ translations, locale }: FooterProps) {
   const nav = translations?.nav || {};
   const footer = translations?.footer || {};
   
-  // UMAI Widget hooks
-  const { openWidget: openReservation, isOpening: isReservationOpening } = useUmaiWidget();
-  const { openGiftCard, isOpening: isGiftCardOpening } = useUmaiGiftCard();
+  // TheFork booking hook
+  const { openWidget: openReservation, isOpening: isReservationOpening } = useBooking(locale);
   
   // Helper function to safely get translation value (handles both string and {label, value} formats)
   const getLabel = (obj: any, key: string, fallback: string): string => {
@@ -155,6 +154,15 @@ export default function Footer({ translations, locale }: FooterProps) {
                   Blog
                 </Link>
               </li>
+              {/* Join Us — visually separated from the rest with a subtle divider */}
+              <li className="pt-2 mt-2 border-t border-white/10">
+                <Link
+                  href={`/${locale}/join-us`}
+                  className="text-warm-white/70 text-sm hover:text-warm-white transition-colors"
+                >
+                  Join Us
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -163,21 +171,20 @@ export default function Footer({ translations, locale }: FooterProps) {
             <span className="block text-sm tracking-[0.15em] uppercase text-terracotta-light mb-3 font-medium">
               {getLabel(footer, 'hours', 'Hours')}
             </span>
-            {/* Opening hours - FIXED: Changed /50 to /70 for better contrast */}
+            {/* Opening hours - matched to the reserve page wording */}
             <ul className="text-sm">
-              {/* Day labels in full white, times in /70 */}
-              <li className="text-warm-white">Mon–Tue</li>
-              <li className="text-warm-white/70">Closed</li>
-              
-              <li className="mt-2 text-warm-white">Wed, Thu, Sun</li>
-              <li className="text-warm-white/70">12:30 - 23:00</li>
-              {/* FIXED: Kitchen note from /50 to /70 */}
-              <li className="text-warm-white/70 text-xs">Kitchen closes 22:30</li>
-              
-              <li className="mt-2 text-warm-white">Fri–Sat</li>
-              <li className="text-warm-white/70">12:30 - 01:00</li>
-              {/* FIXED: Kitchen note from /50 to /70 */}
-              <li className="text-warm-white/70 text-xs">Kitchen closes 23:30</li>
+              <li className="text-warm-white">Wed – Mon · 17:00 – 23:00</li>
+              <li className="mt-3 text-terracotta-light font-medium">Fri &amp; Sat till 01:00</li>
+              <li className="mt-1.5">
+                <span className="inline-block bg-terracotta-light/10 text-terracotta-light text-[9px] tracking-[0.15em] uppercase px-2.5 py-0.5 rounded-full">
+                  Maída DJ Sessions
+                </span>
+              </li>
+              <li className="mt-3">
+                <span className="inline-block bg-white/10 text-warm-white/70 text-[10px] tracking-[0.05em] px-2.5 py-1 rounded">
+                  Tue · Closed
+                </span>
+              </li>
             </ul>
           </div>
 
@@ -204,20 +211,11 @@ export default function Footer({ translations, locale }: FooterProps) {
               </li>
               <li className="mt-2">
                 <button
-                  onClick={openReservation}
+                  onClick={() => openReservation('button')}
                   disabled={isReservationOpening}
                   className="text-terracotta-light text-sm hover:text-warm-white transition-colors disabled:opacity-70"
                 >
                   {isReservationOpening ? 'Loading...' : 'Book a table'}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={openGiftCard}
-                  disabled={isGiftCardOpening}
-                  className="text-warm-white/70 text-sm hover:text-warm-white transition-colors disabled:opacity-70"
-                >
-                  {isGiftCardOpening ? 'Loading...' : getLabel(footer, 'giftCards', 'Gift Cards')}
                 </button>
               </li>
             </ul>

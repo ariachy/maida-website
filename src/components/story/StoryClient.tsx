@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import Image from 'next/image';
 import { Locale } from '@/lib/i18n';
+import { useBooking } from '@/hooks/useBooking';
 
 interface StoryClientProps {
   translations: any;
@@ -16,15 +17,8 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
   const cta = translations?.cta || {};
   const nav = translations?.nav || {};
 
-  const handleReserveClick = () => {
-    if (typeof window !== 'undefined' && (window as any).umaiWidget) {
-      (window as any).umaiWidget.config({
-        apiKey: 'd541f212-d5ca-4839-ab2b-7f9c99e1c96c',
-        widgetType: 'reservation',
-      });
-      (window as any).umaiWidget.openWidget();
-    }
-  };
+  const { openWidget } = useBooking(locale);
+  const handleReserveClick = () => openWidget('button');
 
   // Animation variants
   const fadeInUp = {

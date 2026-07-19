@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import LanguageTabs from '@/components/admin/LanguageTabs';
 import ContentField from '@/components/admin/ContentField';
+import RebuildModal from '@/components/admin/RebuildModal';
 
 interface LocaleData {
   [key: string]: any;
@@ -17,6 +18,7 @@ export default function HomepageEditorPage() {
   const [saving, setSaving] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [showRebuildModal, setShowRebuildModal] = useState(false);
 
   // Sections for navigation
   const sections = [
@@ -53,14 +55,26 @@ export default function HomepageEditorPage() {
     loadData();
   }, []);
 
+  // Warn before leaving with unsaved changes
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [hasUnsavedChanges]);
+
   // Toast helper
   const showToast = (type: 'success' | 'error', message: string) => {
     setToast({ type, message });
     setTimeout(() => setToast(null), 3000);
   };
 
-  // Save data
-  const saveData = async () => {
+  // Save data only (no rebuild)
+  const saveData = async (): Promise<boolean> => {
     setSaving(true);
     try {
       const [enRes, ptRes] = await Promise.all([
@@ -78,15 +92,25 @@ export default function HomepageEditorPage() {
 
       if (enRes.ok && ptRes.ok) {
         setHasUnsavedChanges(false);
-        showToast('success', 'Homepage saved successfully');
+        return true;
       } else {
         showToast('error', 'Failed to save changes');
+        return false;
       }
     } catch (error) {
       console.error('Save error:', error);
       showToast('error', 'Failed to save homepage');
+      return false;
     } finally {
       setSaving(false);
+    }
+  };
+
+  // Save and trigger rebuild
+  const saveAndPublish = async () => {
+    const saved = await saveData();
+    if (saved) {
+      setShowRebuildModal(true);
     }
   };
 
@@ -146,6 +170,12 @@ export default function HomepageEditorPage() {
         </div>
       )}
 
+      {/* Rebuild Modal */}
+      <RebuildModal 
+        isOpen={showRebuildModal} 
+        onClose={() => setShowRebuildModal(false)} 
+      />
+
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -164,8 +194,23 @@ export default function HomepageEditorPage() {
             </svg>
             View Page
           </a>
+          
+          {/* Save Draft Button */}
           <button
             onClick={saveData}
+            disabled={saving || !hasUnsavedChanges}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-md font-medium transition-colors border ${
+              hasUnsavedChanges
+                ? 'border-[#C4A484] text-[#C4A484] hover:bg-[#C4A484]/10'
+                : 'border-[#E5E5E5] text-[#9CA3AF] cursor-not-allowed'
+            }`}
+          >
+            {saving ? 'Saving...' : 'Save Draft'}
+          </button>
+
+          {/* Save & Publish Button */}
+          <button
+            onClick={saveAndPublish}
             disabled={saving || !hasUnsavedChanges}
             className={`relative flex items-center gap-2 px-6 py-2.5 rounded-md font-medium transition-colors ${
               hasUnsavedChanges
@@ -173,7 +218,10 @@ export default function HomepageEditorPage() {
                 : 'bg-[#E5E5E5] text-[#9CA3AF] cursor-not-allowed'
             }`}
           >
-            {saving ? 'Saving...' : 'Save Changes'}
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            {saving ? 'Saving...' : 'Save & Publish'}
             {hasUnsavedChanges && !saving && (
               <span className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full" />
             )}
@@ -204,7 +252,7 @@ export default function HomepageEditorPage() {
 
         {/* Editor Area */}
         <div className="flex-1 bg-white rounded-lg shadow-sm border border-[#E5E5E5]">
-          <LanguageTabs activeLanguage={activeLanguage} onLanguageChange={setActiveLanguage} />
+          <LanguageTabs activeLanguage={activeLanguage} onLanguageChange={(lang) => setActiveLanguage(lang as 'en' | 'pt')} />
 
           <div className="p-6">
             {/* HERO SECTION */}
@@ -447,18 +495,25 @@ export default function HomepageEditorPage() {
                   placeholder="Mon, Wed, Thu, Sun: 12:30 – 23:00"
                 />
                 <ContentField
-                  label="Friday/Saturday Hours"
-                  description="Opening hours for weekend"
-                  value={getValue(['homeVisit', 'hours', 'friSat'])}
-                  onChange={(val) => updateField(['homeVisit', 'hours', 'friSat'], val)}
-                  placeholder="Fri, Sat: 12:30 – 01:00"
+                  label="Friday Hours"
+                  description="Opening hours for Friday"
+                  value={getValue(['homeVisit', 'hours', 'friday'])}
+                  onChange={(val) => updateField(['homeVisit', 'hours', 'friday'], val)}
+                  placeholder="Friday: 12:30 – 01:00"
+                />
+                <ContentField
+                  label="Saturday Hours"
+                  description="Opening hours for Saturday"
+                  value={getValue(['homeVisit', 'hours', 'saturday'])}
+                  onChange={(val) => updateField(['homeVisit', 'hours', 'saturday'], val)}
+                  placeholder="Saturday: 12:30 – 01:00"
                 />
                 <ContentField
                   label="Closed Days"
                   description="Days the restaurant is closed"
                   value={getValue(['homeVisit', 'hours', 'closed'])}
                   onChange={(val) => updateField(['homeVisit', 'hours', 'closed'], val)}
-                  placeholder="Closed Tuesday"
+                  placeholder="Tuesday: Closed"
                 />
 
                 <div className="mt-6 mb-4">
@@ -473,18 +528,18 @@ export default function HomepageEditorPage() {
                   placeholder="Rua da Boavista 66"
                 />
                 <ContentField
-                  label="City/Area"
-                  description="City or neighborhood"
-                  value={getValue(['homeVisit', 'address', 'city'])}
-                  onChange={(val) => updateField(['homeVisit', 'address', 'city'], val)}
-                  placeholder="Cais do Sodré, Lisboa"
+                  label="Postal Code & City"
+                  description="Postal code and city"
+                  value={getValue(['homeVisit', 'address', 'postal'])}
+                  onChange={(val) => updateField(['homeVisit', 'address', 'postal'], val)}
+                  placeholder="1200-068 Lisboa"
                 />
                 <ContentField
                   label="Directions Button Text"
                   description="Text for the directions link"
                   value={getValue(['homeVisit', 'directions'])}
                   onChange={(val) => updateField(['homeVisit', 'directions'], val)}
-                  placeholder="Get Directions"
+                  placeholder="Directions"
                 />
               </>
             )}
@@ -500,24 +555,23 @@ export default function HomepageEditorPage() {
                 <ContentField
                   label="CTA Title"
                   description="Main heading for the call-to-action"
-                  value={getValue(['cta', 'title'])}
-                  onChange={(val) => updateField(['cta', 'title'], val)}
-                  placeholder="Join Us at the Table"
+                  value={getValue(['homeCta', 'title'])}
+                  onChange={(val) => updateField(['homeCta', 'title'], val)}
+                  placeholder="Your table is waiting"
                   required
                 />
                 <ContentField
                   label="CTA Subtitle"
-                  description="Supporting text below the title"
-                  value={getValue(['cta', 'subtitle'])}
-                  onChange={(val) => updateField(['cta', 'subtitle'], val)}
-                  multiline
-                  placeholder="Experience Mediterranean flavours..."
+                  description="Hashtag or tagline below the title"
+                  value={getValue(['homeCta', 'subtitle'])}
+                  onChange={(val) => updateField(['homeCta', 'subtitle'], val)}
+                  placeholder="#MeetMeAtMaída"
                 />
                 <ContentField
                   label="Button Text"
                   description="Reservation button text"
-                  value={getValue(['cta', 'button'])}
-                  onChange={(val) => updateField(['cta', 'button'], val)}
+                  value={getValue(['homeCta', 'button'])}
+                  onChange={(val) => updateField(['homeCta', 'button'], val)}
                   placeholder="Reserve a Table"
                 />
               </>

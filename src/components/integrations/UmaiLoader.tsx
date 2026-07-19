@@ -25,9 +25,19 @@ export default function UmaiLoader({ children }: UmaiLoaderProps) {
     }
   }, [shouldLoad]);
 
+  // Reservation landing page (/en/reserve, /pt/reserve): load UMAI
+  // immediately — ad visitors expect the widget to be ready instantly.
+  const isReservePage = pathname?.includes('/reserve');
+
   useEffect(() => {
     // Don't set up listeners on admin pages
     if (isAdminPage) return;
+
+    // Eager load on the reserve landing page, skip lazy listeners
+    if (isReservePage) {
+      triggerLoad();
+      return;
+    }
 
     // Events that trigger UMAI loading
     const events = [
@@ -55,7 +65,7 @@ export default function UmaiLoader({ children }: UmaiLoaderProps) {
       });
       clearTimeout(timeout);
     };
-  }, [triggerLoad, isAdminPage]);
+  }, [triggerLoad, isAdminPage, isReservePage]);
 
   const handleScriptLoad = () => {
     setIsLoaded(true);
@@ -78,6 +88,31 @@ export default function UmaiLoader({ children }: UmaiLoaderProps) {
 }
 
 /**
+ * Derive the site locale from the URL ('/pt/...' → 'pt', default 'en').
+ */
+function currentUmaiLocale(): string {
+  if (typeof window === 'undefined') return 'en';
+  return window.location.pathname.split('/')[1] === 'pt' ? 'pt' : 'en';
+}
+
+/**
+ * Shared UMAI widget config with language hints so the widget opens in
+ * the same language as the page. UMAI supports Portuguese; the embed's
+ * exact key name isn't publicly documented, so we pass the common
+ * variants — unknown keys are simply ignored.
+ */
+function buildUmaiConfig(widgetType: 'reservation' | 'giftcard') {
+  const lang = currentUmaiLocale();
+  return {
+    apiKey: UMAI_API_KEY,
+    widgetType,
+    language: lang,
+    locale: lang,
+    lang,
+  };
+}
+
+/**
  * Hook to open UMAI widget from any component
  * Handles the case where UMAI might not be loaded yet
  */
@@ -86,10 +121,7 @@ export function useUmaiWidget() {
 
   const openWidget = useCallback(() => {
     if (typeof window !== 'undefined' && (window as any).umaiWidget) {
-      (window as any).umaiWidget.config({
-        apiKey: UMAI_API_KEY,
-        widgetType: 'reservation',
-      });
+      (window as any).umaiWidget.config(buildUmaiConfig('reservation'));
       (window as any).umaiWidget.openWidget();
     } else {
       // UMAI not loaded yet - wait and retry
@@ -98,10 +130,7 @@ export function useUmaiWidget() {
         if ((window as any).umaiWidget) {
           clearInterval(checkInterval);
           setIsOpening(false);
-          (window as any).umaiWidget.config({
-            apiKey: UMAI_API_KEY,
-            widgetType: 'reservation',
-          });
+          (window as any).umaiWidget.config(buildUmaiConfig('reservation'));
           (window as any).umaiWidget.openWidget();
         }
       }, 100);
@@ -125,10 +154,7 @@ export function useUmaiGiftCard() {
 
   const openGiftCard = useCallback(() => {
     if (typeof window !== 'undefined' && (window as any).umaiWidget) {
-      (window as any).umaiWidget.config({
-        apiKey: UMAI_API_KEY,
-        widgetType: 'giftcard',
-      });
+      (window as any).umaiWidget.config(buildUmaiConfig('giftcard'));
       (window as any).umaiWidget.openWidget();
     } else {
       // UMAI not loaded yet - wait and retry
@@ -137,10 +163,7 @@ export function useUmaiGiftCard() {
         if ((window as any).umaiWidget) {
           clearInterval(checkInterval);
           setIsOpening(false);
-          (window as any).umaiWidget.config({
-            apiKey: UMAI_API_KEY,
-            widgetType: 'giftcard',
-          });
+          (window as any).umaiWidget.config(buildUmaiConfig('giftcard'));
           (window as any).umaiWidget.openWidget();
         }
       }, 100);

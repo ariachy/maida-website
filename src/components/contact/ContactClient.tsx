@@ -30,7 +30,6 @@ export default function ContactClient({ translations, locale }: ContactClientPro
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
   const [timestamp, setTimestamp] = useState(Math.floor(Date.now() / 1000));
 
   useEffect(() => {
@@ -58,10 +57,18 @@ export default function ContactClient({ translations, locale }: ContactClientPro
     }
 
     try {
-      // Get reCAPTCHA token
+      // Get reCAPTCHA token — check window.grecaptcha directly (no state guard).
+      // The script may already be cached from another page, so onLoad doesn't always fire.
       let recaptchaToken = '';
-      if (recaptchaLoaded && (window as any).grecaptcha?.enterprise) {
-        recaptchaToken = await (window as any).grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, { action: 'contact' });
+      if ((window as any).grecaptcha?.enterprise) {
+        try {
+          recaptchaToken = await (window as any).grecaptcha.enterprise.execute(
+            RECAPTCHA_SITE_KEY,
+            { action: 'contact' }
+          );
+        } catch (err) {
+          console.error('reCAPTCHA execute failed:', err);
+        }
       }
 
       // Development mode - just log
@@ -124,7 +131,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
       {/* Load reCAPTCHA Enterprise Script */}
       <Script
         src={`https://www.google.com/recaptcha/enterprise.js?render=${RECAPTCHA_SITE_KEY}`}
-        onLoad={() => setRecaptchaLoaded(true)}
+        strategy="afterInteractive"
       />
 
       <div className="min-h-screen bg-warm-white pt-32 pb-20">
@@ -156,18 +163,18 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                 <h3 className="font-display text-xl text-charcoal mb-4">{hours?.title || 'Opening Hours'}</h3>
                 <div className="space-y-3 text-charcoal/70 text-sm">
                   <div>
-                    <p className="text-charcoal font-medium">Mon–Tue</p>
-                    <p>{hours?.closedText || 'Closed'}</p>
+                    <p className="text-charcoal font-medium">Wed – Mon</p>
+                    <p>17:00 - 23:00</p>
+                    <p className="text-xs text-stone">Kitchen closes 22:30</p>
                   </div>
                   <div>
-                    <p className="text-charcoal font-medium">Wed, Thu, Sun</p>
-                    <p>12:30 - 23:00</p>
-                    <p className="text-xs text-stone">{hours?.midweekKitchen || 'Kitchen closes 22:30'}</p>
+                    <p className="text-charcoal font-medium">Fri &amp; Sat</p>
+                    <p>17:00 - 01:00</p>
+                    <p className="text-xs text-stone">Kitchen closes 23:00</p>
                   </div>
                   <div>
-                    <p className="text-charcoal font-medium">Fri–Sat</p>
-                    <p>12:30 - 01:00</p>
-                    <p className="text-xs text-stone">{hours?.weekendKitchen || 'Kitchen closes 23:30'}</p>
+                    <p className="text-charcoal font-medium">Tue</p>
+                    <p>Closed</p>
                   </div>
                 </div>
               </div>
@@ -323,7 +330,25 @@ export default function ContactClient({ translations, locale }: ContactClientPro
 
                   {/* reCAPTCHA notice */}
                   <p className="text-xs text-stone/60 text-center">
-                    Protected by reCAPTCHA.
+                    Protected by reCAPTCHA. The Google{' '}
+                    <a
+                      href="https://policies.google.com/privacy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-terracotta"
+                    >
+                      Privacy Policy
+                    </a>{' '}
+                    and{' '}
+                    <a
+                      href="https://policies.google.com/terms"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-terracotta"
+                    >
+                      Terms of Service
+                    </a>{' '}
+                    apply.
                   </p>
                 </form>
               </div>

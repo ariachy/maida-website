@@ -72,3 +72,6 @@ next-env.d.ts
 *.tmp
 *.temp
 .cache/
+
+prisma/admin.db
+src/data/.backups/

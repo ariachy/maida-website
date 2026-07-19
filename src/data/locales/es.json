@@ -207,7 +207,14 @@
       "gluten-free": "GF"
     },
     "glass": "glass",
-    "bottle": "bottle"
+    "bottle": "bottle",
+    "subCategories": {
+      "white-wine": "Blanco",
+      "rose-wine": "Rosado",
+      "red-wine": "Tinto",
+      "green-wine": "Vinho Verde",
+      "sparkling-wine": "Espumoso"
+    }
   },
   "drinks": {
     "label": "From Our Roots",
@@ -227,7 +234,7 @@
     },
     "hours": {
       "label": "Hours",
-      "value": "Tue – Sat: 19:00 – 00:00"
+      "value": "Mié – Lun: 17:00 – 23:00 · Vie & Sáb hasta la 01:00"
     },
     "contact": {
       "label": "Contact",
@@ -245,7 +252,7 @@
     "navigate": "Navigate",
     "hours": "Hours",
     "hoursValue": "Tue – Sat: 19h – 00h",
-    "closed": "Sun – Mon: Closed",
+    "closed": "Martes: Cerrado",
     "contact": "Contact",
     "reservations": "Reservations",
     "giftCards": "Gift Cards",
@@ -281,11 +288,11 @@
     },
     "hours": {
       "title": "Horario",
-      "closed": "Lunes - Martes: Cerrado",
-      "midweek": "Mié, Jue, Dom: 12:30 - 23:00",
-      "midweekKitchen": "Cocina cierra 22:30",
-      "weekend": "Vie - Sáb: 12:30 - 01:00",
-      "weekendKitchen": "Cocina cierra 23:30"
+      "closed": "Martes: Cerrado",
+      "midweek": "Mié – Lun: 17:00 – 23:00",
+      "midweekKitchen": "La cocina cierra a las 22:30",
+      "weekend": "Vie – Sáb: 17:00 – 01:00",
+      "weekendKitchen": "La cocina cierra a las 23:00"
     }
   },
   "common": {

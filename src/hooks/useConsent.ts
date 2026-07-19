@@ -175,6 +175,13 @@ export function useConsent() {
     setShowBanner(true);
   }, []);
 
+  // Listen for custom event to reopen banner (from pages outside [lang] layout, e.g. meetmeatmaida)
+  useEffect(() => {
+    const handler = () => setShowBanner(true);
+    window.addEventListener('open-cookie-consent', handler);
+    return () => window.removeEventListener('open-cookie-consent', handler);
+  }, []);
+
   return {
     consent,
     hasConsented,

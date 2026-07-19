@@ -33,7 +33,7 @@ interface MenuItemEditorProps {
   enTranslation: TranslationItem;
   ptTranslation: TranslationItem;
   categoryTranslations: Record<string, CategoryTranslation>;
-  subCategories: Record<string, string>;
+  subCategoriesByCategory: Record<string, Record<string, string>>;
   defaultCategoryId?: string;
   onSave: (updates: {
     categoryId?: string;
@@ -51,7 +51,7 @@ export default function MenuItemEditor({
   enTranslation,
   ptTranslation,
   categoryTranslations,
-  subCategories,
+  subCategoriesByCategory,
   defaultCategoryId,
   onSave,
   onClose,
@@ -119,8 +119,8 @@ export default function MenuItemEditor({
     onSave(updates);
   };
 
-  // Get available subcategories for selected category
-  const availableSubCategories = Object.entries(subCategories);
+  // Available subcategories for the currently selected category only.
+  const availableSubCategories = Object.entries(subCategoriesByCategory[categoryId] || {});
 
   return (
     <Modal
@@ -236,7 +236,14 @@ export default function MenuItemEditor({
             </label>
             <select
               value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
+              onChange={(e) => {
+                const newCat = e.target.value;
+                setCategoryId(newCat);
+                const allowed = subCategoriesByCategory[newCat] || {};
+                if (subCategory && !allowed[subCategory]) {
+                  setSubCategory('');
+                }
+              }}
               className="w-full px-4 py-2 border border-[#D4C4B5] rounded-md focus:outline-none focus:ring-2 focus:ring-[#C4A484]"
             >
               {categories.sort((a, b) => a.sortOrder - b.sortOrder).map((cat) => (

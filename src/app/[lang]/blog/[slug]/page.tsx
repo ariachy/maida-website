@@ -1,11 +1,18 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { isValidLocale, loadTranslations, Locale } from '@/lib/i18n';
+import { isValidLocale } from '@/lib/i18n';
+import { getServerTranslations } from '@/lib/translations';
 import { generatePageMetadata } from '@/lib/seo';
+import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 import BlogPostClient from '@/components/blog/BlogPostClient';
-import blogData from '@/data/blog.json';
+import { getBlogPosts, getBlogPostBySlug } from '@/lib/content';
 
-// Define types to match BlogPostClient
+// See menu/page.tsx for caching rationale. revalidateContent('blog') busts the
+// whole /[lang]/blog/[slug] segment so edited or newly published posts go live
+// without a build.
+export const revalidate = 3600;
+
+// Types kept local to match BlogPostClient's expected shape.
 type ContentBlockType = 'paragraph' | 'heading' | 'list' | 'callout' | 'highlight' | 'cta';
 
 interface ContentBlock {
@@ -35,27 +42,26 @@ interface BlogPost {
 }
 
 export async function generateStaticParams() {
-  return blogData.posts.map((post) => ({
+  const posts = await getBlogPosts();
+  return posts.map((post) => ({
     slug: post.slug,
   }));
 }
 
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: { lang: string; slug: string } 
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: string; slug: string };
 }): Promise<Metadata> {
   const locale = params.lang;
-  const post = blogData.posts.find((p) => p.slug === params.slug);
-  
+  const post = await getBlogPostBySlug(params.slug);
+
   if (!post || !isValidLocale(locale)) {
     return {
       title: 'Post Not Found | Maída',
     };
   }
 
-  const isPortuguese = locale === 'pt';
-  
   return generatePageMetadata({
     title: `${post.title} | Maída`,
     description: post.excerpt,
@@ -71,20 +77,21 @@ export default async function BlogPostPage({
   params: { lang: string; slug: string };
 }) {
   const locale = params.lang;
-  
+
   if (!isValidLocale(locale)) {
     notFound();
   }
-  
-  const post = blogData.posts.find((p) => p.slug === params.slug);
-  
+
+  const [post, translations] = await Promise.all([
+    getBlogPostBySlug(params.slug),
+    getServerTranslations(locale),
+  ]);
+
   if (!post) {
     notFound();
   }
-  
-  const translations = await loadTranslations(locale);
-  
-  // Cast the post to the correct type
+
+  // Cast the post to the strict client type.
   const typedPost: BlogPost = {
     ...post,
     content: post.content.map((block) => ({
@@ -93,6 +100,17 @@ export default async function BlogPostPage({
     })),
     relatedPosts: post.relatedPosts as RelatedPost[] | undefined,
   };
-  
-  return <BlogPostClient translations={translations} locale={locale} post={typedPost} />;
+
+  const breadcrumbs = [
+    { name: 'Maída', url: `https://maida.pt/${locale}` },
+    { name: locale === 'pt' ? 'Descobrir' : 'Discover', url: `https://maida.pt/${locale}/blog` },
+    { name: post.title, url: `https://maida.pt/${locale}/blog/${post.slug}` },
+  ];
+
+  return (
+    <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
+      <BlogPostClient translations={translations} locale={locale} post={typedPost} />
+    </>
+  );
 }

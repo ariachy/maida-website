@@ -1,25 +1,30 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { isValidLocale, loadTranslations, Locale } from '@/lib/i18n';
+import { isValidLocale } from '@/lib/i18n';
+import { getServerTranslations } from '@/lib/translations';
 import { generatePageMetadata } from '@/lib/seo';
+import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 import BlogClient from '@/components/blog/BlogClient';
-import blogData from '@/data/blog.json';
+import { getBlogPosts } from '@/lib/content';
 
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: { lang: string } 
+// See menu/page.tsx for the caching rationale. Busted by revalidateContent('blog').
+export const revalidate = 3600;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: string };
 }): Promise<Metadata> {
   const locale = params.lang;
-  
+
   if (!isValidLocale(locale)) {
     return {};
   }
 
   const isPortuguese = locale === 'pt';
-  
+
   return generatePageMetadata({
-    title: isPortuguese 
+    title: isPortuguese
       ? 'Maída - Sabores Mediterrânicos. Alma Libanesa | Descobrir'
       : 'Maída - Mediterranean Flavours. Lebanese Soul | Discover',
     description: isPortuguese
@@ -36,12 +41,25 @@ export default async function BlogPage({
   params: { lang: string };
 }) {
   const locale = params.lang;
-  
+
   if (!isValidLocale(locale)) {
     notFound();
   }
-  
-  const translations = await loadTranslations(locale);
-  
-  return <BlogClient translations={translations} locale={locale} posts={blogData.posts} />;
+
+  const [translations, posts] = await Promise.all([
+    getServerTranslations(locale),
+    getBlogPosts(),
+  ]);
+
+  const breadcrumbs = [
+    { name: 'Maída', url: `https://maida.pt/${locale}` },
+    { name: locale === 'pt' ? 'Descobrir' : 'Discover', url: `https://maida.pt/${locale}/blog` },
+  ];
+
+  return (
+    <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
+      <BlogClient translations={translations} locale={locale} posts={posts} />
+    </>
+  );
 }

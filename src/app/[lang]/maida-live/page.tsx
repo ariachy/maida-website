@@ -1,24 +1,28 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { isValidLocale, loadTranslations, Locale } from '@/lib/i18n';
+import { isValidLocale } from '@/lib/i18n';
 import { generatePageMetadata } from '@/lib/seo';
+import { getServerTranslations } from '@/lib/translations';
+import { BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 import MaidaLiveClient from '@/components/maida-live/MaidaLiveClient';
 
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: { lang: string } 
+export const revalidate = 3600;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: string };
 }): Promise<Metadata> {
   const locale = params.lang;
-  
+
   if (!isValidLocale(locale)) {
     return {};
   }
 
   const isPortuguese = locale === 'pt';
-  
+
   return generatePageMetadata({
-    title: isPortuguese 
+    title: isPortuguese
       ? 'Maída - Sabores Mediterrânicos. Alma Libanesa | Maída Live'
       : 'Maída - Mediterranean Flavours. Lebanese Soul | Maída Live',
     description: isPortuguese
@@ -35,12 +39,22 @@ export default async function MaidaLivePage({
   params: { lang: string };
 }) {
   const locale = params.lang;
-  
+
   if (!isValidLocale(locale)) {
     notFound();
   }
-  
-  const translations = await loadTranslations(locale);
-  
-  return <MaidaLiveClient translations={translations} locale={locale} />;
+
+  const translations = await getServerTranslations(locale);
+
+  const breadcrumbs = [
+    { name: 'Maída', url: `https://maida.pt/${locale}` },
+    { name: 'Maída Live', url: `https://maida.pt/${locale}/maida-live` },
+  ];
+
+  return (
+    <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
+      <MaidaLiveClient translations={translations} locale={locale} />
+    </>
+  );
 }

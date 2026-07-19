@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import Script from 'next/script';
+import { useBooking } from '@/hooks/useBooking';
 
 // Variation configurations
 const variations = [
@@ -44,6 +44,7 @@ const variations = [
 
 export default function NotFound() {
   const [variation, setVariation] = useState(variations[0]);
+  const { openWidget } = useBooking();
 
   useEffect(() => {
     // Randomly select a variation on mount
@@ -54,15 +55,7 @@ export default function NotFound() {
     document.title = "404 | This page went to grab more hummus | Maída";
   }, []);
 
-  const handleReserveClick = () => {
-    if (typeof window !== 'undefined' && (window as any).umaiWidget) {
-      (window as any).umaiWidget.config({
-        apiKey: 'd541f212-d5ca-4839-ab2b-7f9c99e1c96c',
-        widgetType: 'reservation',
-      });
-      (window as any).umaiWidget.openWidget();
-    }
-  };
+  const handleReserveClick = () => openWidget('button');
 
   return (
     <div className={`min-h-screen ${variation.background} flex flex-col items-center justify-center px-6 py-20 overflow-hidden`}>
@@ -157,14 +150,6 @@ export default function NotFound() {
           {variation.tagline}
         </motion.p>
       </div>
-
-      {/* UMAI Widget Script - needed since 404 is outside [lang] layout */}
-      <Script
-        src="https://widget.letsumai.com/dist/embed.min.js"
-        data-api-key="d541f212-d5ca-4839-ab2b-7f9c99e1c96c"
-        data-widget-type="reservation"
-        strategy="lazyOnload"
-      />
     </div>
   );
 }

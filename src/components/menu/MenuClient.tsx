@@ -5,7 +5,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 
+interface InlineTranslation {
+  name?: string;
+  description?: string;
+}
+
 interface MenuItem {
+  id: string;
+  categoryId: string;
+  sortOrder: number;
+  subCategory?: string;
+  active?: boolean; // Phase 0: undefined or true = visible; false = hidden
+  en?: InlineTranslation;
+  pt?: InlineTranslation;
+}
+
+interface SubCategoryRecord {
   id: string;
   categoryId: string;
   sortOrder: number;
@@ -14,108 +29,109 @@ interface MenuItem {
 interface MenuClientProps {
   translations: any;
   menuData: {
-    categories: Array<{
-      id: string;
-      slug: string;
-      image: string;
-      sortOrder: number;
-    }>;
+    categories: Array<{ id: string; slug: string; image: string; sortOrder: number }>;
+    subCategories?: Array<SubCategoryRecord>;
     items: Array<MenuItem>;
   };
   locale: string;
 }
 
-// Define sub-categories with their sortOrder ranges
-const subCategories: Record<string, Array<{ id: string; name: string; minOrder: number; maxOrder: number }>> = {
-  'to-start': [
-    { id: 'starters', name: 'Starters', minOrder: 1, maxOrder: 9 },
-    { id: 'dips', name: 'Dips', minOrder: 10, maxOrder: 19 },
-    { id: 'salads', name: 'Salads', minOrder: 30, maxOrder: 39 },
-  ],
-  'saj-wraps': [
-    { id: 'savoury', name: 'Savoury', minOrder: 1, maxOrder: 9 },
-    { id: 'sweet', name: 'Sweet', minOrder: 10, maxOrder: 19 },
-  ],
-  'drinks': [
-    { id: 'coffee', name: 'Coffee', minOrder: 1, maxOrder: 19 },
-    { id: 'tea', name: 'Tea', minOrder: 20, maxOrder: 29 },
-    { id: 'lemonade', name: 'Lemonade', minOrder: 30, maxOrder: 34 },
-    { id: 'juices', name: 'Juices', minOrder: 35, maxOrder: 39 },
-    { id: 'milkshakes', name: 'Milkshakes', minOrder: 40, maxOrder: 49 },
-    { id: 'soft-drinks', name: 'Soft Drinks', minOrder: 50, maxOrder: 69 },
-    { id: 'mocktails', name: 'Mocktails', minOrder: 70, maxOrder: 79 },
-  ],
-  'cocktails-wine': [
-    { id: 'signatures', name: "Maída's Signatures", minOrder: 1, maxOrder: 19 },
-    { id: 'classics', name: 'Classics', minOrder: 20, maxOrder: 39 },
-    { id: 'wines', name: 'Wines', minOrder: 40, maxOrder: 49 },
-    { id: 'beers', name: 'Beers', minOrder: 50, maxOrder: 59 },
-  ],
-};
+// Sub-category GROUPS and their order now come from menuData.subCategories (records
+// with their own sortOrder). Item order within a group comes from item.sortOrder.
+// Inactive items (active === false) are hidden. `couvert` renders as a boxed section
+// at the top of its category, matching the existing design. Falls back gracefully if
+// the subCategories records are absent (old data).
 
 export default function MenuClient({ translations, menuData, locale }: MenuClientProps) {
   const [activeCategory, setActiveCategory] = useState(menuData.categories[0]?.id || '');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [needsScroll, setNeedsScroll] = useState(false);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
-  
+
   const { menu } = translations;
   const { categories, items } = menuData;
-  
-  // Sort categories by sortOrder
+  const subCategoryRecords: SubCategoryRecord[] = menuData.subCategories || [];
+
   const sortedCategories = [...categories].sort((a, b) => a.sortOrder - b.sortOrder);
-  
-  // Handle category click - just switch category, no scroll
-  const handleCategoryClick = (categoryId: string) => {
-    setActiveCategory(categoryId);
-  };
-  
-  // Handle URL hash or query param for deep linking
+
+  const handleCategoryClick = (categoryId: string) => setActiveCategory(categoryId);
+
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     const params = new URLSearchParams(window.location.search);
     const categoryParam = params.get('category') || hash;
-    
     if (categoryParam) {
-      const category = categories.find(c => c.slug === categoryParam);
-      if (category) {
-        setActiveCategory(category.id);
-      }
+      const category = categories.find((c) => c.slug === categoryParam);
+      if (category) setActiveCategory(category.id);
     }
   }, [categories]);
-  
-  // Get items for a specific category
-  const getItemsForCategory = (categoryId: string) => {
-    return items
-      .filter((item) => item.categoryId === categoryId)
+
+  // ---- Visibility ----
+  const isVisible = (item: MenuItem) => item.active !== false;
+
+  // ---- Grouping helpers ----
+  const itemsInCategory = (categoryId: string) =>
+    items
+      .filter((i) => i.categoryId === categoryId && isVisible(i))
       .sort((a, b) => a.sortOrder - b.sortOrder);
+
+  // Ordered sub-category ids for a category (excludes 'couvert', which renders
+  // separately). Prefers the subCategories records; falls back to deriving from items.
+  const orderedSubCategoryIds = (categoryId: string): string[] => {
+    const recs = subCategoryRecords
+      .filter((s) => s.categoryId === categoryId && s.id !== 'couvert')
+      .sort((a, b) => a.sortOrder - b.sortOrder)
+      .map((s) => s.id);
+    if (recs.length) return recs;
+
+    // Fallback: derive from items by lowest sortOrder.
+    const minOrder: Record<string, number> = {};
+    for (const it of items) {
+      if (it.categoryId !== categoryId || !isVisible(it)) continue;
+      const sc = it.subCategory;
+      if (!sc || sc === 'couvert') continue;
+      minOrder[sc] = minOrder[sc] === undefined ? it.sortOrder : Math.min(minOrder[sc], it.sortOrder);
+    }
+    return Object.keys(minOrder).sort((a, b) => minOrder[a] - minOrder[b]);
   };
-  
-  // Get items for a sub-category
-  const getItemsForSubCategory = (categoryId: string, minOrder: number, maxOrder: number) => {
-    return items
-      .filter((item) => item.categoryId === categoryId && item.sortOrder >= minOrder && item.sortOrder <= maxOrder)
+
+  const itemsForSubCategory = (categoryId: string, subId: string) =>
+    items
+      .filter((i) => i.categoryId === categoryId && i.subCategory === subId && isVisible(i))
       .sort((a, b) => a.sortOrder - b.sortOrder);
+
+  const ungroupedItems = (categoryId: string) =>
+    items
+      .filter((i) => i.categoryId === categoryId && !i.subCategory && isVisible(i))
+      .sort((a, b) => a.sortOrder - b.sortOrder);
+
+  // Name/description: inline translation first, then locale file, then humanized id.
+  const getName = (item: MenuItem) => {
+    const inline = (item as any)[locale]?.name || item.en?.name;
+    return inline || menu?.items?.[item.id]?.name || item.id.replace(/-/g, ' ');
   };
-  
-  // Check if scrolling is needed and update arrows
+  const getDescription = (item: MenuItem) => {
+    const inline = (item as any)[locale]?.description || item.en?.description;
+    return inline || menu?.items?.[item.id]?.description || '';
+  };
+  const subCategoryName = (subId: string) =>
+    menu?.subCategories?.[subId] || subId.replace(/-/g, ' ');
+
+  // ---- Scroll arrows ----
   const updateScrollState = () => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
       const hasOverflow = scrollWidth > clientWidth + 10;
-      setNeedsScroll(hasOverflow);
       setShowLeftArrow(hasOverflow && scrollLeft > 10);
       setShowRightArrow(hasOverflow && scrollLeft < scrollWidth - clientWidth - 10);
     }
   };
-  
+
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
       container.addEventListener('scroll', updateScrollState);
       updateScrollState();
-      
       window.addEventListener('resize', updateScrollState);
       return () => {
         container.removeEventListener('scroll', updateScrollState);
@@ -123,62 +139,40 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       };
     }
   }, []);
-  
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -200, behavior: 'smooth' });
-    }
-  };
-  
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 200, behavior: 'smooth' });
-    }
-  };
 
-  // Render items grid - compact mode for simple items like drinks
-  const renderItems = (itemsList: MenuItem[], compact: boolean = false) => {
+  const scrollLeft = () => scrollContainerRef.current?.scrollBy({ left: -200, behavior: 'smooth' });
+  const scrollRight = () => scrollContainerRef.current?.scrollBy({ left: 200, behavior: 'smooth' });
+
+  // ---- Renderers ----
+  const renderItems = (itemsList: MenuItem[], compact = false) => {
     if (compact) {
-      // Single column, minimal spacing for drinks/simple items
       return (
         <div className="flex flex-wrap justify-center gap-x-6 gap-y-1">
-          {itemsList.map((item, index) => {
-            const itemTranslation = menu?.items?.[item.id];
-            const itemName = itemTranslation?.name || item.id.replace(/-/g, ' ');
-            const itemDescription = itemTranslation?.description || '';
-            
+          {itemsList.map((item) => {
+            const name = getName(item);
+            const description = getDescription(item);
             return (
               <span key={item.id} className="text-charcoal text-sm capitalize py-1">
-                {itemName}
-                {itemDescription && (
-                  <span className="text-stone text-xs ml-1">({itemDescription})</span>
-                )}
+                {name}
+                {description && <span className="text-stone text-xs ml-1">({description})</span>}
               </span>
             );
           })}
         </div>
       );
     }
-    
-    {/* CHANGE 2: Center-aligned menu text */}
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-4">
         {itemsList.map((item) => {
-          const itemTranslation = menu?.items?.[item.id];
-          const itemName = itemTranslation?.name || item.id.replace(/-/g, ' ');
-          const itemDescription = itemTranslation?.description || '';
-          
+          const name = getName(item);
+          const description = getDescription(item);
           return (
-            // CHANGE 7: Reduced line-height between item name and description (py-2 → py-1.5)
             <div key={item.id} className="py-1.5 text-center">
               <h3 className="font-display text-base md:text-lg text-charcoal font-medium capitalize">
-                {itemName}
+                {name}
               </h3>
-              {itemDescription && (
-                // CHANGE 7: Reduced margin-top (mt-1 → mt-0.5) for tighter spacing
-                <p className="text-stone text-sm mt-0.5 leading-snug">
-                  {itemDescription}
-                </p>
+              {description && (
+                <p className="text-stone text-sm mt-0.5 leading-snug">{description}</p>
               )}
             </div>
           );
@@ -187,84 +181,61 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
     );
   };
 
-  // Render Couvert box - special styling
   const renderCouvertBox = (categoryId: string) => {
-    let couvertItems = getItemsForSubCategory(categoryId, 20, 29);
+    let couvertItems = items
+      .filter((i) => i.categoryId === categoryId && i.subCategory === 'couvert' && isVisible(i))
+      .sort((a, b) => a.sortOrder - b.sortOrder);
     if (couvertItems.length === 0) return null;
-    
-    // Custom order for couvert items: Marinated Olives, Saj Crackers, Zaatar Mix & Crackers, Saj Bread
+
     const couvertOrder = ['marinated-olives', 'saj-crackers', 'zaatar-mix-crackers', 'saj-bread'];
     couvertItems = [...couvertItems].sort((a, b) => {
-      const aIndex = couvertOrder.indexOf(a.id);
-      const bIndex = couvertOrder.indexOf(b.id);
-      // If item not in custom order, put it at the end
-      const aOrder = aIndex === -1 ? 999 : aIndex;
-      const bOrder = bIndex === -1 ? 999 : bIndex;
-      return aOrder - bOrder;
+      const ai = couvertOrder.indexOf(a.id);
+      const bi = couvertOrder.indexOf(b.id);
+      return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
     });
-    
+
     const couvertName = menu?.subCategories?.couvert || 'Couvert';
-    
+
     return (
       <div className="relative mb-12 mt-2">
-        {/* Couvert label centered above the box */}
         <div className="text-center mb-3">
           <h3 className="text-base uppercase tracking-[0.2em] text-terracotta/80 font-bold">
             {couvertName}
           </h3>
         </div>
-        
-        {/* Couvert box with items */}
         <div className="border border-terracotta/25 px-4 py-3">
-          {/* Couvert items as inline text with dot separators */}
           <p className="text-center text-charcoal text-sm leading-relaxed">
-            {couvertItems.map((item, index) => {
-              const itemTranslation = menu?.items?.[item.id];
-              const itemName = itemTranslation?.name || item.id.replace(/-/g, ' ');
-              
-              return (
-                <span key={item.id} className="capitalize whitespace-nowrap inline-block">
-                  {index > 0 && <span className="text-terracotta/40 mx-2">·</span>}
-                  {itemName}
-                </span>
-              );
-            })}
+            {couvertItems.map((item, index) => (
+              <span key={item.id} className="capitalize whitespace-nowrap inline-block">
+                {index > 0 && <span className="text-terracotta/40 mx-2">·</span>}
+                {getName(item)}
+              </span>
+            ))}
           </p>
         </div>
       </div>
     );
   };
 
-  // Render sub-category section
-  const renderSubCategory = (subCat: { id: string; name: string; minOrder: number; maxOrder: number }, categoryId: string, isFirst: boolean) => {
-    const subCatItems = getItemsForSubCategory(categoryId, subCat.minOrder, subCat.maxOrder);
+  const renderSubCategory = (categoryId: string, subId: string, isFirst: boolean, isCompact: boolean) => {
+    const subCatItems = itemsForSubCategory(categoryId, subId);
     if (subCatItems.length === 0) return null;
-    
-    // Get translated sub-category name if available
-    const subCatName = menu?.subCategories?.[subCat.id] || subCat.name;
-    
-    // Use compact mode for drinks category
-    const isCompact = categoryId === 'drinks';
-    
     return (
-      <div key={subCat.id} className={isFirst ? '' : isCompact ? 'mt-6' : 'mt-10'}>
-        {/* CHANGE 6: Increased sub-category size (text-sm → text-base) and added font-bold */}
+      <div key={subId} className={isFirst ? '' : isCompact ? 'mt-6' : 'mt-10'}>
         <h3 className="text-center text-base uppercase tracking-[0.2em] text-terracotta/80 mb-4 font-bold">
-          {subCatName}
+          {subCategoryName(subId)}
         </h3>
         {renderItems(subCatItems, isCompact)}
       </div>
     );
   };
-  
+
   return (
     <div className="min-h-screen bg-warm-white">
-      {/* ============================================
-          HEADER SECTION
-          ============================================ */}
+      {/* HEADER */}
       <section className="pt-28 md:pt-32 pb-6 md:pb-8 px-6 bg-warm-white">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.h1 
+          <motion.h1
             className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal mb-3"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -272,7 +243,6 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           >
             {menu?.heroTitle || 'Our Menu'}
           </motion.h1>
-
           <motion.p
             className="text-stone text-base md:text-lg"
             initial={{ opacity: 0 }}
@@ -281,40 +251,26 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           >
             {menu?.heroSubtitle || 'Mediterranean flavours. Lebanese soul.'}
           </motion.p>
-          
-          {/* CHANGE 1: Removed مائدة from the decorative divider */}
           <motion.div
             className="relative flex items-center justify-center gap-4 px-6 pb-4 overflow-hidden mt-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            {/* Removed: Arabic watermark مائدة */}
             <span className="relative w-16 md:w-24 h-px bg-terracotta/30" />
-            <Image 
-              src="/images/brand/emblem.svg" 
-              alt="" 
-              width={20} 
-              height={20}
-              className="relative opacity-50"
-            />
+            <Image src="/images/brand/emblem.svg" alt="" width={20} height={20} className="relative opacity-50" />
             <span className="relative w-16 md:w-24 h-px bg-terracotta/30" />
           </motion.div>
         </div>
       </section>
-      
-      {/* ============================================
-          CATEGORY SELECTOR (Sticky)
-          ============================================ */}
+
+      {/* CATEGORY SELECTOR */}
       <div className="sticky top-[72px] md:top-[80px] z-40 bg-warm-white/95 backdrop-blur-sm border-b border-stone/10">
         <div className="max-w-4xl mx-auto relative py-3 px-4">
-          {/* Left Arrow */}
           <AnimatePresence>
             {showLeftArrow && (
               <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                 onClick={scrollLeft}
                 className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-warm-white/90 backdrop-blur-sm shadow-md flex items-center justify-center text-charcoal hover:bg-terracotta hover:text-warm-white transition-colors"
                 aria-label="Scroll left"
@@ -323,16 +279,11 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
               </motion.button>
             )}
           </AnimatePresence>
-          
-          {/* Categories - Scrollable on mobile, centered on desktop */}
-          <div 
+
+          <div
             ref={scrollContainerRef}
             className="flex md:justify-center gap-2 overflow-x-auto scrollbar-hide px-1"
-            style={{ 
-              scrollbarWidth: 'none', 
-              msOverflowStyle: 'none',
-              WebkitOverflowScrolling: 'touch'
-            }}
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
           >
             {sortedCategories.map((category) => {
               const isActive = activeCategory === category.id;
@@ -342,9 +293,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                   key={category.id}
                   onClick={() => handleCategoryClick(category.id)}
                   className={`flex-shrink-0 px-4 py-2 text-sm font-medium transition-all duration-300 whitespace-nowrap ${
-                    isActive
-                      ? 'bg-terracotta text-warm-white'
-                      : 'bg-sand text-charcoal hover:bg-terracotta/10 hover:text-terracotta'
+                    isActive ? 'bg-terracotta text-warm-white' : 'bg-sand text-charcoal hover:bg-terracotta/10 hover:text-terracotta'
                   }`}
                 >
                   {categoryName}
@@ -352,14 +301,11 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
               );
             })}
           </div>
-          
-          {/* Right Arrow */}
+
           <AnimatePresence>
             {showRightArrow && (
               <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                 onClick={scrollRight}
                 className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-warm-white/90 backdrop-blur-sm shadow-md flex items-center justify-center text-charcoal hover:bg-terracotta hover:text-warm-white transition-colors"
                 aria-label="Scroll right"
@@ -370,90 +316,55 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           </AnimatePresence>
         </div>
       </div>
-      
-      {/* ============================================
-          MENU ITEMS
-          ============================================ */}
+
+      {/* MENU ITEMS */}
       <div className="py-6 md:py-10 px-4 bg-sand/30">
         <div className="max-w-3xl mx-auto">
-          {/* Menu Container - Paper style */}
-          <div 
+          <div
             className="relative border border-stone/10 shadow-lg overflow-hidden"
-            style={{
-              background: '#FFFFFF',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05)',
-            }}
+            style={{ background: '#FFFFFF', boxShadow: '0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05)' }}
           >
-            {/* CHANGE 4: Reduced paper texture opacity by ~25% (0.4 → 0.3) */}
-            <div 
+            <div
               className="absolute inset-0 pointer-events-none opacity-[0.3]"
               style={{
                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' stitchTiles='stitch'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fff' surfaceScale='2'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E")`,
               }}
             />
-            
-            {/* Edge darkening */}
-            <div 
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                boxShadow: 'inset 0 0 60px rgba(0,0,0,0.03)',
-              }}
-            />
-            
-            {/* Corner accents */}
+            <div className="absolute inset-0 pointer-events-none" style={{ boxShadow: 'inset 0 0 60px rgba(0,0,0,0.03)' }} />
             <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-terracotta/20 pointer-events-none" />
             <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-terracotta/20 pointer-events-none" />
             <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-terracotta/20 pointer-events-none" />
             <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-terracotta/20 pointer-events-none" />
-            
-            {/* REMOVED: Arabic Watermark - was causing visual clutter */}
-            {/* Previously: <span className="text-[180px] md:text-[250px] text-terracotta/[0.06]">مائدة</span> */}
 
-            {/* Content */}
             <div className="relative px-8 md:px-12 py-10 md:py-12">
               {sortedCategories.map((category) => {
-                const categoryItems = getItemsForCategory(category.id);
+                const categoryItems = itemsInCategory(category.id);
                 const isActive = activeCategory === category.id;
-                const categoryName = menu?.categories?.[category.id]?.name || category.id;
-                const hasSubCategories = subCategories[category.id];
-                
+                const isCompact = category.id === 'drinks';
+                const subIds = orderedSubCategoryIds(category.id);
+                const ungrouped = ungroupedItems(category.id);
+
                 return (
-                  <div
-                    key={category.id}
-                    className={isActive ? 'block' : 'hidden'}
-                    aria-hidden={!isActive}
-                  >
-                    {/* CHANGE 5: Removed Category Header title - category buttons are enough */}
-                    {/* Previously showed: categoryName with emblem divider */}
-                    
-                    {/* Simple top divider instead of full header */}
+                  <div key={category.id} className={isActive ? 'block' : 'hidden'} aria-hidden={!isActive}>
                     <div className="flex items-center justify-center mb-8">
                       <div className="w-12 h-px bg-terracotta/40" />
                       <div className="mx-3">
-                        <Image 
-                          src="/images/brand/emblem.svg" 
-                          alt="" 
-                          width={16} 
-                          height={16} 
-                          className="opacity-50"
-                        />
+                        <Image src="/images/brand/emblem.svg" alt="" width={16} height={16} className="opacity-50" />
                       </div>
                       <div className="w-12 h-px bg-terracotta/40" />
                     </div>
-                    
-                    {/* Render Couvert box at top for to-start category */}
-                    {category.id === 'to-start' && renderCouvertBox(category.id)}
-                    
-                    {/* Render with sub-categories if available, otherwise flat list */}
-                    {hasSubCategories ? (
-                      hasSubCategories.map((subCat, index) => 
-                        renderSubCategory(subCat, category.id, index === 0)
-                      )
-                    ) : (
-                      renderItems(categoryItems)
+
+                    {/* Couvert box */}
+                    {renderCouvertBox(category.id)}
+
+                    {/* Ungrouped items first (categories with no sub-categories) */}
+                    {ungrouped.length > 0 && renderItems(ungrouped, isCompact)}
+
+                    {/* Then each sub-category group, in records order */}
+                    {subIds.map((subId, index) =>
+                      renderSubCategory(category.id, subId, index === 0 && ungrouped.length === 0, isCompact)
                     )}
-                    
-                    {/* Empty state */}
+
                     {categoryItems.length === 0 && (
                       <p className="text-center text-stone py-12">
                         {menu?.emptyCategory || 'No items in this category yet.'}
@@ -462,8 +373,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                   </div>
                 );
               })}
-              
-              {/* Allergen Note */}
+
               <div className="mt-10 pt-6 border-t border-stone/20">
                 <p className="text-center text-stone text-sm italic">
                   {menu?.allergenNote || 'Please ask our team about allergens and dietary requirements.'}

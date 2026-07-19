@@ -11,7 +11,6 @@ interface VisitProps {
 
 export default function Visit({ translations, locale }: VisitProps) {
   const homeVisit = translations?.homeVisit || {};
-  const hours = homeVisit?.hours || {};
   const address = homeVisit?.address || {};
   
   const ref = useRef(null);
@@ -72,34 +71,22 @@ export default function Visit({ translations, locale }: VisitProps) {
           
           <div className="px-6 md:px-10 lg:px-12 py-8 md:py-10 relative z-10">
             {/* Stacked Title - Now from translations */}
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal leading-[1.1] mb-6 md:mb-8">
-              <span className="block">{t('headline1', 'FIND')}</span>
-              <span className="block">{t('headline2', 'US')}</span>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal leading-[1.1] mb-8 md:mb-10">
+              {t('headline1', 'FIND')} {t('headline2', 'US')}
             </h2>
             
-            {/* Info Grid */}
+            {/* Address - Now from translations */}
             <div className="text-charcoal/80">
-              {/* Hours - Now from translations */}
-              <div className="text-sm md:text-base space-y-0.5 mb-8">
-                <p>{hours.monWedThuSun || 'Mon, Wed, Thu, Sun: 12:30 – 23:00'}</p>
-                <p>{hours.friday || 'Friday: 12:30 – 01:00'}</p>
-                <p>{hours.saturday || 'Saturday: 12:30 – 01:00'}</p>
-                <p className="text-terracotta">{hours.closed || 'Tuesday: Closed'}</p>
-              </div>
-              
-              {/* Address - Now from translations */}
-              <div>
-                <p className="text-base md:text-lg text-charcoal">
-                  {address.street || 'Rua da Boavista 66'}<br />
-                  {address.postal || '1200-068 Lisboa'}
-                </p>
-              </div>
+              <p className="text-base md:text-lg text-charcoal">
+                {address.street || 'Rua da Boavista 66'}<br />
+                {address.postal || '1200-068 Lisboa'}
+              </p>
             </div>
             
             {/* CTA - Now from translations */}
             <button
               onClick={handleDirectionsClick}
-              className="mt-2 inline-block text-charcoal border-b border-charcoal/50 hover:border-charcoal pb-1 transition-colors"
+              className="mt-6 inline-block text-charcoal border-b border-charcoal/50 hover:border-charcoal pb-1 transition-colors"
             >
               {t('directions', 'Directions')} →
             </button>

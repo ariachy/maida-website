@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate --schema=/home/thehlxvx/maida.pt/prisma/schema.prisma || true",
     "dev": "next dev",
-    "build": "next build",
+    "build": "node node_modules/next/dist/bin/next build",
     "start": "next start",
-    "export": "next build && next export",
+    "export": "node node_modules/next/dist/bin/next build && node node_modules/next/dist/bin/next export",
     "lint": "next lint"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "lucide-react": "^0.303.0",
     "next": "^14.2.35",
     "prisma": "^6.19.2",
+    "qrcode.react": "^4.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sharp": "^0.34.5"

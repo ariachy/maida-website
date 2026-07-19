@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import LanguageTabs from '@/components/admin/LanguageTabs';
 import ContentField from '@/components/admin/ContentField';
 import { ToastContainer, useToast } from '@/components/admin/Toast';
+import RebuildModal from '@/components/admin/RebuildModal';
 
 interface LocaleData {
   [key: string]: any;
@@ -16,9 +17,10 @@ export default function StoryEditorPage() {
   const [ptData, setPtData] = useState<LocaleData | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [activeLanguage, setActiveLanguage] = useState('en');
+  const [activeLanguage, setActiveLanguage] = useState<'en' | 'pt'>('en');
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [activeSection, setActiveSection] = useState('story');
+  const [showRebuildModal, setShowRebuildModal] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -56,8 +58,8 @@ export default function StoryEditorPage() {
     }
   };
 
-  const saveData = async () => {
-    if (!enData || !ptData) return;
+  const saveData = async (): Promise<boolean> => {
+    if (!enData || !ptData) return false;
 
     setSaving(true);
     try {
@@ -77,16 +79,23 @@ export default function StoryEditorPage() {
       if (!results.every((r) => r.ok)) throw new Error('Failed to save');
 
       setHasUnsavedChanges(false);
-      toast.success('Story page saved successfully!');
+      return true;
     } catch (error) {
       console.error('Save error:', error);
       toast.error('Failed to save story page');
+      return false;
     } finally {
       setSaving(false);
     }
   };
 
-  // Memoized update function to prevent unnecessary re-renders
+  const saveAndPublish = async () => {
+    const saved = await saveData();
+    if (saved) {
+      setShowRebuildModal(true);
+    }
+  };
+
   const updateField = useCallback((path: string[], value: string) => {
     const setData = activeLanguage === 'en' ? setEnData : setPtData;
     
@@ -108,7 +117,6 @@ export default function StoryEditorPage() {
     setHasUnsavedChanges(true);
   }, [activeLanguage]);
 
-  // Helper to get value from nested path
   const getValue = useCallback((path: string[]): string => {
     const data = activeLanguage === 'en' ? enData : ptData;
     if (!data) return '';
@@ -121,7 +129,6 @@ export default function StoryEditorPage() {
     return typeof current === 'string' ? current : '';
   }, [activeLanguage, enData, ptData]);
 
-  // Helper to create onChange handler for a specific path
   const createOnChange = useCallback((path: string[]) => {
     return (value: string) => updateField(path, value);
   }, [updateField]);
@@ -152,6 +159,12 @@ export default function StoryEditorPage() {
 
   return (
     <div>
+      {/* Rebuild Modal */}
+      <RebuildModal 
+        isOpen={showRebuildModal} 
+        onClose={() => setShowRebuildModal(false)} 
+      />
+
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -170,8 +183,23 @@ export default function StoryEditorPage() {
             </svg>
             View Page
           </a>
+          
+          {/* Save Draft Button */}
           <button
             onClick={saveData}
+            disabled={saving || !hasUnsavedChanges}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-md font-medium transition-colors border ${
+              hasUnsavedChanges
+                ? 'border-[#C4A484] text-[#C4A484] hover:bg-[#C4A484]/10'
+                : 'border-[#E5E5E5] text-[#9CA3AF] cursor-not-allowed'
+            }`}
+          >
+            {saving ? 'Saving...' : 'Save Draft'}
+          </button>
+
+          {/* Save & Publish Button */}
+          <button
+            onClick={saveAndPublish}
             disabled={saving || !hasUnsavedChanges}
             className={`relative flex items-center gap-2 px-6 py-2.5 rounded-md font-medium transition-colors ${
               hasUnsavedChanges
@@ -179,7 +207,10 @@ export default function StoryEditorPage() {
                 : 'bg-[#E5E5E5] text-[#9CA3AF] cursor-not-allowed'
             }`}
           >
-            {saving ? 'Saving...' : 'Save Changes'}
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            {saving ? 'Saving...' : 'Save & Publish'}
             {hasUnsavedChanges && !saving && (
               <span className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full" />
             )}
@@ -191,7 +222,7 @@ export default function StoryEditorPage() {
       <div className="mb-6">
         <LanguageTabs
           activeLanguage={activeLanguage}
-          onLanguageChange={setActiveLanguage}
+          onLanguageChange={(lang) => setActiveLanguage(lang as 'en' | 'pt')}
         />
       </div>
 
@@ -220,12 +251,12 @@ export default function StoryEditorPage() {
             <>
               <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
                 <h2 className="text-lg font-medium text-[#2C2C2C]">Introduction Section</h2>
-                <p className="text-sm text-[#6B6B6B] mt-1">The opening text explaining what Maída is about</p>
+                <p className="text-sm text-[#6B6B6B] mt-1">The opening story section on the homepage and story page</p>
               </div>
 
               <ContentField 
                 label="Section Label" 
-                description="Small hashtag label above title (e.g., '#FromOurRoots')"
+                description="Small hashtag or label above the title"
                 value={getValue(['story', 'label'])}
                 onChange={createOnChange(['story', 'label'])}
                 placeholder="#FromOurRoots"
@@ -238,15 +269,13 @@ export default function StoryEditorPage() {
                   value={getValue(['story', 'title'])}
                   onChange={createOnChange(['story', 'title'])}
                   placeholder="Where every meal is"
-                  required
                 />
                 <ContentField 
                   label="Title (highlighted part)" 
-                  description="Emphasized text in accent color"
+                  description="Emphasized part in accent color"
                   value={getValue(['story', 'titleHighlight'])}
                   onChange={createOnChange(['story', 'titleHighlight'])}
                   placeholder="an invitation"
-                  required
                 />
               </div>
 

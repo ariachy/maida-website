@@ -1,6 +1,48 @@
-'use client';
+import { locales } from '@/lib/i18n';
 
-import Script from 'next/script';
+/**
+ * ⚠️ VERIFY BEFORE DEPLOY — opening hours.
+ * The footer settings (api/meetmeatmaida defaults) say the kitchen opens 12:00,
+ * while this structured data said 17:00. They cannot both be right. The hours
+ * below are kept at the previous structured-data values (17:00 open) but the
+ * OPEN TIME MUST BE CONFIRMED against the real schedule, and then made to match
+ * the footer string. Tuesday is intentionally omitted = closed.
+ *
+ * The previous version listed Friday and Saturday TWICE (once closing 23:00 in
+ * the Wed–Mon block, once closing 01:00) — a direct contradiction. That is fixed
+ * here: standard days and the late-close days are now mutually exclusive.
+ */
+const OPENING_HOURS = [
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Wednesday', 'Thursday', 'Sunday', 'Monday'],
+    opens: '17:00',
+    closes: '23:00',
+  },
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Friday', 'Saturday'],
+    opens: '17:00',
+    closes: '01:00',
+  },
+  // Tuesday absent = closed.
+];
+
+/**
+ * ⚠️ MANUAL FIELD — aggregate rating.
+ * There is no rating data in the JSON content model, so this cannot be sourced
+ * "dynamically" — it has to be maintained by hand here. Google requires that an
+ * aggregateRating reflect real, visible reviews; a self-asserted rating with no
+ * on-page reviews can trigger a structured-data manual action. Keep these in
+ * sync with the real Google rating, or delete the `aggregateRating` block.
+ */
+const AGGREGATE_RATING = {
+  '@type': 'AggregateRating',
+  ratingValue: '4.8',
+  reviewCount: '115',
+  bestRating: '5',
+  worstRating: '1',
+};
 
 // Restaurant structured data for Google
 export function RestaurantJsonLd() {
@@ -10,12 +52,12 @@ export function RestaurantJsonLd() {
     '@id': 'https://maida.pt/#restaurant',
     name: 'Maída',
     alternateName: 'Maída Lisboa',
-    description: 'Mediterranean restaurant with Lebanese soul. A gathering place for shared plates, natural wines, and evenings that linger in Cais do Sodré, Lisbon.',
+    description:
+      'Mediterranean restaurant with Lebanese soul. A gathering place for shared plates, natural wines, and evenings that linger in Cais do Sodré, Lisbon.',
     url: 'https://maida.pt',
-    telephone: '+351961111383',
-    email: 'hello@maida.pt',
-    
-    // Address
+    telephone: '+351966604674',
+    email: 'info@maida.pt',
+
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Rua da Boavista 66',
@@ -24,36 +66,18 @@ export function RestaurantJsonLd() {
       postalCode: '1200-068',
       addressCountry: 'PT',
     },
-    
-    // Geo coordinates (Cais do Sodré area)
+
     geo: {
       '@type': 'GeoCoordinates',
       latitude: 38.7069,
       longitude: -9.1427,
     },
-    
-    // Opening Hours
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Wednesday', 'Thursday', 'Sunday'],
-        opens: '12:30',
-        closes: '23:00',
-      },
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Friday', 'Saturday'],
-        opens: '12:30',
-        closes: '01:00',
-      },
-      // Monday and Tuesday are closed - no entry needed (absence = closed)
-    ],
-    
-    // Cuisine & Category
+
+    openingHoursSpecification: OPENING_HOURS,
+
     servesCuisine: ['Mediterranean', 'Lebanese', 'Middle Eastern'],
     priceRange: '€€',
-    
-    // Menu
+
     hasMenu: {
       '@type': 'Menu',
       url: 'https://maida.pt/en/menu',
@@ -75,36 +99,40 @@ export function RestaurantJsonLd() {
         },
       ],
     },
-    
-    // Ratings
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      reviewCount: '115',
-      bestRating: '5',
-      worstRating: '1',
-    },
-    
-    // Images
+
+    aggregateRating: AGGREGATE_RATING,
+
     image: [
       'https://maida.pt/images/og-image.jpg',
       'https://maida.pt/images/hero/hero-1.jpg',
     ],
-    
-    // Social & Contact
+
     sameAs: [
       'https://www.instagram.com/maida.lisbon',
       'https://www.facebook.com/maida.lisbon',
     ],
-    
-    // Reservations
+
     acceptsReservations: 'True',
-    
-    // Payment
+    potentialAction: {
+      '@type': 'ReserveAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://maida.pt/en/reserve',
+        inLanguage: 'en',
+        actionPlatform: [
+          'http://schema.org/DesktopWebPlatform',
+          'http://schema.org/MobileWebPlatform',
+        ],
+      },
+      result: {
+        '@type': 'Reservation',
+        name: 'Table reservation',
+      },
+    },
+
     paymentAccepted: 'Cash, Credit Card, Debit Card',
     currenciesAccepted: 'EUR',
-    
-    // Amenities
+
     amenityFeature: [
       { '@type': 'LocationFeatureSpecification', name: 'Outdoor Seating', value: true },
       { '@type': 'LocationFeatureSpecification', name: 'WiFi', value: true },
@@ -113,11 +141,9 @@ export function RestaurantJsonLd() {
   };
 
   return (
-    <Script
-      id="restaurant-jsonld"
+    <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantData) }}
-      strategy="afterInteractive"
     />
   );
 }
@@ -133,7 +159,7 @@ export function OrganizationJsonLd() {
     logo: 'https://maida.pt/images/brand/logo.png',
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+351961111383',
+      telephone: '+351966604674',
       contactType: 'reservations',
       availableLanguage: ['English', 'Portuguese', 'German', 'Italian', 'Spanish'],
     },
@@ -144,20 +170,24 @@ export function OrganizationJsonLd() {
   };
 
   return (
-    <Script
-      id="organization-jsonld"
+    <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(orgData) }}
-      strategy="afterInteractive"
     />
   );
 }
 
-// Breadcrumb structured data (for pages)
-export function BreadcrumbJsonLd({ 
-  items 
-}: { 
-  items: { name: string; url: string }[] 
+/**
+ * Breadcrumb structured data.
+ * Render this on content pages (menu, blog, blog/[slug], search, story, …).
+ * `items` is an ordered trail, e.g.
+ *   [{ name: 'Home', url: 'https://maida.pt/en' },
+ *    { name: 'Blog', url: 'https://maida.pt/en/blog' }]
+ */
+export function BreadcrumbJsonLd({
+  items,
+}: {
+  items: { name: string; url: string }[];
 }) {
   const breadcrumbData = {
     '@context': 'https://schema.org',
@@ -171,16 +201,16 @@ export function BreadcrumbJsonLd({
   };
 
   return (
-    <Script
-      id="breadcrumb-jsonld"
+    <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
-      strategy="afterInteractive"
     />
   );
 }
 
-// Website search structured data
+// Website structured data — now advertises a sitewide SearchAction so the site
+// is eligible for the Google sitelinks searchbox. The target must resolve to a
+// working results page: /[lang]/search?q=... (provided in src/app/[lang]/search).
 export function WebsiteJsonLd() {
   const websiteData = {
     '@context': 'https://schema.org',
@@ -188,19 +218,28 @@ export function WebsiteJsonLd() {
     '@id': 'https://maida.pt/#website',
     url: 'https://maida.pt',
     name: 'Maída',
+    alternateName: ['Maída Lisbon', 'Maída Lisboa', 'Maida'],
     description: 'Mediterranean restaurant with Lebanese soul in Lisbon',
     publisher: {
       '@id': 'https://maida.pt/#organization',
     },
-    inLanguage: ['en', 'pt', 'de', 'it', 'es'],
+    // Driven by the live locale set (i18n.ts), so it stays in sync as languages launch.
+    inLanguage: [...locales],
+    potentialAction: {
+      '@type': 'SearchAction',
+      // trailingSlash:true → the path segment keeps its trailing slash before "?".
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://maida.pt/en/search/?q={search_term_string}',
+      },
+      'query-input': 'required name=search_term_string',
+    },
   };
 
   return (
-    <Script
-      id="website-jsonld"
+    <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteData) }}
-      strategy="afterInteractive"
     />
   );
 }

@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import LanguageSwitcher from './LanguageSwitcher';
 import { Locale } from '@/lib/i18n';
-import { useUmaiWidget } from '@/components/integrations/UmaiLoader';
+import { useBooking } from '@/hooks/useBooking';
 
 interface NavbarProps {
   translations: any;
@@ -26,8 +26,8 @@ export default function Navbar({ translations, locale }: NavbarProps) {
   const nav = translations?.nav || {};
   const footer = translations?.footer || {};
   
-  // UMAI Widget hook
-  const { openWidget, isOpening } = useUmaiWidget();
+  // TheFork booking hook
+  const { openWidget, isOpening } = useBooking(locale);
   
   // Helper function to safely get translation value
   const t = (key: string, fallback: string): string => {
@@ -99,10 +99,12 @@ export default function Navbar({ translations, locale }: NavbarProps) {
   ];
   
   // Discover dropdown links with translations
+  // The `divider: true` flag adds visual separation above the link in the dropdown.
   const discoverLinks = [
-    { href: `/${locale}/maida-saj`, label: tf('whatIsSaj', 'What is SAJ?'), segment: 'maida-saj' },
-    { href: `/${locale}/coffee-tea`, label: tf('coffeeTea', 'Coffee & Tea'), segment: 'coffee-tea' },
-    { href: `/${locale}/blog`, label: t('blog', 'Blog'), segment: 'blog' },
+    { href: `/${locale}/maida-saj`, label: tf('whatIsSaj', 'What is SAJ?'), segment: 'maida-saj', divider: false },
+    { href: `/${locale}/coffee-tea`, label: tf('coffeeTea', 'Coffee & Tea'), segment: 'coffee-tea', divider: false },
+    { href: `/${locale}/blog`, label: t('blog', 'Blog'), segment: 'blog', divider: false },
+    { href: `/${locale}/join-us`, label: 'Join Us', segment: 'join-us', divider: true },
   ];
   
   const isActiveLink = (segment: string) => {
@@ -200,18 +202,22 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                         const isActive = isActiveLink(link.segment);
                         
                         return (
-                          <Link
-                            key={link.href}
-                            href={link.href}
-                            onClick={() => setIsDiscoverOpen(false)}
-                            className={`block px-5 py-2.5 font-nav text-sm transition-colors ${
-                              isActive 
-                                ? 'text-terracotta bg-sand/30' 
-                                : 'text-stone hover:text-terracotta hover:bg-sand/20'
-                            }`}
-                          >
-                            {link.label}
-                          </Link>
+                          <div key={link.href}>
+                            {link.divider && (
+                              <div className="my-2 mx-4 border-t border-sand/60" />
+                            )}
+                            <Link
+                              href={link.href}
+                              onClick={() => setIsDiscoverOpen(false)}
+                              className={`block px-5 py-2.5 font-nav text-sm transition-colors ${
+                                isActive 
+                                  ? 'text-terracotta bg-sand/30' 
+                                  : 'text-stone hover:text-terracotta hover:bg-sand/20'
+                              }`}
+                            >
+                              {link.label}
+                            </Link>
+                          </div>
                         );
                       })}
                     </div>
@@ -225,7 +231,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
             <LanguageSwitcher locale={locale} />
             {/* Desktop Reserve Button */}
             <button
-              onClick={openWidget}
+              onClick={() => openWidget('button')}
               disabled={isOpening}
               className="btn btn-ghost text-sm py-2 px-5 font-nav disabled:opacity-70"
             >
@@ -336,7 +342,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                               const isActive = isActiveLink(link.segment);
                               
                               return (
-                                <li key={link.href}>
+                                <li key={link.href} className={link.divider ? 'pt-3 mt-3 border-t border-sand/60' : ''}>
                                   <Link
                                     href={link.href}
                                     onClick={() => setIsMobileMenuOpen(false)}
@@ -367,7 +373,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                   <button
                     onClick={() => {
                       setIsMobileMenuOpen(false);
-                      openWidget();
+                      openWidget('button');
                     }}
                     disabled={isOpening}
                     className="btn btn-primary w-full disabled:opacity-70"

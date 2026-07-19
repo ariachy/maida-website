@@ -10,7 +10,16 @@ export default function robots(): MetadataRoute.Robots {
           '/api/',
           '/_next/',
           '/admin/',
-          '/*?*',  // Block all URLs with query parameters
+          // NOTE: the previous `'/*?*'` rule blocked EVERY query-string URL,
+          // which would have made the new ?q= search results page (and the
+          // SearchAction that points at it) uncrawlable. It is removed.
+          //
+          // Duplicate-content risk from tracking params (utm_*, etc.) is handled
+          // by the canonical tags emitted in generatePageMetadata(), which is the
+          // correct tool for that — not a robots block.
+          //
+          // The search results page itself is set to noindex,follow in its own
+          // metadata, so it is crawlable (SearchAction works) but not indexed.
         ],
       },
     ],

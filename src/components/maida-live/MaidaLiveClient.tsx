@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Music, Calendar, PartyPopper, X, Send, CheckCircle, Loader2 } from 'lucide-react';
 import { Locale } from '@/lib/i18n';
+import { useBooking } from '@/hooks/useBooking';
 
 interface MaidaLiveClientProps {
   translations: any;
@@ -44,15 +45,8 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
     'Funk / Soul',
   ];
 
-  const handleReserveClick = () => {
-    if (typeof window !== 'undefined' && (window as any).umaiWidget) {
-      (window as any).umaiWidget.config({
-        apiKey: 'd541f212-d5ca-4839-ab2b-7f9c99e1c96c',
-        widgetType: 'reservation',
-      });
-      (window as any).umaiWidget.openWidget();
-    }
-  };
+  const { openWidget } = useBooking(locale);
+  const handleReserveClick = () => openWidget('button');
 
   // Handle reserve for specific day
   const handleReserve = (day: string) => {

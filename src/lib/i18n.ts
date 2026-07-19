@@ -19,8 +19,12 @@ export const languageFlags: Record<Locale, string> = {
 /**
  * ROOT CAUSE FIX: Normalizes translation values to plain strings.
  * Handles both simple strings and {label, value} objects that may exist in JSON files.
+ *
+ * Exported so the server-only translations loader (src/lib/translations.ts) reuses
+ * the exact same normalization — one implementation, no drift. This file stays
+ * client-safe (no `fs`), so exporting a pure function changes nothing for clients.
  */
-function normalizeValue(value: any): any {
+export function normalizeValue(value: any): any {
   // Null/undefined pass through
   if (value === null || value === undefined) {
     return value;
@@ -75,6 +79,11 @@ export function getNestedValue(obj: any, path: string): string {
  * Load translations for a locale
  * IMPORTANT: Uses dynamic import() which works in both server and client contexts
  * Do NOT use 'fs' module here as this file is imported by client components
+ *
+ * NOTE: Because import() is resolved at BUILD time, edits to the locale JSON do
+ * not appear until a rebuild. SERVER components should use getServerTranslations()
+ * from src/lib/translations.ts (runtime fs read) so admin edits go live with no
+ * build. This client-safe path is intentionally left unchanged.
  */
 export async function loadTranslations(
   locale: Locale

@@ -1,29 +1,38 @@
 import { Metadata } from 'next';
+import { locales, defaultLocale } from '@/lib/i18n';
 
 const baseUrl = 'https://maida.pt';
 
 /**
- * Generate hreflang alternates for any page
- * @param path - The page path without locale (e.g., '/menu', '/contact', or '' for homepage)
+ * Generate hreflang alternates for any page.
+ *
+ * The language map is now built from `locales` in i18n.ts — the single source of
+ * truth for which languages are live. To launch de/es/it later, add them to the
+ * `locales` array in i18n.ts and the sitemap + every page's hreflang update
+ * automatically. No edits needed here.
+ *
+ * @param path - The page path without locale (e.g., '/menu', or '' for homepage)
  * @param locale - Current locale
  */
 export function generateAlternates(path: string, locale: string) {
   const pagePath = path.startsWith('/') ? path : `/${path}`;
   const cleanPath = pagePath === '/' ? '' : pagePath;
-  
+
+  const languages: Record<string, string> = {};
+  for (const l of locales) {
+    languages[l] = `${baseUrl}/${l}${cleanPath}`;
+  }
+  // x-default points at the default locale.
+  languages['x-default'] = `${baseUrl}/${defaultLocale}${cleanPath}`;
+
   return {
     canonical: `${baseUrl}/${locale}${cleanPath}`,
-    languages: {
-      'en': `${baseUrl}/en${cleanPath}`,
-      'pt': `${baseUrl}/pt${cleanPath}`,
-      'x-default': `${baseUrl}/en${cleanPath}`,
-    },
+    languages,
   };
 }
 
 /**
- * Generate full metadata for a page with proper SEO
- * @param options - Metadata options
+ * Generate full metadata for a page with proper SEO.
  */
 export function generatePageMetadata({
   title,
@@ -40,7 +49,7 @@ export function generatePageMetadata({
 }): Metadata {
   const alternates = generateAlternates(path, locale);
   const ogImage = image || '/images/og-image.jpg';
-  
+
   return {
     title,
     description,
