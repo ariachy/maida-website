@@ -83,9 +83,14 @@ export function RestaurantJsonLd({ locale }: LocaleProps) {
 
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: 38.7069,
-      longitude: -9.1427,
+      // Coordinates of the actual Google Business pin (maps.app.goo.gl/mYPmDCBEvfEQq1yz8),
+      // not the approximate street centroid that was here before.
+      latitude: 38.7088333,
+      longitude: -9.1486581,
     },
+
+    // Same Google Maps place as the geo pin above and the FAQ "Get directions" link.
+    hasMap: 'https://maps.app.goo.gl/mYPmDCBEvfEQq1yz8',
 
     openingHoursSpecification: OPENING_HOURS,
 
@@ -232,7 +237,10 @@ export function MenuJsonLd({
     name: locale === 'pt' ? 'Menu Maída' : 'Maída Menu',
     url: url(locale, '/menu'),
     inLanguage: bcp47(locale),
-    isPartOf: { '@id': `${BASE}/#restaurant` },
+    // NOTE: no isPartOf here. Google rejects isPartOf pointing at a Restaurant
+    // ("not a valid known destination type"). The link is expressed the correct
+    // direction instead — RestaurantJsonLd.hasMenu references this Menu by @id, so the
+    // two nodes still merge into one graph without the invalid back-reference.
     hasMenuSection: sections,
   };
 
@@ -299,6 +307,45 @@ export function BreadcrumbJsonLd({
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+    />
+  );
+}
+
+/**
+ * FAQ structured data. Render on /[lang]/faq only.
+ *
+ * `items[].answer` MUST be plain text: no link markup, no arrows, no HTML. The clickable
+ * links live in the visible HTML answer on the page; the FAQ page derives this plain-text
+ * form from its answer segments (inline link words kept, trailing call-to-action links
+ * dropped) and passes it here. Do not put markup in acceptedAnswer.text — Google treats
+ * FAQ answer text as plain content and markup risks a rich-result rejection.
+ */
+export function FAQPageJsonLd({
+  items,
+  locale,
+}: {
+  items: { question: string; answer: string }[];
+  locale: Locale;
+}) {
+  const faqData = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${url(locale, '/faq')}#faqpage`,
+    inLanguage: bcp47(locale),
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
     />
   );
 }

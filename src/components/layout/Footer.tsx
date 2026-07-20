@@ -168,6 +168,14 @@ export default function Footer({ translations, locale }: FooterProps) {
                   {getLabel(nav, 'blog', 'Blog')}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href={`/${locale}/faq`}
+                  className="text-warm-white/70 text-sm hover:text-warm-white transition-colors"
+                >
+                  {getLabel(footer, 'faq', 'FAQ')}
+                </Link>
+              </li>
               {/* Join Us — visually separated from the rest with a subtle divider */}
               <li className="pt-2 mt-2 border-t border-white/10">
                 <Link

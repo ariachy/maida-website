@@ -857,6 +857,7 @@
     "copyright": "© 2026 maída",
     "location": "Cais do Sodré, Lisboa",
     "whatIsSaj": "O que é SAJ?",
+    "faq": "FAQ",
     "coffeeTea": "Café e Chá",
     "joinUs": "Junta-te a nós"
   },
@@ -1093,5 +1094,139 @@
     "phoneBoxLabel": "Grupos de 8+, eventos privados ou reservas para o próprio dia",
     "directions": "Como chegar",
     "unavailable": "O sistema de reservas demorou a responder. Tente novamente ou ligue-nos."
+  },
+  "faq": {
+    "heroTitle": "Perguntas Frequentes",
+    "heroSubtitle": "Tudo o que precisa de saber antes de nos visitar",
+    "items": [
+      {
+        "q": "Que tipo de comida serve a Maída?",
+        "a": [
+          {
+            "t": "A Maída serve sabores mediterrânicos com alma libanesa - dips, pratos de partilha, saj wraps e grelhados, a par de cocktails de assinatura e vinhos naturais, em Cais do Sodré, Lisboa."
+          }
+        ]
+      },
+      {
+        "q": "Onde fica a Maída?",
+        "a": [
+          {
+            "t": "A Maída fica na Rua da Boavista 66, Cais do Sodré, Lisboa."
+          }
+        ],
+        "cta": {
+          "t": "Como chegar",
+          "href": "https://maps.app.goo.gl/mYPmDCBEvfEQq1yz8"
+        }
+      },
+      {
+        "q": "Qual é o horário da Maída?",
+        "a": [
+          {
+            "t": "Quarta a Segunda, 18:00-23:30 (cozinha fecha às 23:00). Sexta e Sábado até tarde, por volta das 02:00 (cozinha fecha às 23:30). Terça-feira: fechado."
+          }
+        ]
+      },
+      {
+        "q": "A Maída aceita reservas?",
+        "a": [
+          {
+            "t": "Sim. Pode reservar mesa através da nossa "
+          },
+          {
+            "t": "página de reservas",
+            "to": "/reserve"
+          },
+          {
+            "t": ", ou ligando para "
+          },
+          {
+            "t": "+351 966 604 674",
+            "href": "tel:+351966604674"
+          },
+          {
+            "t": "."
+          }
+        ]
+      },
+      {
+        "q": "A Maída é boa para grupos?",
+        "a": [
+          {
+            "t": "Sim. Para grupos maiores, contacte-nos por WhatsApp ou telefone através do +351 966 604 674 e ajudamos a organizar."
+          }
+        ]
+      },
+      {
+        "q": "A Maída tem opções vegetarianas?",
+        "a": [
+          {
+            "t": "Sim. Temos vários pratos vegetarianos - Charred Corn, Hummus, Muhamara, Feta Brûlée e Pasta Pomodoro, entre outros. Não rotulamos pratos como estritamente vegan, pois a nossa cozinha usa equipamento partilhado, mas a nossa equipa terá todo o gosto em ajudar a escolher."
+          }
+        ]
+      },
+      {
+        "q": "A Maída tem esplanada?",
+        "a": [
+          {
+            "t": "Sim, temos esplanada para até 6 pessoas."
+          }
+        ]
+      },
+      {
+        "q": "Há estacionamento nas proximidades?",
+        "a": [
+          {
+            "t": "Existem alguns lugares na rua junto à Rua da Boavista, mas enchem rapidamente. Há vários parques públicos em Cais do Sodré a curta distância a pé."
+          }
+        ]
+      },
+      {
+        "q": "Têm informação sobre alergénios?",
+        "a": [
+          {
+            "t": "Por favor, pergunte à nossa equipa sobre alergénios e requisitos dietéticos - terão todo o gosto em ajudar."
+          }
+        ]
+      },
+      {
+        "q": "O que é o saj?",
+        "a": [
+          {
+            "t": "O saj é um pão tradicional levantino cozido numa chapa em forma de cúpula. Saiba mais na nossa "
+          },
+          {
+            "t": "página O que é SAJ?",
+            "to": "/maida-saj"
+          },
+          {
+            "t": "."
+          }
+        ]
+      },
+      {
+        "q": "A Maída tem música ao vivo ou eventos?",
+        "a": [
+          {
+            "t": "Sim - o Maída Live traz DJ sets e noites especiais aos fins de semana. Siga-nos no "
+          },
+          {
+            "t": "Instagram",
+            "href": "https://instagram.com/maida.lisbon"
+          },
+          {
+            "t": " para novidades."
+          }
+        ]
+      },
+      {
+        "q": "Existe código de vestuário?",
+        "a": [
+          {
+            "t": "Não temos um código de vestuário rígido - venha como está, desde que se sinta elegante e à vontade. O ambiente é descontraído mas requintado."
+          }
+        ]
+      }
+    ]
   }
 }

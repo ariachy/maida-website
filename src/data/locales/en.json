@@ -769,6 +769,7 @@
     "copyright": "© 2026 maída",
     "location": "Cais do Sodré, Lisboa",
     "whatIsSaj": "What is SAJ?",
+    "faq": "FAQ",
     "coffeeTea": "Coffee & Tea",
     "joinUs": "Join Us"
   },
@@ -1005,5 +1006,139 @@
     "phoneBoxLabel": "Groups of 8+, private events or same-day requests",
     "directions": "Directions",
     "unavailable": "The booking system is taking a moment. Try again, or give us a call."
+  },
+  "faq": {
+    "heroTitle": "Frequently Asked Questions",
+    "heroSubtitle": "Everything you need to know before you visit",
+    "items": [
+      {
+        "q": "What kind of food does Maída serve?",
+        "a": [
+          {
+            "t": "Maída serves Mediterranean flavours with Lebanese soul - dips, shared plates, saj wraps, and grilled dishes, alongside signature cocktails and natural wines, in Cais do Sodré, Lisbon."
+          }
+        ]
+      },
+      {
+        "q": "Where is Maída located?",
+        "a": [
+          {
+            "t": "Maída is at Rua da Boavista 66, Cais do Sodré, Lisbon."
+          }
+        ],
+        "cta": {
+          "t": "Get directions",
+          "href": "https://maps.app.goo.gl/mYPmDCBEvfEQq1yz8"
+        }
+      },
+      {
+        "q": "What are Maída's opening hours?",
+        "a": [
+          {
+            "t": "Wednesday to Monday, 18:00-23:30 (kitchen closes 23:00). Friday and Saturday until late, around 02:00 (kitchen closes 23:30). Closed Tuesdays."
+          }
+        ]
+      },
+      {
+        "q": "Does Maída take reservations?",
+        "a": [
+          {
+            "t": "Yes. You can book a table through our "
+          },
+          {
+            "t": "reservations page",
+            "to": "/reserve"
+          },
+          {
+            "t": ", or by calling us at "
+          },
+          {
+            "t": "+351 966 604 674",
+            "href": "tel:+351966604674"
+          },
+          {
+            "t": "."
+          }
+        ]
+      },
+      {
+        "q": "Is Maída good for groups?",
+        "a": [
+          {
+            "t": "Yes. For larger groups, message or call us on WhatsApp at +351 966 604 674 and we'll help arrange it."
+          }
+        ]
+      },
+      {
+        "q": "Does Maída have vegetarian options?",
+        "a": [
+          {
+            "t": "Yes. We have plenty of vegetarian dishes - Charred Corn, Hummus, Muhamara, Feta Brûlée and Pasta Pomodoro, among others. We don't label dishes strictly vegan, as our kitchen uses shared equipment, but our team is always happy to talk you through the options."
+          }
+        ]
+      },
+      {
+        "q": "Does Maída have outdoor seating?",
+        "a": [
+          {
+            "t": "Yes, we have outdoor seating for up to 6 people."
+          }
+        ]
+      },
+      {
+        "q": "Is there parking nearby?",
+        "a": [
+          {
+            "t": "There are a few street spots near Rua da Boavista, though they fill quickly. Several public car parks in Cais do Sodré are within a short walk."
+          }
+        ]
+      },
+      {
+        "q": "Do you have information on allergens?",
+        "a": [
+          {
+            "t": "Please ask our team about allergens and dietary requirements - they'll guide you through the menu."
+          }
+        ]
+      },
+      {
+        "q": "What is saj?",
+        "a": [
+          {
+            "t": "Saj is a traditional Levantine flatbread baked on a domed griddle. You can read more on our "
+          },
+          {
+            "t": "What is SAJ? page",
+            "to": "/maida-saj"
+          },
+          {
+            "t": "."
+          }
+        ]
+      },
+      {
+        "q": "Does Maída have live music or events?",
+        "a": [
+          {
+            "t": "Yes - Maída Live brings DJ sets and special evenings on weekends. Follow us on "
+          },
+          {
+            "t": "Instagram",
+            "href": "https://instagram.com/maida.lisbon"
+          },
+          {
+            "t": " for the latest."
+          }
+        ]
+      },
+      {
+        "q": "Is there a dress code?",
+        "a": [
+          {
+            "t": "No strict dress code - come as you are, as long as it feels elegant and easy. The vibe is relaxed but refined."
+          }
+        ]
+      }
+    ]
   }
 }
