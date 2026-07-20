@@ -1,3 +1,4 @@
+import { CANONICAL_MEET_HOURS } from '@/lib/meet-hours';
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getLatestBlogPost } from '@/lib/content';
@@ -18,7 +19,7 @@ const DEFAULT_SETTINGS: Record<string, string> = {
   footer_contact_text: 'Contact',
   footer_contact_text_pt: 'Contacto',
   footer_contact_url: 'mailto:info@maida.pt',
-  footer_hours: 'Wed – Mon: 18:00 – 23:30 · Fri – Sat: 18:00 till late (02:00)',
+  footer_hours: CANONICAL_MEET_HOURS,
   footer_address_text: 'Rua da Boavista 66, 1200-068, Lisboa',
   footer_address_url: 'https://maps.google.com/?q=Rua+da+Boavista+66+1200-068+Lisboa',
   wifi_network: 'Maida-Guest',
