@@ -1,6 +1,13 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import {
+  CANONICAL_MEET_HOURS,
+  CANONICAL_MEET_HOURS_PARTS,
+  composeMeetHours,
+  parseMeetHours,
+  type MeetHoursParts,
+} from '@/lib/meet-hours';
 
 interface MeetItem {
   id: string;
@@ -61,6 +68,9 @@ export default function MeetMeAtMaidaAdminPage() {
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<'sections' | 'settings'>('sections');
   const [settingsTab, setSettingsTab] = useState<'branding' | 'wifi' | 'footer' | 'appearance'>('branding');
+  // Opening-hours editor: when true (or when the saved value isn't in the standard
+  // shape) the hours field shows a raw text input instead of the structured fields.
+  const [hoursRawMode, setHoursRawMode] = useState(false);
   
   // Modal states
   const [showSectionModal, setShowSectionModal] = useState(false);
@@ -791,17 +801,120 @@ export default function MeetMeAtMaidaAdminPage() {
                     </div>
                   </div>
 
-                  {/* Hours */}
+                  {/* Hours — guided editor. Composes the single footer_hours string from
+                      structured fields so it stays consistent with the site-wide hours;
+                      falls back to a raw text field for legacy/non-standard values. */}
                   <div className="p-4 bg-cream/30 rounded-lg">
-                    <label className="block text-sm font-medium text-charcoal mb-3">🕐 Opening Hours</label>
-                    <input
-                      type="text"
-                      value={settings.footer_hours || ''}
-                      onChange={(e) => setSettings({ ...settings, footer_hours: e.target.value })}
-                      className="w-full px-3 py-2 border border-sand rounded-lg text-sm"
-                      placeholder="Wed – Mon: 18:00 – 23:30 · Fri – Sat: 18:00 till late (02:00)"
-                    />
-                    <p className="text-xs text-stone mt-2">Use · (middle dot) to separate different schedules</p>
+                    <div className="flex items-center justify-between mb-3">
+                      <label className="block text-sm font-medium text-charcoal">🕐 Opening Hours</label>
+                      <button
+                        type="button"
+                        onClick={() => setSettings({ ...settings, footer_hours: CANONICAL_MEET_HOURS })}
+                        className="px-3 py-1.5 bg-charcoal text-white text-xs rounded-lg hover:bg-charcoal/90"
+                      >
+                        Reset to standard Maída hours
+                      </button>
+                    </div>
+
+                    {(() => {
+                      const raw = settings.footer_hours || '';
+                      const parsed = parseMeetHours(raw);
+                      const showRaw = hoursRawMode || (parsed === null && raw !== '');
+                      const parts: MeetHoursParts = parsed ?? CANONICAL_MEET_HOURS_PARTS;
+                      const setParts = (next: MeetHoursParts) =>
+                        setSettings({ ...settings, footer_hours: composeMeetHours(next) });
+                      const field = 'w-full px-3 py-2 border border-sand rounded-lg text-sm';
+                      const lab = 'block text-xs text-stone mb-1';
+
+                      if (showRaw) {
+                        return (
+                          <div>
+                            <input
+                              type="text"
+                              value={raw}
+                              onChange={(e) => setSettings({ ...settings, footer_hours: e.target.value })}
+                              className={field}
+                              placeholder={CANONICAL_MEET_HOURS}
+                            />
+                            <p className="text-xs text-amber-600 mt-2">
+                              {parsed === null && raw !== ''
+                                ? 'This value isn’t in the standard format, so structured editing is off. Use “Reset to standard Maída hours”, or edit the text directly.'
+                                : 'Editing raw text.'}
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setHoursRawMode(false);
+                                if (parseMeetHours(raw) === null) {
+                                  setSettings({ ...settings, footer_hours: CANONICAL_MEET_HOURS });
+                                }
+                              }}
+                              className="text-xs text-terracotta underline mt-1"
+                            >
+                              Switch to structured editor
+                            </button>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <div className="space-y-3">
+                          <div className="grid grid-cols-3 gap-3">
+                            <div>
+                              <label className={lab}>Midweek days</label>
+                              <input type="text" value={parts.midweekDays}
+                                onChange={(e) => setParts({ ...parts, midweekDays: e.target.value })} className={field} />
+                            </div>
+                            <div>
+                              <label className={lab}>Hours</label>
+                              <input type="text" value={parts.midweekHours}
+                                onChange={(e) => setParts({ ...parts, midweekHours: e.target.value })} className={field} />
+                            </div>
+                            <div>
+                              <label className={lab}>Kitchen closes</label>
+                              <input type="text" value={parts.midweekKitchen}
+                                onChange={(e) => setParts({ ...parts, midweekKitchen: e.target.value })} className={field} />
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-3 gap-3">
+                            <div>
+                              <label className={lab}>Weekend days</label>
+                              <input type="text" value={parts.weekendDays}
+                                onChange={(e) => setParts({ ...parts, weekendDays: e.target.value })} className={field} />
+                            </div>
+                            <div>
+                              <label className={lab}>Hours</label>
+                              <input type="text" value={parts.weekendHours}
+                                onChange={(e) => setParts({ ...parts, weekendHours: e.target.value })} className={field} />
+                            </div>
+                            <div>
+                              <label className={lab}>Kitchen closes</label>
+                              <input type="text" value={parts.weekendKitchen}
+                                onChange={(e) => setParts({ ...parts, weekendKitchen: e.target.value })} className={field} />
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-3 gap-3">
+                            <div>
+                              <label className={lab}>Closed day</label>
+                              <input type="text" value={parts.closedDay}
+                                onChange={(e) => setParts({ ...parts, closedDay: e.target.value })} className={field} />
+                            </div>
+                          </div>
+                          <button type="button" onClick={() => setHoursRawMode(true)} className="text-xs text-terracotta underline">
+                            Edit as raw text
+                          </button>
+                        </div>
+                      );
+                    })()}
+
+                    {/* Live preview — exactly what the meetmeatmaida footer will render */}
+                    <div className="mt-4 pt-3 border-t border-sand">
+                      <p className="text-xs text-stone mb-1">Preview (as shown on the page):</p>
+                      <p className="text-sm text-charcoal">{settings.footer_hours || CANONICAL_MEET_HOURS}</p>
+                      {(settings.footer_hours || '') === CANONICAL_MEET_HOURS && (
+                        <p className="text-xs text-green-600 mt-1">✓ Matches the site-wide standard hours.</p>
+                      )}
+                    </div>
                   </div>
 
                   {/* Address */}
