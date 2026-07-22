@@ -25,7 +25,7 @@ export default function Visit({ translations, locale }: VisitProps) {
   };
 
   const handleDirectionsClick = () => {
-    window.open('https://maps.google.com/?q=Rua+da+Boavista+66+Lisboa', '_blank');
+    window.open('https://maps.app.goo.gl/mYPmDCBEvfEQq1yz8', '_blank');
   };
   
   return (

@@ -64,7 +64,7 @@ export default function Footer({ translations, locale }: FooterProps) {
             </div>
             <div className="flex gap-3">
               <a
-                href="https://instagram.com/maida.lisbon"
+                href="https://www.instagram.com/maida_lisbon"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-warm-white hover:bg-terracotta hover:border-terracotta transition-all duration-300"
@@ -73,7 +73,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                 <Instagram className="w-4 h-4" />
               </a>
               <a
-                href="https://facebook.com/maida.lisbon"
+                href="https://facebook.com/maida_lisbon"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-warm-white hover:bg-terracotta hover:border-terracotta transition-all duration-300"

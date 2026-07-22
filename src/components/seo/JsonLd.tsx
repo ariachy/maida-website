@@ -110,8 +110,8 @@ export function RestaurantJsonLd({ locale }: LocaleProps) {
     image: [`${BASE}/images/og-image.jpg`, `${BASE}/images/hero/hero-1.jpg`],
 
     sameAs: [
-      'https://www.instagram.com/maida.lisbon',
-      'https://www.facebook.com/maida.lisbon',
+      'https://www.instagram.com/maida_lisbon',
+      'https://www.facebook.com/maida_lisbon',
     ],
 
     acceptsReservations: 'True',
@@ -270,8 +270,8 @@ export function OrganizationJsonLd() {
       availableLanguage: ['English', 'Portuguese'],
     },
     sameAs: [
-      'https://www.instagram.com/maida.lisbon',
-      'https://www.facebook.com/maida.lisbon',
+      'https://www.instagram.com/maida_lisbon',
+      'https://www.facebook.com/maida_lisbon',
     ],
   };
 

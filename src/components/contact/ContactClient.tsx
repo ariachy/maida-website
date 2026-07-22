@@ -195,7 +195,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                   Cais do Sodré
                 </p>
                 <a
-                  href="https://maps.google.com/?q=Rua+da+Boavista+66+Lisboa"
+                  href="https://maps.app.goo.gl/mYPmDCBEvfEQq1yz8"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block mt-3 text-terracotta hover:text-terracotta/80 text-sm transition-colors"

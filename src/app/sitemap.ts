@@ -9,10 +9,9 @@ const baseUrl = 'https://maida.pt';
 export const revalidate = 3600;
 
 /**
- * Static (non-content-driven) pages.
- *
- * ⚠️ VERIFY against the actual folders in src/app/[lang]/ before deploying.
- * These were already in the live sitemap, so they are assumed valid:
+ * Static (non-content-driven) pages. All routes verified live in the build route table.
+ * trailingSlash:true in next.config.js — every URL ends in '/' to match canonicals and
+ * avoid a 308 redirect hop. /search is intentionally excluded (internal results).
  */
 const staticPages = [
   '', // Homepage
@@ -23,9 +22,10 @@ const staticPages = [
   '/maida-saj',
   '/coffee-tea',
   '/blog',
-  // '/reserve',  // strongly implied by the ReserveAction → uncomment once the route is confirmed
-  // '/review',   // confirm a /review route exists (review_url in settings is an external g.page link)
-  // '/privacy',  // confirm a privacy page route exists
+  '/faq',
+  '/reserve',
+  '/join-us',
+  '/privacy',
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -38,21 +38,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getBlogPosts(),
   ]);
 
-  // Reasonable lastModified for each static page.
   const lastModifiedFor = (page: string): Date => {
     if (page === '/menu') return menuMtime;
     if (page === '/blog' || page === '') {
-      // Homepage surfaces the latest post, so it tracks blog changes too.
       return new Date(Math.max(blogMtime.getTime(), menuMtime.getTime()));
     }
-    // Pages with no JSON content source: fall back to the newest content edit.
     return new Date(Math.max(blogMtime.getTime(), menuMtime.getTime()));
   };
 
   for (const page of staticPages) {
     for (const locale of locales) {
       entries.push({
-        url: `${baseUrl}/${locale}${page}`,
+        url: `${baseUrl}/${locale}${page}/`,
         lastModified: lastModifiedFor(page),
         changeFrequency: page === '' ? 'weekly' : 'monthly',
         priority: page === '' ? 1 : page === '/menu' ? 0.9 : 0.7,
@@ -66,7 +63,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const lastModified = isNaN(postDate.getTime()) ? blogMtime : postDate;
     for (const locale of locales) {
       entries.push({
-        url: `${baseUrl}/${locale}/blog/${post.slug}`,
+        url: `${baseUrl}/${locale}/blog/${post.slug}/`,
         lastModified,
         changeFrequency: 'monthly',
         priority: 0.6,
