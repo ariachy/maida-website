@@ -56,5 +56,5 @@ export const RESTAURANT_INFO = {
   phoneHref: 'tel:+351966604674',
   address: 'Rua da Boavista 66, 1200-068 Lisboa',
   directionsUrl:
-    'https://maps.google.com/?q=Rua+da+Boavista+66+1200-068+Lisboa',
+    'https://maps.app.goo.gl/mYPmDCBEvfEQq1yz8',
 };
