@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Instagram, Facebook } from 'lucide-react';
+import { Instagram } from 'lucide-react';
 import { Locale } from '@/lib/i18n';
 import { useBooking } from '@/hooks/useBooking';
 
@@ -72,15 +72,7 @@ export default function Footer({ translations, locale }: FooterProps) {
               >
                 <Instagram className="w-4 h-4" />
               </a>
-              <a
-                href="https://facebook.com/maida_lisbon"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-warm-white hover:bg-terracotta hover:border-terracotta transition-all duration-300"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-4 h-4" />
-              </a>
+
             </div>
           </div>
         </div>

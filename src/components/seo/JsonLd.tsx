@@ -111,7 +111,6 @@ export function RestaurantJsonLd({ locale }: LocaleProps) {
 
     sameAs: [
       'https://www.instagram.com/maida_lisbon',
-      'https://www.facebook.com/maida_lisbon',
     ],
 
     acceptsReservations: 'True',
@@ -271,7 +270,6 @@ export function OrganizationJsonLd() {
     },
     sameAs: [
       'https://www.instagram.com/maida_lisbon',
-      'https://www.facebook.com/maida_lisbon',
     ],
   };
 
