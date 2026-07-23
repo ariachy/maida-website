@@ -132,7 +132,7 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     Header set Referrer-Policy "strict-origin-when-cross-origin"
     
     # Permissions Policy
-    Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(self \"https://js.stripe.com\")"
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(self)"
 </IfModule>
 
 # ===========================================
