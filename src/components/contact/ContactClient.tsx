@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Script from 'next/script';
 import { Locale } from '@/lib/i18n';
+import FindUsMap from '@/components/sections/FindUsMap';
+import { track } from '@/lib/analytics';
 
 // reCAPTCHA Enterprise Site Key
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '6LffXD0sAAAAACfEknWv1dMM2MTVwa3ScqsDP-2U';
@@ -199,6 +201,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block mt-3 text-terracotta hover:text-terracotta/80 text-sm transition-colors"
+                  onClick={() => track('directions_click', { cta_location: 'contact_text', locale })}
                 >
                   {location?.directions || 'Get Directions →'}
                 </a>
@@ -208,7 +211,11 @@ export default function ContactClient({ translations, locale }: ContactClientPro
               <div>
                 <h3 className="font-display text-xl text-charcoal mb-4">{info?.title || 'Contact'}</h3>
                 <p className="text-charcoal/70 text-sm">
-                  <a href="mailto:info@maida.pt" className="hover:text-terracotta transition-colors">
+                  <a
+                    href="mailto:info@maida.pt"
+                    className="hover:text-terracotta transition-colors"
+                    onClick={() => track('email_click', { cta_location: 'contact_page', locale })}
+                  >
                     {info?.email || 'info@maida.pt'}
                   </a>
                 </p>
@@ -369,16 +376,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <div className="aspect-[2/1] md:aspect-[3/1] bg-sand/30 overflow-hidden">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2849.8846023983865!2d-9.15119542455817!3d38.70891275780444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd193332b934a279%3A0x3191bb53cc89ae9!2sma%C3%ADda%20%7C%20Mediterranean%20Flavours%2C%20Lebanese%20Soul!5e1!3m2!1sen!2slb!4v1768684138120!5m2!1sen!2slb"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Maída Restaurant Location"
-              />
+              <FindUsMap locale={locale} ctaLocation="contact_map" />
             </div>
           </motion.div>
         </div>

@@ -37,7 +37,7 @@ const featuredSaj = [
 
 export default function SAJClient({ translations, locale }: SAJClientProps) {
   const { openWidget } = useBooking(locale);
-  const handleReserveClick = () => openWidget('button');
+  const handleReserveClick = () => openWidget('button', 'saj');
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },

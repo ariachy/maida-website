@@ -46,7 +46,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
   ];
 
   const { openWidget } = useBooking(locale);
-  const handleReserveClick = () => openWidget('button');
+  const handleReserveClick = () => openWidget('button', 'maida_live');
 
   // Handle reserve for specific day
   const handleReserve = (day: string) => {

@@ -47,7 +47,7 @@ const featuredItems = [
 
 export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClientProps) {
   const { openWidget } = useBooking(locale);
-  const handleReserveClick = () => openWidget('button');
+  const handleReserveClick = () => openWidget('button', 'coffee_tea');
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },

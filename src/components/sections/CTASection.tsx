@@ -54,7 +54,7 @@ export default function CTASection({ translations }: CTASectionProps) {
         </motion.p>
         
         <motion.button
-          onClick={() => openWidget('button')}
+          onClick={() => openWidget('button', 'cta_section')}
           disabled={isOpening}
           className="btn bg-charcoal text-warm-white hover:bg-warm-white hover:text-charcoal disabled:opacity-70"
           initial={{ opacity: 0, y: 30 }}

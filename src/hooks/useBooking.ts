@@ -71,20 +71,30 @@ export function useBooking(locale: string = 'en') {
   const [isOpening, setIsOpening] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
 
-  const openWidget = useCallback((trigger: 'auto' | 'button' = 'button') => {
-    trackBookingEvent('booking_widget_open', { trigger, locale });
-    setIsOpening(true);
+  const openWidget = useCallback(
+    (trigger: 'auto' | 'button' = 'button', ctaLocation: string = 'unknown') => {
+      trackBookingEvent('booking_widget_open', {
+        trigger,
+        locale,
+        cta_location: ctaLocation,
+      });
+      setIsOpening(true);
 
-    const done = (ok: boolean) => {
-      setIsOpening(false);
-      if (!ok) {
-        setUnavailable(true);
-        trackBookingEvent('booking_widget_unavailable', { trigger });
-      }
-    };
+      const done = (ok: boolean) => {
+        setIsOpening(false);
+        if (!ok) {
+          setUnavailable(true);
+          trackBookingEvent('booking_widget_unavailable', {
+            trigger,
+            cta_location: ctaLocation,
+          });
+        }
+      };
 
-    openTheFork(locale, done);
-  }, [locale]);
+      openTheFork(locale, done);
+    },
+    [locale]
+  );
 
   return { openWidget, isOpening, unavailable };
 }

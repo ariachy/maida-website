@@ -41,7 +41,7 @@ interface BlogPostClientProps {
 
 export default function BlogPostClient({ translations, locale, post }: BlogPostClientProps) {
   const { openWidget } = useBooking(locale);
-  const handleReserveClick = () => openWidget('button');
+  const handleReserveClick = () => openWidget('button', 'blog');
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },

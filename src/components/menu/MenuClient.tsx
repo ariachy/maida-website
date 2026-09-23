@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { track } from '@/lib/analytics';
+import { useBooking } from '@/hooks/useBooking';
 import Image from 'next/image';
 
 interface InlineTranslation {
@@ -54,7 +56,17 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
 
   const sortedCategories = [...categories].sort((a, b) => a.sortOrder - b.sortOrder);
 
-  const handleCategoryClick = (categoryId: string) => setActiveCategory(categoryId);
+  const { openWidget, isOpening } = useBooking(locale);
+  
+  const handleCategoryClick = (categoryId: string) => {
+  setActiveCategory(categoryId);
+  const cat = categories.find((c) => c.id === categoryId);
+  track('menu_category_view', {
+    menu_category: cat?.slug || categoryId,
+    locale,
+  });
+
+};
 
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
@@ -399,6 +411,17 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
             </div>
           </div>
         </div>
+      </div>
+      <div className="text-center my-12">
+        <button
+          onClick={() => openWidget('button', 'menu_page')}
+          disabled={isOpening}
+          className="btn btn-primary px-8 py-3 disabled:opacity-70"
+        >
+          {isOpening
+            ? (locale === 'pt' ? 'A abrir…' : 'Opening…')
+            : (locale === 'pt' ? 'Reservar mesa' : 'Book a table')}
+        </button>
       </div>
     </div>
   );

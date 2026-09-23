@@ -131,7 +131,7 @@ export default function ReserveClient({
             className="mb-6"
           >
             <button
-              onClick={() => openWidget('button')}
+              onClick={() => openWidget('button', 'reserve_page')}
               disabled={isOpening}
               className="btn btn-primary w-full py-3 text-sm md:text-base disabled:opacity-70"
             >

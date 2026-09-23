@@ -18,7 +18,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
   const nav = translations?.nav || {};
 
   const { openWidget } = useBooking(locale);
-  const handleReserveClick = () => openWidget('button');
+  const handleReserveClick = () => openWidget('button', 'story');
 
   // Animation variants
   const fadeInUp = {

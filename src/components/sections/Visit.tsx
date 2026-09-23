@@ -1,8 +1,10 @@
 'use client';
 
+import FindUsMap from '@/components/sections/FindUsMap';
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Locale } from '@/lib/i18n';
+import { track } from '@/lib/analytics';
 
 interface VisitProps {
   translations: any;
@@ -25,6 +27,7 @@ export default function Visit({ translations, locale }: VisitProps) {
   };
 
   const handleDirectionsClick = () => {
+    track('directions_click', { cta_location: 'homepage_text', locale });
     window.open('https://maps.app.goo.gl/mYPmDCBEvfEQq1yz8', '_blank');
   };
   
@@ -39,17 +42,7 @@ export default function Visit({ translations, locale }: VisitProps) {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
         >
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2849.8846023983865!2d-9.15119542455817!3d38.70891275780444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd193332b934a279%3A0x3191bb53cc89ae9!2sma%C3%ADda%20%7C%20Mediterranean%20Flavours%2C%20Lebanese%20Soul!5e1!3m2!1sen!2slb!4v1768845671958!5m2!1sen!2slb"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Maída Location"
-            className="absolute inset-0 w-full h-full"
-          />
+          <FindUsMap locale={locale} />
         </motion.div>
         
         {/* Right - Cream Panel with Emblem Pattern */}

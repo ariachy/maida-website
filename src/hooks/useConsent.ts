@@ -123,6 +123,9 @@ export function useConsent() {
     
     // Update GTM
     updateGTMConsent(consentWithNecessary);
+    window.dispatchEvent(
+      new CustomEvent('consent-changed', { detail: consentWithNecessary })
+    );
   }, [updateGTMConsent]);
 
   // Accept all cookies

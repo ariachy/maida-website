@@ -30,7 +30,7 @@ export default function HeroCTA({ translations, locale }: HeroCTAProps) {
     >
       <div className="flex flex-row gap-3 md:gap-4 justify-center px-6">
         <button 
-          onClick={() => openWidget('button')}
+          onClick={() => openWidget('button', 'hero')}
           disabled={isOpening}
           className="btn btn-primary text-sm px-5 md:px-6 py-2 md:py-2.5 disabled:opacity-70"
         >

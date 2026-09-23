@@ -231,7 +231,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
             <LanguageSwitcher locale={locale} />
             {/* Desktop Reserve Button */}
             <button
-              onClick={() => openWidget('button')}
+              onClick={() => openWidget('button', 'navbar_desktop')}
               disabled={isOpening}
               className="btn btn-ghost text-sm py-2 px-5 font-nav disabled:opacity-70"
             >
@@ -373,7 +373,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
                   <button
                     onClick={() => {
                       setIsMobileMenuOpen(false);
-                      openWidget('button');
+                      openWidget('button', 'navbar_mobile');
                     }}
                     disabled={isOpening}
                     className="btn btn-primary w-full disabled:opacity-70"

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Instagram } from 'lucide-react';
 import { Locale } from '@/lib/i18n';
+import { track } from '@/lib/analytics';
 import { useBooking } from '@/hooks/useBooking';
 
 interface FooterProps {
@@ -69,6 +70,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-warm-white hover:bg-terracotta hover:border-terracotta transition-all duration-300"
                 aria-label="Instagram"
+                onClick={() => track('social_click', { social_network: 'instagram', locale })}
               >
                 <Instagram className="w-4 h-4" />
               </a>
@@ -214,6 +216,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                 <a
                   href="mailto:info@maida.pt"
                   className="text-warm-white/70 text-sm hover:text-warm-white transition-colors"
+                  onClick={() => track('email_click', { cta_location: 'footer', locale })}
                 >
                   info@maida.pt
                 </a>
@@ -225,9 +228,24 @@ export default function Footer({ translations, locale }: FooterProps) {
               <li className="text-warm-white/70 text-sm">
                 Cais do Sodré, Lisboa
               </li>
+              <li className="mt-1">
+                <a
+                  href={`https://wa.me/351966604674?text=${encodeURIComponent(
+                    locale === 'pt'
+                      ? 'Olá Maída! Gostaria de fazer uma reserva.'
+                      : 'Hi Maída! I would like to make a reservation.'
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track('whatsapp_click', { cta_location: 'footer', locale })}
+                  className="text-warm-white/70 text-sm hover:text-warm-white transition-colors"
+                >
+                  WhatsApp
+                </a>
+              </li>
               <li className="mt-2">
                 <button
-                  onClick={() => openReservation('button')}
+                  onClick={() => openReservation('button', 'footer')}
                   disabled={isReservationOpening}
                   className="text-terracotta-light text-sm hover:text-warm-white transition-colors disabled:opacity-70"
                 >

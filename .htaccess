@@ -27,6 +27,39 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 # RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
 # ===========================================
+# LEGACY / NON-LOCALISED URL HANDLING
+#
+# The pre-rebuild site had no locale prefix (/menu, /contact, /blog).
+# Those URLs are still indexed by Google and still receive traffic.
+# Separately, ANY unknown path outside /en/ or /pt/ currently renders
+# a blank page instead of the 404, because it never reaches the
+# localised route group.
+#
+# One rule solves both: send anything that is not a known route and
+# not a real file to its /en/ equivalent. Legacy URLs land on the
+# correct page; genuinely unknown paths hit the proper localised 404.
+#
+# The exclusions below MUST stay in place:
+#   - /en, /pt          already localised
+#   - /admin ... /api   standalone routes served by Node
+#   - /_next, /backend  build output and PHP endpoints
+#   - file extensions   robots.txt, sitemap.xml, icons, images, assets
+#     (these are Next.js routes, not files on disk, so the -f check
+#      below does not catch them)
+# ===========================================
+
+# Portuguese blog index kept its own path on the old site
+RewriteRule ^blog/pt/?$ /pt/blog/ [R=301,L]
+
+RewriteCond %{REQUEST_URI} !^/(en|pt)(/|$)
+RewriteCond %{REQUEST_URI} !^/(admin|review|meetmeatmaida|api|_next|backend|cgi-bin)(/|$)
+RewriteCond %{REQUEST_URI} !^/$
+RewriteCond %{REQUEST_URI} !\.(ico|png|svg|jpg|jpeg|webp|gif|txt|xml|json|webmanifest|js|css|woff|woff2|ttf|eot|pdf|php)$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /en/$1 [R=301,L]
+
+# ===========================================
 # CLEAN URLs — DISABLED (Node.js/Passenger handles all routing)
 # These were for static export mode. With a running Node server,
 # they intercept routes like /api/*, /review, /admin before
@@ -63,6 +96,18 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
     # -------------------------------------------
     # CSP (Content Security Policy)
+    #
+    # SYNTAX RULES — get these wrong and directives are silently dropped:
+    #   1. A semicolon ENDS a directive. Only the LAST line of each
+    #      directive may carry the ';'.
+    #   2. Every line except the very last needs a trailing backslash.
+    #   3. NO blank lines anywhere inside the block — a blank line
+    #      terminates the Apache line continuation.
+    #
+    # A misplaced ';' makes the next token be read as a directive NAME,
+    # which discards everything after it. That is how style-src went
+    # missing and inline styles (next/image fill, Framer Motion) fell
+    # back to default-src 'self' and were blocked.
     # -------------------------------------------
     Header always set Content-Security-Policy "\
     default-src 'self'; \
@@ -71,13 +116,15 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
         https://www.google-analytics.com \
         https://*.doubleclick.net \
         https://www.googleadservices.com \
+        https://pagead2.googlesyndication.com \
         https://www.google.com \
         https://www.gstatic.com \
         https://maps.googleapis.com \
         https://maps.gstatic.com \
         https://js.stripe.com \
         https://www.google.com/recaptcha/ \
-        https://www.gstatic.com/recaptcha/; \
+        https://www.gstatic.com/recaptcha/ \
+        https://connect.facebook.net; \
     style-src 'self' 'unsafe-inline' \
         https://fonts.googleapis.com; \
     img-src 'self' data: blob: \
@@ -90,7 +137,8 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
         https://www.gstatic.com \
         https://*.google.com \
         https://*.googleapis.com \
-        https://www.google.pt; \
+        https://www.google.pt \
+        https://www.facebook.com; \
     font-src 'self' \
         https://fonts.gstatic.com; \
     connect-src 'self' \
@@ -99,14 +147,16 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
         https://www.googletagmanager.com \
         https://*.doubleclick.net \
         https://www.googleadservices.com \
+        https://pagead2.googlesyndication.com \
         https://maps.googleapis.com \
         https://*.stripe.com \
         https://www.google.com \
-        https://www.google.pt; \
+        https://www.google.pt \
+        https://www.facebook.com \
+        https://connect.facebook.net; \
     frame-src 'self' \
         https://www.google.com \
         https://maps.google.com \
-        https://www.google.com/maps/ \
         https://js.stripe.com \
         https://hooks.stripe.com \
         https://www.googletagmanager.com; \

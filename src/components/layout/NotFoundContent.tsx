@@ -59,7 +59,7 @@ export default function NotFoundContent() {
     // being applied after hydration.
   }, []);
 
-  const handleReserveClick = () => openWidget('button');
+  const handleReserveClick = () => openWidget('button', 'not_found');
 
   return (
     <div className={`min-h-screen ${variation.background} flex flex-col items-center justify-center px-6 py-20 overflow-hidden`}>

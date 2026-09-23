@@ -28,9 +28,10 @@ export default function Hero({ translations }: HeroProps) {
           src="/images/hero/maida-table.webp"
           alt="Maída Table Setup"
           fill
+          sizes="100vw"
           className="object-cover"
           priority
-          quality={85}
+          unoptimized
         />
         {/* Overlay for text readability */}
         <div className="absolute inset-0 bg-charcoal/40" />
