@@ -933,19 +933,10 @@
     }
   },
   "maidaLive": {
-    "heroTagline": "Música • Cultura • Atmosfera",
+    "heroTagline": "Pratos • Pessoas • Playlists",
     "heroTitle": "Maída Sessions",
     "heroSubtitle": "Onde o jantar se torna uma experiência. Música, cultura e atmosfera.",
     "weeklyProgramTitle": "O nosso programa semanal",
-    "theVibe": "A Vibe",
-    "theJourney": "A Jornada",
-    "hours": "Horário",
-    "djSetsFrom": "DJ Sets a partir das",
-    "partyMode": "Modo Festa",
-    "from": "A partir das",
-    "clickToCollapse": "Clique para fechar",
-    "clickToSeeSchedule": "Clique para ver agenda",
-    "clickToLearnMore": "Clique para saber mais",
     "ctaTitle": "Uma atmosfera em evolução de comida, bebidas,",
     "ctaTitleHighlight": "e música",
     "ctaHashtag": "#MeetMeAtMaída",
@@ -955,40 +946,17 @@
         "title": "Quintas",
         "subtitle": "#MeetMeAtMaída",
         "description": "Jantar a partir das 18h, DJ a partir das 21h, e às 23h as luzes baixam e a noite toma conta. Comece à mesa que nos junta, acabe onde a noite o levar.",
-        "walkIn": "Reserve mesa para jantar ou simplesmente apareça.",
-        "hoursValue": "18:00 – 01:30",
-        "timeline": [
-          {
-            "time": "18:00",
-            "label": "Jantar"
-          },
-          {
-            "time": "21:00",
-            "label": "DJ"
-          },
-          {
-            "time": "23:00",
-            "label": "Luzes baixas"
-          },
-          {
-            "time": "01:30",
-            "label": "Última rodada"
-          }
-        ]
+        "walkIn": "Reserve mesa para jantar ou simplesmente apareça."
       },
       "friday": {
         "title": "Sextas",
         "subtitle": "Jantar & DJ",
-        "description": "O fim de semana começa. Sets de DJ ao vivo criam o cenário perfeito para jantar e drinks.",
-        "vibeDescription": "Não é uma festa - é uma experiência de jantar elevada. A música complementa a sua refeição, a energia cresce naturalmente, e a noite desenrola-se ao seu ritmo.",
-        "hoursValue": "18:00 – 02:00"
+        "description": "O fim de semana começa. Primeiro o jantar, o DJ aquece a sala, e a noite desenrola-se ao seu ritmo."
       },
       "saturday": {
         "title": "Sábados",
         "subtitle": "A Jornada Completa",
-        "description": "A jornada completa - jantar, drinks e dança até às 02:00.",
-        "journeyDescription": "Comece com jantar, fique para a festa. As nossas noites de sábado são lendárias - a comida, as bebidas, a música, tudo a construir para um pico.",
-        "hoursValue": "18:00 – 02:00"
+        "description": "A jornada completa - jantar, drinks e dança até às 02:00."
       }
     },
     "privateEvents": {
@@ -1027,7 +995,12 @@
         "privacyNote": "Ao submeter, concordas em ser contactado sobre oportunidades de DJ no"
       }
     },
-    "theNight": "A noite"
+    "runningOrder": {
+      "dinner": "Jantar",
+      "preParty": "Pré-festa com DJ",
+      "partyMode": "Modo festa",
+      "lastCall": "Última rodada"
+    }
   },
   "saj": {
     "heroTitle": "O que é SAJ?",

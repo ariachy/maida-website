@@ -277,7 +277,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
               src="/images/about/AnnaAnthony.webp"
               alt="Anna and Anthony, founders of Maída"
               fill
-              className="object-cover object-top"
+              className="object-cover object-[50%_30%]"
             />
           </motion.div>
 

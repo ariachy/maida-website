@@ -22,16 +22,54 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
   const nav = translations?.nav || {};
   
   const [isDJModalOpen, setIsDJModalOpen] = useState(false);
-  const [activeNight, setActiveNight] = useState<'thursday' | 'friday' | 'saturday' | null>(null);
 
-  // Thursday (#MeetMeAtMaída) running order
-  const thursdayTimeline: { time: string; label: string }[] =
-    nights?.thursday?.timeline || [
-      { time: '18:00', label: 'Dinner' },
-      { time: '21:00', label: 'DJ' },
-      { time: '23:00', label: 'Lights down' },
-      { time: '01:30', label: 'Last call' },
-    ];
+  // Running order, shared by all three nights: dinner, pre-party with the DJ from 21:00,
+  // party mode from 23:00. Only the closing time differs. Keys are `time`/`name` on
+  // purpose: normalizeValue() in lib/i18n collapses any object with a `label` key
+  // into a plain string, which is what blanked the first Thursday timeline.
+  const order = maidaLive?.runningOrder || {};
+  const stepsUntil = (close: string) => [
+    { time: '18:00', name: order.dinner || 'Dinner' },
+    { time: '21:00', name: order.preParty || 'Pre-party with the DJ' },
+    { time: '23:00', name: order.partyMode || 'Party mode' },
+    { time: close, name: order.lastCall || 'Last call' },
+  ];
+
+  const nightCards = [
+    {
+      key: 'thursday',
+      Icon: Calendar,
+      tint: 'from-sand/60 to-sand/30',
+      title: nights?.thursday?.title || 'Thursdays',
+      subtitle: nights?.thursday?.subtitle || '#MeetMeAtMaída',
+      description:
+        nights?.thursday?.description ||
+        'Dinner from 6, a DJ from 9, and at 11 the lights go down and the night takes over. Start it at the gathering table, end it wherever it takes you.',
+      steps: stepsUntil('01:30'),
+    },
+    {
+      key: 'friday',
+      Icon: Music,
+      tint: 'from-sage/40 to-sage/20',
+      title: nights?.friday?.title || 'Fridays',
+      subtitle: nights?.friday?.subtitle || 'Dinner & DJ',
+      description:
+        nights?.friday?.description ||
+        'The weekend begins. Dinner first, the DJ warms up the room, and the night unfolds at your pace.',
+      steps: stepsUntil('02:00'),
+    },
+    {
+      key: 'saturday',
+      Icon: PartyPopper,
+      tint: 'from-terracotta/40 to-terracotta/20',
+      title: nights?.saturday?.title || 'Saturdays',
+      subtitle: nights?.saturday?.subtitle || 'The Full Journey',
+      description:
+        nights?.saturday?.description ||
+        'The full journey - dinner, drinks, and dancing until 02:00.',
+      steps: stepsUntil('02:00'),
+    },
+  ];
 
   // Genre options for DJ form
   const genreOptions = [
@@ -101,7 +139,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="w-8 h-px bg-terracotta-light" />
-            {maidaLive?.heroTagline || 'Music • Culture • Atmosphere'}
+            {maidaLive?.heroTagline || 'Plates • People • Playlists'}
             <span className="w-8 h-px bg-terracotta-light" />
           </motion.p>
 
@@ -129,204 +167,110 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
         </div>
       </section>
 
-      {/* The Nights Section */}
-      <section className="pt-12 pb-16 md:pt-16 md:pb-24 px-6 bg-warm-white">
+      {/* The Nights Section — every night shows its running order up front (no click-to-reveal) */}
+      <section className="pt-12 pb-16 md:pt-16 md:pb-20 px-6 bg-warm-white">
         <div className="max-w-6xl mx-auto">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-10 md:mb-14"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
           >
-            <h2 className="font-display text-3xl md:text-5xl font-medium mb-4 text-charcoal">
+            <h2 className="font-display text-3xl md:text-5xl font-medium text-charcoal">
               {maidaLive?.weeklyProgramTitle || 'Our weekly program'}
             </h2>
           </motion.div>
 
-          {/* Cards */}
-          <motion.div 
-            className="flex flex-col gap-6"
+          <motion.div
+            className="grid md:grid-cols-3 gap-6"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-50px' }}
             variants={staggerContainer}
           >
-            {/* Row 1: Thursday and Friday side by side on desktop */}
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Thursday Card */}
-              <motion.div
-                className="group relative overflow-hidden cursor-pointer"
+            {nightCards.map((night) => (
+              <motion.article
+                key={night.key}
                 variants={fadeInUp}
-                onClick={() => setActiveNight(activeNight === 'thursday' ? null : 'thursday')}
+                className={`bg-gradient-to-br ${night.tint} p-7 md:p-8 flex flex-col`}
               >
-                <div className="relative bg-gradient-to-br from-sand/60 to-sand/30 p-8 flex flex-col min-h-[280px]">
-                  {/* Icon */}
-                  <div className="w-14 h-14 rounded-full bg-charcoal/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <Calendar className="w-7 h-7 text-charcoal" />
-                  </div>
-
-                  <h3 className="font-display text-3xl mb-2 text-charcoal">{nights?.thursday?.title || 'Thursdays'}</h3>
-                  <p className="text-charcoal/80 text-lg mb-4">{nights?.thursday?.subtitle || '#MeetMeAtMaída'}</p>
-                  
-                  <p className="text-charcoal/60 mb-6">
-                    {nights?.thursday?.description || 'Dinner from 6, a DJ from 9, and at 11 the lights go down and the night takes over. Start it at the gathering table, end it wherever it takes you.'}
-                  </p>
-
-                  {/* Expanded content */}
-                  <AnimatePresence>
-                    {activeNight === 'thursday' && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
-                      >
-                        <p className="text-charcoal font-display text-xl mb-3">{maidaLive?.theNight || 'The night'}</p>
-                        <ol className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                          {thursdayTimeline.map((step, index) => (
-                            <li key={index} className="bg-charcoal/5 p-4">
-                              <p className="text-charcoal font-display text-lg">{step.time}</p>
-                              <p className="text-charcoal/60 text-sm">{step.label}</p>
-                            </li>
-                          ))}
-                        </ol>
-                        <p className="text-charcoal/70 mt-4">
-                          {nights?.thursday?.walkIn || 'Book a table for dinner or just walk in.'}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Click hint */}
-                  <p className="mt-auto pt-4 text-xs text-charcoal/40">
-                    {activeNight === 'thursday' ? (maidaLive?.clickToCollapse || 'Click to collapse') : (maidaLive?.clickToLearnMore || 'Click to learn more')}
-                  </p>
+                <div className="w-12 h-12 rounded-full bg-charcoal/10 flex items-center justify-center mb-5">
+                  <night.Icon className="w-6 h-6 text-charcoal" aria-hidden="true" />
                 </div>
-              </motion.div>
+                <h3 className="font-display text-3xl text-charcoal">{night.title}</h3>
+                <p className="text-charcoal/80 text-lg mt-1">{night.subtitle}</p>
+                <p className="text-charcoal/65 mt-4 leading-relaxed">{night.description}</p>
 
-              {/* Friday Card */}
-              <motion.div
-                className="group relative overflow-hidden cursor-pointer"
-                variants={fadeInUp}
-                onClick={() => setActiveNight(activeNight === 'friday' ? null : 'friday')}
-              >
-                <div className="relative bg-gradient-to-br from-sage/40 to-sage/20 p-8 flex flex-col min-h-[280px]">
-                  {/* Icon */}
-                  <div className="w-14 h-14 rounded-full bg-charcoal/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <Music className="w-7 h-7 text-charcoal" />
-                  </div>
-
-                  <h3 className="font-display text-3xl mb-2 text-charcoal">{nights?.friday?.title || 'Fridays'}</h3>
-                  <p className="text-charcoal/80 text-lg mb-4">{nights?.friday?.subtitle || 'Dinner & DJ'}</p>
-                  
-                  <p className="text-charcoal/60 mb-6">
-                    {nights?.friday?.description || 'The weekend begins. Live DJ sets create the perfect backdrop for dinner and drinks.'}
-                  </p>
-
-                  {/* Expanded content */}
-                  <AnimatePresence>
-                    {activeNight === 'friday' && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden space-y-4"
-                      >
-                        <div className="bg-charcoal/5 p-6">
-                          <p className="text-charcoal font-display text-xl mb-2">{maidaLive?.theVibe || 'The Vibe'}</p>
-                          <p className="text-charcoal/60">
-                            {nights?.friday?.vibeDescription || 'Not a party - an elevated dinner experience. The music complements your meal, the energy builds naturally, and the night unfolds at your pace.'}
-                          </p>
-                        </div>
-                        <div className="flex gap-4">
-                          <div className="bg-charcoal/5 p-4 flex-1">
-                            <p className="text-charcoal/60 text-sm">{maidaLive?.hours || 'Hours'}</p>
-                            <p className="text-charcoal font-display text-lg">
-                              {nights?.friday?.hoursValue || '18:00 – 02:00'}
-                            </p>
-                          </div>
-                          <div className="bg-charcoal/5 p-4 flex-1">
-                            <p className="text-charcoal/60 text-sm">{maidaLive?.djSetsFrom || 'DJ Sets from'}</p>
-                            <p className="text-charcoal font-display text-lg">21:00</p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Click hint */}
-                  <p className="mt-auto pt-4 text-xs text-charcoal/40">
-                    {activeNight === 'friday' ? (maidaLive?.clickToCollapse || 'Click to collapse') : (maidaLive?.clickToLearnMore || 'Click to learn more')}
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Row 2: Saturday full width */}
-            <motion.div
-              className="group relative overflow-hidden cursor-pointer"
-              variants={fadeInUp}
-              onClick={() => setActiveNight(activeNight === 'saturday' ? null : 'saturday')}
-            >
-              <div className="relative bg-gradient-to-br from-terracotta/40 to-terracotta/20 p-8 flex flex-col min-h-[280px]">
-                {/* Icon */}
-                <div className="w-14 h-14 rounded-full bg-charcoal/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <PartyPopper className="w-7 h-7 text-charcoal" />
-                </div>
-
-                <h3 className="font-display text-3xl mb-2 text-charcoal">{nights?.saturday?.title || 'Saturdays'}</h3>
-                <p className="text-charcoal/80 text-lg mb-4">{nights?.saturday?.subtitle || 'The Full Journey'}</p>
-                
-                <p className="text-charcoal/60 mb-6">
-                  {nights?.saturday?.description || 'The full journey - dinner, drinks, and dancing until 02:00.'}
-                </p>
-
-                {/* Expanded content */}
-                <AnimatePresence>
-                  {activeNight === 'saturday' && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden space-y-4"
-                    >
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="bg-charcoal/5 p-6">
-                          <p className="text-charcoal font-display text-xl mb-2">{maidaLive?.theJourney || 'The Journey'}</p>
-                          <p className="text-charcoal/60">
-                            {nights?.saturday?.journeyDescription || 'Start with dinner, stay for the party. Our Saturday nights are legendary - the food, the drinks, the music, all building to a peak.'}
-                          </p>
-                        </div>
-                        <div className="space-y-4">
-                          <div className="flex gap-4">
-                            <div className="bg-charcoal/5 p-4 flex-1">
-                              <p className="text-charcoal/60 text-sm">{maidaLive?.hours || 'Hours'}</p>
-                              <p className="text-charcoal font-display text-lg">
-                                {nights?.saturday?.hoursValue || '18:00 – 02:00'}
-                              </p>
-                            </div>
-                            <div className="bg-charcoal/5 p-4 flex-1">
-                              <p className="text-charcoal/60 text-sm">{maidaLive?.partyMode || 'Party Mode'}</p>
-                              <p className="text-charcoal font-display text-lg">{maidaLive?.from || 'From'} 23:00</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {/* Click hint */}
-                <p className="mt-auto pt-4 text-xs text-charcoal/40">
-                  {activeNight === 'saturday' ? (maidaLive?.clickToCollapse || 'Click to collapse') : (maidaLive?.clickToLearnMore || 'Click to learn more')}
-                </p>
-              </div>
-            </motion.div>
+                <ol className="mt-6 pt-5 border-t border-charcoal/10 space-y-2.5">
+                  {night.steps.map((step) => (
+                    <li key={step.time} className="flex items-baseline gap-4">
+                      <span className="font-display text-lg text-charcoal tabular-nums w-14 shrink-0">{step.time}</span>
+                      <span className="text-charcoal/70">{step.name}</span>
+                    </li>
+                  ))}
+                </ol>
+              </motion.article>
+            ))}
           </motion.div>
+        </div>
+      </section>
+
+      {/* ============================================
+          FINAL CTA - Terracotta with Emblem Pattern
+          ============================================ */}
+      <section 
+        className="relative py-16 md:py-20 px-6 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, rgb(198, 125, 94) 0%, rgb(166, 93, 63) 100%)' }}
+      >
+        {/* Emblem Pattern - darker for visibility on terracotta */}
+        <div 
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage: `url('/images/brand/emblem.svg')`,
+            backgroundSize: '100px',
+            backgroundRepeat: 'repeat',
+            filter: 'brightness(0)',
+          }}
+        />
+        
+        <div className="max-w-3xl mx-auto text-center relative z-10">
+          <motion.h2 
+            className="font-display text-fluid-3xl font-light text-warm-white mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+             {maidaLive?.ctaTitle || 'An evolving atmosphere of food, drinks,'} <span className="italic">{maidaLive?.ctaTitleHighlight || 'and music'}</span>
+          </motion.h2>
+
+          <motion.p 
+            className="text-lg text-warm-white/90 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            {maidaLive?.ctaHashtag || '#MeetMeAtMaída'}
+          </motion.p>
+
+          <p className="text-warm-white/90 -mt-4 mb-8">
+            {nights?.thursday?.walkIn || 'Book a table for dinner or just walk in.'}
+          </p>
+
+          <motion.button
+            onClick={handleReserveClick}
+            className="btn bg-charcoal text-warm-white hover:bg-warm-white hover:text-charcoal"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            {nav?.bookTable || maidaLive?.ctaButton || 'Reserve a Table'}
+          </motion.button>
         </div>
       </section>
 
@@ -386,60 +330,6 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
               </button>
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* ============================================
-          FINAL CTA - Terracotta with Emblem Pattern
-          ============================================ */}
-      <section 
-        className="relative py-16 md:py-20 px-6 overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, rgb(198, 125, 94) 0%, rgb(166, 93, 63) 100%)' }}
-      >
-        {/* Emblem Pattern - darker for visibility on terracotta */}
-        <div 
-          className="absolute inset-0 opacity-[0.08]"
-          style={{
-            backgroundImage: `url('/images/brand/emblem.svg')`,
-            backgroundSize: '100px',
-            backgroundRepeat: 'repeat',
-            filter: 'brightness(0)',
-          }}
-        />
-        
-        <div className="max-w-3xl mx-auto text-center relative z-10">
-          <motion.h2 
-            className="font-display text-fluid-3xl font-light text-warm-white mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-             {maidaLive?.ctaTitle || 'An evolving atmosphere of food, drinks,'} <span className="italic">{maidaLive?.ctaTitleHighlight || 'and music'}</span>
-          </motion.h2>
-
-          <motion.p 
-            className="text-lg text-warm-white/90 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            {maidaLive?.ctaHashtag || '#MeetMeAtMaída'}
-          </motion.p>
-
-          <motion.button
-            onClick={handleReserveClick}
-            className="btn bg-charcoal text-warm-white hover:bg-warm-white hover:text-charcoal"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            {nav?.bookTable || maidaLive?.ctaButton || 'Reserve a Table'}
-          </motion.button>
         </div>
       </section>
 

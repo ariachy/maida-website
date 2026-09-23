@@ -845,19 +845,10 @@
     }
   },
   "maidaLive": {
-    "heroTagline": "Music • Culture • Atmosphere",
+    "heroTagline": "Plates • People • Playlists",
     "heroTitle": "Maída Sessions",
     "heroSubtitle": "Where dinner becomes an experience. Music, culture, and atmosphere.",
     "weeklyProgramTitle": "Our weekly program",
-    "theVibe": "The Vibe",
-    "theJourney": "The Journey",
-    "hours": "Hours",
-    "djSetsFrom": "DJ Sets from",
-    "partyMode": "Party Mode",
-    "from": "From",
-    "clickToCollapse": "Click to collapse",
-    "clickToSeeSchedule": "Click to see schedule",
-    "clickToLearnMore": "Click to learn more",
     "ctaTitle": "An evolving atmosphere of food, drinks,",
     "ctaTitleHighlight": "and music",
     "ctaHashtag": "#MeetMeAtMaída",
@@ -867,40 +858,17 @@
         "title": "Thursdays",
         "subtitle": "#MeetMeAtMaída",
         "description": "Dinner from 6, a DJ from 9, and at 11 the lights go down and the night takes over. Start it at the gathering table, end it wherever it takes you.",
-        "walkIn": "Book a table for dinner or just walk in.",
-        "hoursValue": "18:00 – 01:30",
-        "timeline": [
-          {
-            "time": "18:00",
-            "label": "Dinner"
-          },
-          {
-            "time": "21:00",
-            "label": "DJ"
-          },
-          {
-            "time": "23:00",
-            "label": "Lights down"
-          },
-          {
-            "time": "01:30",
-            "label": "Last call"
-          }
-        ]
+        "walkIn": "Book a table for dinner or just walk in."
       },
       "friday": {
         "title": "Fridays",
         "subtitle": "Dinner & DJ",
-        "description": "The weekend begins. Live DJ sets create the perfect backdrop for dinner and drinks.",
-        "vibeDescription": "Not a party - an elevated dinner experience. The music complements your meal, the energy builds naturally, and the night unfolds at your pace.",
-        "hoursValue": "18:00 – 02:00"
+        "description": "The weekend begins. Dinner first, the DJ warms up the room, and the night unfolds at your pace."
       },
       "saturday": {
         "title": "Saturdays",
         "subtitle": "The Full Journey",
-        "description": "The full journey - dinner, drinks, and dancing until 02:00.",
-        "journeyDescription": "Start with dinner, stay for the party. Our Saturday nights are legendary - the food, the drinks, the music, all building to a peak.",
-        "hoursValue": "18:00 – 02:00"
+        "description": "The full journey - dinner, drinks, and dancing until 02:00."
       }
     },
     "privateEvents": {
@@ -939,7 +907,12 @@
         "privacyNote": "By submitting, you agree to be contacted about DJ opportunities at"
       }
     },
-    "theNight": "The night"
+    "runningOrder": {
+      "dinner": "Dinner",
+      "preParty": "Pre-party with the DJ",
+      "partyMode": "Party mode",
+      "lastCall": "Last call"
+    }
   },
   "saj": {
     "heroTitle": "What is SAJ?",
