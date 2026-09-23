@@ -52,7 +52,7 @@ export default function AdminSidebar() {
         { href: '/admin/content/homepage', label: 'Homepage' },
         { href: '/admin/content/story', label: 'Story' },
         { href: '/admin/content/contact', label: 'Contact' },
-        { href: '/admin/content/maida-live', label: 'Maída Live' },
+        { href: '/admin/content/maida-live', label: 'Maída Sessions' },
         { href: '/admin/content/footer', label: 'Footer' },
       ],
     },

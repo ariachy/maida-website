@@ -174,6 +174,12 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                   </div>
                   <div>
                     <p className="text-charcoal font-medium">
+                      {hours?.thursday || 'Thu: 18:00 till late (01:30)'}
+                    </p>
+                    <p className="text-xs text-stone">#MeetMeAtMaída</p>
+                  </div>
+                  <div>
+                    <p className="text-charcoal font-medium">
                       {hours?.weekend || 'Fri – Sat: 18:00 till late (02:00)'}
                     </p>
                     <p className="text-xs text-stone">

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import CookieConsent from '@/components/consent/CookieConsent';
+import { CANONICAL_MEET_HOURS } from '@/lib/meet-hours';
 
 interface MeetItem {
   id: string;
@@ -68,7 +69,7 @@ const DEFAULT_SETTINGS: Settings = {
   footer_contact_text: 'Contact',
   footer_contact_text_pt: 'Contacto',
   footer_contact_url: 'mailto:info@maida.pt',
-  footer_hours: 'Wed – Mon: 18:00 – 23:30 · Fri – Sat: 18:00 till late (02:00)',
+  footer_hours: CANONICAL_MEET_HOURS,
   footer_address_text: 'Rua da Boavista 66, 1200-068, Lisboa',
   footer_address_url: 'https://maps.app.goo.gl/mYPmDCBEvfEQq1yz8',
   wifi_network: 'Maida-Guest',

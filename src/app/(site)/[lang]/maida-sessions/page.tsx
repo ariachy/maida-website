@@ -23,17 +23,17 @@ export async function generateMetadata({
 
   return generatePageMetadata({
     title: isPortuguese
-      ? 'Maída - Sabores Mediterrânicos. Alma Libanesa | Maída Live'
-      : 'Maída - Mediterranean Flavours. Lebanese Soul | Maída Live',
+      ? 'Maída Sessions - DJs e jantar no Cais do Sodré'
+      : 'Maída Sessions - DJs and dinner in Cais do Sodré',
     description: isPortuguese
-      ? 'Experimente o Maída Live - o nosso programa semanal de música, cultura e atmosfera. Quintas, sextas e sábados.'
-      : 'Experience Maída Live - our weekly program of music, culture, and atmosphere. Thursdays, Fridays, and Saturdays.',
-    path: '/maida-live',
+      ? 'Maída Sessions: DJs às quintas, sextas e sábados no Cais do Sodré. Quintas #MeetMeAtMaída - jantar a partir das 18h, DJ às 21h, até à 01:30.'
+      : 'Maída Sessions: DJs on Thursdays, Fridays and Saturdays in Cais do Sodré. #MeetMeAtMaída Thursdays - dinner from 18:00, DJ from 21:00, open till 01:30.',
+    path: '/maida-sessions',
     locale,
   });
 }
 
-export default async function MaidaLivePage({
+export default async function MaidaSessionsPage({
   params,
 }: {
   params: { lang: string };
@@ -48,7 +48,7 @@ export default async function MaidaLivePage({
 
   const breadcrumbs = [
     { name: 'Maída', url: `https://maida.pt/${locale}` },
-    { name: 'Maída Live', url: `https://maida.pt/${locale}/maida-live` },
+    { name: 'Maída Sessions', url: `https://maida.pt/${locale}/maida-sessions/` },
   ];
 
   return (

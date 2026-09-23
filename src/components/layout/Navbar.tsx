@@ -94,7 +94,7 @@ export default function Navbar({ translations, locale }: NavbarProps) {
     { href: `/${locale}`, label: t('home', 'Home'), segment: '' },
     { href: `/${locale}/story`, label: t('story', 'Story'), segment: 'story' },
     { href: `/${locale}/menu`, label: t('menu', 'Menu'), segment: 'menu' },
-    { href: `/${locale}/maida-live`, label: t('events', 'Maída Live'), segment: 'maida-live' },
+    { href: `/${locale}/maida-sessions`, label: t('events', 'Maída Sessions'), segment: 'maida-sessions' },
     { href: `/${locale}/contact`, label: t('contact', 'Contact'), segment: 'contact' },
   ];
   

@@ -19,14 +19,23 @@ import type { MenuData } from '@/lib/content';
  *
  * If these change, they change HERE and in the locale dictionaries (contact.hours.*,
  * footer.hoursValue, homeVisit.hours.*, visit.hours.value, reserve.hoursTime/
- * hoursWeekend). Nothing else hardcodes hours.
+ * hoursWeekend), ReserveClient.tsx (hardcoded copy) and lib/meet-hours.ts.
  */
 const OPENING_HOURS = [
   {
     '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Wednesday', 'Thursday', 'Sunday', 'Monday'],
+    dayOfWeek: ['Wednesday', 'Sunday', 'Monday'],
     opens: '18:00',
     closes: '23:30',
+  },
+  {
+    // #MeetMeAtMaída Thursdays (dinner 18:00, DJ 21:00). On the rare Thursday with no
+    // event we close at 23:30 — set that as a Special Hours date in Google Business
+    // Profile rather than changing this regular schedule.
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Thursday'],
+    opens: '18:00',
+    closes: '01:30',
   },
   {
     '@type': 'OpeningHoursSpecification',

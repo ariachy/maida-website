@@ -18,7 +18,7 @@ const staticPages = [
   '/menu',
   '/story',
   '/contact',
-  '/maida-live',
+  '/maida-sessions',
   '/maida-saj',
   '/coffee-tea',
   '/blog',

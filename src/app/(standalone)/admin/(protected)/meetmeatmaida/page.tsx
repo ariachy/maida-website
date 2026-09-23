@@ -878,6 +878,18 @@ export default function MeetMeAtMaidaAdminPage() {
                           </div>
                           <div className="grid grid-cols-3 gap-3">
                             <div>
+                              <label className={lab}>Thursday (#MeetMeAtMaída)</label>
+                              <input type="text" value={parts.thursdayDays}
+                                onChange={(e) => setParts({ ...parts, thursdayDays: e.target.value })} className={field} />
+                            </div>
+                            <div>
+                              <label className={lab}>Hours</label>
+                              <input type="text" value={parts.thursdayHours}
+                                onChange={(e) => setParts({ ...parts, thursdayHours: e.target.value })} className={field} />
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-3 gap-3">
+                            <div>
                               <label className={lab}>Weekend days</label>
                               <input type="text" value={parts.weekendDays}
                                 onChange={(e) => setParts({ ...parts, weekendDays: e.target.value })} className={field} />

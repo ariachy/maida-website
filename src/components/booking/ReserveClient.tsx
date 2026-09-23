@@ -54,12 +54,13 @@ export default function ReserveClient({
     cta: isPt ? 'Reservar mesa' : 'Book a table',
     loading: isPt ? 'A abrir…' : 'Opening…',
     hoursWeekdays: isPt ? 'Qua – Seg · 18:00 – 23:30' : 'Wed – Mon · 18:00 – 23:30',
+    hoursThursday: isPt ? 'Qui · 18:00 até tarde (01:30)' : 'Thu · 18:00 till late (01:30)',
     hoursWeekend: isPt
       ? 'Sex & Sáb · 18:00 até tarde (02:00)'
       : 'Fri & Sat · 18:00 till late (02:00)',
     kitchenWeekdays: isPt ? 'Cozinha fecha às 23:00' : 'Kitchen closes 23:00',
     kitchenWeekend: isPt ? 'Cozinha fecha às 23:30' : 'Kitchen closes 23:30',
-    djPill: 'Maída DJ Sessions',
+    djPill: 'Maída Sessions',
     closedChip: isPt ? 'Ter · Fechado' : 'Tue · Closed',
     // Large-group threshold aligned with the contact form. It disagreed on both sides
     // before: this box said one number, contact.subjects.reservation said another.
@@ -106,7 +107,8 @@ export default function ReserveClient({
             {t.hoursWeekdays} <span className="text-stone mx-1">|</span> {t.closedChip}
           </p>
           <p className="text-xs text-stone mt-0.5">{t.kitchenWeekdays}</p>
-          <p className="text-sm text-charcoal mt-2">{t.hoursWeekend}</p>
+          <p className="text-sm text-charcoal mt-2">{t.hoursThursday}</p>
+          <p className="text-sm text-charcoal mt-1">{t.hoursWeekend}</p>
           <p className="text-xs text-stone mt-0.5">{t.kitchenWeekend}</p>
           <p className="font-display italic text-rust text-xs mt-0.5">
             {t.djPill}

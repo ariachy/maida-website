@@ -52,7 +52,7 @@ export default function MaidaLiveEditorPage() {
       setPtData(ptJson.data);
     } catch (error) {
       console.error('Load error:', error);
-      toast.error('Failed to load Maída Live data');
+      toast.error('Failed to load Maída Sessions data');
     } finally {
       setLoading(false);
     }
@@ -82,7 +82,7 @@ export default function MaidaLiveEditorPage() {
       return true;
     } catch (error) {
       console.error('Save error:', error);
-      toast.error('Failed to save Maída Live');
+      toast.error('Failed to save Maída Sessions');
       return false;
     } finally {
       setSaving(false);
@@ -166,12 +166,12 @@ export default function MaidaLiveEditorPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-3xl font-serif text-[#2C2C2C]">Maída Live Editor</h1>
-          <p className="text-[#6B6B6B] mt-1">Edit the Maída Live page content</p>
+          <h1 className="text-3xl font-serif text-[#2C2C2C]">Maída Sessions Editor</h1>
+          <p className="text-[#6B6B6B] mt-1">Edit the Maída Sessions page content</p>
         </div>
         <div className="flex items-center gap-3">
           <a
-            href={`/${activeLanguage}/maida-live`}
+            href={`/${activeLanguage}/maida-sessions`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2.5 border border-[#D4C4B5] rounded-md text-[#6B6B6B] hover:bg-[#F5F1EB] transition-colors"
@@ -251,27 +251,19 @@ export default function MaidaLiveEditorPage() {
                 </div>
 
                 <ContentField
-                  label="Page Title"
-                  description="Main heading"
-                  value={getValue(['maidaLive', 'title'])}
-                  onChange={(val) => updateField(['maidaLive', 'title'], val)}
-                  placeholder="Maída Live"
-                  required
+                  label="Tagline"
+                  description="Small line above the title (the title itself is the fixed brand name)"
+                  value={getValue(['maidaLive', 'heroTagline'])}
+                  onChange={(val) => updateField(['maidaLive', 'heroTagline'], val)}
+                  placeholder="Music • Culture • Atmosphere"
                 />
                 <ContentField
                   label="Subtitle"
                   description="Supporting text below title"
-                  value={getValue(['maidaLive', 'subtitle'])}
-                  onChange={(val) => updateField(['maidaLive', 'subtitle'], val)}
-                  placeholder="Where the night comes alive"
-                />
-                <ContentField
-                  label="Introduction"
-                  description="Opening paragraph"
-                  value={getValue(['maidaLive', 'intro'])}
-                  onChange={(val) => updateField(['maidaLive', 'intro'], val)}
+                  value={getValue(['maidaLive', 'heroSubtitle'])}
+                  onChange={(val) => updateField(['maidaLive', 'heroSubtitle'], val)}
                   multiline
-                  placeholder="From intimate acoustic sets to..."
+                  placeholder="Where dinner becomes an experience. Music, culture, and atmosphere."
                 />
               </>
             )}
@@ -291,15 +283,15 @@ export default function MaidaLiveEditorPage() {
                     <ContentField
                       label="Title"
                       description="Night theme"
-                      value={getValue(['maidaLive', 'thursday', 'title'])}
-                      onChange={(val) => updateField(['maidaLive', 'thursday', 'title'], val)}
+                      value={getValue(['maidaLive', 'nights', 'thursday', 'title'])}
+                      onChange={(val) => updateField(['maidaLive', 'nights', 'thursday', 'title'], val)}
                       placeholder="Cultural Rotation"
                     />
                     <ContentField
                       label="Description"
                       description="What happens on Thursday"
-                      value={getValue(['maidaLive', 'thursday', 'description'])}
-                      onChange={(val) => updateField(['maidaLive', 'thursday', 'description'], val)}
+                      value={getValue(['maidaLive', 'nights', 'thursday', 'description'])}
+                      onChange={(val) => updateField(['maidaLive', 'nights', 'thursday', 'description'], val)}
                       multiline
                       placeholder="Each week brings something new..."
                     />
@@ -311,15 +303,15 @@ export default function MaidaLiveEditorPage() {
                     <ContentField
                       label="Title"
                       description="Night theme"
-                      value={getValue(['maidaLive', 'friday', 'title'])}
-                      onChange={(val) => updateField(['maidaLive', 'friday', 'title'], val)}
+                      value={getValue(['maidaLive', 'nights', 'friday', 'title'])}
+                      onChange={(val) => updateField(['maidaLive', 'nights', 'friday', 'title'], val)}
                       placeholder="DJ Night"
                     />
                     <ContentField
                       label="Description"
                       description="What happens on Friday"
-                      value={getValue(['maidaLive', 'friday', 'description'])}
-                      onChange={(val) => updateField(['maidaLive', 'friday', 'description'], val)}
+                      value={getValue(['maidaLive', 'nights', 'friday', 'description'])}
+                      onChange={(val) => updateField(['maidaLive', 'nights', 'friday', 'description'], val)}
                       multiline
                       placeholder="Our resident and guest DJs..."
                     />
@@ -331,15 +323,15 @@ export default function MaidaLiveEditorPage() {
                     <ContentField
                       label="Title"
                       description="Night theme"
-                      value={getValue(['maidaLive', 'saturday', 'title'])}
-                      onChange={(val) => updateField(['maidaLive', 'saturday', 'title'], val)}
+                      value={getValue(['maidaLive', 'nights', 'saturday', 'title'])}
+                      onChange={(val) => updateField(['maidaLive', 'nights', 'saturday', 'title'], val)}
                       placeholder="Live Music"
                     />
                     <ContentField
                       label="Description"
                       description="What happens on Saturday"
-                      value={getValue(['maidaLive', 'saturday', 'description'])}
-                      onChange={(val) => updateField(['maidaLive', 'saturday', 'description'], val)}
+                      value={getValue(['maidaLive', 'nights', 'saturday', 'description'])}
+                      onChange={(val) => updateField(['maidaLive', 'nights', 'saturday', 'description'], val)}
                       multiline
                       placeholder="Live performances from local and..."
                     />
@@ -359,23 +351,23 @@ export default function MaidaLiveEditorPage() {
                 <ContentField
                   label="Section Title"
                   description="Heading for events section"
-                  value={getValue(['maidaLive', 'events', 'title'])}
-                  onChange={(val) => updateField(['maidaLive', 'events', 'title'], val)}
+                  value={getValue(['maidaLive', 'privateEvents', 'title'])}
+                  onChange={(val) => updateField(['maidaLive', 'privateEvents', 'title'], val)}
                   placeholder="Private Events"
                 />
                 <ContentField
                   label="Description"
                   description="What you offer for private events"
-                  value={getValue(['maidaLive', 'events', 'description'])}
-                  onChange={(val) => updateField(['maidaLive', 'events', 'description'], val)}
+                  value={getValue(['maidaLive', 'privateEvents', 'description'])}
+                  onChange={(val) => updateField(['maidaLive', 'privateEvents', 'description'], val)}
                   multiline
                   placeholder="From intimate celebrations to..."
                 />
                 <ContentField
                   label="Button Text"
                   description="CTA button text"
-                  value={getValue(['maidaLive', 'events', 'cta'])}
-                  onChange={(val) => updateField(['maidaLive', 'events', 'cta'], val)}
+                  value={getValue(['maidaLive', 'privateEvents', 'cta'])}
+                  onChange={(val) => updateField(['maidaLive', 'privateEvents', 'cta'], val)}
                   placeholder="Inquire Now"
                 />
               </>
@@ -392,23 +384,23 @@ export default function MaidaLiveEditorPage() {
                 <ContentField
                   label="Section Title"
                   description="Heading for DJ section"
-                  value={getValue(['maidaLive', 'dj', 'title'])}
-                  onChange={(val) => updateField(['maidaLive', 'dj', 'title'], val)}
+                  value={getValue(['maidaLive', 'djApplication', 'title'])}
+                  onChange={(val) => updateField(['maidaLive', 'djApplication', 'title'], val)}
                   placeholder="Spin at Maída"
                 />
                 <ContentField
                   label="Description"
                   description="What you're looking for"
-                  value={getValue(['maidaLive', 'dj', 'description'])}
-                  onChange={(val) => updateField(['maidaLive', 'dj', 'description'], val)}
+                  value={getValue(['maidaLive', 'djApplication', 'description'])}
+                  onChange={(val) => updateField(['maidaLive', 'djApplication', 'description'], val)}
                   multiline
                   placeholder="We're always looking for talented DJs..."
                 />
                 <ContentField
                   label="Button Text"
                   description="Application button text"
-                  value={getValue(['maidaLive', 'dj', 'cta'])}
-                  onChange={(val) => updateField(['maidaLive', 'dj', 'cta'], val)}
+                  value={getValue(['maidaLive', 'djApplication', 'cta'])}
+                  onChange={(val) => updateField(['maidaLive', 'djApplication', 'cta'], val)}
                   placeholder="Apply to DJ"
                 />
 
@@ -420,37 +412,37 @@ export default function MaidaLiveEditorPage() {
                   <ContentField
                     label="Name Label"
                     description="Label for name field"
-                    value={getValue(['maidaLive', 'dj', 'form', 'name'])}
-                    onChange={(val) => updateField(['maidaLive', 'dj', 'form', 'name'], val)}
+                    value={getValue(['maidaLive', 'djApplication', 'form', 'name'])}
+                    onChange={(val) => updateField(['maidaLive', 'djApplication', 'form', 'name'], val)}
                     placeholder="Name"
                   />
                   <ContentField
                     label="Email Label"
                     description="Label for email field"
-                    value={getValue(['maidaLive', 'dj', 'form', 'email'])}
-                    onChange={(val) => updateField(['maidaLive', 'dj', 'form', 'email'], val)}
+                    value={getValue(['maidaLive', 'djApplication', 'form', 'email'])}
+                    onChange={(val) => updateField(['maidaLive', 'djApplication', 'form', 'email'], val)}
                     placeholder="Email"
                   />
                 </div>
                 <ContentField
                   label="SoundCloud/Mixcloud Label"
                   description="Label for music link field"
-                  value={getValue(['maidaLive', 'dj', 'form', 'link'])}
-                  onChange={(val) => updateField(['maidaLive', 'dj', 'form', 'link'], val)}
+                  value={getValue(['maidaLive', 'djApplication', 'form', 'link'])}
+                  onChange={(val) => updateField(['maidaLive', 'djApplication', 'form', 'link'], val)}
                   placeholder="SoundCloud / Mixcloud Link"
                 />
                 <ContentField
                   label="Message Label"
                   description="Label for message field"
-                  value={getValue(['maidaLive', 'dj', 'form', 'message'])}
-                  onChange={(val) => updateField(['maidaLive', 'dj', 'form', 'message'], val)}
+                  value={getValue(['maidaLive', 'djApplication', 'form', 'message'])}
+                  onChange={(val) => updateField(['maidaLive', 'djApplication', 'form', 'message'], val)}
                   placeholder="Tell us about your style"
                 />
                 <ContentField
                   label="Submit Button"
                   description="Form submit button text"
-                  value={getValue(['maidaLive', 'dj', 'form', 'submit'])}
-                  onChange={(val) => updateField(['maidaLive', 'dj', 'form', 'submit'], val)}
+                  value={getValue(['maidaLive', 'djApplication', 'form', 'submit'])}
+                  onChange={(val) => updateField(['maidaLive', 'djApplication', 'form', 'submit'], val)}
                   placeholder="Submit Application"
                 />
               </>

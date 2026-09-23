@@ -11,7 +11,7 @@
     "home": "Início",
     "story": "História",
     "menu": "Menu",
-    "events": "Maída Live",
+    "events": "Maída Sessions",
     "blog": "Blog",
     "contact": "Contacto",
     "reserve": "Reservar Mesa",
@@ -97,6 +97,7 @@
     "headline2": "-NOS",
     "hours": {
       "monWedThuSun": "Qua – Seg: 18:00 – 23:30",
+      "thursday": "Qui: 18:00 até tarde (01:30)",
       "friday": "Sex – Sáb: 18:00 até tarde (02:00)",
       "saturday": "Sex & Sáb até tarde (02:00)",
       "closed": "Terça: Fechado",
@@ -831,7 +832,7 @@
     },
     "hours": {
       "label": "Horário",
-      "value": "Qua – Seg: 18:00 – 23:30 · Sex & Sáb até tarde (02:00)"
+      "value": "Qua – Seg: 18:00 – 23:30 · Qui até à 01:30 · Sex & Sáb até tarde (02:00)"
     },
     "contact": {
       "label": "Contacto",
@@ -849,7 +850,7 @@
     "navigate": "Navegação",
     "discover": "Descobrir",
     "hours": "Horário",
-    "hoursValue": "Qua – Seg: 18:00 – 23:30 · Sex & Sáb até tarde (02:00)",
+    "hoursValue": "Qua – Seg: 18:00 – 23:30 · Qui até à 01:30 · Sex & Sáb até tarde (02:00)",
     "closed": "Terça: Fechado",
     "contact": "Contacto",
     "reservations": "Reservas",
@@ -922,6 +923,7 @@
       "closed": "Terça: Fechado",
       "midweek": "Qua – Seg: 18:00 – 23:30",
       "midweekKitchen": "Cozinha fecha às 23:00",
+      "thursday": "Qui: 18:00 até tarde (01:30)",
       "weekend": "Sex – Sáb: 18:00 até tarde (02:00)",
       "weekendKitchen": "Cozinha fecha às 23:30"
     },
@@ -932,11 +934,9 @@
   },
   "maidaLive": {
     "heroTagline": "Música • Cultura • Atmosfera",
-    "heroTitle": "Maída Live",
+    "heroTitle": "Maída Sessions",
     "heroSubtitle": "Onde o jantar se torna uma experiência. Música, cultura e atmosfera.",
     "weeklyProgramTitle": "O nosso programa semanal",
-    "monthlyRotation": "Rotação Mensal",
-    "week": "Semana",
     "theVibe": "A Vibe",
     "theJourney": "A Jornada",
     "hours": "Horário",
@@ -950,33 +950,31 @@
     "ctaTitleHighlight": "e música",
     "ctaHashtag": "#MeetMeAtMaída",
     "ctaButton": "Reservar Mesa",
-    "thursdayThemes": [
-      {
-        "week": "1ª",
-        "theme": "Noite das Décadas",
-        "description": "Hits dos anos 80, 90, 00"
-      },
-      {
-        "week": "2ª",
-        "theme": "World Music",
-        "description": "Árabe, Francês, Latino e mais"
-      },
-      {
-        "week": "3ª",
-        "theme": "Noite de Jazz",
-        "description": "Jazz suave, vibes soulful"
-      },
-      {
-        "week": "4ª",
-        "theme": "A Anunciar",
-        "description": "Siga-nos para surpresas"
-      }
-    ],
     "nights": {
       "thursday": {
         "title": "Quintas",
-        "subtitle": "Rotação Cultural",
-        "description": "Cada quinta traz um sabor diferente. Não é só música - é uma viagem cultural através do som."
+        "subtitle": "#MeetMeAtMaída",
+        "description": "Jantar a partir das 18h, DJ a partir das 21h, e às 23h as luzes baixam e a noite toma conta. Comece à mesa que nos junta, acabe onde a noite o levar.",
+        "walkIn": "Reserve mesa para jantar ou simplesmente apareça.",
+        "hoursValue": "18:00 – 01:30",
+        "timeline": [
+          {
+            "time": "18:00",
+            "label": "Jantar"
+          },
+          {
+            "time": "21:00",
+            "label": "DJ"
+          },
+          {
+            "time": "23:00",
+            "label": "Luzes baixas"
+          },
+          {
+            "time": "01:30",
+            "label": "Última rodada"
+          }
+        ]
       },
       "friday": {
         "title": "Sextas",
@@ -1028,7 +1026,8 @@
         "networkError": "Erro de rede. Por favor tenta novamente.",
         "privacyNote": "Ao submeter, concordas em ser contactado sobre oportunidades de DJ no"
       }
-    }
+    },
+    "theNight": "A noite"
   },
   "saj": {
     "heroTitle": "O que é SAJ?",
@@ -1090,10 +1089,11 @@
     "hoursOpen": "Aberto todos os dias exceto terça",
     "hoursTime": "18:00 – 23:30",
     "hoursWeekend": "Sex & Sáb até tarde (02:00)",
-    "djPill": "Maída DJ Sessions",
+    "djPill": "Maída Sessions",
     "phoneBoxLabel": "Grupos de 8+, eventos privados ou reservas para o próprio dia",
     "directions": "Como chegar",
-    "unavailable": "O sistema de reservas demorou a responder. Tente novamente ou ligue-nos."
+    "unavailable": "O sistema de reservas demorou a responder. Tente novamente ou ligue-nos.",
+    "hoursThursday": "Qui até tarde (01:30)"
   },
   "faq": {
     "heroTitle": "Perguntas Frequentes",
@@ -1123,7 +1123,14 @@
         "q": "Qual é o horário da Maída?",
         "a": [
           {
-            "t": "Quarta a Segunda, 18:00-23:30 (cozinha fecha às 23:00). Sexta e Sábado até tarde, por volta das 02:00 (cozinha fecha às 23:30). Terça-feira: fechado."
+            "t": "Quarta a segunda a partir das 18:00 (fechado à terça). Domingo, segunda e quarta até às 23:30, cozinha fecha às 23:00. Quinta é noite #MeetMeAtMaída: jantar a partir das 18:00, DJ a partir das 21:00, aberto até à 01:30 (cozinha fecha às 23:00). Sexta e sábado até tarde, por volta das 02:00 (cozinha fecha às 23:30). Nas raras quintas sem evento fechamos às 23:30 - "
+          },
+          {
+            "t": "o programa do mês",
+            "to": "/maida-sessions"
+          },
+          {
+            "t": " mostra quais as noites confirmadas."
           }
         ]
       },
@@ -1208,7 +1215,14 @@
         "q": "A Maída tem música ao vivo ou eventos?",
         "a": [
           {
-            "t": "Sim - o Maída Live traz DJ sets e noites especiais aos fins de semana. Siga-nos no "
+            "t": "Sim - o "
+          },
+          {
+            "t": "Maída Sessions",
+            "to": "/maida-sessions"
+          },
+          {
+            "t": " traz DJs às quintas, sextas e sábados. As quintas são #MeetMeAtMaída: jantar a partir das 18:00, DJ a partir das 21:00, e às 23:00 as luzes baixam e a noite toma conta. Siga-nos no "
           },
           {
             "t": "Instagram",

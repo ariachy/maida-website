@@ -55,7 +55,7 @@ export default async function DashboardPage() {
     { name: 'Menu Items', href: '/admin/content/menu', status: 'ready' },
     { name: 'Story Page', href: '/admin/content/story', status: 'ready' },
     { name: 'Contact Page', href: '/admin/content/contact', status: 'ready' },
-    { name: 'Maída Live', href: '/admin/content/maida-live', status: 'ready' },
+    { name: 'Maída Sessions', href: '/admin/content/maida-live', status: 'ready' },
   ];
 
   return (

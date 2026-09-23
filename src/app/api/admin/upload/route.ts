@@ -43,12 +43,12 @@ const IMAGE_USAGE_MAP: Record<string, string[]> = {
   '/images/drinks/zhourat-tea.webp': ['Menu - Hot Drinks', 'Coffee & Tea Page'],
   '/images/drinks/coffee-cortado.webp': ['Coffee & Tea Page'],
   '/images/drinks/manhattan.webp': ['Menu - Cocktails'],
-  '/images/drinks/bartender.webp': ['Maída Live Page'],
+  '/images/drinks/bartender.webp': ['Maída Sessions Page'],
 
   // Atmosphere images
-  '/images/atmosphere/dj.webp': ['Maída Live Page'],
+  '/images/atmosphere/dj.webp': ['Maída Sessions Page'],
   '/images/atmosphere/gathering-table.webp': ['Homepage Story Section'],
-  '/images/atmosphere/private-event.webp': ['Maída Live - Private Events'],
+  '/images/atmosphere/private-event.webp': ['Maída Sessions - Private Events'],
 
   // About images
   '/images/about/anna-anthony.webp': ['Story Page - Founders'],

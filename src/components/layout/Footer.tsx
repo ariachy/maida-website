@@ -37,6 +37,7 @@ export default function Footer({ translations, locale }: FooterProps) {
   const hours = {
     midweek: getLabel(hoursSrc, 'midweek', 'Wed – Mon: 18:00 – 23:30'),
     midweekKitchen: getLabel(hoursSrc, 'midweekKitchen', 'Kitchen closes 23:00'),
+    thursday: getLabel(hoursSrc, 'thursday', 'Thu: 18:00 till late (01:30)'),
     weekend: getLabel(hoursSrc, 'weekend', 'Fri – Sat: 18:00 till late (02:00)'),
     weekendKitchen: getLabel(hoursSrc, 'weekendKitchen', 'Kitchen closes 23:30'),
     closed: getLabel(hoursSrc, 'closed', 'Tuesday: Closed'),
@@ -115,10 +116,10 @@ export default function Footer({ translations, locale }: FooterProps) {
               </li>
               <li>
                 <Link
-                  href={`/${locale}/maida-live`}
+                  href={`/${locale}/maida-sessions`}
                   className="text-warm-white/70 text-sm hover:text-warm-white transition-colors"
                 >
-                  Maída Live
+                  {getLabel(nav, 'events', 'Maída Sessions')}
                 </Link>
               </li>
               <li>
@@ -191,12 +192,16 @@ export default function Footer({ translations, locale }: FooterProps) {
             <ul className="text-sm">
               <li className="text-warm-white">{hours.midweek}</li>
               <li className="text-warm-white/60 text-xs mt-0.5">{hours.midweekKitchen}</li>
-              <li className="mt-3 text-terracotta-light font-medium">{hours.weekend}</li>
+              <li className="mt-3 text-terracotta-light font-medium">{hours.thursday}</li>
+              <li className="mt-1 text-terracotta-light font-medium">{hours.weekend}</li>
               <li className="text-warm-white/60 text-xs mt-0.5">{hours.weekendKitchen}</li>
               <li className="mt-1.5">
-                <span className="inline-block bg-terracotta-light/10 text-terracotta-light text-[9px] tracking-[0.15em] uppercase px-2.5 py-0.5 rounded-full">
-                  Maída DJ Sessions
-                </span>
+                <Link
+                  href={`/${locale}/maida-sessions`}
+                  className="inline-block bg-terracotta-light/10 text-terracotta-light text-[9px] tracking-[0.15em] uppercase px-2.5 py-0.5 rounded-full hover:bg-terracotta-light/20 transition-colors"
+                >
+                  Maída Sessions
+                </Link>
               </li>
               <li className="mt-3">
                 <span className="inline-block bg-white/10 text-warm-white/70 text-[10px] tracking-[0.05em] px-2.5 py-1 rounded">

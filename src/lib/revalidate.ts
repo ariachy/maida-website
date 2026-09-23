@@ -6,7 +6,7 @@ import { locales } from '@/lib/i18n';
  * Maps a content type to every route that depends on it and revalidates them.
  *
  * - 'translations' | 'all': locale JSON drives navbar, footer, hero, homepage,
- *   story, contact, maida-live, menu, blog — i.e. every page under the [lang]
+ *   story, contact, maida-sessions, menu, blog — i.e. every page under the [lang]
  *   layout. So we revalidate the WHOLE locale layout in one call, which busts
  *   the layout and all nested routes for all locales.
  * - 'menu' / 'blog': only the routes that read those specific JSON files.

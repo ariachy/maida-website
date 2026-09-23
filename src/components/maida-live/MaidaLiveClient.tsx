@@ -24,13 +24,14 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
   const [isDJModalOpen, setIsDJModalOpen] = useState(false);
   const [activeNight, setActiveNight] = useState<'thursday' | 'friday' | 'saturday' | null>(null);
 
-  // Thursday themes rotation
-  const thursdayThemes = maidaLive?.thursdayThemes || [
-    { week: '1st', theme: 'Decades Night', description: '80s, 90s, 00s hits' },
-    { week: '2nd', theme: 'World Music', description: 'Arabic, French, Latin & more' },
-    { week: '3rd', theme: 'Jazz Night', description: 'Smooth jazz, soulful vibes' },
-    { week: '4th', theme: 'To Be Announced', description: 'Follow us for surprises' },
-  ];
+  // Thursday (#MeetMeAtMaída) running order
+  const thursdayTimeline: { time: string; label: string }[] =
+    nights?.thursday?.timeline || [
+      { time: '18:00', label: 'Dinner' },
+      { time: '21:00', label: 'DJ' },
+      { time: '23:00', label: 'Lights down' },
+      { time: '01:30', label: 'Last call' },
+    ];
 
   // Genre options for DJ form
   const genreOptions = [
@@ -112,7 +113,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                 animate={{ y: 0 }}
                 transition={{ duration: 1.2, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
               >
-                <span className="italic text-terracotta">Maída</span> Live
+                <span className="italic text-terracotta">Maída</span> Sessions
               </motion.span>
             </span>
           </h1>
@@ -166,10 +167,10 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                   </div>
 
                   <h3 className="font-display text-3xl mb-2 text-charcoal">{nights?.thursday?.title || 'Thursdays'}</h3>
-                  <p className="text-charcoal/80 text-lg mb-4">{nights?.thursday?.subtitle || 'Cultural Rotation'}</p>
+                  <p className="text-charcoal/80 text-lg mb-4">{nights?.thursday?.subtitle || '#MeetMeAtMaída'}</p>
                   
                   <p className="text-charcoal/60 mb-6">
-                    {nights?.thursday?.description || 'Every Thursday brings a different flavour. Not just music - a cultural journey through sound.'}
+                    {nights?.thursday?.description || 'Dinner from 6, a DJ from 9, and at 11 the lights go down and the night takes over. Start it at the gathering table, end it wherever it takes you.'}
                   </p>
 
                   {/* Expanded content */}
@@ -182,26 +183,25 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <p className="text-xs uppercase tracking-widest text-charcoal/60 mb-4">{maidaLive?.monthlyRotation || 'Monthly Rotation'}</p>
-                        <div className="grid grid-cols-2 gap-3">
-                          {thursdayThemes.map((item: any, index: number) => (
-                            <div 
-                              key={index}
-                              className="bg-charcoal/5 p-4 hover:bg-charcoal/10 transition-colors"
-                            >
-                              <p className="text-charcoal/60 text-sm font-medium">{item.week} {maidaLive?.week || 'Week'}</p>
-                              <p className="text-charcoal font-display text-lg">{item.theme}</p>
-                              <p className="text-charcoal/50 text-sm">{item.description}</p>
-                            </div>
+                        <p className="text-charcoal font-display text-xl mb-3">{maidaLive?.theNight || 'The night'}</p>
+                        <ol className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                          {thursdayTimeline.map((step, index) => (
+                            <li key={index} className="bg-charcoal/5 p-4">
+                              <p className="text-charcoal font-display text-lg">{step.time}</p>
+                              <p className="text-charcoal/60 text-sm">{step.label}</p>
+                            </li>
                           ))}
-                        </div>
+                        </ol>
+                        <p className="text-charcoal/70 mt-4">
+                          {nights?.thursday?.walkIn || 'Book a table for dinner or just walk in.'}
+                        </p>
                       </motion.div>
                     )}
                   </AnimatePresence>
 
                   {/* Click hint */}
                   <p className="mt-auto pt-4 text-xs text-charcoal/40">
-                    {activeNight === 'thursday' ? (maidaLive?.clickToCollapse || 'Click to collapse') : (maidaLive?.clickToSeeSchedule || 'Click to see schedule')}
+                    {activeNight === 'thursday' ? (maidaLive?.clickToCollapse || 'Click to collapse') : (maidaLive?.clickToLearnMore || 'Click to learn more')}
                   </p>
                 </div>
               </motion.div>
@@ -345,7 +345,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
               transition={{ duration: 0.6 }}
             >
               <h2 className="font-display text-2xl md:text-3xl font-medium text-white mb-3">
-                {privateEvents?.title || 'Enjoying'} <span className="italic text-terracotta">Maída</span> Live?
+                {privateEvents?.title || 'Enjoying'} <span className="italic text-terracotta">Maída</span> Sessions?
               </h2>
               <p className="text-lg text-sand mb-2">
                 {privateEvents?.subtitle || 'Make it private.'}
