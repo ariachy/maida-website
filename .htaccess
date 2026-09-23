@@ -27,7 +27,7 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteRule ^meetme/?$ https://maida.pt/meetmeatmaida/?utm_source=instagram&utm_medium=bio&utm_campaign=always_on [NC,R=302,L]
 RewriteRule ^bookatmaida/?$ https://maida.pt/en/reserve/?utm_source=instagram&utm_medium=story&utm_campaign=always_on [NC,R=302,L]
 RewriteRule ^thursdays/?$ https://maida.pt/en/reserve/?utm_source=instagram&utm_medium=story&utm_campaign=meetme [NC,R=302,L]
-RewriteRule ^sessions/?$ https://maida.pt/en/reserve/?utm_source=instagram&utm_medium=story&utm_campaign=sessions [NC,R=302,L]
+RewriteRule ^sessions/?$ https://maida.pt/en/maida-sessions/?utm_source=instagram&utm_medium=story&utm_campaign=sessions [NC,R=302,L]
 
 # Redirect www to non-www (optional - uncomment if needed)
 # RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
