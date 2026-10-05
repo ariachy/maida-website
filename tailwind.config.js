@@ -24,12 +24,17 @@ module.exports = {
         },
         'olive': '#4c5e36',
         'coral': '#f04e4f',
+        // Printed-menu palette (Oct 2026 PDFs): peach paper, red for food, green for drinks
+        'menu-paper': '#FCDAC1',
+        'menu-red': { DEFAULT: '#C04A37', soft: '#C85D49' },
+        'menu-green': { DEFAULT: '#162F31', soft: '#2E4140' },
       },
       fontFamily: {
         // UPDATED 2026-01-09: Cambria for titles/body, Roboto for navbar
         'display': ['Cambria', 'Georgia', 'serif'],
         'body': ['Cambria', 'Georgia', 'serif'],
         'nav': ['Roboto', 'sans-serif'],
+        'menu': ['var(--font-jost)', 'Jost', 'Helvetica Neue', 'Arial', 'sans-serif'],
       },
       fontSize: {
         'fluid-xs': 'clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem)',

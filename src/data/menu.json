@@ -4,55 +4,74 @@
       "id": "starters",
       "slug": "starters",
       "image": "",
-      "sortOrder": 1
+      "sortOrder": 1,
+      "page": "food"
     },
     {
       "id": "salads",
       "slug": "salads",
       "image": "",
-      "sortOrder": 2
+      "sortOrder": 2,
+      "page": "food"
     },
     {
       "id": "mains",
       "slug": "mains",
       "image": "",
-      "sortOrder": 3
+      "sortOrder": 3,
+      "page": "food"
     },
     {
       "id": "desserts",
       "slug": "desserts",
       "image": "",
-      "sortOrder": 4
+      "sortOrder": 4,
+      "page": "food"
     },
     {
       "id": "saj-wraps",
       "slug": "saj-wraps",
       "image": "",
-      "sortOrder": 5
-    },
-    {
-      "id": "drinks",
-      "slug": "drinks",
-      "image": "",
-      "sortOrder": 6
+      "sortOrder": 5,
+      "page": "saj"
     },
     {
       "id": "cocktails-wine",
       "slug": "cocktails-wine",
       "image": "",
-      "sortOrder": 7
+      "sortOrder": 6,
+      "page": "alcoholic",
+      "headless": true
     },
     {
       "id": "beers",
       "slug": "beers",
       "image": "",
-      "sortOrder": 8
+      "sortOrder": 7,
+      "page": "alcoholic"
+    },
+    {
+      "id": "arak",
+      "slug": "arak",
+      "image": "",
+      "sortOrder": 8,
+      "page": "alcoholic",
+      "printNote": true
+    },
+    {
+      "id": "drinks",
+      "slug": "drinks",
+      "image": "",
+      "sortOrder": 9,
+      "page": "non-alcoholic",
+      "headless": true
     },
     {
       "id": "wines",
       "slug": "wines",
       "image": "",
-      "sortOrder": 9
+      "sortOrder": 10,
+      "page": "wines"
     }
   ],
   "subCategories": [
@@ -82,16 +101,6 @@
       "sortOrder": 2
     },
     {
-      "id": "signatures",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 1
-    },
-    {
-      "id": "classics",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 2
-    },
-    {
       "id": "white-wine",
       "categoryId": "wines",
       "sortOrder": 1
@@ -117,39 +126,41 @@
       "sortOrder": 5
     },
     {
-      "id": "lemonade",
-      "categoryId": "drinks",
+      "id": "classics",
+      "categoryId": "cocktails-wine",
       "sortOrder": 1
     },
     {
-      "id": "juices",
-      "categoryId": "drinks",
-      "sortOrder": 2
-    },
-    {
-      "id": "milkshakes",
-      "categoryId": "drinks",
-      "sortOrder": 3
-    },
-    {
-      "id": "mocktails",
-      "categoryId": "drinks",
-      "sortOrder": 4
+      "id": "signatures",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 2,
+      "boxed": true
     },
     {
       "id": "coffee",
       "categoryId": "drinks",
-      "sortOrder": 5
-    },
-    {
-      "id": "tea",
-      "categoryId": "drinks",
-      "sortOrder": 6
+      "sortOrder": 1
     },
     {
       "id": "soft-drinks",
       "categoryId": "drinks",
-      "sortOrder": 7
+      "sortOrder": 2
+    },
+    {
+      "id": "juices",
+      "categoryId": "drinks",
+      "sortOrder": 3
+    },
+    {
+      "id": "milkshakes",
+      "categoryId": "drinks",
+      "sortOrder": 4,
+      "boxed": true
+    },
+    {
+      "id": "mocktails",
+      "categoryId": "drinks",
+      "sortOrder": 5
     }
   ],
   "items": [
@@ -465,440 +476,6 @@
       "active": false
     },
     {
-      "id": "cortado",
-      "categoryId": "drinks",
-      "sortOrder": 18,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "espresso",
-      "categoryId": "drinks",
-      "sortOrder": 19,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "espresso-double",
-      "categoryId": "drinks",
-      "sortOrder": 20,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "americano",
-      "categoryId": "drinks",
-      "sortOrder": 21,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "americano-iced",
-      "categoryId": "drinks",
-      "sortOrder": 22,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "cappuccino",
-      "categoryId": "drinks",
-      "sortOrder": 23,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "flat-white",
-      "categoryId": "drinks",
-      "sortOrder": 24,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "hot-chocolate",
-      "categoryId": "drinks",
-      "sortOrder": 25,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "hot-chocolate-sweet",
-      "categoryId": "drinks",
-      "sortOrder": 26,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "latte",
-      "categoryId": "drinks",
-      "sortOrder": 27,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "latte-iced",
-      "categoryId": "drinks",
-      "sortOrder": 28,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "latte-macchiato",
-      "categoryId": "drinks",
-      "sortOrder": 29,
-      "subCategory": "coffee",
-      "active": false
-    },
-    {
-      "id": "lavender-coffee",
-      "categoryId": "drinks",
-      "sortOrder": 30,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "macchiato",
-      "categoryId": "drinks",
-      "sortOrder": 31,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "mocha",
-      "categoryId": "drinks",
-      "sortOrder": 32,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "milk",
-      "categoryId": "drinks",
-      "sortOrder": 33,
-      "subCategory": "coffee",
-      "active": true
-    },
-    {
-      "id": "tea-moroccan",
-      "categoryId": "drinks",
-      "sortOrder": 34,
-      "subCategory": "tea",
-      "active": true
-    },
-    {
-      "id": "tea-zhourat",
-      "categoryId": "drinks",
-      "sortOrder": 35,
-      "subCategory": "tea",
-      "active": true
-    },
-    {
-      "id": "tea-maida",
-      "categoryId": "drinks",
-      "sortOrder": 36,
-      "subCategory": "tea",
-      "active": true
-    },
-    {
-      "id": "tea-cafe-blanc",
-      "categoryId": "drinks",
-      "sortOrder": 37,
-      "subCategory": "tea",
-      "active": true
-    },
-    {
-      "id": "tea-other",
-      "categoryId": "drinks",
-      "sortOrder": 38,
-      "subCategory": "tea",
-      "active": true
-    },
-    {
-      "id": "lemonade",
-      "categoryId": "drinks",
-      "sortOrder": 1,
-      "subCategory": "lemonade",
-      "active": true
-    },
-    {
-      "id": "lemonade-maida",
-      "categoryId": "drinks",
-      "sortOrder": 2,
-      "subCategory": "lemonade",
-      "active": true
-    },
-    {
-      "id": "lemonade-pitcher",
-      "categoryId": "drinks",
-      "sortOrder": 3,
-      "subCategory": "lemonade",
-      "active": true
-    },
-    {
-      "id": "juice-passion-fruit",
-      "categoryId": "drinks",
-      "sortOrder": 15,
-      "subCategory": "mocktails",
-      "active": true
-    },
-    {
-      "id": "juice-buzz",
-      "categoryId": "drinks",
-      "sortOrder": 4,
-      "subCategory": "juices",
-      "active": true
-    },
-    {
-      "id": "milkshake-banana",
-      "categoryId": "drinks",
-      "sortOrder": 10,
-      "subCategory": "milkshakes",
-      "active": true
-    },
-    {
-      "id": "cola",
-      "categoryId": "drinks",
-      "sortOrder": 39,
-      "subCategory": "soft-drinks",
-      "active": true
-    },
-    {
-      "id": "cola-zero",
-      "categoryId": "drinks",
-      "sortOrder": 40,
-      "subCategory": "soft-drinks",
-      "active": true
-    },
-    {
-      "id": "kombucha",
-      "categoryId": "drinks",
-      "sortOrder": 41,
-      "subCategory": "soft-drinks",
-      "active": true
-    },
-    {
-      "id": "ice-tea",
-      "categoryId": "drinks",
-      "sortOrder": 42,
-      "subCategory": "soft-drinks",
-      "active": true
-    },
-    {
-      "id": "fritz-spritz",
-      "categoryId": "drinks",
-      "sortOrder": 43,
-      "subCategory": "soft-drinks",
-      "active": false
-    },
-    {
-      "id": "fritz-limo",
-      "categoryId": "drinks",
-      "sortOrder": 44,
-      "subCategory": "soft-drinks",
-      "active": false
-    },
-    {
-      "id": "pink-grapefruit",
-      "categoryId": "drinks",
-      "sortOrder": 45,
-      "subCategory": "soft-drinks",
-      "active": true
-    },
-    {
-      "id": "still-water",
-      "categoryId": "drinks",
-      "sortOrder": 50,
-      "subCategory": "soft-drinks",
-      "active": true
-    },
-    {
-      "id": "sparkling-water",
-      "categoryId": "drinks",
-      "sortOrder": 51,
-      "subCategory": "soft-drinks",
-      "active": true
-    },
-    {
-      "id": "tonic-water",
-      "categoryId": "drinks",
-      "sortOrder": 47,
-      "subCategory": "soft-drinks",
-      "active": true
-    },
-    {
-      "id": "soda-water",
-      "categoryId": "drinks",
-      "sortOrder": 46,
-      "subCategory": "soft-drinks",
-      "active": true
-    },
-    {
-      "id": "ginger-beer",
-      "categoryId": "drinks",
-      "sortOrder": 48,
-      "subCategory": "soft-drinks",
-      "active": true
-    },
-    {
-      "id": "ginger-ale",
-      "categoryId": "drinks",
-      "sortOrder": 49,
-      "subCategory": "soft-drinks",
-      "active": true
-    },
-    {
-      "id": "mocktail-paloma",
-      "categoryId": "drinks",
-      "sortOrder": 16,
-      "subCategory": "mocktails",
-      "active": true
-    },
-    {
-      "id": "mocktail-kombucha-mojito",
-      "categoryId": "drinks",
-      "sortOrder": 17,
-      "subCategory": "mocktails",
-      "active": true
-    },
-    {
-      "id": "cocktail-fatouch-rocks",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 1,
-      "subCategory": "signatures",
-      "active": true
-    },
-    {
-      "id": "cocktail-maida-martini",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 2,
-      "subCategory": "signatures",
-      "active": true
-    },
-    {
-      "id": "cocktail-mediterranean-gt",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 3,
-      "subCategory": "signatures",
-      "active": true
-    },
-    {
-      "id": "cocktail-warda",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 4,
-      "subCategory": "signatures",
-      "active": true
-    },
-    {
-      "id": "cocktail-thyme-margarita",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 5,
-      "subCategory": "signatures",
-      "active": true
-    },
-    {
-      "id": "cocktail-azeitona-cafe",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 6,
-      "subCategory": "signatures",
-      "active": true
-    },
-    {
-      "id": "cocktail-marie-antoinette",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 7,
-      "subCategory": "signatures",
-      "active": true
-    },
-    {
-      "id": "cocktail-soraya",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 8,
-      "subCategory": "signatures",
-      "active": true
-    },
-    {
-      "id": "cocktail-mimosa",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 20,
-      "subCategory": "classics",
-      "active": true
-    },
-    {
-      "id": "cocktail-manhattan",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 21,
-      "subCategory": "classics",
-      "active": true
-    },
-    {
-      "id": "cocktail-gin-basil-smash",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 22,
-      "subCategory": "classics",
-      "active": true
-    },
-    {
-      "id": "cocktail-daiquiri",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 23,
-      "subCategory": "classics",
-      "active": true
-    },
-    {
-      "id": "cocktail-negroni",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 24,
-      "subCategory": "classics",
-      "active": true
-    },
-    {
-      "id": "cocktail-naked-famous",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 25,
-      "subCategory": "classics",
-      "active": true
-    },
-    {
-      "id": "cocktail-caipirinha",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 26,
-      "subCategory": "classics",
-      "active": true
-    },
-    {
-      "id": "cocktail-espresso-martini",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 27,
-      "subCategory": "classics",
-      "active": true
-    },
-    {
-      "id": "cocktail-aperol-spritz",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 28,
-      "subCategory": "classics",
-      "active": true
-    },
-    {
-      "id": "cocktail-moscow-mule",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 29,
-      "subCategory": "classics",
-      "active": true
-    },
-    {
-      "id": "cocktail-margarita",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 30,
-      "subCategory": "classics",
-      "active": true
-    },
-    {
-      "id": "cocktail-new-york-sour",
-      "categoryId": "cocktails-wine",
-      "sortOrder": 31,
-      "subCategory": "classics",
-      "active": true
-    },
-    {
       "id": "wine-2160-white",
       "categoryId": "wines",
       "sortOrder": 40,
@@ -955,103 +532,765 @@
       "active": true
     },
     {
+      "id": "lebanese-rakwe",
+      "categoryId": "drinks",
+      "sortOrder": 1,
+      "price": 6.4,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "lavender-coffee",
+      "categoryId": "drinks",
+      "sortOrder": 2,
+      "price": 4.5,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "cortado",
+      "categoryId": "drinks",
+      "sortOrder": 3,
+      "price": 2.1,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "espresso",
+      "categoryId": "drinks",
+      "sortOrder": 4,
+      "price": 2,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "espresso-double",
+      "categoryId": "drinks",
+      "sortOrder": 5,
+      "price": 2.9,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "americano",
+      "categoryId": "drinks",
+      "sortOrder": 6,
+      "price": 3.1,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "americano-iced",
+      "categoryId": "drinks",
+      "sortOrder": 7,
+      "price": 3.1,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "cappuccino",
+      "categoryId": "drinks",
+      "sortOrder": 8,
+      "price": 3.9,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "flat-white",
+      "categoryId": "drinks",
+      "sortOrder": 9,
+      "price": 3.9,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "latte",
+      "categoryId": "drinks",
+      "sortOrder": 10,
+      "price": 4.1,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "latte-iced",
+      "categoryId": "drinks",
+      "sortOrder": 11,
+      "price": 4.1,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "latte-macchiato",
+      "categoryId": "drinks",
+      "sortOrder": 12,
+      "price": 4.5,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "macchiato",
+      "categoryId": "drinks",
+      "sortOrder": 13,
+      "price": 2.9,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "mocha",
+      "categoryId": "drinks",
+      "sortOrder": 14,
+      "price": 4.7,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "hot-chocolate-sweet",
+      "categoryId": "drinks",
+      "sortOrder": 15,
+      "price": 4.4,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "hot-chocolate",
+      "categoryId": "drinks",
+      "sortOrder": 16,
+      "price": 4.4,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "milk",
+      "categoryId": "drinks",
+      "sortOrder": 17,
+      "price": 2,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "tea-moroccan",
+      "categoryId": "drinks",
+      "sortOrder": 18,
+      "price": 3.5,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "tea-zhourat",
+      "categoryId": "drinks",
+      "sortOrder": 19,
+      "price": 3.5,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "tea-maida",
+      "categoryId": "drinks",
+      "sortOrder": 20,
+      "price": 3.5,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "tea-cafe-blanc",
+      "categoryId": "drinks",
+      "sortOrder": 21,
+      "price": 3.2,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "tea-bags",
+      "categoryId": "drinks",
+      "sortOrder": 22,
+      "price": 2.8,
+      "active": true,
+      "subCategory": "coffee"
+    },
+    {
+      "id": "cola",
+      "categoryId": "drinks",
+      "sortOrder": 1,
+      "price": 2.8,
+      "active": true,
+      "subCategory": "soft-drinks"
+    },
+    {
+      "id": "cola-zero",
+      "categoryId": "drinks",
+      "sortOrder": 2,
+      "price": 2.8,
+      "active": true,
+      "subCategory": "soft-drinks"
+    },
+    {
+      "id": "kombucha",
+      "categoryId": "drinks",
+      "sortOrder": 3,
+      "price": 4.8,
+      "active": true,
+      "subCategory": "soft-drinks"
+    },
+    {
+      "id": "ice-tea",
+      "categoryId": "drinks",
+      "sortOrder": 4,
+      "price": 2.8,
+      "active": true,
+      "subCategory": "soft-drinks"
+    },
+    {
+      "id": "pink-grapefruit",
+      "categoryId": "drinks",
+      "sortOrder": 5,
+      "price": 4,
+      "active": true,
+      "subCategory": "soft-drinks"
+    },
+    {
+      "id": "ginger-beer",
+      "categoryId": "drinks",
+      "sortOrder": 6,
+      "price": 4,
+      "active": true,
+      "subCategory": "soft-drinks"
+    },
+    {
+      "id": "ginger-ale",
+      "categoryId": "drinks",
+      "sortOrder": 7,
+      "price": 4,
+      "active": true,
+      "subCategory": "soft-drinks"
+    },
+    {
+      "id": "still-water",
+      "categoryId": "drinks",
+      "sortOrder": 8,
+      "price": 2.2,
+      "active": true,
+      "subCategory": "soft-drinks"
+    },
+    {
+      "id": "sparkling-water",
+      "categoryId": "drinks",
+      "sortOrder": 9,
+      "price": 2.6,
+      "active": true,
+      "subCategory": "soft-drinks"
+    },
+    {
+      "id": "filtered-water",
+      "categoryId": "drinks",
+      "sortOrder": 10,
+      "price": 2,
+      "active": true,
+      "subCategory": "soft-drinks"
+    },
+    {
+      "id": "pomegranate-juice",
+      "categoryId": "drinks",
+      "sortOrder": 1,
+      "price": 4.4,
+      "active": true,
+      "subCategory": "juices"
+    },
+    {
+      "id": "apple-juice",
+      "categoryId": "drinks",
+      "sortOrder": 2,
+      "price": 4.4,
+      "active": true,
+      "subCategory": "juices"
+    },
+    {
+      "id": "orange-juice",
+      "categoryId": "drinks",
+      "sortOrder": 3,
+      "price": 4.4,
+      "active": true,
+      "subCategory": "juices"
+    },
+    {
+      "id": "carrot-juice",
+      "categoryId": "drinks",
+      "sortOrder": 4,
+      "price": 4.4,
+      "active": true,
+      "subCategory": "juices"
+    },
+    {
+      "id": "ayran",
+      "categoryId": "drinks",
+      "sortOrder": 5,
+      "price": 3.9,
+      "active": true,
+      "subCategory": "juices"
+    },
+    {
+      "id": "lemonade",
+      "categoryId": "drinks",
+      "sortOrder": 6,
+      "price": 3.5,
+      "active": true,
+      "subCategory": "juices"
+    },
+    {
+      "id": "lemonade-maida",
+      "categoryId": "drinks",
+      "sortOrder": 7,
+      "price": 4,
+      "active": true,
+      "subCategory": "juices"
+    },
+    {
+      "id": "lemonade-pitcher",
+      "categoryId": "drinks",
+      "sortOrder": 8,
+      "price": 13,
+      "active": true,
+      "subCategory": "juices"
+    },
+    {
+      "id": "juice-buzz",
+      "categoryId": "drinks",
+      "sortOrder": 9,
+      "price": 4.8,
+      "active": true,
+      "subCategory": "juices"
+    },
+    {
+      "id": "red-fruits",
+      "categoryId": "drinks",
+      "sortOrder": 1,
+      "price": 5,
+      "active": true,
+      "subCategory": "milkshakes"
+    },
+    {
+      "id": "strawberry-banana",
+      "categoryId": "drinks",
+      "sortOrder": 2,
+      "price": 5,
+      "active": true,
+      "subCategory": "milkshakes"
+    },
+    {
+      "id": "milkshake-banana",
+      "categoryId": "drinks",
+      "sortOrder": 3,
+      "price": 5.5,
+      "active": true,
+      "subCategory": "milkshakes"
+    },
+    {
+      "id": "date-escape",
+      "categoryId": "drinks",
+      "sortOrder": 4,
+      "price": 5.5,
+      "active": true,
+      "subCategory": "milkshakes"
+    },
+    {
+      "id": "coffee-shake",
+      "categoryId": "drinks",
+      "sortOrder": 5,
+      "price": 5.5,
+      "active": true,
+      "subCategory": "milkshakes"
+    },
+    {
+      "id": "mocktail-paloma",
+      "categoryId": "drinks",
+      "sortOrder": 1,
+      "price": 8,
+      "active": true,
+      "subCategory": "mocktails"
+    },
+    {
+      "id": "mocktail-kombucha-mojito",
+      "categoryId": "drinks",
+      "sortOrder": 2,
+      "price": 7.9,
+      "active": true,
+      "subCategory": "mocktails"
+    },
+    {
+      "id": "juice-passion-fruit",
+      "categoryId": "drinks",
+      "sortOrder": 3,
+      "price": 6.5,
+      "active": true,
+      "subCategory": "mocktails"
+    },
+    {
+      "id": "cocktail-aperol-spritz",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 1,
+      "price": 9,
+      "active": true,
+      "subCategory": "classics"
+    },
+    {
+      "id": "cocktail-mimosa",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 2,
+      "price": 8,
+      "active": true,
+      "subCategory": "classics"
+    },
+    {
+      "id": "cocktail-martini",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 3,
+      "price": 12,
+      "active": true,
+      "subCategory": "classics"
+    },
+    {
+      "id": "cocktail-gin-basil-smash",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 4,
+      "price": 12,
+      "active": true,
+      "subCategory": "classics"
+    },
+    {
+      "id": "cocktail-daiquiri",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 5,
+      "price": 11,
+      "active": true,
+      "subCategory": "classics"
+    },
+    {
+      "id": "cocktail-negroni",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 6,
+      "price": 11,
+      "active": true,
+      "subCategory": "classics"
+    },
+    {
+      "id": "cocktail-naked-famous",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 7,
+      "price": 13,
+      "active": true,
+      "subCategory": "classics"
+    },
+    {
+      "id": "cocktail-caipirinha",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 8,
+      "price": 11,
+      "active": true,
+      "subCategory": "classics"
+    },
+    {
+      "id": "cocktail-moscow-mule",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 9,
+      "price": 11,
+      "active": true,
+      "subCategory": "classics"
+    },
+    {
+      "id": "cocktail-margarita",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 10,
+      "price": 12,
+      "active": true,
+      "subCategory": "classics"
+    },
+    {
+      "id": "cocktail-new-york-sour",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 11,
+      "price": 12,
+      "active": true,
+      "subCategory": "classics"
+    },
+    {
+      "id": "cocktail-espresso-martini",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 12,
+      "price": 12,
+      "active": true,
+      "subCategory": "classics"
+    },
+    {
+      "id": "cocktail-fatouch-rocks",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 1,
+      "price": 12.5,
+      "active": true,
+      "subCategory": "signatures"
+    },
+    {
+      "id": "cocktail-maida-martini",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 2,
+      "price": 12.5,
+      "active": true,
+      "subCategory": "signatures"
+    },
+    {
+      "id": "cocktail-mediterranean-gt",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 3,
+      "price": 13,
+      "active": true,
+      "subCategory": "signatures"
+    },
+    {
+      "id": "cocktail-warda",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 4,
+      "price": 12.5,
+      "active": true,
+      "subCategory": "signatures"
+    },
+    {
+      "id": "cocktail-thyme-margarita",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 5,
+      "price": 12.5,
+      "active": true,
+      "subCategory": "signatures"
+    },
+    {
+      "id": "cocktail-azeitona-cafe",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 6,
+      "price": 12.5,
+      "active": true,
+      "subCategory": "signatures"
+    },
+    {
+      "id": "cocktail-marie-antoinette",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 7,
+      "price": 13,
+      "active": true,
+      "subCategory": "signatures"
+    },
+    {
+      "id": "cocktail-soraya",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 8,
+      "price": 13,
+      "active": true,
+      "subCategory": "signatures"
+    },
+    {
+      "id": "cocktail-maida-passion",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 9,
+      "price": 12,
+      "active": true,
+      "subCategory": "signatures"
+    },
+    {
       "id": "beer-clay-cold",
       "categoryId": "beers",
-      "sortOrder": 90,
+      "sortOrder": 1,
+      "price": 4.5,
       "active": true
     },
     {
-      "id": "beer-draft-25",
+      "id": "beer-draft-30",
       "categoryId": "beers",
-      "sortOrder": 91,
+      "sortOrder": 2,
+      "price": 4.5,
       "active": true
     },
     {
       "id": "beer-draft-50",
       "categoryId": "beers",
-      "sortOrder": 92,
-      "active": true
-    },
-    {
-      "id": "beer-superbock",
-      "categoryId": "beers",
-      "sortOrder": 93,
+      "sortOrder": 3,
+      "price": 7.5,
       "active": true
     },
     {
       "id": "beer-musa-apa",
       "categoryId": "beers",
-      "sortOrder": 94,
+      "sortOrder": 4,
+      "price": 5,
       "active": true
+    },
+    {
+      "id": "beer-wannabe",
+      "categoryId": "beers",
+      "sortOrder": 5,
+      "price": 4.5,
+      "active": true
+    },
+    {
+      "id": "beer-raspberry-sour",
+      "categoryId": "beers",
+      "sortOrder": 6,
+      "price": 5.5,
+      "active": true
+    },
+    {
+      "id": "beer-superbock",
+      "categoryId": "beers",
+      "sortOrder": 7,
+      "price": 2.9,
+      "active": true
+    },
+    {
+      "id": "beer-cider",
+      "categoryId": "beers",
+      "sortOrder": 8,
+      "price": 4.5,
+      "active": true
+    },
+    {
+      "id": "arak-brun",
+      "categoryId": "arak",
+      "sortOrder": 1,
+      "price": 11,
+      "active": true
+    },
+    {
+      "id": "arak-jawary",
+      "categoryId": "arak",
+      "sortOrder": 2,
+      "price": 9,
+      "active": true
+    },
+    {
+      "id": "tea-other",
+      "categoryId": "drinks",
+      "sortOrder": 23,
+      "subCategory": "coffee",
+      "active": false
+    },
+    {
+      "id": "fritz-spritz",
+      "categoryId": "drinks",
+      "sortOrder": 11,
+      "subCategory": "soft-drinks",
+      "active": false
+    },
+    {
+      "id": "fritz-limo",
+      "categoryId": "drinks",
+      "sortOrder": 12,
+      "subCategory": "soft-drinks",
+      "active": false
+    },
+    {
+      "id": "tonic-water",
+      "categoryId": "drinks",
+      "sortOrder": 13,
+      "subCategory": "soft-drinks",
+      "active": false
+    },
+    {
+      "id": "soda-water",
+      "categoryId": "drinks",
+      "sortOrder": 14,
+      "subCategory": "soft-drinks",
+      "active": false
+    },
+    {
+      "id": "cocktail-manhattan",
+      "categoryId": "cocktails-wine",
+      "sortOrder": 13,
+      "subCategory": "classics",
+      "active": false
+    },
+    {
+      "id": "beer-draft-25",
+      "categoryId": "beers",
+      "sortOrder": 9,
+      "active": false
     },
     {
       "id": "alcohol-free-beer",
       "categoryId": "beers",
-      "sortOrder": 19,
-      "active": true
+      "sortOrder": 10,
+      "active": false
+    }
+  ],
+  "pages": [
+    {
+      "id": "food",
+      "sortOrder": 1,
+      "layout": {
+        "left": [
+          "starters"
+        ],
+        "right": [
+          "salads",
+          "mains",
+          "desserts"
+        ],
+        "bottom": [
+          "starters/couvert"
+        ]
+      }
     },
     {
-      "id": "red-fruits",
-      "categoryId": "drinks",
-      "sortOrder": 11,
-      "subCategory": "milkshakes",
-      "active": true
+      "id": "saj",
+      "sortOrder": 2,
+      "layout": {
+        "left": [
+          "saj-wraps/savoury"
+        ],
+        "right": [
+          "saj-wraps/sweet"
+        ]
+      }
     },
     {
-      "id": "strawberry-banana",
-      "categoryId": "drinks",
-      "sortOrder": 12,
-      "subCategory": "milkshakes",
-      "active": true
+      "id": "alcoholic",
+      "sortOrder": 3,
+      "layout": {
+        "left": [
+          "cocktails-wine/classics"
+        ],
+        "right": [
+          "cocktails-wine/signatures",
+          "beers"
+        ],
+        "bottom": [
+          "arak"
+        ]
+      }
     },
     {
-      "id": "date-escape",
-      "categoryId": "drinks",
-      "sortOrder": 13,
-      "subCategory": "milkshakes",
-      "active": true
+      "id": "non-alcoholic",
+      "sortOrder": 4,
+      "layout": {
+        "left": [
+          "drinks/coffee",
+          "drinks/juices",
+          "drinks/mocktails"
+        ],
+        "right": [
+          "drinks/soft-drinks",
+          "drinks/milkshakes"
+        ]
+      }
     },
     {
-      "id": "coffee-shake",
-      "categoryId": "drinks",
-      "sortOrder": 14,
-      "subCategory": "milkshakes",
-      "active": true
-    },
-    {
-      "id": "pomegranate-juice",
-      "categoryId": "drinks",
+      "id": "wines",
       "sortOrder": 5,
-      "subCategory": "juices",
-      "active": true
-    },
-    {
-      "id": "apple-juice",
-      "categoryId": "drinks",
-      "sortOrder": 6,
-      "subCategory": "juices",
-      "active": true
-    },
-    {
-      "id": "orange-juice",
-      "categoryId": "drinks",
-      "sortOrder": 7,
-      "subCategory": "juices",
-      "active": true
-    },
-    {
-      "id": "carrot-juice",
-      "categoryId": "drinks",
-      "sortOrder": 8,
-      "subCategory": "juices",
-      "active": true
-    },
-    {
-      "id": "ayran",
-      "categoryId": "drinks",
-      "sortOrder": 9,
-      "subCategory": "juices",
-      "active": true
+      "layout": {
+        "left": [
+          "wines/white-wine",
+          "wines/rose-wine",
+          "wines/green-wine"
+        ],
+        "right": [
+          "wines/red-wine",
+          "wines/sparkling-wine"
+        ]
+      }
     }
   ]
 }

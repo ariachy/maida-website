@@ -172,17 +172,21 @@
         "name": "SAJ WRAPS",
         "description": "Pão fino e estaladiço libanês cozido na chapa saj"
       },
-      "drinks": {
-        "name": "BEBIDAS",
-        "description": "Café, chá e refrescos"
-      },
       "cocktails-wine": {
         "name": "COCKTAILS",
-        "description": "Cocktails de assinatura e clássicos"
+        "description": "Clássicos e criações da Maída"
       },
       "beers": {
         "name": "CERVEJAS",
-        "description": "Cervejas de pressão e garrafa"
+        "description": ""
+      },
+      "arak": {
+        "name": "ARAK",
+        "description": "copo (60ml) | ¼ garrafa (175ml) | ½ garrafa (350ml)"
+      },
+      "drinks": {
+        "name": "SEM ÁLCOOL",
+        "description": "Café, chá e refrescos"
       },
       "wines": {
         "name": "VINHOS",
@@ -191,18 +195,16 @@
     },
     "subCategories": {
       "starters": "PRATINHOS",
-      "dips": "DIPS (SERVIDOS COM CRACKERS CASEIRAS)",
+      "dips": "DIPS (servidos com crackers caseiras)",
       "couvert": "ACOMPANHAMENTOS & COUVERT",
-      "savoury": "Salgados",
-      "sweet": "Doces",
-      "coffee": "CAFÉ",
-      "tea": "CHÁ",
-      "lemonade": "LIMONADA",
-      "juices": "FRESCOS E FRUTADOS",
-      "milkshakes": "SMOOTHIES & BATIDOS",
+      "savoury": "SALGADOS",
+      "sweet": "DOCES",
+      "coffee": "CAFÉ · CHÁ",
+      "juices": "FRESCOS · FRUTADOS",
+      "milkshakes": "SMOOTHIES · BATIDOS",
       "soft-drinks": "REFRIGERANTES",
       "mocktails": "MOCKTAILS",
-      "signatures": "CRIAÇÕES DA MAÍDA",
+      "signatures": "DA MAÍDA",
       "classics": "CLÁSSICOS",
       "white-wine": "BRANCO",
       "rose-wine": "ROSÉ",
@@ -384,31 +386,31 @@
         "description": "Creme libanês tradicional com mel e pistácios"
       },
       "espresso": {
-        "name": "Espresso",
+        "name": "ESPRESSO",
         "description": ""
       },
       "espresso-double": {
-        "name": "Espresso Duplo",
+        "name": "ESPRESSO DUPLO",
         "description": ""
       },
       "americano": {
-        "name": "Americano",
+        "name": "AMERICANO",
         "description": ""
       },
       "cappuccino": {
-        "name": "Cappuccino",
+        "name": "CAPPUCCINO",
         "description": ""
       },
       "latte": {
-        "name": "Latte",
+        "name": "LATTE",
         "description": ""
       },
       "flat-white": {
-        "name": "Flat White",
+        "name": "FLAT WHITE",
         "description": ""
       },
       "mocha": {
-        "name": "Mocha",
+        "name": "MOCHA",
         "description": ""
       },
       "lebanese-coffee": {
@@ -416,7 +418,7 @@
         "description": "Com cardamomo"
       },
       "hot-chocolate": {
-        "name": "Chocolate Quente",
+        "name": "CHOCOLATE QUENTE",
         "description": ""
       },
       "tea-fresh-mint": {
@@ -452,39 +454,39 @@
         "description": ""
       },
       "lemonade-maida": {
-        "name": "Limonada Maída",
-        "description": "Xarope de rosas, xarope de mástique, limão"
+        "name": "LIMONADA MAÍDA (xarope de rosas, xarope de mástique, limão)",
+        "description": ""
       },
       "lemonade-pitcher": {
-        "name": "Limonada (jarro)",
+        "name": "LIMONADA (jarro)",
         "description": ""
       },
       "juice-passion-fruit": {
-        "name": "Maracujá e Canela",
+        "name": "MARACUJÁ & CANELA",
         "description": ""
       },
       "juice-buzz": {
-        "name": "Buzz",
-        "description": "Cenoura, maçã, gengibre"
+        "name": "BUZZ (cenoura, maçã, gengibre)",
+        "description": ""
       },
       "milkshake-banana": {
-        "name": "Banana Heaven",
+        "name": "BANANA HEAVEN",
         "description": "leite, banana, mel."
       },
       "cola": {
-        "name": "Cola",
+        "name": "COLA",
         "description": ""
       },
       "cola-zero": {
-        "name": "Cola Zero",
+        "name": "COLA ZERO",
         "description": ""
       },
       "kombucha": {
-        "name": "Kombucha",
+        "name": "KOMBUCHA",
         "description": ""
       },
       "ice-tea": {
-        "name": "Ice Tea (Pêssego ou Limão)",
+        "name": "ICE TEA",
         "description": ""
       },
       "fritz-spritz": {
@@ -496,15 +498,15 @@
         "description": ""
       },
       "pink-grapefruit": {
-        "name": "Toranja Rosa",
-        "description": "Fever-tree"
+        "name": "TORANJA ROSA",
+        "description": ""
       },
       "still-water": {
-        "name": "Água Sem Gás",
+        "name": "ÁGUA SEM GÁS (50cl)",
         "description": ""
       },
       "sparkling-water": {
-        "name": "Água Com Gás",
+        "name": "ÁGUA COM GÁS",
         "description": ""
       },
       "tonic-water": {
@@ -516,19 +518,19 @@
         "description": ""
       },
       "ginger-beer": {
-        "name": "Ginger Beer (Fever-tree)",
+        "name": "GINGER BEER",
         "description": ""
       },
       "ginger-ale": {
-        "name": "Ginger Ale",
+        "name": "GINGER ALE",
         "description": ""
       },
       "mocktail-paloma": {
-        "name": "Paloma Picante",
+        "name": "PALOMA PICANTE",
         "description": ""
       },
       "mocktail-kombucha-mojito": {
-        "name": "Kombucha Mojito",
+        "name": "KOMBUCHA MOJITO",
         "description": ""
       },
       "cocktail-fatouch-rocks": {
@@ -537,11 +539,11 @@
       },
       "cocktail-maida-martini": {
         "name": "MAÍDA MARTINI",
-        "description": "gin, vermute, flor de laranjeira."
+        "description": "dry gin, Carpano dry, flor de laranjeira."
       },
       "cocktail-mediterranean-gt": {
         "name": "MEDITERRANEAN G&T",
-        "description": "gin Mare, lillet, lima, água tónica"
+        "description": "Gin Mare, Lillet, lima, água tónica."
       },
       "cocktail-warda": {
         "name": "WARDA",
@@ -564,52 +566,52 @@
         "description": "arak, rum, limão, ginjinha."
       },
       "cocktail-mimosa": {
-        "name": "Mimosa",
-        "description": "Espumante, laranja"
+        "name": "MIMOSA",
+        "description": "espumante, laranja fresca."
       },
       "cocktail-manhattan": {
         "name": "Manhattan",
         "description": "Bourbon, vermute, bitter"
       },
       "cocktail-gin-basil-smash": {
-        "name": "Gin Basil Smash",
-        "description": "Gin, manjericão, limão"
+        "name": "GIN BASIL SMASH",
+        "description": "gin, manjericão, limão."
       },
       "cocktail-daiquiri": {
-        "name": "Daiquiri",
-        "description": "Rum branco, lima"
+        "name": "DAIQUIRI",
+        "description": "rum branco, lima."
       },
       "cocktail-negroni": {
-        "name": "Negroni",
-        "description": "Gin, campari, vermute"
+        "name": "NEGRONI",
+        "description": "gin, Campari, vermute."
       },
       "cocktail-naked-famous": {
-        "name": "Naked & Famous",
-        "description": "Mezcal, chartreuse, aperol, lima"
+        "name": "NAKED & FAMOUS",
+        "description": "mezcal, Chartreuse, Aperol, lima."
       },
       "cocktail-caipirinha": {
-        "name": "Caipirinha de Limão",
-        "description": "Cachaça, açúcar demerara, lima"
+        "name": "CAIPIRINHA DE LIMÃO",
+        "description": "cachaça, açúcar demerara, lima."
       },
       "cocktail-espresso-martini": {
-        "name": "Espresso Martini",
-        "description": "Vodka, licor de café, espresso"
+        "name": "ESPRESSO MARTINI",
+        "description": "vodka, licor de café, espresso."
       },
       "cocktail-aperol-spritz": {
-        "name": "Aperol Spritz",
-        "description": "Prosecco, aperol, água com gás"
+        "name": "APEROL SPRITZ",
+        "description": "prosecco, Aperol, água com gás."
       },
       "cocktail-moscow-mule": {
-        "name": "Moscow Mule",
-        "description": "Vodka, gengibre, limão, bitter"
+        "name": "MOSCOW MULE",
+        "description": "vodka, gengibre, limão, bitters."
       },
       "cocktail-margarita": {
-        "name": "Margarita",
-        "description": "Tequila, licor de laranja, limão"
+        "name": "MARGARITA",
+        "description": "tequila, licor de laranja, limão."
       },
       "cocktail-new-york-sour": {
-        "name": "New York Sour",
-        "description": "Bourbon, limão, bitter, vinho tinto"
+        "name": "NEW YORK SOUR",
+        "description": "bourbon, limão, bitters, vinho tinto."
       },
       "wine-2160-white": {
         "name": "2160 (Douro)",
@@ -644,15 +646,15 @@
         "description": "Seco e fresco."
       },
       "beer-clay-cold": {
-        "name": "CLAY COLD",
-        "description": "superbock, limão, sal. Servida em copo de barro frio"
+        "name": "CLAY COLD (loira, limão, sal, copo de barro)",
+        "description": ""
       },
       "beer-draft-25": {
         "name": "Imperial - LISBON LAGER (25cl)",
         "description": ""
       },
       "beer-draft-50": {
-        "name": "CANECA - LISBON LAGER (50cl)",
+        "name": "CANECA (50cl)",
         "description": ""
       },
       "beer-superbock": {
@@ -716,51 +718,51 @@
         "description": ""
       },
       "cortado": {
-        "name": "Cortado",
+        "name": "CORTADO",
         "description": ""
       },
       "americano-iced": {
-        "name": "Americano (Gelado)",
+        "name": "AMERICANO GELADO",
         "description": ""
       },
       "hot-chocolate-sweet": {
-        "name": "Chocolate Quente (Doce)",
+        "name": "CHOCOLATE QUENTE DOCE",
         "description": ""
       },
       "latte-iced": {
-        "name": "Latte (Gelado)",
+        "name": "LATTE GELADO",
         "description": ""
       },
       "latte-macchiato": {
-        "name": "Latte Macchiato",
+        "name": "LATTE MACCHIATO",
         "description": ""
       },
       "lavender-coffee": {
-        "name": "Café de Alfazema",
+        "name": "CAFÉ DE ALFAZEMA",
         "description": ""
       },
       "macchiato": {
-        "name": "Macchiato",
+        "name": "MACCHIATO",
         "description": ""
       },
       "milk": {
-        "name": "Leite",
+        "name": "LEITE",
         "description": ""
       },
       "tea-moroccan": {
-        "name": "Chá Marroquino",
+        "name": "CHÁ MARROQUINO",
         "description": ""
       },
       "tea-zhourat": {
-        "name": "Chá Zhourat",
+        "name": "CHÁ ZHOURAT (especialidade)",
         "description": ""
       },
       "tea-maida": {
-        "name": "Chá Maída",
+        "name": "CHÁ MAÍDA (especialidade)",
         "description": ""
       },
       "tea-cafe-blanc": {
-        "name": "Café Blanc",
+        "name": "CAFÉ BLANC",
         "description": ""
       },
       "tea-other": {
@@ -773,7 +775,7 @@
       },
       "strawberry-banana": {
         "name": "STRAWBERRY BANANA",
-        "description": "morango, banana, iogurte, mel."
+        "description": "morango, banana, espinafre, iogurte."
       },
       "date-escape": {
         "name": "DATE ESCAPE",
@@ -784,19 +786,19 @@
         "description": "leite, banana, baunilha, espresso."
       },
       "pomegranate-juice": {
-        "name": "Romã (sumo)",
+        "name": "ROMÃ (sumo)",
         "description": ""
       },
       "apple-juice": {
-        "name": "Maçã (sumo)",
+        "name": "MAÇÃ (sumo)",
         "description": ""
       },
       "orange-juice": {
-        "name": "Laranja (sumo)",
+        "name": "LARANJA (sumo)",
         "description": ""
       },
       "carrot-juice": {
-        "name": "Cenoura (sumo)",
+        "name": "CENOURA (sumo)",
         "description": ""
       },
       "ayran": {
@@ -804,8 +806,52 @@
         "description": ""
       },
       "lemonade": {
-        "name": "Limonada",
+        "name": "LIMONADA",
         "description": ""
+      },
+      "lebanese-rakwe": {
+        "name": "RAKWE LIBANESA",
+        "description": ""
+      },
+      "tea-bags": {
+        "name": "CHÁ EM SAQUETA",
+        "description": ""
+      },
+      "filtered-water": {
+        "name": "ÁGUA FILTRADA (70cl)",
+        "description": ""
+      },
+      "cocktail-martini": {
+        "name": "MARTINI",
+        "description": "gin, vermute."
+      },
+      "cocktail-maida-passion": {
+        "name": "MAÍDA PASSION",
+        "description": "vodka, maracujá, limão."
+      },
+      "beer-draft-30": {
+        "name": "IMPERIAL (30cl)",
+        "description": ""
+      },
+      "beer-wannabe": {
+        "name": "WANNABE (0% álcool)",
+        "description": ""
+      },
+      "beer-raspberry-sour": {
+        "name": "RASPBERRY SOUR",
+        "description": ""
+      },
+      "beer-cider": {
+        "name": "SIDRA (pera e gengibre)",
+        "description": ""
+      },
+      "arak-brun": {
+        "name": "BRUN",
+        "description": "| 30 | 50"
+      },
+      "arak-jawary": {
+        "name": "JAWARY",
+        "description": "| 22 | 40"
       }
     },
     "tags": {
@@ -814,7 +860,16 @@
       "gluten-free": "SG"
     },
     "glass": "copo",
-    "bottle": "garrafa"
+    "bottle": "garrafa",
+    "pages": {
+      "food": "Comida",
+      "saj": "SAJ Wraps",
+      "alcoholic": "Alcoólicas",
+      "non-alcoholic": "Sem Álcool",
+      "wines": "Vinhos"
+    },
+    "tagline": "people, plates, playlists.",
+    "backToTop": "Voltar ao topo"
   },
   "drinks": {
     "label": "Das Nossas Raízes",

@@ -1,11 +1,29 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { ArrowUp } from 'lucide-react';
 import { track } from '@/lib/analytics';
 import { useBooking } from '@/hooks/useBooking';
-import Image from 'next/image';
+
+/* ------------------------------------------------------------------------------------
+ * Menu page in the style of the printed menu (Oct 2026 PDFs).
+ *
+ * Data model (src/data/menu.json):
+ *  - pages[]            : the top-level switch (Food, SAJ Wraps, Alcoholic, Non-alcoholic,
+ *                         Wines). Each page has a layout of "blocks" for the desktop
+ *                         two-column composition: left / right / bottom. A block is a
+ *                         category id ("starters") or a sub-category ref ("starters/couvert").
+ *  - categories[].page  : which page a category belongs to (used for anything a layout
+ *                         does not reference explicitly, e.g. a category added in the admin).
+ *  - categories[].headless : the category title is not printed; its sub-categories are
+ *                         printed as top-level sections (Classics / Maída's, Coffee · Tea …).
+ *  - subCategories[].boxed : the section gets the framed box of the PDF.
+ *  - items[].price      : in €, printed as "10,5" like the PDF.
+ *
+ * Desktop (lg and up): the page's blocks in two columns + a full-width bottom strip, no
+ * jump bar — the whole page is visible, as on paper. Below lg: one column in reading
+ * order, a sticky jump bar that follows the scroll, and a back-to-top button.
+ * ---------------------------------------------------------------------------------- */
 
 interface InlineTranslation {
   name?: string;
@@ -17,129 +35,90 @@ interface MenuItem {
   categoryId: string;
   sortOrder: number;
   subCategory?: string;
-  active?: boolean; // Phase 0: undefined or true = visible; false = hidden
-  price?: number; // in €; omitted = not shown
+  active?: boolean;
+  price?: number;
   en?: InlineTranslation;
   pt?: InlineTranslation;
 }
 
-// "10,5 €" / "14 €" — Portuguese convention, matches the printed menu. Both locales.
-const formatPrice = (price: number): string => {
-  const s = Number.isInteger(price) ? String(price) : price.toFixed(1);
-  return `${s.replace('.', ',')} €`;
-};
-
-const hasPrice = (item: MenuItem) => typeof item.price === 'number' && item.price > 0;
+interface Category {
+  id: string;
+  slug: string;
+  image: string;
+  sortOrder: number;
+  page?: string;
+  headless?: boolean;
+  printNote?: boolean; // print the category description under the title (ARAK sizes)
+}
 
 interface SubCategoryRecord {
   id: string;
   categoryId: string;
   sortOrder: number;
+  boxed?: boolean;
+}
+
+interface PageLayout {
+  left?: string[];
+  right?: string[];
+  bottom?: string[];
+}
+
+interface PageRecord {
+  id: string;
+  sortOrder: number;
+  layout?: PageLayout;
 }
 
 interface MenuClientProps {
   translations: any;
   menuData: {
-    categories: Array<{ id: string; slug: string; image: string; sortOrder: number }>;
-    subCategories?: Array<SubCategoryRecord>;
-    items: Array<MenuItem>;
+    categories: Category[];
+    subCategories?: SubCategoryRecord[];
+    pages?: PageRecord[];
+    items: MenuItem[];
   };
   locale: string;
 }
 
-// Sub-category GROUPS and their order now come from menuData.subCategories (records
-// with their own sortOrder). Item order within a group comes from item.sortOrder.
-// Inactive items (active === false) are hidden. `couvert` renders as a boxed section
-// at the top of its category, matching the existing design. Falls back gracefully if
-// the subCategories records are absent (old data).
+/** A printable section: a whole category (with its sub-sections) or one sub-category. */
+interface Block {
+  key: string; // "starters" | "starters/couvert"
+  title: string;
+  categoryId: string;
+  subId?: string;
+  items: MenuItem[]; // direct items (for a category block: items without sub-category)
+  subSections: { id: string; title: string; items: MenuItem[]; boxed: boolean }[];
+  boxed: boolean;
+  note?: string; // category description, printed under the title (ARAK sizes)
+  isCouvertStrip: boolean;
+  isStrip?: boolean; // bottom blocks print as one inline line, like the PDF
+}
 
-export default function MenuClient({ translations, menuData, locale }: MenuClientProps) {
-  const [activeCategory, setActiveCategory] = useState(menuData.categories[0]?.id || '');
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(false);
+const NAVBAR_OFFSET = 72; // px, matches the sticky Navbar height on small screens
 
-  const { menu } = translations;
-  const { categories, items } = menuData;
-  const subCategoryRecords: SubCategoryRecord[] = menuData.subCategories || [];
+// "10,5" / "14" — the printed menu's format; the footer says prices are in €.
+const formatPrice = (price: number) =>
+  (Number.isInteger(price) ? String(price) : price.toFixed(1)).replace('.', ',');
 
-  const sortedCategories = [...categories].sort((a, b) => a.sortOrder - b.sortOrder);
+const hasPrice = (i: MenuItem) => typeof i.price === 'number' && i.price > 0;
 
-  const { openWidget, isOpening } = useBooking(locale);
-  
-  const handleCategoryClick = (categoryId: string) => {
-  setActiveCategory(categoryId);
-  const cat = categories.find((c) => c.id === categoryId);
-  track('menu_category_view', {
-    menu_category: cat?.slug || categoryId,
-    locale,
-  });
-
+// "SHISH BARAK (house specialty)" -> ["SHISH BARAK", "house specialty", ""]
+// "SAJ (baked in-house) bread or crackers" -> ["SAJ", "baked in-house", "bread or crackers"]
+const splitName = (name: string): [string, string | undefined, string] => {
+  const m = name.match(/^(.*?)\s*\((.*?)\)\s*(.*)$/);
+  return m ? [m[1], m[2], m[3]] : [name, undefined, ''];
 };
 
-  useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    const params = new URLSearchParams(window.location.search);
-    const categoryParam = params.get('category') || hash;
-    if (categoryParam) {
-      const category = categories.find((c) => c.slug === categoryParam);
-      if (category) setActiveCategory(category.id);
-    }
-  }, [categories]);
+const GREEN_PAGES = new Set(['alcoholic', 'non-alcoholic', 'wines']);
 
-  // ---- Visibility ----
-  // Strict: an item must opt IN. Every live item now carries `active: true`
-  // explicitly (menu.json), so a new item cannot leak onto the page just because
-  // someone forgot the flag.
-  const isVisible = (item: MenuItem) => item.active === true;
+export default function MenuClient({ translations, menuData, locale }: MenuClientProps) {
+  const { menu } = translations;
+  const { categories, items } = menuData;
+  const subRecords: SubCategoryRecord[] = menuData.subCategories || [];
+  const { openWidget, isOpening } = useBooking(locale);
 
-  // ---- Grouping helpers ----
-  const itemsInCategory = (categoryId: string) =>
-    items
-      .filter((i) => i.categoryId === categoryId && isVisible(i))
-      .sort((a, b) => a.sortOrder - b.sortOrder);
-
-  // Ordered sub-category ids for a category (excludes 'couvert', which renders
-  // separately). Prefers the subCategories records; falls back to deriving from items.
-  const orderedSubCategoryIds = (categoryId: string): string[] => {
-    const recs = subCategoryRecords
-      .filter((s) => s.categoryId === categoryId && s.id !== 'couvert')
-      .sort((a, b) => a.sortOrder - b.sortOrder)
-      .map((s) => s.id);
-    if (recs.length) return recs;
-
-    // Fallback: derive from items by lowest sortOrder.
-    const minOrder: Record<string, number> = {};
-    for (const it of items) {
-      if (it.categoryId !== categoryId || !isVisible(it)) continue;
-      const sc = it.subCategory;
-      if (!sc || sc === 'couvert') continue;
-      minOrder[sc] = minOrder[sc] === undefined ? it.sortOrder : Math.min(minOrder[sc], it.sortOrder);
-    }
-    return Object.keys(minOrder).sort((a, b) => minOrder[a] - minOrder[b]);
-  };
-
-  const itemsForSubCategory = (categoryId: string, subId: string) =>
-    items
-      .filter((i) => i.categoryId === categoryId && i.subCategory === subId && isVisible(i))
-      .sort((a, b) => a.sortOrder - b.sortOrder);
-
-  const ungroupedItems = (categoryId: string) =>
-    items
-      .filter((i) => i.categoryId === categoryId && !i.subCategory && isVisible(i))
-      .sort((a, b) => a.sortOrder - b.sortOrder);
-
-  // Resolution order, per field, independently:
-  //   1. item[locale]              — a deliberate per-item override for THIS locale
-  //   2. translations[locale].items — the locale dictionary (the normal source)
-  //   3. item.en                    — last resort only, so an English string can never
-  //                                   silently win on the Portuguese page
-  //   4. humanised id               — visible-broken, better than blank
-  //
-  // The old order was item[locale] -> item.en -> dictionary, which let a stale
-  // per-item override shadow a corrected translation, and let English render on /pt.
-  // `name` and `description` resolve separately so a pt.name override cannot drag an
-  // en.description along with it.
+  // ---------- text resolution (locale dictionary first, inline override as fallback) ----------
   const resolveField = (item: MenuItem, field: 'name' | 'description'): string | undefined => {
     const own = (item as any)[locale]?.[field];
     if (own) return own;
@@ -147,304 +126,426 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
     if (dict) return dict;
     return item.en?.[field];
   };
-
-  const getName = (item: MenuItem) =>
-    resolveField(item, 'name') || item.id.replace(/-/g, ' ');
-
+  const getName = (item: MenuItem) => resolveField(item, 'name') || item.id.replace(/-/g, ' ');
   const getDescription = (item: MenuItem) => resolveField(item, 'description') || '';
-  const subCategoryName = (subId: string) =>
-    menu?.subCategories?.[subId] || subId.replace(/-/g, ' ');
+  const categoryName = (id: string) => menu?.categories?.[id]?.name || id.replace(/-/g, ' ');
+  const categoryNote = (id: string) => menu?.categories?.[id]?.description || '';
+  const subName = (id: string) => menu?.subCategories?.[id] || id.replace(/-/g, ' ');
+  const pageName = (id: string) => menu?.pages?.[id] || id.replace(/-/g, ' ');
 
-  // ---- Scroll arrows ----
-  const updateScrollState = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-      const hasOverflow = scrollWidth > clientWidth + 10;
-      setShowLeftArrow(hasOverflow && scrollLeft > 10);
-      setShowRightArrow(hasOverflow && scrollLeft < scrollWidth - clientWidth - 10);
+  const isLive = (i: MenuItem) => i.active !== false;
+
+  // ---------- pages ----------
+  const pages: PageRecord[] = useMemo(() => {
+    if (menuData.pages && menuData.pages.length) {
+      return [...menuData.pages].sort((a, b) => a.sortOrder - b.sortOrder);
     }
+    // Old data without pages: one page per category, in category order.
+    return [...categories]
+      .sort((a, b) => a.sortOrder - b.sortOrder)
+      .map((c, i) => ({ id: c.id, sortOrder: i + 1, layout: { left: [c.id] } }));
+  }, [menuData.pages, categories]);
+
+  const [activePage, setActivePage] = useState(pages[0]?.id || '');
+  const [activeSection, setActiveSection] = useState('');
+  const [showTop, setShowTop] = useState(false);
+  const tone = GREEN_PAGES.has(activePage) ? 'green' : 'red';
+
+  // ---------- blocks ----------
+  const subsOf = (categoryId: string) =>
+    subRecords.filter((s) => s.categoryId === categoryId).sort((a, b) => a.sortOrder - b.sortOrder);
+
+  const itemsOf = (categoryId: string, subId?: string) =>
+    items
+      .filter((i) => i.categoryId === categoryId && isLive(i) && (i.subCategory || undefined) === subId)
+      .sort((a, b) => a.sortOrder - b.sortOrder);
+
+  /** Build the printable blocks for a page, in reading order (left, right, bottom). */
+  const buildPage = (page: PageRecord) => {
+    const layout = page.layout || {};
+    const refs = {
+      left: layout.left || [],
+      right: layout.right || [],
+      bottom: layout.bottom || [],
+    };
+    const referenced = new Set([...refs.left, ...refs.right, ...refs.bottom]);
+    const referencedSubs = new Set(
+      Array.from(referenced).filter((r) => r.includes('/')).map((r) => r.split('/')[1])
+    );
+
+    // Categories that belong to this page but are not placed by the layout (e.g. added
+    // later in the admin) go to whichever column is shorter.
+    categories
+      .filter((c) => (c.page || pages[0]?.id) === page.id && !referenced.has(c.id))
+      .filter((c) => !subsOf(c.id).some((s) => referenced.has(`${c.id}/${s.id}`)))
+      .sort((a, b) => a.sortOrder - b.sortOrder)
+      .forEach((c) => (refs.left.length <= refs.right.length ? refs.left : refs.right).push(c.id));
+
+    const makeBlock = (ref: string): Block | null => {
+      const [categoryId, subId] = ref.split('/');
+      const category = categories.find((c) => c.id === categoryId);
+      if (!category) return null;
+
+      if (subId) {
+        const rec = subRecords.find((s) => s.categoryId === categoryId && s.id === subId);
+        const blockItems = itemsOf(categoryId, subId);
+        if (blockItems.length === 0) return null;
+        return {
+          key: ref,
+          title: subName(subId),
+          categoryId,
+          subId,
+          items: blockItems,
+          subSections: [],
+          boxed: !!rec?.boxed,
+          isCouvertStrip: subId === 'couvert',
+        };
+      }
+
+      // Whole category. Sub-categories placed elsewhere on this page are left out here.
+      const subSections = subsOf(categoryId)
+        .filter((s) => !referencedSubs.has(s.id))
+        .map((s) => ({ id: s.id, title: subName(s.id), items: itemsOf(categoryId, s.id), boxed: !!s.boxed }))
+        .filter((s) => s.items.length > 0);
+      const direct = itemsOf(categoryId, undefined);
+      if (direct.length === 0 && subSections.length === 0) return null;
+
+      if (category.headless) {
+        // Each sub-category is its own top-level section.
+        return {
+          key: ref,
+          title: '',
+          categoryId,
+          items: direct,
+          subSections,
+          boxed: false,
+          isCouvertStrip: false,
+        };
+      }
+      return {
+        key: ref,
+        title: categoryName(categoryId),
+        categoryId,
+        items: direct,
+        subSections,
+        boxed: false,
+        note: category.printNote ? categoryNote(categoryId) || undefined : undefined,
+        isCouvertStrip: false,
+      };
+    };
+
+    const build = (list: string[]) => list.map(makeBlock).filter((b): b is Block => !!b);
+    const left = build(refs.left);
+    const right = build(refs.right);
+    const bottom = build(refs.bottom);
+
+    // Headless categories expand into one jump entry per sub-section.
+    const expand = (blocks: Block[]): Block[] =>
+      blocks.flatMap((b) =>
+        b.title === '' && b.subSections.length
+          ? b.subSections.map((s) => ({
+              key: `${b.categoryId}/${s.id}`,
+              title: s.title,
+              categoryId: b.categoryId,
+              subId: s.id,
+              items: s.items,
+              subSections: [],
+              boxed: s.boxed,
+              isCouvertStrip: false,
+            }))
+          : [b]
+      );
+
+    return { left: expand(left), right: expand(right), bottom: expand(bottom).map((b) => ({ ...b, isStrip: true })) };
   };
 
+  const pageBlocks = useMemo(
+    () => Object.fromEntries(pages.map((p) => [p.id, buildPage(p)])),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pages, categories, subRecords, items, locale]
+  );
+
+  const current = pageBlocks[activePage] || { left: [], right: [], bottom: [] };
+  const readingOrder = [...current.left, ...current.right, ...current.bottom];
+  const sectionId = (block: Block) => `menu-${block.key.replace('/', '--')}`;
+
+  // ---------- page switch ----------
+  const topRef = useRef<HTMLDivElement>(null);
+  const handlePage = (id: string) => {
+    if (id === activePage) return;
+    setActivePage(id);
+    setActiveSection('');
+    track('menu_category_view', { menu_category: id, locale });
+    // Bring the switch back into view so the new page starts at its top.
+    requestAnimationFrame(() => {
+      const top = topRef.current?.getBoundingClientRect().top ?? 0;
+      if (top < NAVBAR_OFFSET) {
+        window.scrollTo({ top: window.scrollY + top - NAVBAR_OFFSET - 8, behavior: 'auto' });
+      }
+    });
+  };
+
+  // ---------- mobile: jump bar scroll-spy + back-to-top ----------
+  const jumpRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      container.addEventListener('scroll', updateScrollState);
-      updateScrollState();
-      window.addEventListener('resize', updateScrollState);
-      return () => {
-        container.removeEventListener('scroll', updateScrollState);
-        window.removeEventListener('resize', updateScrollState);
-      };
-    }
+    const ids = readingOrder.map(sectionId);
+    const els = ids.map((id) => document.getElementById(id)).filter((e): e is HTMLElement => !!e);
+    if (els.length === 0) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible.length) setActiveSection(visible[0].target.id);
+      },
+      { rootMargin: `-${NAVBAR_OFFSET + 56}px 0px -55% 0px`, threshold: 0 }
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activePage, locale]);
+
+  useEffect(() => {
+    // Keep the active jump link in view inside the scrolling bar.
+    const link = jumpRef.current?.querySelector<HTMLElement>(`[data-target="${activeSection}"]`);
+    link?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+  }, [activeSection]);
+
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 600);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const scrollLeft = () => scrollContainerRef.current?.scrollBy({ left: -200, behavior: 'smooth' });
-  const scrollRight = () => scrollContainerRef.current?.scrollBy({ left: 200, behavior: 'smooth' });
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // ---- Renderers ----
-  const renderItems = (itemsList: MenuItem[], compact = false) => {
+  // ---------- renderers ----------
+  const renderItem = (item: MenuItem, compact: boolean) => {
+    const [name, note, rest] = splitName(getName(item));
+    const description = getDescription(item);
     if (compact) {
+      // Lists without descriptions (coffee, soft drinks, beers): name left, price right.
       return (
-        <div className="flex flex-wrap justify-center gap-x-6 gap-y-1">
-          {itemsList.map((item) => {
-            const name = getName(item);
-            const description = getDescription(item);
-            return (
-              <span key={item.id} className="text-charcoal text-sm py-1">
-                {name}
-                {description && <span className="text-stone text-xs ml-1">({description})</span>}
-                {hasPrice(item) && (
-                  <span className="text-terracotta text-xs ml-1.5 whitespace-nowrap">{formatPrice(item.price!)}</span>
-                )}
-              </span>
-            );
-          })}
+        <div key={item.id} className="flex items-baseline justify-between gap-3 py-[3px]">
+          <span className="min-w-0">
+            <span className="font-semibold text-[13px] tracking-[0.14em] uppercase">{name}</span>
+            {note && <span className="italic text-[12.5px] ml-1.5 opacity-80">({note})</span>}
+            {rest && <span className="font-light text-[13px] ml-1.5">{rest}</span>}
+          </span>
+          {hasPrice(item) && (
+            <span className="font-light text-[14px] tabular-nums whitespace-nowrap">{formatPrice(item.price!)}</span>
+          )}
         </div>
       );
     }
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-4">
-        {itemsList.map((item) => {
-          const name = getName(item);
+      <div key={item.id} className="py-[5px]">
+        <div className="flex flex-wrap items-baseline gap-x-2">
+          <span className="font-semibold text-[13.5px] tracking-[0.14em] uppercase">{name}</span>
+          {note && <span className="italic text-[13px] opacity-80">({note})</span>}
+          {rest && <span className="font-light text-[14px]">{rest}</span>}
+          {hasPrice(item) && (
+            <span className="font-light text-[14px] tabular-nums whitespace-nowrap">{formatPrice(item.price!)}</span>
+          )}
+        </div>
+        {description && <p className="font-light text-[14px] leading-[1.35] mt-px max-w-[46ch]">{description}</p>}
+      </div>
+    );
+  };
+
+  const isCompactList = (list: MenuItem[]) => list.length > 0 && list.every((i) => !getDescription(i));
+
+  const renderItems = (list: MenuItem[]) => {
+    const compact = isCompactList(list);
+    return (
+      <div className={compact ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-x-8' : ''}>
+        {list.map((i) => renderItem(i, compact))}
+      </div>
+    );
+  };
+
+  const renderCouvertStrip = (block: Block) => (
+    <section
+      key={block.key}
+      id={sectionId(block)}
+      className={`scroll-mt-[136px] lg:scroll-mt-0 border-t ${T.rule} pt-5 mt-2`}
+    >
+      <h2 className="font-menu font-black text-[22px] md:text-[26px] tracking-[0.14em] uppercase leading-none mb-3 [text-wrap:balance]">
+        {block.title}
+      </h2>
+      {block.note && <p className="font-light italic text-[13px] -mt-1 mb-2">{block.note}</p>}
+      <p className="font-light text-[14px] leading-[1.75]">
+        {block.items.map((item, index) => {
+          const [name, note, rest] = splitName(getName(item));
           const description = getDescription(item);
+          const priceList = description.startsWith('|'); // ARAK: "11 | 30 | 50"
           return (
-            <div key={item.id} className="py-1.5 text-center">
-              <h3 className="font-display text-base md:text-lg text-charcoal font-medium">
-                {name}
-                {hasPrice(item) && (
-                  <span className="ml-2 text-terracotta text-sm md:text-base font-medium whitespace-nowrap">
-                    {formatPrice(item.price!)}
-                  </span>
-                )}
-              </h3>
-              {description && (
-                <p className="text-stone text-sm mt-0.5 leading-snug">{description}</p>
-              )}
-            </div>
+            <span key={item.id} className="inline">
+              {index > 0 && <span className="opacity-60 mx-2">·</span>}
+              <span className="font-semibold text-[13px] tracking-[0.14em] uppercase">{name}</span>
+              {note && <span className="italic text-[13px] ml-1">({note})</span>}
+              {rest && <span className="ml-1">{rest}</span>}
+              {description && !priceList && <span className="italic text-[13px] ml-1">({description})</span>}
+              {hasPrice(item) && <span className="ml-1.5 tabular-nums">{formatPrice(item.price!)}</span>}
+              {description && priceList && <span className="ml-1 tabular-nums">{description}</span>}
+            </span>
           );
         })}
-      </div>
-    );
-  };
+      </p>
+    </section>
+  );
 
-  const renderCouvertBox = (categoryId: string) => {
-    // Order comes from item.sortOrder (editable in the admin), same as every other group.
-    const couvertItems = items
-      .filter((i) => i.categoryId === categoryId && i.subCategory === 'couvert' && isVisible(i))
-      .sort((a, b) => a.sortOrder - b.sortOrder);
-    if (couvertItems.length === 0) return null;
-
-    const couvertName = menu?.subCategories?.couvert || 'Couvert';
-
+  const renderBlock = (block: Block) => {
+    if (block.isCouvertStrip || block.isStrip) return renderCouvertStrip(block);
+    const frame = block.boxed ? 'border-[1.5px] border-current px-5 pt-4 pb-2' : '';
     return (
-      <div className="relative mb-12 mt-2">
-        <div className="text-center mb-3">
-          <h3 className="text-base uppercase tracking-[0.2em] text-terracotta/80 font-bold">
-            {couvertName}
-          </h3>
-        </div>
-        <div className="border border-terracotta/25 px-4 py-3">
-          <p className="text-center text-charcoal text-sm leading-relaxed">
-            {couvertItems.map((item, index) => (
-              <span key={item.id} className="inline-block">
-                {index > 0 && <span className="text-terracotta/40 mx-2">·</span>}
-                <span className="whitespace-nowrap">{getName(item)}</span>
-                {getDescription(item) && (
-                  <span className="text-stone text-xs ml-1">({getDescription(item)})</span>
-                )}
-                {hasPrice(item) && (
-                  <span className="text-terracotta text-xs ml-1.5 whitespace-nowrap">{formatPrice(item.price!)}</span>
-                )}
-              </span>
-            ))}
-          </p>
-        </div>
-      </div>
+      <section key={block.key} id={sectionId(block)} className={`scroll-mt-[136px] lg:scroll-mt-0 mb-8 ${frame}`}>
+        {block.title && (
+          <h2 className="font-menu font-black text-[22px] md:text-[26px] tracking-[0.14em] uppercase leading-none mb-2 [text-wrap:balance]">
+            {block.title}
+          </h2>
+        )}
+        {block.note && <p className="font-light italic text-[13px] -mt-1 mb-2">{block.note}</p>}
+        {block.items.length > 0 && renderItems(block.items)}
+        {block.subSections.map((s) => (
+          <div key={s.id} className={`${s.boxed ? 'border-[1.5px] border-current px-5 pt-3 pb-2 mt-4' : 'mt-3'}`}>
+            <h3 className="font-menu font-semibold italic text-[16px] tracking-[0.06em] uppercase mb-1 [text-wrap:balance]">
+              {(() => {
+                const [t, n] = splitName(s.title);
+                return (
+                  <>
+                    {t}
+                    {n && <span className="not-italic font-light normal-case tracking-normal text-[12px] ml-1.5">({n})</span>}
+                  </>
+                );
+              })()}
+            </h3>
+            {renderItems(s.items)}
+          </div>
+        ))}
+      </section>
     );
   };
 
-  const renderSubCategory = (categoryId: string, subId: string, isFirst: boolean, isCompact: boolean) => {
-    const subCatItems = itemsForSubCategory(categoryId, subId);
-    if (subCatItems.length === 0) return null;
-    return (
-      <div key={subId} className={isFirst ? '' : isCompact ? 'mt-6' : 'mt-10'}>
-        <h3 className="text-center text-base uppercase tracking-[0.2em] text-terracotta/80 mb-4 font-bold">
-          {subCategoryName(subId)}
-        </h3>
-        {renderItems(subCatItems, isCompact)}
-      </div>
-    );
-  };
+  const T =
+    tone === 'green'
+      ? { ink: 'text-menu-green', rule: 'border-menu-green/30', hover: 'hover:bg-menu-green/10', border: 'border-menu-green' }
+      : { ink: 'text-menu-red', rule: 'border-menu-red/30', hover: 'hover:bg-menu-red/10', border: 'border-menu-red' };
 
   return (
-    <div className="min-h-screen bg-warm-white">
-      {/* HEADER */}
-      <section className="pt-28 md:pt-32 pb-6 md:pb-8 px-6 bg-warm-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.h1
-            className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal mb-3"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            {menu?.heroTitle || 'Our Menu'}
-          </motion.h1>
-          <motion.p
-            className="text-stone text-base md:text-lg"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            {menu?.heroSubtitle || 'Mediterranean flavours. Lebanese soul.'}
-          </motion.p>
-          <motion.div
-            className="relative flex items-center justify-center gap-4 px-6 pb-4 overflow-hidden mt-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <span className="relative w-16 md:w-24 h-px bg-terracotta/30" />
-            <Image src="/images/brand/emblem.svg" alt="" width={20} height={20} className="relative opacity-50" />
-            <span className="relative w-16 md:w-24 h-px bg-terracotta/30" />
-          </motion.div>
-        </div>
-      </section>
+    <div className={`min-h-screen bg-menu-paper font-menu ${T.ink}`}>
+      <div className="max-w-5xl mx-auto px-5 md:px-8 pt-24 md:pt-28 pb-16" ref={topRef}>
+        {/* Tagline (as printed) */}
+        <p className="text-center italic font-semibold text-[16px] md:text-[17px] tracking-[0.02em] text-menu-red">
+          {menu?.tagline || 'people, plates, playlists.'}
+        </p>
 
-      {/* CATEGORY SELECTOR */}
-      <div className="sticky top-[72px] md:top-[80px] z-40 bg-warm-white/95 backdrop-blur-sm border-b border-stone/10">
-        <div className="max-w-4xl mx-auto relative py-3 px-4">
-          <AnimatePresence>
-            {showLeftArrow && (
-              <motion.button
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                onClick={scrollLeft}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-warm-white/90 backdrop-blur-sm shadow-md flex items-center justify-center text-charcoal hover:bg-terracotta hover:text-warm-white transition-colors"
-                aria-label="Scroll left"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </motion.button>
-            )}
-          </AnimatePresence>
-
+        {/* Page switch: Food · SAJ Wraps · Alcoholic · Non-alcoholic · Wines */}
+        <div className="mt-4 flex justify-center">
           <div
-            ref={scrollContainerRef}
-            className="overflow-x-auto scrollbar-hide px-1"
+            role="tablist"
+            aria-label="Menu"
+            className={`flex gap-1 max-w-full overflow-x-auto scrollbar-hide border-[1.5px] ${T.border} rounded-full p-[3px]`}
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
           >
-            {/* w-max + mx-auto: centred when the buttons fit, left-aligned and scrollable when
-                they overflow. (justify-center on an overflowing flex row makes the left part
-                unreachable, which clipped the first category.) */}
-            <div className="flex gap-2 w-max mx-auto">
-            {sortedCategories.map((category) => {
-              const isActive = activeCategory === category.id;
-              const categoryName = menu?.categories?.[category.id]?.name || category.id;
+            {pages.map((p) => {
+              const on = p.id === activePage;
               return (
                 <button
-                  key={category.id}
-                  onClick={() => handleCategoryClick(category.id)}
-                  className={`flex-shrink-0 px-4 py-2 text-sm font-medium transition-all duration-300 whitespace-nowrap ${
-                    isActive ? 'bg-terracotta text-warm-white' : 'bg-sand text-charcoal hover:bg-terracotta/10 hover:text-terracotta'
+                  key={p.id}
+                  role="tab"
+                  aria-selected={on}
+                  onClick={() => handlePage(p.id)}
+                  className={`flex-shrink-0 rounded-full px-4 py-1.5 text-[12px] md:text-[13px] font-semibold tracking-[0.14em] uppercase whitespace-nowrap transition-colors ${
+                    on ? 'bg-current' : T.hover
                   }`}
                 >
-                  {categoryName}
+                  <span className={on ? 'text-menu-paper' : ''}>{pageName(p.id)}</span>
                 </button>
               );
             })}
-            </div>
           </div>
-
-          <AnimatePresence>
-            {showRightArrow && (
-              <motion.button
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                onClick={scrollRight}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-warm-white/90 backdrop-blur-sm shadow-md flex items-center justify-center text-charcoal hover:bg-terracotta hover:text-warm-white transition-colors"
-                aria-label="Scroll right"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </motion.button>
-            )}
-          </AnimatePresence>
         </div>
-      </div>
 
-      {/* MENU ITEMS */}
-      <div className="py-6 md:py-10 px-4 bg-sand/30">
-        <div className="max-w-3xl mx-auto">
-          <div
-            className="relative border border-stone/10 shadow-lg overflow-hidden"
-            style={{ background: '#FFFFFF', boxShadow: '0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05)' }}
-          >
-            <div
-              className="absolute inset-0 pointer-events-none opacity-[0.3]"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' stitchTiles='stitch'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fff' surfaceScale='2'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E")`,
-              }}
-            />
-            <div className="absolute inset-0 pointer-events-none" style={{ boxShadow: 'inset 0 0 60px rgba(0,0,0,0.03)' }} />
-            <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-terracotta/20 pointer-events-none" />
-            <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-terracotta/20 pointer-events-none" />
-            <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-terracotta/20 pointer-events-none" />
-            <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-terracotta/20 pointer-events-none" />
-
-            <div className="relative px-8 md:px-12 py-10 md:py-12">
-              {sortedCategories.map((category) => {
-                const categoryItems = itemsInCategory(category.id);
-                const isActive = activeCategory === category.id;
-                const isCompact = category.id === 'drinks';
-                const subIds = orderedSubCategoryIds(category.id);
-                const ungrouped = ungroupedItems(category.id);
-
+        {/* Jump bar — small screens only (below lg the two-column page no longer fits) */}
+        <div
+          ref={jumpRef}
+          className={`lg:hidden sticky z-30 bg-menu-paper -mx-5 md:-mx-8 px-5 md:px-8 mt-5 border-b ${T.rule}`}
+          style={{ top: NAVBAR_OFFSET }}
+        >
+          <nav aria-label="Sections">
+            <ul
+              className="flex gap-6 overflow-x-auto scrollbar-hide"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+            >
+              {readingOrder.map((b) => {
+                const id = sectionId(b);
+                const on = activeSection === id || (!activeSection && readingOrder[0] === b);
                 return (
-                  <div key={category.id} className={isActive ? 'block' : 'hidden'} aria-hidden={!isActive}>
-                    <div className="flex items-center justify-center mb-8">
-                      <div className="w-12 h-px bg-terracotta/40" />
-                      <div className="mx-3">
-                        <Image src="/images/brand/emblem.svg" alt="" width={16} height={16} className="opacity-50" />
-                      </div>
-                      <div className="w-12 h-px bg-terracotta/40" />
-                    </div>
-
-                    {/* Couvert box */}
-                    {renderCouvertBox(category.id)}
-
-                    {/* Ungrouped items first (categories with no sub-categories) */}
-                    {ungrouped.length > 0 && renderItems(ungrouped, isCompact)}
-
-                    {/* Then each sub-category group, in records order */}
-                    {subIds.map((subId, index) =>
-                      renderSubCategory(category.id, subId, index === 0 && ungrouped.length === 0, isCompact)
-                    )}
-
-                    {categoryItems.length === 0 && (
-                      <p className="text-center text-stone py-12">
-                        {menu?.emptyCategory || 'No items in this category yet.'}
-                      </p>
-                    )}
-                  </div>
+                  <li key={b.key} className="flex-shrink-0">
+                    <a
+                      href={`#${id}`}
+                      data-target={id}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        setActiveSection(id);
+                      }}
+                      className={`block py-3 text-[12.5px] font-semibold tracking-[0.16em] uppercase whitespace-nowrap border-b-2 transition-opacity ${
+                        on ? 'opacity-100 border-current' : 'opacity-55 border-transparent'
+                      }`}
+                    >
+                      {b.title}
+                    </a>
+                  </li>
                 );
               })}
+            </ul>
+          </nav>
+        </div>
 
-              <div className="mt-10 pt-6 border-t border-stone/20">
-                <p className="text-center text-stone text-sm italic">
-                  {menu?.allergenNote || 'Please ask our team about allergens and dietary requirements.'}
-                </p>
-              </div>
-            </div>
+        {/* The page: two columns on lg+, one column below */}
+        <div className="mt-6 lg:mt-10">
+          {readingOrder.length === 0 && (
+            <p className="text-center py-12 font-light">{menu?.emptyCategory || 'No items in this category yet.'}</p>
+          )}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-14 xl:gap-x-20">
+            <div className="min-w-0">{current.left.map(renderBlock)}</div>
+            <div className="min-w-0">{current.right.map(renderBlock)}</div>
           </div>
+          {current.bottom.map(renderBlock)}
+        </div>
+
+        {/* Allergen / VAT line, as on the printed menu */}
+        <p className="mt-10 text-center font-light text-[10.5px] md:text-[11px] leading-[1.45] max-w-[72ch] mx-auto">
+          {menu?.allergenNote || 'Please ask our team about allergens and dietary requirements. Prices in € including VAT.'}
+        </p>
+
+        <div className="text-center mt-10">
+          <button
+            onClick={() => openWidget('button', 'menu_page')}
+            disabled={isOpening}
+            className={`rounded-full border-[1.5px] border-current px-7 py-2.5 text-[13px] font-semibold tracking-[0.14em] uppercase ${T.hover} transition-colors disabled:opacity-60`}
+          >
+            {isOpening
+              ? locale === 'pt' ? 'A abrir…' : 'Opening…'
+              : locale === 'pt' ? 'Reservar mesa' : 'Book a table'}
+          </button>
         </div>
       </div>
-      <div className="text-center my-12">
-        <button
-          onClick={() => openWidget('button', 'menu_page')}
-          disabled={isOpening}
-          className="btn btn-primary px-8 py-3 disabled:opacity-70"
-        >
-          {isOpening
-            ? (locale === 'pt' ? 'A abrir…' : 'Opening…')
-            : (locale === 'pt' ? 'Reservar mesa' : 'Book a table')}
-        </button>
-      </div>
+
+      {/* Back to top — small screens only */}
+      <button
+        onClick={scrollToTop}
+        aria-label={menu?.backToTop || 'Back to top'}
+        className={`lg:hidden fixed right-4 bottom-5 z-30 w-11 h-11 rounded-full border-[1.5px] border-current bg-menu-paper grid place-items-center shadow-md transition-all duration-300 ${
+          showTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
+        }`}
+      >
+        <ArrowUp className="w-[18px] h-[18px]" />
+      </button>
     </div>
   );
 }

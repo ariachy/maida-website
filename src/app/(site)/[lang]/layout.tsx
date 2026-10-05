@@ -15,7 +15,7 @@
 
 import { Suspense } from 'react';
 import { Metadata } from 'next';
-import { Fraunces, DM_Sans } from 'next/font/google';
+import { Fraunces, DM_Sans, Jost } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import '@/styles/globals.css';
 import { locales, isValidLocale, type Locale } from '@/lib/i18n';
@@ -47,6 +47,15 @@ const dmSans = DM_Sans({
   variable: '--font-dm-sans',
   display: 'swap',
   weight: ['300', '400', '500'],
+});
+
+// Menu page only: the typeface of the printed menu.
+const jost = Jost({
+  subsets: ['latin'],
+  variable: '--font-jost',
+  display: 'swap',
+  weight: ['300', '400', '600', '900'],
+  style: ['normal', 'italic'],
 });
 
 // html lang / hreflang share ONE implementation (src/lib/seo.ts). If they disagree the
@@ -149,7 +158,7 @@ export default async function LocaleRootLayout({
   const translations = await getServerTranslations(locale);
 
   return (
-    <html lang={htmlLang(locale)} className={`${fraunces.variable} ${dmSans.variable}`}>
+    <html lang={htmlLang(locale)} className={`${fraunces.variable} ${dmSans.variable} ${jost.variable}`}>
       <head>
         {/* Preload hero image - CRITICAL for LCP */}
         <link

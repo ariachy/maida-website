@@ -163,10 +163,8 @@ export function RestaurantJsonLd({ locale }: LocaleProps) {
  * Full Menu -> MenuSection -> MenuItem graph, generated from menu.json + the locale
  * dictionary at render time. Render on the menu route only.
  *
- *  - `offers` is intentionally ABSENT. There is no price data anywhere in the content
- *    model (menu.json items carry id/categoryId/sortOrder/subCategory/active only).
- *    Inventing prices for schema is worse than omitting them. If prices are ever added
- *    to menu.json, add: offers: { '@type': 'Offer', price, priceCurrency: 'EUR' }.
+ *  - `offers` is emitted only for items that carry a `price` in menu.json (added Oct 2026);
+ *    items without a price (wines, SAJ wraps for now) get no offer rather than an invented one.
  *  - `suitableForDiet` is intentionally ABSENT pending the dietary-tag pass. The tag
  *    vocabulary exists (menu.tags) but no item is tagged yet.
  *  - Field resolution mirrors MenuClient exactly: item[locale] -> dictionary -> item.en.
@@ -191,10 +189,12 @@ export function MenuJsonLd({
   const toMenuItem = (item: any) => {
     const name = resolve(item, 'name') || item.id.replace(/-/g, ' ');
     const description = resolve(item, 'description');
+    const price = typeof item.price === 'number' && item.price > 0 ? item.price : null;
     return {
       '@type': 'MenuItem',
       name,
       ...(description ? { description } : {}),
+      ...(price !== null ? { offers: { '@type': 'Offer', price: price.toFixed(2), priceCurrency: 'EUR' } } : {}),
     };
   };
 
