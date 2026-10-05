@@ -10,6 +10,7 @@ interface MenuItem {
   subCategory?: string;
   active?: boolean; // undefined or true = visible; false = hidden from the public menu
   price?: number;
+  priceBottle?: number;
 }
 
 interface TranslationItem {
@@ -78,9 +79,10 @@ export default function SortableItem({
           <span className={`font-medium ${isActive ? 'text-[#2C2C2C]' : 'text-[#9CA3AF] line-through'}`}>
             {enTranslation.name || <span className="text-[#9CA3AF] italic">Unnamed</span>}
           </span>
-          {typeof item.price === 'number' && (
+          {(typeof item.price === 'number' || typeof item.priceBottle === 'number') && (
             <span className="text-sm text-[#B5654A] font-medium">
-              {String(item.price).replace('.', ',')} €
+              {typeof item.price === 'number' ? String(item.price).replace('.', ',') : '—'}
+              {typeof item.priceBottle === 'number' ? ` | ${String(item.priceBottle).replace('.', ',')}` : ''} €
             </span>
           )}
           {subCategoryName && (

@@ -189,7 +189,13 @@ export function MenuJsonLd({
   const toMenuItem = (item: any) => {
     const name = resolve(item, 'name') || item.id.replace(/-/g, ' ');
     const description = resolve(item, 'description');
-    const price = typeof item.price === 'number' && item.price > 0 ? item.price : null;
+    // Wines sold only by the bottle carry priceBottle without a glass price.
+    const price =
+      typeof item.price === 'number' && item.price > 0
+        ? item.price
+        : typeof item.priceBottle === 'number' && item.priceBottle > 0
+          ? item.priceBottle
+          : null;
     return {
       '@type': 'MenuItem',
       name,

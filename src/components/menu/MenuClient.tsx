@@ -37,7 +37,8 @@ interface MenuItem {
   sortOrder: number;
   subCategory?: string;
   active?: boolean;
-  price?: number;
+  price?: number; // glass price for wines
+  priceBottle?: number; // wines: bottle price
   en?: InlineTranslation;
   pt?: InlineTranslation;
 }
@@ -50,6 +51,8 @@ interface Category {
   page?: string;
   headless?: boolean;
   printNote?: boolean; // print the category description under the title (ARAK sizes)
+  subheadingTone?: 'accent'; // wines: red, upright sub-headings (WHITE, RED, ROSÉ…)
+  priceColumns?: boolean; // wines: glass | bottle columns with a header row
 }
 
 interface SubCategoryRecord {
@@ -70,6 +73,7 @@ interface PageRecord {
   id: string;
   sortOrder: number;
   layout?: PageLayout;
+  active?: boolean; // false = page switched off (SAJ Wraps for now)
 }
 
 interface MenuClientProps {
@@ -94,6 +98,8 @@ interface Block {
   columns?: 1 | 2;
   boxed: boolean;
   note?: string; // category description, printed under the title (ARAK sizes)
+  accentSubheadings?: boolean;
+  priceColumns?: boolean;
   isCouvertStrip: boolean;
   isStrip?: boolean; // bottom blocks print as one inline line, like the PDF
 }
@@ -146,7 +152,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   // ---------- pages ----------
   const pages: PageRecord[] = useMemo(() => {
     if (menuData.pages && menuData.pages.length) {
-      return [...menuData.pages].sort((a, b) => a.sortOrder - b.sortOrder);
+      return [...menuData.pages].filter((p) => p.active !== false).sort((a, b) => a.sortOrder - b.sortOrder);
     }
     // Old data without pages: one page per category, in category order.
     return [...categories]
@@ -239,6 +245,8 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         subSections,
         boxed: false,
         note: category.printNote ? categoryNote(categoryId) || undefined : undefined,
+        accentSubheadings: category.subheadingTone === 'accent',
+        priceColumns: !!category.priceColumns,
         isCouvertStrip: false,
       };
     };
@@ -370,6 +378,35 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
     );
   };
 
+  // Wine row: name and region on the left, glass | bottle on the right.
+  const renderWineRow = (item: MenuItem) => {
+    const [name, note] = splitName(getName(item));
+    const description = getDescription(item);
+    const cell = 'w-10 lg:w-12 text-right font-light text-[14px] lg:text-[15.5px] tabular-nums';
+    return (
+      <div key={item.id} className="flex items-start gap-4 py-[6px]">
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-baseline gap-x-2">
+            <span className="font-semibold text-[13.5px] lg:text-[15px] tracking-[0.14em] uppercase">{name}</span>
+            {note && <span className="italic text-[13px] lg:text-[14px]">{note}</span>}
+          </div>
+          {description && <p className="font-light text-[14px] lg:text-[15.5px] leading-[1.35] mt-px max-w-[60ch]">{description}</p>}
+        </div>
+        <div className="flex gap-3 flex-shrink-0 pt-px">
+          <span className={cell}>{hasPrice(item) ? formatPrice(item.price!) : '—'}</span>
+          <span className={cell}>{typeof item.priceBottle === 'number' ? formatPrice(item.priceBottle) : ''}</span>
+        </div>
+      </div>
+    );
+  };
+
+  const renderPriceHeader = () => (
+    <div className={`flex justify-end gap-3 mb-1 ${T.note}`}>
+      <span className="w-10 lg:w-12 text-right italic text-[12px] lg:text-[13px]">{menu?.glass || 'glass'}</span>
+      <span className="w-10 lg:w-12 text-right italic text-[12px] lg:text-[13px]">{menu?.bottle || 'bottle'}</span>
+    </div>
+  );
+
   const isCompactList = (list: MenuItem[]) =>
     list.length > 2 && list.filter((i) => !getDescription(i)).length >= Math.ceil(list.length * 0.75);
 
@@ -483,10 +520,18 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           </h2>
         )}
         {block.note && <p className={`font-light italic text-[13px] -mt-1 mb-2 ${T.head}`}>{block.note}</p>}
-        {block.items.length > 0 && renderItems(block.items, block.columns)}
-        {block.subSections.map((s) => (
-          <div key={s.id} className={s.boxed ? `border-[1.5px] ${T.box} px-5 pt-3 pb-2 mt-6` : 'mt-7'}>
-            <h3 className={`font-menu font-semibold italic text-[16px] lg:text-[18px] tracking-[0.06em] uppercase mb-1 [text-wrap:balance] ${T.head}`}>
+        {block.priceColumns && renderPriceHeader()}
+        {block.items.length > 0 &&
+          (block.priceColumns ? <div className={T.text}>{block.items.map(renderWineRow)}</div> : renderItems(block.items, block.columns))}
+        {block.subSections.map((s, si) => (
+          <div key={s.id} className={s.boxed ? `border-[1.5px] ${T.box} px-5 pt-3 pb-2 mt-6` : si === 0 && block.priceColumns ? 'mt-2' : 'mt-7'}>
+            <h3
+              className={`font-menu font-semibold uppercase mb-1 [text-wrap:balance] ${
+                block.accentSubheadings
+                  ? `text-[15px] lg:text-[16px] tracking-[0.16em] ${T.note}`
+                  : `italic text-[16px] lg:text-[18px] tracking-[0.06em] ${T.head}`
+              }`}
+            >
               {(() => {
                 const [t, n] = splitName(s.title);
                 return (
@@ -497,7 +542,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                 );
               })()}
             </h3>
-            {renderItems(s.items, s.columns)}
+            {block.priceColumns ? <div className={T.text}>{s.items.map(renderWineRow)}</div> : renderItems(s.items, s.columns)}
           </div>
         ))}
       </section>
@@ -577,7 +622,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         {/* Jump bar — small screens only (below lg the two-column page no longer fits) */}
         <div
           ref={jumpRef}
-          className={`lg:hidden sticky z-30 bg-menu-paper -mx-5 md:-mx-8 px-5 md:px-8 mt-5 border-b ${T.rule}`}
+          className={`${readingOrder.length > 1 ? 'lg:hidden' : 'hidden'} sticky z-30 bg-menu-paper -mx-5 md:-mx-8 px-5 md:px-8 mt-5 border-b ${T.rule}`}
           style={{ top: NAVBAR_OFFSET }}
         >
           <nav aria-label="Sections">
@@ -616,11 +661,22 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           {readingOrder.length === 0 && (
             <p className="text-center py-12 font-light">{menu?.emptyCategory || 'No items in this category yet.'}</p>
           )}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 xl:gap-x-12">
-            <div className="min-w-0">{current.left.map(renderBlock)}</div>
-            <div className="min-w-0">{current.right.map(renderBlock)}</div>
-          </div>
-          {current.bottom.map(renderBlock)}
+          {current.right.length === 0 && current.bottom.length === 0 ? (
+            <div className="max-w-[680px] mx-auto">{current.left.map(renderBlock)}</div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 xl:gap-x-12">
+                <div className="min-w-0">{current.left.map(renderBlock)}</div>
+                <div className="min-w-0">{current.right.map(renderBlock)}</div>
+              </div>
+              {current.bottom.map(renderBlock)}
+            </>
+          )}
+          {activePage === 'wines' && menu?.cellarSignoff && (
+            <p className="font-menu font-black text-menu-red text-[34px] md:text-[48px] lg:text-[56px] tracking-[0.1em] uppercase leading-none text-center mt-14 [text-wrap:balance]">
+              {menu.cellarSignoff}
+            </p>
+          )}
         </div>
 
         {/* Allergen / VAT line, as on the printed menu */}

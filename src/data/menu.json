@@ -71,7 +71,9 @@
       "slug": "wines",
       "image": "",
       "sortOrder": 10,
-      "page": "wines"
+      "page": "wines",
+      "subheadingTone": "accent",
+      "priceColumns": true
     }
   ],
   "subCategories": [
@@ -108,7 +110,7 @@
     {
       "id": "rose-wine",
       "categoryId": "wines",
-      "sortOrder": 2
+      "sortOrder": 4
     },
     {
       "id": "red-wine",
@@ -118,7 +120,7 @@
     {
       "id": "green-wine",
       "categoryId": "wines",
-      "sortOrder": 4
+      "sortOrder": 2
     },
     {
       "id": "sparkling-wine",
@@ -475,62 +477,6 @@
       "sortOrder": 13,
       "subCategory": "sweet",
       "active": false
-    },
-    {
-      "id": "wine-2160-white",
-      "categoryId": "wines",
-      "sortOrder": 40,
-      "subCategory": "white-wine",
-      "active": true
-    },
-    {
-      "id": "wine-infinitude-white",
-      "categoryId": "wines",
-      "sortOrder": 41,
-      "subCategory": "white-wine",
-      "active": true
-    },
-    {
-      "id": "wine-altitudes-white",
-      "categoryId": "wines",
-      "sortOrder": 42,
-      "subCategory": "white-wine",
-      "active": true
-    },
-    {
-      "id": "wine-cameleao-green",
-      "categoryId": "wines",
-      "sortOrder": 70,
-      "subCategory": "green-wine",
-      "active": true
-    },
-    {
-      "id": "wine-memorias-rose",
-      "categoryId": "wines",
-      "sortOrder": 50,
-      "subCategory": "rose-wine",
-      "active": true
-    },
-    {
-      "id": "wine-anexo-red",
-      "categoryId": "wines",
-      "sortOrder": 60,
-      "subCategory": "red-wine",
-      "active": true
-    },
-    {
-      "id": "wine-biaia-red",
-      "categoryId": "wines",
-      "sortOrder": 61,
-      "subCategory": "red-wine",
-      "active": true
-    },
-    {
-      "id": "wine-sparkling",
-      "categoryId": "wines",
-      "sortOrder": 80,
-      "subCategory": "sparkling-wine",
-      "active": true
     },
     {
       "id": "lebanese-rakwe",
@@ -1215,6 +1161,118 @@
       "categoryId": "beers",
       "sortOrder": 10,
       "active": false
+    },
+    {
+      "id": "wine-piteira-talha",
+      "categoryId": "wines",
+      "sortOrder": 1,
+      "subCategory": "white-wine",
+      "active": true,
+      "priceBottle": 42
+    },
+    {
+      "id": "wine-adegamae-chardonnay",
+      "categoryId": "wines",
+      "sortOrder": 2,
+      "subCategory": "white-wine",
+      "active": true,
+      "price": 9,
+      "priceBottle": 34
+    },
+    {
+      "id": "wine-2160-white",
+      "categoryId": "wines",
+      "sortOrder": 3,
+      "subCategory": "white-wine",
+      "active": true,
+      "price": 7,
+      "priceBottle": 25
+    },
+    {
+      "id": "wine-adegamae-sauvignon",
+      "categoryId": "wines",
+      "sortOrder": 4,
+      "subCategory": "white-wine",
+      "active": true,
+      "priceBottle": 31
+    },
+    {
+      "id": "wine-infinitude-white",
+      "categoryId": "wines",
+      "sortOrder": 5,
+      "subCategory": "white-wine",
+      "active": true,
+      "priceBottle": 38
+    },
+    {
+      "id": "wine-altitudes-white",
+      "categoryId": "wines",
+      "sortOrder": 6,
+      "subCategory": "white-wine",
+      "active": true,
+      "price": 12,
+      "priceBottle": 42
+    },
+    {
+      "id": "wine-cameleao-green",
+      "categoryId": "wines",
+      "sortOrder": 1,
+      "subCategory": "green-wine",
+      "active": true,
+      "price": 8,
+      "priceBottle": 27
+    },
+    {
+      "id": "wine-anexo-red",
+      "categoryId": "wines",
+      "sortOrder": 1,
+      "subCategory": "red-wine",
+      "active": true,
+      "price": 11,
+      "priceBottle": 40
+    },
+    {
+      "id": "wine-adegamae-castelao",
+      "categoryId": "wines",
+      "sortOrder": 2,
+      "subCategory": "red-wine",
+      "active": true,
+      "priceBottle": 30
+    },
+    {
+      "id": "wine-biaia-red",
+      "categoryId": "wines",
+      "sortOrder": 3,
+      "subCategory": "red-wine",
+      "active": true,
+      "price": 7,
+      "priceBottle": 25
+    },
+    {
+      "id": "wine-adegamae-cabernet",
+      "categoryId": "wines",
+      "sortOrder": 4,
+      "subCategory": "red-wine",
+      "active": true,
+      "priceBottle": 32
+    },
+    {
+      "id": "wine-memorias-rose",
+      "categoryId": "wines",
+      "sortOrder": 1,
+      "subCategory": "rose-wine",
+      "active": true,
+      "price": 8,
+      "priceBottle": 27
+    },
+    {
+      "id": "wine-sparkling",
+      "categoryId": "wines",
+      "sortOrder": 1,
+      "subCategory": "sparkling-wine",
+      "active": true,
+      "price": 7,
+      "priceBottle": 25
     }
   ],
   "pages": [
@@ -1245,7 +1303,8 @@
         "right": [
           "saj-wraps/sweet"
         ]
-      }
+      },
+      "active": false
     },
     {
       "id": "alcoholic",
@@ -1283,13 +1342,7 @@
       "sortOrder": 5,
       "layout": {
         "left": [
-          "wines/white-wine",
-          "wines/rose-wine",
-          "wines/green-wine"
-        ],
-        "right": [
-          "wines/red-wine",
-          "wines/sparkling-wine"
+          "wines"
         ]
       }
     }

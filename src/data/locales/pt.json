@@ -615,35 +615,35 @@
       },
       "wine-2160-white": {
         "name": "2160 (Douro)",
-        "description": "Leve, fresco e fácil de beber."
+        "description": "Frutado, com notas de pera e pêssego e um final ligeiramente herbáceo."
       },
       "wine-infinitude-white": {
-        "name": "Infinitude (Sintra - Colares)",
-        "description": "Seco, vivo e refrescante, com um toque mineral."
+        "name": "INFINITUDE (Sintra)",
+        "description": "Elegante e delicado, com uma subtil frescura salina da costa atlântica. Chardonnay e Viognier."
       },
       "wine-altitudes-white": {
-        "name": "Altitudes Ixsir (Líbano - Batroun)",
-        "description": "Floral, frutado e aromático, com final vibrante."
+        "name": "ALTITUDES IXSIR (Líbano)",
+        "description": "Fresco e aromático, com toranja e um toque de especiarias."
       },
       "wine-cameleao-green": {
-        "name": "Camaleão Alvarinho (Amarante)",
-        "description": "Leve e frutado."
+        "name": "CAMALEÃO ALVARINHO (Amarante)",
+        "description": "Aromático, com notas cítricas e florais. Leve e refrescante."
       },
       "wine-memorias-rose": {
-        "name": "Memórias (Dão)",
-        "description": "Delicado, frutado e refrescante."
+        "name": "MEMÓRIAS (Dão)",
+        "description": "Fresco e elegante, com framboesa e groselha."
       },
       "wine-anexo-red": {
-        "name": "Anexo (Alentejo)",
-        "description": "Encorpado, rico e envolvente, com fruta profunda."
+        "name": "ANEXO (Baixa intervenção • Alentejo)",
+        "description": "Encorpado, frutado e gastronómico. Metade do lote estagia em talhas de barro e a outra metade em barricas de carvalho."
       },
       "wine-biaia-red": {
-        "name": "Biaia Colheita (Beira)",
-        "description": "Leve, frutado e fácil de beber."
+        "name": "BIAIA COLHEITA (Bio • Vegan • Beira Interior)",
+        "description": "Leve e fresco, com fruta vermelha, notas herbáceas e um delicado toque resinoso."
       },
       "wine-sparkling": {
-        "name": "Mar Salgado Bruto",
-        "description": "Seco e fresco."
+        "name": "MAR SALGADO BRUTO (Bairrada)",
+        "description": "Seco, fresco e mineral. Leve e fácil de beber."
       },
       "beer-clay-cold": {
         "name": "CLAY COLD",
@@ -852,6 +852,26 @@
       "arak-jawary": {
         "name": "JAWARY",
         "description": "| 22 | 40"
+      },
+      "wine-piteira-talha": {
+        "name": "JOSÉ PITEIRA TALHA BRANCO — ORANGE WINE (Baixa intervenção • Alentejo)",
+        "description": "Seco, com ervas secas, marmelo e um toque de pêssego. Fermentado com as películas em talhas de barro tradicionais, como faziam os romanos."
+      },
+      "wine-adegamae-chardonnay": {
+        "name": "ADEGAMÃE CHARDONNAY (Lisboa)",
+        "description": "Maçã, pêssego e um toque de fruta tropical, com ligeira passagem por madeira. Cremoso e equilibrado, de final longo e frutado."
+      },
+      "wine-adegamae-sauvignon": {
+        "name": "ADEGAMÃE SAUVIGNON BLANC (Lisboa)",
+        "description": "Fresco e vibrante, com citrinos, maracujá e notas verdes."
+      },
+      "wine-adegamae-castelao": {
+        "name": "ADEGAMÃE CASTELÃO (Lisboa)",
+        "description": "Frutos vermelhos e um toque de especiarias, suavizados pela madeira. Taninos macios, fresco e fácil de beber."
+      },
+      "wine-adegamae-cabernet": {
+        "name": "ADEGAMÃE CABERNET SAUVIGNON (Lisboa)",
+        "description": "Fruta negra, tabaco e um toque de pimento verde, com estágio em carvalho. Encorpado, de taninos maduros e polidos."
       }
     },
     "tags": {
@@ -869,7 +889,8 @@
       "wines": "Vinhos"
     },
     "tagline": "people, plates, playlists.",
-    "backToTop": "Voltar ao topo"
+    "backToTop": "Voltar ao topo",
+    "cellarSignoff": "DA GARRAFEIRA"
   },
   "drinks": {
     "label": "Das Nossas Raízes",

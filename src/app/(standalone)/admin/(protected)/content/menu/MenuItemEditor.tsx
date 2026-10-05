@@ -16,6 +16,7 @@ interface MenuItem {
   sortOrder: number;
   subCategory?: string;
   price?: number;
+  priceBottle?: number;
 }
 
 interface TranslationItem {
@@ -40,6 +41,7 @@ interface MenuItemEditorProps {
     categoryId?: string;
     subCategory?: string;
     price?: number | null; // null = remove price
+    priceBottle?: number | null; // wines: bottle price; null = remove
     en?: Partial<TranslationItem>;
     pt?: Partial<TranslationItem>;
     newItemId?: string;
@@ -66,6 +68,9 @@ export default function MenuItemEditor({
   const [subCategory, setSubCategory] = useState(item?.subCategory || '');
   const [price, setPrice] = useState<string>(
     typeof item?.price === 'number' ? String(item.price) : ''
+  );
+  const [priceBottle, setPriceBottle] = useState<string>(
+    typeof item?.priceBottle === 'number' ? String(item.priceBottle) : ''
   );
   
   const [enName, setEnName] = useState(enTranslation.name);
@@ -106,16 +111,26 @@ export default function MenuItemEditor({
       alert('Price must be a number, e.g. 10.5');
       return;
     }
+    const parsedBottle = priceBottle.trim() === '' ? null : Number(priceBottle.replace(',', '.'));
+    if (parsedBottle !== null && (Number.isNaN(parsedBottle) || parsedBottle < 0)) {
+      alert('Bottle price must be a number, e.g. 32');
+      return;
+    }
 
     if (isNew) {
       updates.newItemId = itemId;
       updates.categoryId = categoryId;
       updates.subCategory = subCategory || undefined;
       if (parsedPrice !== null) updates.price = parsedPrice;
+      if (parsedBottle !== null) updates.priceBottle = parsedBottle;
     } else {
       const currentPrice = typeof item?.price === 'number' ? item.price : null;
       if (parsedPrice !== currentPrice) {
         updates.price = parsedPrice;
+      }
+      const currentBottle = typeof item?.priceBottle === 'number' ? item.priceBottle : null;
+      if (parsedBottle !== currentBottle) {
+        updates.priceBottle = parsedBottle;
       }
       if (categoryId !== item?.categoryId) {
         updates.categoryId = categoryId;
@@ -258,8 +273,23 @@ export default function MenuItemEditor({
             className="w-full px-4 py-2 border border-[#D4C4B5] rounded-md focus:outline-none focus:ring-2 focus:ring-[#C4A484]"
           />
           <p className="mt-1 text-xs text-[#9CA3AF]">
-            Shown as &quot;10,5 €&quot; on the site. Same price for both languages.
+            Shown as &quot;10,5&quot; on the site. Same price for both languages. For wines this is the glass price.
           </p>
+        </div>
+
+        {/* Bottle price (wines) */}
+        <div>
+          <label className="block text-sm font-medium text-[#2C2C2C] mb-1">
+            Bottle price (€) <span className="text-[#9CA3AF] font-normal">— wines only</span>
+          </label>
+          <input
+            type="text"
+            inputMode="decimal"
+            value={priceBottle}
+            onChange={(e) => setPriceBottle(e.target.value)}
+            placeholder="e.g., 32 — leave empty if not sold by the bottle"
+            className="w-full px-4 py-2 border border-[#D4C4B5] rounded-md focus:outline-none focus:ring-2 focus:ring-[#C4A484]"
+          />
         </div>
 
         {/* Category & Sub-category */}

@@ -615,35 +615,35 @@
       },
       "wine-2160-white": {
         "name": "2160 (Douro)",
-        "description": "Light, fresh, and easy to drink."
+        "description": "Fruity, with notes of pear and peach and a slightly herbaceous finish."
       },
       "wine-infinitude-white": {
-        "name": "Infinitude (Sintra - Colares)",
-        "description": "Dry, crisp, and refreshing with a hint of minerals."
+        "name": "INFINITUDE (Sintra)",
+        "description": "Elegant and delicate, with a subtle saline freshness from the Atlantic coast. Chardonnay and Viognier."
       },
       "wine-altitudes-white": {
-        "name": "Altitudes Ixsir (Lebanon - Batroun)",
-        "description": "Floral, fruity, and aromatic with a lively finish."
+        "name": "ALTITUDES IXSIR (Lebanon)",
+        "description": "Crisp and aromatic, with grapefruit and a touch of spice."
       },
       "wine-cameleao-green": {
-        "name": "Camaleão Alvarinho (Amarante)",
-        "description": "Light, and fruity."
+        "name": "CAMALEÃO ALVARINHO (Amarante)",
+        "description": "Aromatic, with citrus and floral notes. Light and refreshing."
       },
       "wine-memorias-rose": {
-        "name": "Memórias (Dão)",
-        "description": "Delicate, fruity, and refreshing."
+        "name": "MEMÓRIAS (Dão)",
+        "description": "Crisp and elegant, with raspberry and redcurrant."
       },
       "wine-anexo-red": {
-        "name": "Anexo (Alentejo)",
-        "description": "Full-bodied, rich and warming with deep fruit flavours."
+        "name": "ANEXO (Low intervention • Alentejo)",
+        "description": "Full-bodied, fruity and food-friendly. Half of the blend is aged in clay amphorae and the other half in oak barrels."
       },
       "wine-biaia-red": {
-        "name": "Biaia Colheita (Beira)",
-        "description": "Light, fruity, and easy-drinking."
+        "name": "BIAIA COLHEITA (Bio • Vegan • Beira Interior)",
+        "description": "Light and fresh, with red fruit, herbaceous notes and a delicate resinous touch."
       },
       "wine-sparkling": {
-        "name": "Mar Salgado Bruto",
-        "description": "Dry and crisp."
+        "name": "MAR SALGADO BRUTO (Bairrada)",
+        "description": "Dry, crisp and mineral. Fresh and easy-drinking."
       },
       "beer-clay-cold": {
         "name": "CLAY COLD",
@@ -764,6 +764,26 @@
       "arak-jawary": {
         "name": "JAWARY",
         "description": "| 22 | 40"
+      },
+      "wine-piteira-talha": {
+        "name": "JOSÉ PITEIRA TALHA BRANCO — ORANGE WINE (Low intervention • Alentejo)",
+        "description": "Dry, with dried herbs, quince and a hint of peach. Fermented on the skins in traditional clay amphorae (talhas), as the Romans did."
+      },
+      "wine-adegamae-chardonnay": {
+        "name": "ADEGAMÃE CHARDONNAY (Lisbon)",
+        "description": "Apple, peach and a touch of tropical fruit, lightly oaked. Creamy and well balanced, with a long fruity finish."
+      },
+      "wine-adegamae-sauvignon": {
+        "name": "ADEGAMÃE SAUVIGNON BLANC (Lisbon)",
+        "description": "Crisp and zesty, with citrus, passion fruit and fresh green notes."
+      },
+      "wine-adegamae-castelao": {
+        "name": "ADEGAMÃE CASTELÃO (Lisbon)",
+        "description": "Red berries and a touch of spice, softened by oak. Smooth tannins, fresh and easy to enjoy."
+      },
+      "wine-adegamae-cabernet": {
+        "name": "ADEGAMÃE CABERNET SAUVIGNON (Lisbon)",
+        "description": "Dark fruit, tobacco and a hint of green pepper, aged in oak. Full-bodied with ripe, polished tannins."
       }
     },
     "tags": {
@@ -781,7 +801,8 @@
       "wines": "Wines"
     },
     "tagline": "people, plates, playlists.",
-    "backToTop": "Back to top"
+    "backToTop": "Back to top",
+    "cellarSignoff": "FROM THE CELLAR"
   },
   "drinks": {
     "label": "From Our Roots",

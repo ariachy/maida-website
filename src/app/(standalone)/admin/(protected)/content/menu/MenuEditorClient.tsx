@@ -45,6 +45,7 @@ interface MenuItem {
   subCategory?: string;
   active?: boolean;
   price?: number;
+  priceBottle?: number;
 }
 
 interface SubCategoryRecord {
@@ -559,7 +560,7 @@ export default function MenuEditorClient() {
   };
 
   // Add new item
-  const addItem = (categoryId: string, itemData: { id: string; subCategory?: string; price?: number }) => {
+  const addItem = (categoryId: string, itemData: { id: string; subCategory?: string; price?: number; priceBottle?: number }) => {
     if (!menuData) return;
 
     const categoryItems = menuData.items.filter((i) => i.categoryId === categoryId);
@@ -571,6 +572,7 @@ export default function MenuEditorClient() {
       sortOrder: maxSortOrder + 1,
       subCategory: itemData.subCategory,
       ...(typeof itemData.price === 'number' ? { price: itemData.price } : {}),
+      ...(typeof itemData.priceBottle === 'number' ? { priceBottle: itemData.priceBottle } : {}),
     };
 
     setMenuData((prev) => {
@@ -1097,7 +1099,7 @@ export default function MenuEditorClient() {
           categoryTranslations={enData.menu.categories}
           subCategoriesByCategory={subCatsByCategory}
           onSave={(updates) => {
-            if (updates.categoryId || updates.subCategory !== undefined || updates.price !== undefined) {
+            if (updates.categoryId || updates.subCategory !== undefined || updates.price !== undefined || updates.priceBottle !== undefined) {
               setMenuData((prev) => {
                 if (!prev) return prev;
                 return {
@@ -1109,6 +1111,8 @@ export default function MenuEditorClient() {
                     if (updates.subCategory !== undefined) next.subCategory = updates.subCategory;
                     if (updates.price === null) delete next.price;
                     else if (typeof updates.price === 'number') next.price = updates.price;
+                    if (updates.priceBottle === null) delete next.priceBottle;
+                    else if (typeof updates.priceBottle === 'number') next.priceBottle = updates.priceBottle;
                     return next;
                   }),
                 };
@@ -1169,6 +1173,7 @@ export default function MenuEditorClient() {
                 id: updates.newItemId,
                 subCategory: updates.subCategory,
                 price: typeof updates.price === 'number' ? updates.price : undefined,
+                priceBottle: typeof updates.priceBottle === 'number' ? updates.priceBottle : undefined,
               });
               
               if (updates.en) {
