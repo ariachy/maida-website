@@ -27,6 +27,8 @@ module.exports = {
         // Printed-menu palette (Oct 2026 PDFs): peach paper, red for food, green for drinks
         'menu-paper': '#FCDAC1',
         'menu-red': { DEFAULT: '#C04A37', soft: '#C85D49' },
+        'menu-ink': '#162F31',   // dark ink: item text on food pages, headings on drinks pages
+        'menu-olive': '#445930', // item text on drinks pages
         'menu-green': { DEFAULT: '#162F31', soft: '#2E4140' },
       },
       fontFamily: {

@@ -331,7 +331,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         <div key={item.id} className="flex items-baseline justify-between gap-3 py-[3px]">
           <span className="min-w-0">
             <span className="font-semibold text-[13px] tracking-[0.14em] uppercase">{name}</span>
-            {note && <span className="italic text-[12.5px] ml-1.5 opacity-80">({note})</span>}
+            {note && <span className={`italic text-[12.5px] ml-1.5 ${T.note}`}>({note})</span>}
             {rest && <span className="font-light text-[13px] ml-1.5">{rest}</span>}
           </span>
           {hasPrice(item) && (
@@ -344,7 +344,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       <div key={item.id} className="py-[5px]">
         <div className="flex flex-wrap items-baseline gap-x-2">
           <span className="font-semibold text-[13.5px] tracking-[0.14em] uppercase">{name}</span>
-          {note && <span className="italic text-[13px] opacity-80">({note})</span>}
+          {note && <span className={`italic text-[13px] ${T.note}`}>({note})</span>}
           {rest && <span className="font-light text-[14px]">{rest}</span>}
           {hasPrice(item) && (
             <span className="font-light text-[14px] tabular-nums whitespace-nowrap">{formatPrice(item.price!)}</span>
@@ -360,7 +360,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   const renderItems = (list: MenuItem[]) => {
     const compact = isCompactList(list);
     return (
-      <div className={compact ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-x-8' : ''}>
+      <div className={`${T.text} ${compact ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-x-8' : ''}`}>
         {list.map((i) => renderItem(i, compact))}
       </div>
     );
@@ -372,11 +372,11 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       id={sectionId(block)}
       className={`scroll-mt-[136px] lg:scroll-mt-0 border-t ${T.rule} pt-5 mt-2`}
     >
-      <h2 className="font-menu font-black text-[22px] md:text-[26px] tracking-[0.14em] uppercase leading-none mb-3 [text-wrap:balance]">
+      <h2 className={`font-menu font-black text-[22px] md:text-[26px] tracking-[0.14em] uppercase leading-none mb-3 [text-wrap:balance] ${T.head}`}>
         {block.title}
       </h2>
-      {block.note && <p className="font-light italic text-[13px] -mt-1 mb-2">{block.note}</p>}
-      <p className="font-light text-[14px] leading-[1.75]">
+      {block.note && <p className={`font-light italic text-[13px] -mt-1 mb-2 ${T.head}`}>{block.note}</p>}
+      <p className={`font-light text-[14px] leading-[1.75] ${T.text}`}>
         {block.items.map((item, index) => {
           const [name, note, rest] = splitName(getName(item));
           const description = getDescription(item);
@@ -385,7 +385,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
             <span key={item.id} className="inline">
               {index > 0 && <span className="opacity-60 mx-2">·</span>}
               <span className="font-semibold text-[13px] tracking-[0.14em] uppercase">{name}</span>
-              {note && <span className="italic text-[13px] ml-1">({note})</span>}
+              {note && <span className={`italic text-[13px] ml-1 ${T.note}`}>({note})</span>}
               {rest && <span className="ml-1">{rest}</span>}
               {description && !priceList && <span className="italic text-[13px] ml-1">({description})</span>}
               {hasPrice(item) && <span className="ml-1.5 tabular-nums">{formatPrice(item.price!)}</span>}
@@ -399,19 +399,19 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
 
   const renderBlock = (block: Block) => {
     if (block.isCouvertStrip || block.isStrip) return renderCouvertStrip(block);
-    const frame = block.boxed ? 'border-[1.5px] border-current px-5 pt-4 pb-2' : '';
+    const frame = block.boxed ? `border-[1.5px] ${T.box} px-5 pt-4 pb-2` : '';
     return (
       <section key={block.key} id={sectionId(block)} className={`scroll-mt-[136px] lg:scroll-mt-0 mb-8 ${frame}`}>
         {block.title && (
-          <h2 className="font-menu font-black text-[22px] md:text-[26px] tracking-[0.14em] uppercase leading-none mb-2 [text-wrap:balance]">
+          <h2 className={`font-menu font-black text-[22px] md:text-[26px] tracking-[0.14em] uppercase leading-none mb-2 [text-wrap:balance] ${T.head}`}>
             {block.title}
           </h2>
         )}
-        {block.note && <p className="font-light italic text-[13px] -mt-1 mb-2">{block.note}</p>}
+        {block.note && <p className={`font-light italic text-[13px] -mt-1 mb-2 ${T.head}`}>{block.note}</p>}
         {block.items.length > 0 && renderItems(block.items)}
         {block.subSections.map((s) => (
-          <div key={s.id} className={`${s.boxed ? 'border-[1.5px] border-current px-5 pt-3 pb-2 mt-4' : 'mt-3'}`}>
-            <h3 className="font-menu font-semibold italic text-[16px] tracking-[0.06em] uppercase mb-1 [text-wrap:balance]">
+          <div key={s.id} className={s.boxed ? `border-[1.5px] ${T.box} px-5 pt-3 pb-2 mt-4` : 'mt-3'}>
+            <h3 className={`font-menu font-semibold italic text-[16px] tracking-[0.06em] uppercase mb-1 [text-wrap:balance] ${T.head}`}>
               {(() => {
                 const [t, n] = splitName(s.title);
                 return (
@@ -429,10 +429,30 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
     );
   };
 
+  // Colours measured from the PDFs. Food: red headings/notes, dark-ink items.
+  // Drinks: dark-ink headings, olive items, red notes. Boxes/rules follow the item colour.
   const T =
     tone === 'green'
-      ? { ink: 'text-menu-green', rule: 'border-menu-green/30', hover: 'hover:bg-menu-green/10', border: 'border-menu-green' }
-      : { ink: 'text-menu-red', rule: 'border-menu-red/30', hover: 'hover:bg-menu-red/10', border: 'border-menu-red' };
+      ? {
+          ink: 'text-menu-ink', // page chrome (pills, jump bar, button)
+          head: 'text-menu-ink',
+          text: 'text-menu-olive',
+          note: 'text-menu-red',
+          box: 'border-menu-olive',
+          rule: 'border-menu-olive/40',
+          hover: 'hover:bg-menu-ink/10',
+          border: 'border-menu-ink',
+        }
+      : {
+          ink: 'text-menu-red',
+          head: 'text-menu-red',
+          text: 'text-menu-ink',
+          note: 'text-menu-red',
+          box: 'border-menu-ink',
+          rule: 'border-menu-ink/30',
+          hover: 'hover:bg-menu-red/10',
+          border: 'border-menu-red',
+        };
 
   return (
     <div className={`min-h-screen bg-menu-paper font-menu ${T.ink}`}>
@@ -519,7 +539,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         </div>
 
         {/* Allergen / VAT line, as on the printed menu */}
-        <p className="mt-10 text-center font-light text-[10.5px] md:text-[11px] leading-[1.45] max-w-[72ch] mx-auto">
+        <p className={`mt-10 text-center font-light text-[10.5px] md:text-[11px] leading-[1.45] max-w-[72ch] mx-auto ${T.text}`}>
           {menu?.allergenNote || 'Please ask our team about allergens and dietary requirements. Prices in € including VAT.'}
         </p>
 
