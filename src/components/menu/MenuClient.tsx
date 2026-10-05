@@ -328,9 +328,13 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
 
           <div
             ref={scrollContainerRef}
-            className="flex md:justify-center gap-2 overflow-x-auto scrollbar-hide px-1"
+            className="overflow-x-auto scrollbar-hide px-1"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
           >
+            {/* w-max + mx-auto: centred when the buttons fit, left-aligned and scrollable when
+                they overflow. (justify-center on an overflowing flex row makes the left part
+                unreachable, which clipped the first category.) */}
+            <div className="flex gap-2 w-max mx-auto">
             {sortedCategories.map((category) => {
               const isActive = activeCategory === category.id;
               const categoryName = menu?.categories?.[category.id]?.name || category.id;
@@ -346,6 +350,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                 </button>
               );
             })}
+            </div>
           </div>
 
           <AnimatePresence>
