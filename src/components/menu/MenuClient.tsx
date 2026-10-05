@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import Image from 'next/image';
 import { ArrowUp } from 'lucide-react';
 import { track } from '@/lib/analytics';
 import { useBooking } from '@/hooks/useBooking';
@@ -457,13 +458,29 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   return (
     <div className={`min-h-screen bg-menu-paper font-menu ${T.ink}`}>
       <div className="max-w-5xl mx-auto px-5 md:px-8 pt-24 md:pt-28 pb-16" ref={topRef}>
-        {/* Tagline (as printed) */}
-        <p className="text-center italic font-semibold text-[16px] md:text-[17px] tracking-[0.02em] text-menu-red">
-          {menu?.tagline || 'people, plates, playlists.'}
-        </p>
+        {/* Header as printed: the logo, then the tagline (food) or the page title (drinks) */}
+        <div className="flex flex-col items-center gap-3 md:gap-4">
+          <Image
+            src="/images/brand/logo.svg"
+            alt="Maída"
+            width={168}
+            height={76}
+            priority
+            className="w-[128px] md:w-[168px] h-auto"
+          />
+          {tone === 'green' ? (
+            <h1 className="font-menu font-medium text-[17px] md:text-[19px] tracking-[0.3em] uppercase text-menu-ink leading-none">
+              {pageName(activePage)}
+            </h1>
+          ) : (
+            <p className="font-menu italic font-semibold text-[16px] md:text-[17px] tracking-[0.02em] text-menu-red leading-none">
+              {menu?.tagline || 'people, plates, playlists.'}
+            </p>
+          )}
+        </div>
 
         {/* Page switch: Food · SAJ Wraps · Alcoholic · Non-alcoholic · Wines */}
-        <div className="mt-4 flex justify-center">
+        <div className="mt-6 flex justify-center">
           <div
             role="tablist"
             aria-label="Menu"
