@@ -331,12 +331,12 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       return (
         <div key={item.id} className="flex items-baseline justify-between gap-3 py-[3px]">
           <span className="min-w-0">
-            <span className="font-semibold text-[13px] tracking-[0.14em] uppercase">{name}</span>
-            {note && <span className={`italic text-[12.5px] ml-1.5 ${T.note}`}>({note})</span>}
-            {rest && <span className="font-light text-[13px] ml-1.5">{rest}</span>}
+            <span className="font-semibold text-[13px] lg:text-[14.5px] tracking-[0.14em] uppercase">{name}</span>
+            {note && <span className={`italic text-[12.5px] lg:text-[14px] ml-1.5 ${T.note}`}>({note})</span>}
+            {rest && <span className="font-light text-[13px] lg:text-[14.5px] ml-1.5">{rest}</span>}
           </span>
           {hasPrice(item) && (
-            <span className="font-light text-[14px] tabular-nums whitespace-nowrap">{formatPrice(item.price!)}</span>
+            <span className="font-light text-[14px] lg:text-[15.5px] tabular-nums whitespace-nowrap">{formatPrice(item.price!)}</span>
           )}
         </div>
       );
@@ -344,14 +344,14 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
     return (
       <div key={item.id} className="py-[5px]">
         <div className="flex flex-wrap items-baseline gap-x-2">
-          <span className="font-semibold text-[13.5px] tracking-[0.14em] uppercase">{name}</span>
-          {note && <span className={`italic text-[13px] ${T.note}`}>({note})</span>}
-          {rest && <span className="font-light text-[14px]">{rest}</span>}
+          <span className="font-semibold text-[13.5px] lg:text-[15px] tracking-[0.14em] uppercase">{name}</span>
+          {note && <span className={`italic text-[13px] lg:text-[14.5px] ${T.note}`}>({note})</span>}
+          {rest && <span className="font-light text-[14px] lg:text-[15.5px]">{rest}</span>}
           {hasPrice(item) && (
-            <span className="font-light text-[14px] tabular-nums whitespace-nowrap">{formatPrice(item.price!)}</span>
+            <span className="font-light text-[14px] lg:text-[15.5px] tabular-nums whitespace-nowrap">{formatPrice(item.price!)}</span>
           )}
         </div>
-        {description && <p className="font-light text-[14px] leading-[1.35] mt-px max-w-[46ch]">{description}</p>}
+        {description && <p className="font-light text-[14px] lg:text-[15.5px] leading-[1.35] mt-px max-w-[46ch]">{description}</p>}
       </div>
     );
   };
@@ -373,11 +373,11 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       id={sectionId(block)}
       className={`scroll-mt-[136px] lg:scroll-mt-0 border-t ${T.rule} pt-5 mt-2`}
     >
-      <h2 className={`font-menu font-black text-[22px] md:text-[26px] tracking-[0.14em] uppercase leading-none mb-3 [text-wrap:balance] ${T.head}`}>
+      <h2 className={`font-menu font-black text-[22px] md:text-[26px] lg:text-[30px] tracking-[0.14em] uppercase leading-none mb-3 [text-wrap:balance] ${T.head}`}>
         {block.title}
       </h2>
       {block.note && <p className={`font-light italic text-[13px] -mt-1 mb-2 ${T.head}`}>{block.note}</p>}
-      <p className={`font-light text-[14px] leading-[1.75] ${T.text}`}>
+      <p className={`font-light text-[14px] lg:text-[15.5px] leading-[1.75] ${T.text}`}>
         {block.items.map((item, index) => {
           const [name, note, rest] = splitName(getName(item));
           const description = getDescription(item);
@@ -385,10 +385,10 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           return (
             <span key={item.id} className="inline">
               {index > 0 && <span className="opacity-60 mx-2">·</span>}
-              <span className="font-semibold text-[13px] tracking-[0.14em] uppercase">{name}</span>
-              {note && <span className={`italic text-[13px] ml-1 ${T.note}`}>({note})</span>}
+              <span className="font-semibold text-[13px] lg:text-[14.5px] tracking-[0.14em] uppercase">{name}</span>
+              {note && <span className={`italic text-[13px] lg:text-[14.5px] ml-1 ${T.note}`}>({note})</span>}
               {rest && <span className="ml-1">{rest}</span>}
-              {description && !priceList && <span className="italic text-[13px] ml-1">({description})</span>}
+              {description && !priceList && <span className="italic text-[13px] lg:text-[14.5px] ml-1">({description})</span>}
               {hasPrice(item) && <span className="ml-1.5 tabular-nums">{formatPrice(item.price!)}</span>}
               {description && priceList && <span className="ml-1 tabular-nums">{description}</span>}
             </span>
@@ -398,27 +398,76 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
     </section>
   );
 
+  // Strip with a size legend (ARAK): title and legend on one line, items spread on the next.
+  const renderTableStrip = (block: Block) => {
+    const legend = (block.note || '').split('|').map((part) => part.trim()).filter(Boolean);
+    return (
+      <section
+        key={block.key}
+        id={sectionId(block)}
+        className={`scroll-mt-[136px] lg:scroll-mt-0 border-t ${T.rule} pt-5 mt-2`}
+      >
+        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+          <h2 className={`font-menu font-black text-[22px] md:text-[26px] lg:text-[30px] tracking-[0.14em] uppercase leading-none [text-wrap:balance] ${T.head}`}>
+            {block.title}
+          </h2>
+          {legend.length > 0 && (
+            <p className={`font-normal text-[12.5px] lg:text-[14px] tracking-[0.06em] ${T.text}`}>
+              {legend.map((part, i) => {
+                const [label, size] = splitName(part);
+                return (
+                  <span key={part} className="whitespace-nowrap">
+                    {i > 0 && <span className="mx-2 opacity-70">|</span>}
+                    <span className="uppercase">{label}</span>
+                    {size && <span className="italic font-light ml-1">({size})</span>}
+                  </span>
+                );
+              })}
+            </p>
+          )}
+        </div>
+        <div className={`mt-3 flex flex-wrap gap-x-14 gap-y-2 ${T.text}`}>
+          {block.items.map((item) => {
+            const [name] = splitName(getName(item));
+            const description = getDescription(item);
+            return (
+              <span key={item.id} className="whitespace-nowrap">
+                <span className="font-semibold text-[13px] lg:text-[14.5px] tracking-[0.14em] uppercase">{name}</span>
+                <span className="font-light text-[14px] lg:text-[15.5px] tabular-nums ml-6">
+                  {hasPrice(item) ? formatPrice(item.price!) : ''}
+                  {description && <span className="ml-1">{description}</span>}
+                </span>
+              </span>
+            );
+          })}
+        </div>
+      </section>
+    );
+  };
+
   const renderBlock = (block: Block) => {
-    if (block.isCouvertStrip || block.isStrip) return renderCouvertStrip(block);
+    if (block.isCouvertStrip) return renderCouvertStrip(block);
+    if (block.isStrip && block.note) return renderTableStrip(block);
+    if (block.isStrip) return renderCouvertStrip(block);
     const frame = block.boxed ? `border-[1.5px] ${T.box} px-5 pt-4 pb-2` : '';
     return (
       <section key={block.key} id={sectionId(block)} className={`scroll-mt-[136px] lg:scroll-mt-0 mb-8 ${frame}`}>
         {block.title && (
-          <h2 className={`font-menu font-black text-[22px] md:text-[26px] tracking-[0.14em] uppercase leading-none mb-2 [text-wrap:balance] ${T.head}`}>
+          <h2 className={`font-menu font-black text-[22px] md:text-[26px] lg:text-[30px] tracking-[0.14em] uppercase leading-none mb-2 [text-wrap:balance] ${T.head}`}>
             {block.title}
           </h2>
         )}
         {block.note && <p className={`font-light italic text-[13px] -mt-1 mb-2 ${T.head}`}>{block.note}</p>}
         {block.items.length > 0 && renderItems(block.items)}
         {block.subSections.map((s) => (
-          <div key={s.id} className={s.boxed ? `border-[1.5px] ${T.box} px-5 pt-3 pb-2 mt-4` : 'mt-3'}>
-            <h3 className={`font-menu font-semibold italic text-[16px] tracking-[0.06em] uppercase mb-1 [text-wrap:balance] ${T.head}`}>
+          <div key={s.id} className={s.boxed ? `border-[1.5px] ${T.box} px-5 pt-3 pb-2 mt-6` : 'mt-7'}>
+            <h3 className={`font-menu font-semibold italic text-[16px] lg:text-[18px] tracking-[0.06em] uppercase mb-1 [text-wrap:balance] ${T.head}`}>
               {(() => {
                 const [t, n] = splitName(s.title);
                 return (
                   <>
                     {t}
-                    {n && <span className="not-italic font-light normal-case tracking-normal text-[12px] ml-1.5">({n})</span>}
+                    {n && <span className="not-italic font-light normal-case tracking-normal text-[12px] lg:text-[13px] ml-1.5">({n})</span>}
                   </>
                 );
               })()}
@@ -457,7 +506,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
 
   return (
     <div className={`min-h-screen bg-menu-paper font-menu ${T.ink}`}>
-      <div className="max-w-5xl mx-auto px-5 md:px-8 pt-24 md:pt-28 pb-16" ref={topRef}>
+      <div className="max-w-4xl mx-auto px-5 md:px-8 pt-24 md:pt-28 pb-16" ref={topRef}>
         {/* Header as printed: the logo and the tagline, the same on every page */}
         <div className="flex flex-col items-center gap-3 md:gap-4">
           <Image
@@ -474,7 +523,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         </div>
 
         {/* Page switch: Food · SAJ Wraps · Alcoholic · Non-alcoholic · Wines */}
-        <div className="mt-6 flex justify-center">
+        <div className="mt-9 md:mt-12 flex justify-center">
           <div
             role="tablist"
             aria-label="Menu"
@@ -538,11 +587,11 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         </div>
 
         {/* The page: two columns on lg+, one column below */}
-        <div className="mt-6 lg:mt-10">
+        <div className="mt-8 lg:mt-16">
           {readingOrder.length === 0 && (
             <p className="text-center py-12 font-light">{menu?.emptyCategory || 'No items in this category yet.'}</p>
           )}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-14 xl:gap-x-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 xl:gap-x-12">
             <div className="min-w-0">{current.left.map(renderBlock)}</div>
             <div className="min-w-0">{current.right.map(renderBlock)}</div>
           </div>
@@ -550,7 +599,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         </div>
 
         {/* Allergen / VAT line, as on the printed menu */}
-        <p className={`mt-10 text-center font-light text-[10.5px] md:text-[11px] leading-[1.45] max-w-[72ch] mx-auto ${T.text}`}>
+        <p className={`mt-10 text-center font-light text-[10.5px] md:text-[11px] lg:text-[12px] leading-[1.45] max-w-[80ch] mx-auto ${T.text}`}>
           {menu?.allergenNote || 'Please ask our team about allergens and dietary requirements. Prices in € including VAT.'}
         </p>
 
