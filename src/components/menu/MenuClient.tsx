@@ -531,7 +531,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
 
   return (
     <div className={`min-h-screen bg-menu-paper font-menu ${T.ink}`}>
-      <div className="max-w-4xl mx-auto px-5 md:px-8 pt-24 md:pt-28 pb-16" ref={topRef}>
+      <div className="max-w-[1040px] mx-auto px-5 md:px-8 pt-24 md:pt-28 pb-16" ref={topRef}>
         {/* Header as printed: the logo and the tagline, the same on every page */}
         <div className="flex flex-col items-center gap-3 md:gap-4">
           <Image
