@@ -646,8 +646,8 @@
         "description": "Seco e fresco."
       },
       "beer-clay-cold": {
-        "name": "CLAY COLD (loira, limão, sal, copo de barro)",
-        "description": ""
+        "name": "CLAY COLD",
+        "description": "superbock, limão, sal, copo de barro."
       },
       "beer-draft-25": {
         "name": "Imperial - LISBON LAGER (25cl)",
@@ -842,7 +842,7 @@
         "description": ""
       },
       "beer-cider": {
-        "name": "SIDRA (pera e gengibre)",
+        "name": "SIDRA",
         "description": ""
       },
       "arak-brun": {

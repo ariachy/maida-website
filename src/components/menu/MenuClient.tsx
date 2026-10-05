@@ -113,6 +113,11 @@ const splitName = (name: string): [string, string | undefined, string] => {
 
 const GREEN_PAGES = new Set(['alcoholic', 'non-alcoholic', 'wines']);
 
+// On the drinks sheets only "callout" notes are red — (specialty) — while descriptive
+// notes like (30cl) or (0% alcohol) stay in the item colour. On the food sheet every
+// note is red.
+const isCallout = (note: string) => /specialty|especialidade|favourite|favorite|favorito/i.test(note);
+
 export default function MenuClient({ translations, menuData, locale }: MenuClientProps) {
   const { menu } = translations;
   const { categories, items } = menuData;
@@ -323,21 +328,26 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   // ---------- renderers ----------
+  const noteClass = (note: string) => (tone === 'green' && !isCallout(note) ? T.text : T.note);
+
   const renderItem = (item: MenuItem, compact: boolean) => {
     const [name, note, rest] = splitName(getName(item));
     const description = getDescription(item);
     if (compact) {
       // Lists without descriptions (coffee, soft drinks, beers): name left, price right.
       return (
-        <div key={item.id} className="flex items-baseline justify-between gap-3 py-[3px]">
-          <span className="min-w-0">
-            <span className="font-semibold text-[13px] lg:text-[14.5px] tracking-[0.14em] uppercase">{name}</span>
-            {note && <span className={`italic text-[12.5px] lg:text-[14px] ml-1.5 ${T.note}`}>({note})</span>}
-            {rest && <span className="font-light text-[13px] lg:text-[14.5px] ml-1.5">{rest}</span>}
-          </span>
-          {hasPrice(item) && (
-            <span className="font-light text-[14px] lg:text-[15.5px] tabular-nums whitespace-nowrap">{formatPrice(item.price!)}</span>
-          )}
+        <div key={item.id} className="py-[3px]">
+          <div className="flex items-baseline justify-between gap-3">
+            <span className="min-w-0">
+              <span className="font-semibold text-[12.5px] lg:text-[13px] tracking-[0.1em] uppercase">{name}</span>
+              {note && <span className={`italic text-[12px] lg:text-[12.5px] ml-1 ${noteClass(note)}`}>({note})</span>}
+              {rest && <span className="font-light text-[12.5px] lg:text-[13px] ml-1">{rest}</span>}
+            </span>
+            {hasPrice(item) && (
+              <span className="font-light text-[13px] lg:text-[14px] tabular-nums whitespace-nowrap">{formatPrice(item.price!)}</span>
+            )}
+          </div>
+          {description && <p className="font-light italic text-[12px] lg:text-[12.5px] leading-[1.3] -mt-px">{description}</p>}
         </div>
       );
     }
@@ -345,7 +355,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       <div key={item.id} className="py-[5px]">
         <div className="flex flex-wrap items-baseline gap-x-2">
           <span className="font-semibold text-[13.5px] lg:text-[15px] tracking-[0.14em] uppercase">{name}</span>
-          {note && <span className={`italic text-[13px] lg:text-[14.5px] ${T.note}`}>({note})</span>}
+          {note && <span className={`italic text-[13px] lg:text-[14.5px] ${noteClass(note)}`}>({note})</span>}
           {rest && <span className="font-light text-[14px] lg:text-[15.5px]">{rest}</span>}
           {hasPrice(item) && (
             <span className="font-light text-[14px] lg:text-[15.5px] tabular-nums whitespace-nowrap">{formatPrice(item.price!)}</span>
@@ -356,12 +366,13 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
     );
   };
 
-  const isCompactList = (list: MenuItem[]) => list.length > 0 && list.every((i) => !getDescription(i));
+  const isCompactList = (list: MenuItem[]) =>
+    list.length > 2 && list.filter((i) => !getDescription(i)).length >= Math.ceil(list.length * 0.75);
 
   const renderItems = (list: MenuItem[]) => {
     const compact = isCompactList(list);
     return (
-      <div className={`${T.text} ${compact ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-x-8' : ''}`}>
+      <div className={`${T.text} ${compact ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-6' : ''}`}>
         {list.map((i) => renderItem(i, compact))}
       </div>
     );
@@ -386,7 +397,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
             <span key={item.id} className="inline">
               {index > 0 && <span className="opacity-60 mx-2">·</span>}
               <span className="font-semibold text-[13px] lg:text-[14.5px] tracking-[0.14em] uppercase">{name}</span>
-              {note && <span className={`italic text-[13px] lg:text-[14.5px] ml-1 ${T.note}`}>({note})</span>}
+              {note && <span className={`italic text-[13px] lg:text-[14.5px] ml-1 ${noteClass(note)}`}>({note})</span>}
               {rest && <span className="ml-1">{rest}</span>}
               {description && !priceList && <span className="italic text-[13px] lg:text-[14.5px] ml-1">({description})</span>}
               {hasPrice(item) && <span className="ml-1.5 tabular-nums">{formatPrice(item.price!)}</span>}
