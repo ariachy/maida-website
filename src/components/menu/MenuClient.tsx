@@ -57,6 +57,7 @@ interface SubCategoryRecord {
   categoryId: string;
   sortOrder: number;
   boxed?: boolean;
+  columns?: 1 | 2; // compact lists: 1 = single stack (Soft Drinks on the PDF), default 2
 }
 
 interface PageLayout {
@@ -89,7 +90,8 @@ interface Block {
   categoryId: string;
   subId?: string;
   items: MenuItem[]; // direct items (for a category block: items without sub-category)
-  subSections: { id: string; title: string; items: MenuItem[]; boxed: boolean }[];
+  subSections: { id: string; title: string; items: MenuItem[]; boxed: boolean; columns?: 1 | 2 }[];
+  columns?: 1 | 2;
   boxed: boolean;
   note?: string; // category description, printed under the title (ARAK sizes)
   isCouvertStrip: boolean;
@@ -204,6 +206,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           items: blockItems,
           subSections: [],
           boxed: !!rec?.boxed,
+          columns: rec?.columns,
           isCouvertStrip: subId === 'couvert',
         };
       }
@@ -211,7 +214,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
       // Whole category. Sub-categories placed elsewhere on this page are left out here.
       const subSections = subsOf(categoryId)
         .filter((s) => !referencedSubs.has(s.id))
-        .map((s) => ({ id: s.id, title: subName(s.id), items: itemsOf(categoryId, s.id), boxed: !!s.boxed }))
+        .map((s) => ({ id: s.id, title: subName(s.id), items: itemsOf(categoryId, s.id), boxed: !!s.boxed, columns: s.columns }))
         .filter((s) => s.items.length > 0);
       const direct = itemsOf(categoryId, undefined);
       if (direct.length === 0 && subSections.length === 0) return null;
@@ -257,6 +260,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
               items: s.items,
               subSections: [],
               boxed: s.boxed,
+              columns: s.columns,
               isCouvertStrip: false,
             }))
           : [b]
@@ -369,11 +373,21 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   const isCompactList = (list: MenuItem[]) =>
     list.length > 2 && list.filter((i) => !getDescription(i)).length >= Math.ceil(list.length * 0.75);
 
-  const renderItems = (list: MenuItem[]) => {
+  // Compact lists fill two columns top-to-bottom like the printed sheet: the first half
+  // of the list stacks on the left, the second half on the right.
+  const renderItems = (list: MenuItem[], columns: 1 | 2 = 2) => {
     const compact = isCompactList(list);
+    if (!compact) return <div className={T.text}>{list.map((i) => renderItem(i, false))}</div>;
+    if (columns === 1) return <div className={T.text}>{list.map((i) => renderItem(i, true))}</div>;
+    const half = Math.ceil(list.length / 2);
+    const cols = [list.slice(0, half), list.slice(half)];
     return (
-      <div className={`${T.text} ${compact ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-6' : ''}`}>
-        {list.map((i) => renderItem(i, compact))}
+      <div className={`${T.text} grid grid-cols-1 sm:grid-cols-2 gap-x-6`}>
+        {cols.map((col, ci) => (
+          <div key={ci} className="min-w-0">
+            {col.map((i) => renderItem(i, true))}
+          </div>
+        ))}
       </div>
     );
   };
@@ -469,7 +483,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           </h2>
         )}
         {block.note && <p className={`font-light italic text-[13px] -mt-1 mb-2 ${T.head}`}>{block.note}</p>}
-        {block.items.length > 0 && renderItems(block.items)}
+        {block.items.length > 0 && renderItems(block.items, block.columns)}
         {block.subSections.map((s) => (
           <div key={s.id} className={s.boxed ? `border-[1.5px] ${T.box} px-5 pt-3 pb-2 mt-6` : 'mt-7'}>
             <h3 className={`font-menu font-semibold italic text-[16px] lg:text-[18px] tracking-[0.06em] uppercase mb-1 [text-wrap:balance] ${T.head}`}>
@@ -483,7 +497,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                 );
               })()}
             </h3>
-            {renderItems(s.items)}
+            {renderItems(s.items, s.columns)}
           </div>
         ))}
       </section>

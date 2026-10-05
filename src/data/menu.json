@@ -144,7 +144,8 @@
     {
       "id": "soft-drinks",
       "categoryId": "drinks",
-      "sortOrder": 2
+      "sortOrder": 2,
+      "columns": 1
     },
     {
       "id": "juices",
