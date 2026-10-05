@@ -59,10 +59,10 @@
         "image": "/images/food/kebab.webp"
       },
       {
-        "id": "muhamara",
-        "name": "Muhamara",
-        "description": "Roasted red pepper dip, walnuts, tahini, pomegranate molasses and a hint of chilli.",
-        "image": "/images/food/muhamara.webp"
+        "id": "feta-brulee",
+        "name": "Feta Brûlée",
+        "description": "Creamy feta mix, mild chili and a sugar crust, torched to order.",
+        "image": "/images/food/feta-brulee.webp"
       },
       {
         "id": "shawarma",
@@ -146,22 +146,26 @@
   "menu": {
     "heroTitle": "Our Menu",
     "heroSubtitle": "Mediterranean flavours. Lebanese soul.",
-    "allergenNote": "Please ask our team about allergens and dietary requirements.",
+    "allergenNote": "If you are allergic or intolerant to any food substance, please ask a staff member about its use in the preparation of your dish. Prices in € including VAT.",
     "title": "The Menu",
     "subtitle": "Explore our offerings",
     "viewFull": "View Full Menu",
     "emptyCategory": "No items in this category yet.",
     "categories": {
-      "to-start": {
-        "name": "TO START",
-        "description": "Starters, dips, salads & couvert"
+      "starters": {
+        "name": "STARTERS",
+        "description": "Sides & couvert, plates and dips"
+      },
+      "salads": {
+        "name": "SALADS",
+        "description": "Fresh and bright"
       },
       "mains": {
         "name": "MAINS",
         "description": "Hearty Mediterranean dishes"
       },
-      "to-end": {
-        "name": "TO END",
+      "desserts": {
+        "name": "DESSERTS",
         "description": "Sweet endings"
       },
       "saj-wraps": {
@@ -186,10 +190,9 @@
       }
     },
     "subCategories": {
-      "starters": "SMALL PLATES",
-      "dips": "DIPS (SERVED WITH SAJ CRACKERS)",
-      "couvert": "COUVERT",
-      "salads": "SALADS",
+      "starters": "PLATES",
+      "dips": "DIPS (SERVED WITH CRACKERS BAKED IN-HOUSE)",
+      "couvert": "SIDES & COUVERT",
       "savoury": "Savoury",
       "sweet": "Sweet",
       "coffee": "COFFEE",
@@ -205,29 +208,28 @@
       "rose-wine": "ROSÉ",
       "red-wine": "RED",
       "green-wine": "VINHO VERDE",
-      "sparkling-wine": "SPARKLING",
-      "sides": "SIDES"
+      "sparkling-wine": "SPARKLING"
     },
     "items": {
       "gambas-al-ajillo": {
         "name": "GAMBAS AL AJILLO",
-        "description": "king prawns, garlic, calabrian & fresh chilli, white wine, parsley. Served with toasted sourdough."
+        "description": "sizzled king prawns, garlic, calabrian & fresh chili, white wine, parsley. Served with grilled bread."
       },
       "coriander-lemon-wings": {
         "name": "CORIANDER LEMON WINGS",
         "description": "charred chicken wings, garlic, coriander, lemon."
       },
       "shish-barak": {
-        "name": "SHISH BARAK",
-        "description": "crispy beef dumplings, garlicky yogurt, spiced butter, roasted almonds."
+        "name": "SHISH BARAK (house specialty)",
+        "description": "crispy beef dumplings, garlicky yogurt, caramelized onions, spiced butter, roasted almonds."
       },
       "kebab-pistachio": {
         "name": "KEBAB PISTACHIO",
-        "description": "minced meat with house spices, pistachio, pomegranate molasses, hummus."
+        "description": "pan-seared kebab, pistachio, caramelized pomegranate molasses, hummus."
       },
       "chicken-rolls": {
         "name": "CHICKEN ROLLS (musakhan)",
-        "description": "spiced chicken, caramelised onions, sumac, crispy saj."
+        "description": "shredded chicken, caramelized onions, extra sumac, crispy saj."
       },
       "charred-corn": {
         "name": "CHARRED CORN",
@@ -235,7 +237,7 @@
       },
       "cheese-rolls": {
         "name": "CHEESE ROLLS",
-        "description": "white cheese, parsley, crispy fried shell."
+        "description": "mozzarella and feta mix, parsley, crispy fried shell."
       },
       "fries": {
         "name": "FRIES",
@@ -243,7 +245,7 @@
       },
       "hummus-picanha": {
         "name": "HUMMUS PICANHA",
-        "description": "hummus, seared picanha (top sirloin cap), pomegranate molasses, pine nuts."
+        "description": "hummus, seared picanha, pomegranate molasses, toasted pine nuts."
       },
       "muhamara": {
         "name": "MUHAMARA",
@@ -254,8 +256,8 @@
         "description": "creamy chickpea purée."
       },
       "feta-brulee": {
-        "name": "FETA BRÛLÉE",
-        "description": "creamy feta mix, mild chilli, sugar crust - torched to order."
+        "name": "FETA BRÛLÉE (house specialty)",
+        "description": "creamy feta mix, mild chili, sugar crust - torched to order."
       },
       "baba-ghanouj": {
         "name": "BABA GHANOUJ",
@@ -266,52 +268,52 @@
         "description": ""
       },
       "saj-crackers": {
-        "name": "SAJ bread or crackers",
+        "name": "SAJ (baked in-house) bread or crackers",
         "description": ""
       },
       "zaatar-mix-crackers": {
-        "name": "ZA'ATAR MIX with saj crackers",
+        "name": "ZA'ATAR MIX with crackers",
         "description": ""
       },
       "fatoush": {
-        "name": "SUMMER FATTOUSH",
-        "description": "romaine, watermelon, cucumber, radish, mint, parsley, green onion, sumac, crispy saj bread."
+        "name": "FATTOUSH",
+        "description": "romaine, tomato, cucumber, radish, mint, parsley, green onion, sumac, crispy saj bread, lemon-oil pomegranate dressing."
       },
       "tabbouleh": {
         "name": "TABBOULEH",
-        "description": "parsley, tomato, mint, green onion, lemon-oil dressing."
+        "description": "finely chopped parsley, tomato, mint, green onion, lemon-oil dressing."
       },
       "zaatar-burrata": {
         "name": "ZA'ATAR BURRATA",
-        "description": "heirloom tomatoes, cherry tomatoes, basil, za'atar, olive oil. Served with toasted sourdough."
+        "description": "creamy burrata, coração de boi and roasted cherry tomatoes, basil, pistachio, za'atar oil, grilled bread."
       },
       "shawarma": {
-        "name": "SHAWARMA",
+        "name": "SHAWARMA (house specialty)",
         "description": "slow-roasted beef, fries, tomato, pickles, onion parsley salad, tahini. Served with saj bread."
       },
       "fish-of-the-day": {
         "name": "FISH OF THE DAY",
-        "description": "pan-seared, caper-lemon sauce. Served with roasted potatoes."
+        "description": "pan-seared, crispy-skin fish, caper-lemon sauce. Served with roasted potatoes."
       },
       "chicken-breast": {
         "name": "HOUSE CHICKEN",
-        "description": "grilled chicken breast, baby potatoes, cherry tomatoes, yogurt-herb sauce, green salad."
+        "description": "grilled breast, baby potatoes, cherry tomatoes, yogurt-herb sauce, green salad."
       },
       "pasta-pomodoro": {
         "name": "PASTA POMODORO",
-        "description": "three-tomato sauce, basil, parmesan."
+        "description": "silky three-tomato sauce, basil, parmesan."
       },
       "lebanese-burger": {
-        "name": "BURGER (Lebanese Way)",
-        "description": "two smash patties, coleslaw, tomato, pickles, fries - in toasted bun. Served with fries."
+        "name": "BURGER (Lebanese way)",
+        "description": "two smash patties, coleslaw, tomato, pickles and fries stuffed in a toasted bun."
       },
       "tiramisu": {
         "name": "TIRAMISU (guest favourite)",
-        "description": "mascarpone, pasteurised eggs, savoiardi, a touch of kahlua, cocoa powder. To share"
+        "description": "mascarpone, pasteurized eggs, savoiardi, a touch of kahlúa, cocoa powder. To share."
       },
       "sorbet": {
-        "name": "SORBET (1 scoop)",
-        "description": "seasonal flavours, no added sugar: dark chocolate 85%, lemon, or pistachio"
+        "name": "SORBET",
+        "description": "seasonal flavours, no added sugar."
       },
       "znoud-el-set": {
         "name": "ZNOUD EL SET",
@@ -662,19 +664,19 @@
         "description": ""
       },
       "roasted-baby-potatoes": {
-        "name": "ROASTED BABY POTATOES",
+        "name": "ROASTED POTATOES",
         "description": ""
       },
       "yogurt-mix": {
         "name": "YOGURT MIX",
-        "description": "cucumber, garlic, dried mint."
+        "description": "cucumber, garlic, dried mint"
       },
       "rice": {
         "name": "RICE",
         "description": ""
       },
       "lupins-tremocos": {
-        "name": "LUPINS (TREMOÇOS)",
+        "name": "TREMOÇOS",
         "description": ""
       },
       "alcohol-free-beer": {

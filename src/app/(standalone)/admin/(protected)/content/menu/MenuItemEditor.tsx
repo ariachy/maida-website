@@ -15,6 +15,7 @@ interface MenuItem {
   categoryId: string;
   sortOrder: number;
   subCategory?: string;
+  price?: number;
 }
 
 interface TranslationItem {
@@ -38,6 +39,7 @@ interface MenuItemEditorProps {
   onSave: (updates: {
     categoryId?: string;
     subCategory?: string;
+    price?: number | null; // null = remove price
     en?: Partial<TranslationItem>;
     pt?: Partial<TranslationItem>;
     newItemId?: string;
@@ -62,6 +64,9 @@ export default function MenuItemEditor({
   const [itemId, setItemId] = useState(item?.id || '');
   const [categoryId, setCategoryId] = useState(item?.categoryId || defaultCategoryId || '');
   const [subCategory, setSubCategory] = useState(item?.subCategory || '');
+  const [price, setPrice] = useState<string>(
+    typeof item?.price === 'number' ? String(item.price) : ''
+  );
   
   const [enName, setEnName] = useState(enTranslation.name);
   const [enDescription, setEnDescription] = useState(enTranslation.description);
@@ -96,11 +101,22 @@ export default function MenuItemEditor({
 
     const updates: Parameters<typeof onSave>[0] = {};
 
+    const parsedPrice = price.trim() === '' ? null : Number(price.replace(',', '.'));
+    if (parsedPrice !== null && (Number.isNaN(parsedPrice) || parsedPrice < 0)) {
+      alert('Price must be a number, e.g. 10.5');
+      return;
+    }
+
     if (isNew) {
       updates.newItemId = itemId;
       updates.categoryId = categoryId;
       updates.subCategory = subCategory || undefined;
+      if (parsedPrice !== null) updates.price = parsedPrice;
     } else {
+      const currentPrice = typeof item?.price === 'number' ? item.price : null;
+      if (parsedPrice !== currentPrice) {
+        updates.price = parsedPrice;
+      }
       if (categoryId !== item?.categoryId) {
         updates.categoryId = categoryId;
       }
@@ -227,6 +243,24 @@ export default function MenuItemEditor({
             </div>
           </>
         )}
+
+        {/* Price (shared by both languages) */}
+        <div>
+          <label className="block text-sm font-medium text-[#2C2C2C] mb-1">
+            Price (€)
+          </label>
+          <input
+            type="text"
+            inputMode="decimal"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            placeholder="e.g., 10.5 — leave empty to hide the price"
+            className="w-full px-4 py-2 border border-[#D4C4B5] rounded-md focus:outline-none focus:ring-2 focus:ring-[#C4A484]"
+          />
+          <p className="mt-1 text-xs text-[#9CA3AF]">
+            Shown as &quot;10,5 €&quot; on the site. Same price for both languages.
+          </p>
+        </div>
 
         {/* Category & Sub-category */}
         <div className="grid grid-cols-2 gap-4">

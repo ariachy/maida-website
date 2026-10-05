@@ -1,55 +1,76 @@
 {
   "categories": [
     {
-      "id": "to-start",
-      "slug": "to-start",
+      "id": "starters",
+      "slug": "starters",
       "image": "",
       "sortOrder": 1
+    },
+    {
+      "id": "salads",
+      "slug": "salads",
+      "image": "",
+      "sortOrder": 2
     },
     {
       "id": "mains",
       "slug": "mains",
       "image": "",
-      "sortOrder": 2
+      "sortOrder": 3
     },
     {
-      "id": "to-end",
-      "slug": "to-end",
+      "id": "desserts",
+      "slug": "desserts",
       "image": "",
-      "sortOrder": 3
+      "sortOrder": 4
     },
     {
       "id": "saj-wraps",
       "slug": "saj-wraps",
       "image": "",
-      "sortOrder": 4
+      "sortOrder": 5
     },
     {
       "id": "drinks",
       "slug": "drinks",
       "image": "",
-      "sortOrder": 5
+      "sortOrder": 6
     },
     {
       "id": "cocktails-wine",
       "slug": "cocktails-wine",
       "image": "",
-      "sortOrder": 6
+      "sortOrder": 7
     },
     {
       "id": "beers",
       "slug": "beers",
       "image": "",
-      "sortOrder": 7
+      "sortOrder": 8
     },
     {
       "id": "wines",
       "slug": "wines",
       "image": "",
-      "sortOrder": 8
+      "sortOrder": 9
     }
   ],
   "subCategories": [
+    {
+      "id": "couvert",
+      "categoryId": "starters",
+      "sortOrder": 1
+    },
+    {
+      "id": "starters",
+      "categoryId": "starters",
+      "sortOrder": 2
+    },
+    {
+      "id": "dips",
+      "categoryId": "starters",
+      "sortOrder": 3
+    },
     {
       "id": "savoury",
       "categoryId": "saj-wraps",
@@ -96,31 +117,6 @@
       "sortOrder": 5
     },
     {
-      "id": "couvert",
-      "categoryId": "to-start",
-      "sortOrder": 1
-    },
-    {
-      "id": "dips",
-      "categoryId": "to-start",
-      "sortOrder": 2
-    },
-    {
-      "id": "starters",
-      "categoryId": "to-start",
-      "sortOrder": 3
-    },
-    {
-      "id": "salads",
-      "categoryId": "to-start",
-      "sortOrder": 4
-    },
-    {
-      "id": "sides",
-      "categoryId": "mains",
-      "sortOrder": 1
-    },
-    {
       "id": "lemonade",
       "categoryId": "drinks",
       "sortOrder": 1
@@ -158,185 +154,238 @@
   ],
   "items": [
     {
-      "id": "gambas-al-ajillo",
-      "categoryId": "to-start",
-      "sortOrder": 10,
-      "subCategory": "starters",
-      "active": true
-    },
-    {
-      "id": "coriander-lemon-wings",
-      "categoryId": "to-start",
-      "sortOrder": 12,
-      "subCategory": "starters",
-      "active": true
-    },
-    {
-      "id": "shish-barak",
-      "categoryId": "to-start",
-      "sortOrder": 9,
-      "subCategory": "starters",
-      "active": true
-    },
-    {
-      "id": "kebab-pistachio",
-      "categoryId": "to-start",
-      "sortOrder": 11,
-      "subCategory": "starters",
-      "active": true
-    },
-    {
-      "id": "chicken-rolls",
-      "categoryId": "to-start",
-      "sortOrder": 14,
-      "subCategory": "starters",
-      "active": true
-    },
-    {
-      "id": "charred-corn",
-      "categoryId": "to-start",
-      "sortOrder": 13,
-      "subCategory": "starters",
-      "active": true
-    },
-    {
-      "id": "cheese-rolls",
-      "categoryId": "to-start",
-      "sortOrder": 15,
-      "subCategory": "starters",
-      "active": true
+      "id": "saj-crackers",
+      "categoryId": "starters",
+      "sortOrder": 1,
+      "price": 2,
+      "active": true,
+      "subCategory": "couvert"
     },
     {
       "id": "fries",
-      "categoryId": "mains",
-      "sortOrder": 8,
-      "subCategory": "sides",
-      "active": true
+      "categoryId": "starters",
+      "sortOrder": 2,
+      "price": 4.5,
+      "active": true,
+      "subCategory": "couvert"
     },
     {
-      "id": "hummus-picanha",
-      "categoryId": "to-start",
-      "sortOrder": 5,
-      "subCategory": "dips",
-      "active": true
-    },
-    {
-      "id": "muhamara",
-      "categoryId": "to-start",
-      "sortOrder": 8,
-      "subCategory": "dips",
-      "active": true
-    },
-    {
-      "id": "hummus",
-      "categoryId": "to-start",
-      "sortOrder": 4,
-      "subCategory": "dips",
-      "active": true
-    },
-    {
-      "id": "feta-brulee",
-      "categoryId": "to-start",
-      "sortOrder": 7,
-      "subCategory": "dips",
-      "active": true
-    },
-    {
-      "id": "baba-ghanouj",
-      "categoryId": "to-start",
-      "sortOrder": 6,
-      "subCategory": "dips",
-      "active": true
+      "id": "roasted-baby-potatoes",
+      "categoryId": "starters",
+      "sortOrder": 3,
+      "price": 3.5,
+      "active": true,
+      "subCategory": "couvert"
     },
     {
       "id": "marinated-olives",
-      "categoryId": "to-start",
-      "sortOrder": 1,
-      "subCategory": "couvert",
-      "active": true
+      "categoryId": "starters",
+      "sortOrder": 4,
+      "price": 3,
+      "active": true,
+      "subCategory": "couvert"
+    },
+    {
+      "id": "yogurt-mix",
+      "categoryId": "starters",
+      "sortOrder": 5,
+      "price": 3.5,
+      "active": true,
+      "subCategory": "couvert"
     },
     {
       "id": "zaatar-mix-crackers",
-      "categoryId": "to-start",
-      "sortOrder": 2,
-      "subCategory": "couvert",
-      "active": true
-    },
-    {
-      "id": "saj-crackers",
-      "categoryId": "mains",
+      "categoryId": "starters",
       "sortOrder": 6,
-      "subCategory": "sides",
-      "active": true
+      "price": 3.5,
+      "active": true,
+      "subCategory": "couvert"
     },
     {
-      "id": "fatoush",
-      "categoryId": "to-start",
-      "sortOrder": 18,
-      "subCategory": "salads",
+      "id": "lupins-tremocos",
+      "categoryId": "starters",
+      "sortOrder": 7,
+      "price": 2.5,
+      "active": true,
+      "subCategory": "couvert"
+    },
+    {
+      "id": "shish-barak",
+      "categoryId": "starters",
+      "sortOrder": 1,
+      "price": 10.5,
+      "active": true,
+      "subCategory": "starters"
+    },
+    {
+      "id": "gambas-al-ajillo",
+      "categoryId": "starters",
+      "sortOrder": 2,
+      "price": 14,
+      "active": true,
+      "subCategory": "starters"
+    },
+    {
+      "id": "kebab-pistachio",
+      "categoryId": "starters",
+      "sortOrder": 3,
+      "price": 10.9,
+      "active": true,
+      "subCategory": "starters"
+    },
+    {
+      "id": "coriander-lemon-wings",
+      "categoryId": "starters",
+      "sortOrder": 4,
+      "price": 10.5,
+      "active": true,
+      "subCategory": "starters"
+    },
+    {
+      "id": "cheese-rolls",
+      "categoryId": "starters",
+      "sortOrder": 5,
+      "price": 9.9,
+      "active": true,
+      "subCategory": "starters"
+    },
+    {
+      "id": "chicken-rolls",
+      "categoryId": "starters",
+      "sortOrder": 6,
+      "price": 9.9,
+      "active": true,
+      "subCategory": "starters"
+    },
+    {
+      "id": "hummus",
+      "categoryId": "starters",
+      "sortOrder": 1,
+      "price": 7.9,
+      "active": true,
+      "subCategory": "dips"
+    },
+    {
+      "id": "hummus-picanha",
+      "categoryId": "starters",
+      "sortOrder": 2,
+      "price": 12.9,
+      "active": true,
+      "subCategory": "dips"
+    },
+    {
+      "id": "baba-ghanouj",
+      "categoryId": "starters",
+      "sortOrder": 3,
+      "price": 10.5,
+      "active": true,
+      "subCategory": "dips"
+    },
+    {
+      "id": "feta-brulee",
+      "categoryId": "starters",
+      "sortOrder": 4,
+      "price": 9.9,
+      "active": true,
+      "subCategory": "dips"
+    },
+    {
+      "id": "zaatar-burrata",
+      "categoryId": "salads",
+      "sortOrder": 1,
+      "price": 15.5,
       "active": true
     },
     {
       "id": "tabbouleh",
-      "categoryId": "to-start",
-      "sortOrder": 17,
-      "subCategory": "salads",
+      "categoryId": "salads",
+      "sortOrder": 2,
+      "price": 13.5,
       "active": true
     },
     {
-      "id": "zaatar-burrata",
-      "categoryId": "to-start",
-      "sortOrder": 16,
-      "subCategory": "salads",
-      "active": true
-    },
-    {
-      "id": "shawarma",
-      "categoryId": "mains",
-      "sortOrder": 4,
+      "id": "fatoush",
+      "categoryId": "salads",
+      "sortOrder": 3,
+      "price": 12.9,
       "active": true
     },
     {
       "id": "fish-of-the-day",
       "categoryId": "mains",
       "sortOrder": 1,
+      "price": 21.5,
       "active": true
     },
     {
       "id": "chicken-breast",
       "categoryId": "mains",
       "sortOrder": 2,
+      "price": 16.9,
+      "active": true
+    },
+    {
+      "id": "shawarma",
+      "categoryId": "mains",
+      "sortOrder": 3,
+      "price": 19.5,
       "active": true
     },
     {
       "id": "pasta-pomodoro",
       "categoryId": "mains",
-      "sortOrder": 5,
+      "sortOrder": 4,
+      "price": 15.5,
       "active": true
     },
     {
       "id": "lebanese-burger",
       "categoryId": "mains",
-      "sortOrder": 3,
+      "sortOrder": 5,
+      "price": 14.9,
       "active": true
     },
     {
       "id": "tiramisu",
-      "categoryId": "to-end",
+      "categoryId": "desserts",
       "sortOrder": 1,
-      "active": true
-    },
-    {
-      "id": "sorbet",
-      "categoryId": "to-end",
-      "sortOrder": 3,
+      "price": 10.9,
       "active": true
     },
     {
       "id": "znoud-el-set",
-      "categoryId": "to-end",
+      "categoryId": "desserts",
       "sortOrder": 2,
+      "price": 7.5,
       "active": true
+    },
+    {
+      "id": "sorbet",
+      "categoryId": "desserts",
+      "sortOrder": 3,
+      "price": 4.5,
+      "active": true
+    },
+    {
+      "id": "muhamara",
+      "categoryId": "starters",
+      "sortOrder": 5,
+      "subCategory": "dips",
+      "active": false
+    },
+    {
+      "id": "charred-corn",
+      "categoryId": "starters",
+      "sortOrder": 7,
+      "subCategory": "starters",
+      "active": false
+    },
+    {
+      "id": "rice",
+      "categoryId": "starters",
+      "sortOrder": 8,
+      "subCategory": "couvert",
+      "active": false
     },
     {
       "id": "saj-its-thyme",
@@ -933,34 +982,6 @@
       "id": "beer-musa-apa",
       "categoryId": "beers",
       "sortOrder": 94,
-      "active": true
-    },
-    {
-      "id": "roasted-baby-potatoes",
-      "categoryId": "mains",
-      "sortOrder": 7,
-      "subCategory": "sides",
-      "active": true
-    },
-    {
-      "id": "yogurt-mix",
-      "categoryId": "mains",
-      "sortOrder": 9,
-      "subCategory": "sides",
-      "active": true
-    },
-    {
-      "id": "rice",
-      "categoryId": "mains",
-      "sortOrder": 10,
-      "subCategory": "sides",
-      "active": true
-    },
-    {
-      "id": "lupins-tremocos",
-      "categoryId": "to-start",
-      "sortOrder": 3,
-      "subCategory": "couvert",
       "active": true
     },
     {

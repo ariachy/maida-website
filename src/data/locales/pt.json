@@ -59,10 +59,10 @@
         "image": "/images/food/kebab.webp"
       },
       {
-        "id": "muhamara",
-        "name": "Muhamara",
-        "description": "Dip de pimento vermelho assado, nozes, tahini, melaço de romã e um toque de chili.",
-        "image": "/images/food/muhamara.webp"
+        "id": "feta-brulee",
+        "name": "Feta Brûlée",
+        "description": "Mistura cremosa de feta, malagueta suave e crosta de açúcar, maçaricada na hora.",
+        "image": "/images/food/feta-brulee.webp"
       },
       {
         "id": "shawarma",
@@ -146,22 +146,26 @@
   "menu": {
     "heroTitle": "O Nosso Menu",
     "heroSubtitle": "Sabores mediterrânicos. Alma libanesa.",
-    "allergenNote": "Por favor, pergunte à nossa equipa sobre alergénios e requisitos dietéticos.",
+    "allergenNote": "Em caso de alergia ou intolerância a alguma substância alimentar, solicite informação a um colaborador sobre a sua utilização na preparação do produto. Preços em € com IVA incluído.",
     "title": "O Menu",
     "subtitle": "Explore as nossas ofertas",
     "viewFull": "Ver Menu Completo",
     "emptyCategory": "Ainda não há itens nesta categoria.",
     "categories": {
-      "to-start": {
-        "name": "PARA COMEÇAR",
-        "description": "Entradas, dips, saladas e couvert"
+      "starters": {
+        "name": "ENTRADAS",
+        "description": "Acompanhamentos & couvert, pratinhos e dips"
+      },
+      "salads": {
+        "name": "SALADAS",
+        "description": "Frescas e leves"
       },
       "mains": {
         "name": "PRATOS PRINCIPAIS",
         "description": "Pratos mediterrânicos reconfortantes"
       },
-      "to-end": {
-        "name": "PARA TERMINAR",
+      "desserts": {
+        "name": "SOBREMESAS",
         "description": "Doces finais"
       },
       "saj-wraps": {
@@ -176,20 +180,19 @@
         "name": "COCKTAILS e VINHOS",
         "description": "Cocktails de assinatura, clássicos, vinhos e cervejas"
       },
-      "wines": {
-        "name": "VINHOS",
-        "description": ""
-      },
       "beers": {
         "name": "CERVEJAS",
         "description": "Cervejas de pressão e garrafa"
+      },
+      "wines": {
+        "name": "VINHOS",
+        "description": ""
       }
     },
     "subCategories": {
-      "starters": "PETISCOS",
-      "dips": "DIPS (SERVIDOS COM SAJ CRACKERS)",
-      "couvert": "COUVERT",
-      "salads": "SALADAS",
+      "starters": "PRATINHOS",
+      "dips": "DIPS (SERVIDOS COM CRACKERS CASEIRAS)",
+      "couvert": "ACOMPANHAMENTOS & COUVERT",
       "savoury": "Salgados",
       "sweet": "Doces",
       "coffee": "CAFÉ",
@@ -205,29 +208,28 @@
       "rose-wine": "ROSÉ",
       "red-wine": "TINTO",
       "green-wine": "VINHO VERDE",
-      "sparkling-wine": "ESPUMANTE",
-      "sides": "ACOMPANHAMENTOS"
+      "sparkling-wine": "ESPUMANTE"
     },
     "items": {
       "gambas-al-ajillo": {
         "name": "GAMBAS AL AJILLO",
-        "description": "gambas, alho, malagueta calabresa e malagueta fresca, vinho branco, salsa. Servidas com pão de massa mãe torrado."
+        "description": "gambas salteadas, alho, malagueta calabresa e fresca, vinho branco, salsa. Servido com pão grelhado."
       },
       "coriander-lemon-wings": {
         "name": "CORIANDER LEMON WINGS",
-        "description": "asas de frango tostadas, alho, coentros, limão."
+        "description": "asas de frango grelhadas, alho, coentros, limão."
       },
       "shish-barak": {
-        "name": "SHISH BARAK",
-        "description": "dumplings de carne de vaca estaladiços, iogurte com alho, manteiga com especiarias, amêndoas tostadas."
+        "name": "SHISH BARAK (especialidade da casa)",
+        "description": "dumplings de carne de vaca crocantes, iogurte com alho, cebola caramelizada, manteiga temperada, amêndoa torrada."
       },
       "kebab-pistachio": {
         "name": "KEBAB PISTACHIO",
-        "description": "carne picada com especiarias da casa, pistácio, melaço de romã, húmus."
+        "description": "kebab selado na frigideira, pistácio, melaço de romã caramelizado, hummus."
       },
       "chicken-rolls": {
         "name": "CHICKEN ROLLS (musakhan)",
-        "description": "frango temperado, cebola caramelizada, sumagre, saj estaladiço."
+        "description": "frango desfiado, cebola caramelizada, sumagre extra, saj crocante."
       },
       "charred-corn": {
         "name": "CHARRED CORN",
@@ -235,7 +237,7 @@
       },
       "cheese-rolls": {
         "name": "CHEESE ROLLS",
-        "description": "queijo branco, salsa, massa frita estaladiça."
+        "description": "mistura de mozzarella e feta, salsa, massa frita crocante."
       },
       "fries": {
         "name": "BATATA FRITA",
@@ -243,7 +245,7 @@
       },
       "hummus-picanha": {
         "name": "HUMMUS PICANHA",
-        "description": "húmus, picanha selada, melaço de romã, pinhões."
+        "description": "hummus, picanha selada, melaço de romã, pinhões torrados."
       },
       "muhamara": {
         "name": "MUHAMARA",
@@ -251,35 +253,35 @@
       },
       "hummus": {
         "name": "HUMMUS",
-        "description": "puré de grão-de-bico cremoso."
+        "description": "puré de grão cremoso."
       },
       "feta-brulee": {
-        "name": "FETA BRÛLÉE",
-        "description": "creme de feta, malagueta suave, crosta de açúcar — queimada na hora."
+        "name": "FETA BRÛLÉE (especialidade da casa)",
+        "description": "mistura cremosa de feta, malagueta suave, crosta de açúcar, maçaricada na hora."
       },
       "baba-ghanouj": {
         "name": "BABA GHANOUJ",
-        "description": "beringela fumada, tahine, hortelã, salsa, chalotas fritas."
+        "description": "beringela fumada, tahini, hortelã, salsa, chalotas fritas."
       },
       "marinated-olives": {
         "name": "AZEITONAS MARINADAS",
         "description": ""
       },
       "saj-crackers": {
-        "name": "SAJ pão ou crackers",
+        "name": "SAJ (feito em casa) pão ou crackers",
         "description": ""
       },
       "zaatar-mix-crackers": {
-        "name": "MISTURA DE ZA'ATAR com saj crackers",
+        "name": "MISTURA DE ZA'ATAR com crackers",
         "description": ""
       },
       "fatoush": {
-        "name": "SUMMER FATTOUSH",
-        "description": "alface romana, melancia, pepino, rabanete, hortelã, salsa, cebolinho, sumagre, pão saj estaladiço."
+        "name": "FATTOUSH",
+        "description": "alface romana, tomate, pepino, rabanete, hortelã, salsa, cebola verde, sumagre, pão saj crocante, molho de limão, azeite e melaço de romã."
       },
       "tabbouleh": {
         "name": "TABBOULEH",
-        "description": "salsa, tomate, hortelã, cebolinho, molho de limão e azeite."
+        "description": "salsa picada fina, tomate, hortelã, cebola verde, molho de limão e azeite."
       },
       "lamb-kebab": {
         "name": "Kebab de Borrego",
@@ -306,8 +308,8 @@
         "description": "Sobremesa tradicional com massa desfiada, queijo doce e calda de flor de laranjeira"
       },
       "sorbet": {
-        "name": "Sorbet (1 bola)",
-        "description": "sabores sazonais, sem açúcar adicionado: chocolate negro 85%, limão ou pistácio"
+        "name": "SORBET",
+        "description": "sabores da época, sem açúcar adicionado."
       },
       "saj-nutella": {
         "name": "NUTELLA",
@@ -662,40 +664,40 @@
         "description": ""
       },
       "shawarma": {
-        "name": "SHAWARMA",
-        "description": "carne de vaca assada lentamente, batata frita, tomate, pickles, salada de cebola e salsa, tahine. Servido com pão saj."
+        "name": "SHAWARMA (especialidade da casa)",
+        "description": "carne de vaca assada lentamente, batatas fritas, tomate, picles, salada de cebola e salsa, tahini. Servido com pão saj."
       },
       "fish-of-the-day": {
         "name": "PEIXE DO DIA",
-        "description": "salteado na frigideira, molho de alcaparras e limão. Servido com batatas assadas."
+        "description": "peixe selado, pele crocante, molho de alcaparras e limão. Servido com batatas assadas."
       },
       "chicken-breast": {
         "name": "FRANGO DA CASA",
-        "description": "peito de frango grelhado, batatas baby, tomate cherry, molho de iogurte e ervas, salada verde."
+        "description": "peito de frango grelhado, batatinhas, tomate cherry, molho de iogurte e ervas, salada verde."
       },
       "pasta-pomodoro": {
         "name": "PASTA POMODORO",
-        "description": "molho de três tomates, manjericão, parmesão."
+        "description": "molho aveludado de três tomates, manjericão, parmesão."
       },
       "lebanese-burger": {
-        "name": "HAMBÚRGUER (à Libanesa)",
-        "description": "dois hambúrgueres smash, coleslaw, tomate, pickles, batata frita — em pão torrado. Servido com batata frita."
+        "name": "BURGER (à Libanesa)",
+        "description": "duas smash patties, coleslaw, tomate, picles e batata frita dentro de um pão tostado."
       },
       "tiramisu": {
         "name": "TIRAMISU (favorito dos clientes)",
-        "description": "mascarpone, ovos pasteurizados, savoiardi, um toque de Kahlúa, cacau em pó. Para partilhar"
+        "description": "mascarpone, ovos pasteurizados, savoiardi, um toque de Kahlúa, cacau em pó. Para partilhar."
       },
       "znoud-el-set": {
-        "name": "Znoud el Set",
-        "description": "a nossa versão do clássico: rolos de baklava estaladiços, creme ashta doce, pistácio, calda de açúcar."
+        "name": "ZNOUD EL SET",
+        "description": "a nossa versão do clássico: rolinhos de baklava crocantes, creme doce de ashta, pistácio, calda de açúcar."
       },
       "roasted-baby-potatoes": {
-        "name": "BATATAS BABY ASSADAS",
+        "name": "BATATAS ASSADAS",
         "description": ""
       },
       "yogurt-mix": {
         "name": "MISTURA DE IOGURTE",
-        "description": "pepino, alho, hortelã seca."
+        "description": "pepino, alho, hortelã seca"
       },
       "rice": {
         "name": "ARROZ",
@@ -707,7 +709,7 @@
       },
       "zaatar-burrata": {
         "name": "ZA'ATAR BURRATA",
-        "description": "tomate coração-de-boi, tomate cherry, manjericão, za'atar, azeite. Servido com pão de massa mãe torrado."
+        "description": "burrata cremosa, tomate coração de boi e tomate cherry assado, manjericão, pistácio, azeite de za'atar. Servido com pão grelhado."
       },
       "alcohol-free-beer": {
         "name": "ONZE (SEM ÁLCOOL)",

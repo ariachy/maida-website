@@ -44,6 +44,7 @@ interface MenuItem {
   sortOrder: number;
   subCategory?: string;
   active?: boolean;
+  price?: number;
 }
 
 interface SubCategoryRecord {
@@ -558,7 +559,7 @@ export default function MenuEditorClient() {
   };
 
   // Add new item
-  const addItem = (categoryId: string, itemData: { id: string; subCategory?: string }) => {
+  const addItem = (categoryId: string, itemData: { id: string; subCategory?: string; price?: number }) => {
     if (!menuData) return;
 
     const categoryItems = menuData.items.filter((i) => i.categoryId === categoryId);
@@ -569,6 +570,7 @@ export default function MenuEditorClient() {
       categoryId,
       sortOrder: maxSortOrder + 1,
       subCategory: itemData.subCategory,
+      ...(typeof itemData.price === 'number' ? { price: itemData.price } : {}),
     };
 
     setMenuData((prev) => {
@@ -1095,16 +1097,20 @@ export default function MenuEditorClient() {
           categoryTranslations={enData.menu.categories}
           subCategoriesByCategory={subCatsByCategory}
           onSave={(updates) => {
-            if (updates.categoryId || updates.subCategory !== undefined) {
+            if (updates.categoryId || updates.subCategory !== undefined || updates.price !== undefined) {
               setMenuData((prev) => {
                 if (!prev) return prev;
                 return {
                   ...prev,
-                  items: prev.items.map((i) =>
-                    i.id === editingItem.id
-                      ? { ...i, ...updates }
-                      : i
-                  ),
+                  items: prev.items.map((i) => {
+                    if (i.id !== editingItem.id) return i;
+                    const next: MenuItem = { ...i };
+                    if (updates.categoryId) next.categoryId = updates.categoryId;
+                    if (updates.subCategory !== undefined) next.subCategory = updates.subCategory;
+                    if (updates.price === null) delete next.price;
+                    else if (typeof updates.price === 'number') next.price = updates.price;
+                    return next;
+                  }),
                 };
               });
               setHasUnsavedChanges(true);
@@ -1162,6 +1168,7 @@ export default function MenuEditorClient() {
               addItem(updates.categoryId || menuData.categories[0].id, {
                 id: updates.newItemId,
                 subCategory: updates.subCategory,
+                price: typeof updates.price === 'number' ? updates.price : undefined,
               });
               
               if (updates.en) {

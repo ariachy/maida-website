@@ -18,9 +18,18 @@ interface MenuItem {
   sortOrder: number;
   subCategory?: string;
   active?: boolean; // Phase 0: undefined or true = visible; false = hidden
+  price?: number; // in €; omitted = not shown
   en?: InlineTranslation;
   pt?: InlineTranslation;
 }
+
+// "10,5 €" / "14 €" — Portuguese convention, matches the printed menu. Both locales.
+const formatPrice = (price: number): string => {
+  const s = Number.isInteger(price) ? String(price) : price.toFixed(1);
+  return `${s.replace('.', ',')} €`;
+};
+
+const hasPrice = (item: MenuItem) => typeof item.price === 'number' && item.price > 0;
 
 interface SubCategoryRecord {
   id: string;
@@ -184,6 +193,9 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
               <span key={item.id} className="text-charcoal text-sm py-1">
                 {name}
                 {description && <span className="text-stone text-xs ml-1">({description})</span>}
+                {hasPrice(item) && (
+                  <span className="text-terracotta text-xs ml-1.5 whitespace-nowrap">{formatPrice(item.price!)}</span>
+                )}
               </span>
             );
           })}
@@ -199,6 +211,11 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
             <div key={item.id} className="py-1.5 text-center">
               <h3 className="font-display text-base md:text-lg text-charcoal font-medium">
                 {name}
+                {hasPrice(item) && (
+                  <span className="ml-2 text-terracotta text-sm md:text-base font-medium whitespace-nowrap">
+                    {formatPrice(item.price!)}
+                  </span>
+                )}
               </h3>
               {description && (
                 <p className="text-stone text-sm mt-0.5 leading-snug">{description}</p>
@@ -211,17 +228,11 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   };
 
   const renderCouvertBox = (categoryId: string) => {
-    let couvertItems = items
+    // Order comes from item.sortOrder (editable in the admin), same as every other group.
+    const couvertItems = items
       .filter((i) => i.categoryId === categoryId && i.subCategory === 'couvert' && isVisible(i))
       .sort((a, b) => a.sortOrder - b.sortOrder);
     if (couvertItems.length === 0) return null;
-
-    const couvertOrder = ['marinated-olives', 'saj-crackers', 'zaatar-mix-crackers', 'saj-bread'];
-    couvertItems = [...couvertItems].sort((a, b) => {
-      const ai = couvertOrder.indexOf(a.id);
-      const bi = couvertOrder.indexOf(b.id);
-      return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
-    });
 
     const couvertName = menu?.subCategories?.couvert || 'Couvert';
 
@@ -235,9 +246,15 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         <div className="border border-terracotta/25 px-4 py-3">
           <p className="text-center text-charcoal text-sm leading-relaxed">
             {couvertItems.map((item, index) => (
-              <span key={item.id} className="whitespace-nowrap inline-block">
+              <span key={item.id} className="inline-block">
                 {index > 0 && <span className="text-terracotta/40 mx-2">·</span>}
-                {getName(item)}
+                <span className="whitespace-nowrap">{getName(item)}</span>
+                {getDescription(item) && (
+                  <span className="text-stone text-xs ml-1">({getDescription(item)})</span>
+                )}
+                {hasPrice(item) && (
+                  <span className="text-terracotta text-xs ml-1.5 whitespace-nowrap">{formatPrice(item.price!)}</span>
+                )}
               </span>
             ))}
           </p>
