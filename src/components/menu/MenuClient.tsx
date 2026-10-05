@@ -458,7 +458,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   return (
     <div className={`min-h-screen bg-menu-paper font-menu ${T.ink}`}>
       <div className="max-w-5xl mx-auto px-5 md:px-8 pt-24 md:pt-28 pb-16" ref={topRef}>
-        {/* Header as printed: the logo, then the tagline (food) or the page title (drinks) */}
+        {/* Header as printed: the logo and the tagline, the same on every page */}
         <div className="flex flex-col items-center gap-3 md:gap-4">
           <Image
             src="/images/brand/logo.svg"
@@ -468,15 +468,9 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
             priority
             className="w-[128px] md:w-[168px] h-auto"
           />
-          {tone === 'green' ? (
-            <h1 className="font-menu font-medium text-[17px] md:text-[19px] tracking-[0.3em] uppercase text-menu-ink leading-none">
-              {pageName(activePage)}
-            </h1>
-          ) : (
-            <p className="font-menu italic font-semibold text-[16px] md:text-[17px] tracking-[0.02em] text-menu-red leading-none">
-              {menu?.tagline || 'people, plates, playlists.'}
-            </p>
-          )}
+          <p className="font-menu italic font-semibold text-[16px] md:text-[17px] tracking-[0.02em] text-menu-red leading-none">
+            {menu?.tagline || 'people, plates, playlists.'}
+          </p>
         </div>
 
         {/* Page switch: Food · SAJ Wraps · Alcoholic · Non-alcoholic · Wines */}
