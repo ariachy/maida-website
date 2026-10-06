@@ -346,7 +346,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   }, [activePage, readingOrder.length]);
 
   useEffect(() => {
-    const onScroll = () => setShowTop(window.scrollY > 600);
+    const onScroll = () => setShowTop(window.scrollY > 400);
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
