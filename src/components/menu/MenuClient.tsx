@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import Image from 'next/image';
 import { ArrowUp, ChevronRight } from 'lucide-react';
 import { track } from '@/lib/analytics';
 import { useBooking } from '@/hooks/useBooking';
@@ -616,16 +615,11 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   return (
     <div className={`min-h-screen bg-menu-paper font-menu ${T.ink}`}>
       <div className="max-w-[1040px] mx-auto px-5 md:px-8 pt-24 md:pt-28 pb-16" ref={topRef}>
-        {/* Header as printed: the logo and the tagline, the same on every page */}
+        {/* Header: title and tagline, the same on every page */}
         <div className="flex flex-col items-center gap-3 md:gap-4">
-          <Image
-            src="/images/brand/logo.svg"
-            alt="Maída"
-            width={168}
-            height={76}
-            priority
-            className="w-[128px] md:w-[168px] h-auto"
-          />
+          <h1 className="font-menu font-black text-menu-red text-[30px] md:text-[38px] lg:text-[42px] tracking-[0.14em] uppercase leading-none [text-wrap:balance]">
+            {menu?.heroTitle || 'Our Menu'}
+          </h1>
           <p className="font-menu italic font-semibold text-[16px] md:text-[17px] tracking-[0.02em] text-menu-red leading-none">
             {menu?.tagline || 'people, plates, playlists.'}
           </p>
