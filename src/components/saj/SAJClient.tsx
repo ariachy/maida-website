@@ -361,7 +361,7 @@ export default function SAJClient({ translations, locale }: SAJClientProps) {
           >
             <Link
               href={`/${locale}/menu`}
-              className="inline-block bg-terracotta text-warm-white px-8 py-3 font-medium hover:bg-terracotta/90 transition-colors"
+              className="inline-block rounded-full bg-terracotta text-warm-white px-8 py-3 font-medium hover:bg-terracotta/90 transition-colors"
             >
               View Saj Menu
             </Link>

@@ -743,7 +743,7 @@ export default function JoinUsClient({ locale }: JoinUsClientProps) {
                       <button
                         type="submit"
                         disabled={isSending}
-                        className="w-full bg-terracotta text-warm-white px-6 py-3 font-medium hover:bg-terracotta/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full rounded-full bg-terracotta text-warm-white px-6 py-3 font-medium hover:bg-terracotta/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {isSending ? 'Sending...' : 'Send application'}
                       </button>

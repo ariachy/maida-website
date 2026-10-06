@@ -369,7 +369,7 @@ export default function MenuHighlights({ translations, locale }: MenuHighlightsP
         >
           <Link 
             href={`/${locale}/menu`} 
-            className="bg-terracotta text-warm-white px-8 py-4 text-sm font-medium hover:bg-terracotta/90 transition-colors inline-block"
+            className="rounded-full bg-terracotta text-warm-white px-8 py-4 text-sm font-medium hover:bg-terracotta/90 transition-colors inline-block"
           >
             {t('fullMenu', 'Full Menu')}
           </Link>

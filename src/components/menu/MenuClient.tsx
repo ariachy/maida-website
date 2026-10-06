@@ -620,9 +620,6 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           <h1 className="font-menu font-black text-menu-red text-[30px] md:text-[38px] lg:text-[42px] tracking-[0.14em] uppercase leading-none [text-wrap:balance]">
             {menu?.heroTitle || 'Our Menu'}
           </h1>
-          <p className="font-menu italic font-semibold text-[16px] md:text-[17px] tracking-[0.02em] text-menu-red leading-none">
-            {menu?.tagline || 'people, plates, playlists.'}
-          </p>
         </div>
 
         {/* Page switch: Food · SAJ Wraps · Alcoholic · Non-alcoholic · Wines */}

@@ -11,7 +11,7 @@ module.exports = {
         'cream': '#fedec7',
         'sand': '#E8E0D5',
         'terracotta': {
-          DEFAULT: '#ab5741',
+          DEFAULT: '#C04A37',
           light: '#f79c77',
           glow: '#f79c77',
         },

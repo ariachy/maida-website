@@ -20,7 +20,7 @@ export default function CTASection({ translations }: CTASectionProps) {
       ref={ref}
       className="relative py-16 md:py-20 px-6 overflow-hidden"
       style={{
-        background: 'linear-gradient(135deg, #ab5741 0%, #8a4535 100%)',
+        background: 'linear-gradient(135deg, #C04A37 0%, #9A3B2C 100%)',
       }}
     >
       {/* Repeating Emblem Pattern */}

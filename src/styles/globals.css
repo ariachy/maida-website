@@ -152,13 +152,13 @@
   }
 
   /* ============================================
-     BUTTONS - SQUARE EDGES
+     BUTTONS - PILL SHAPE (matches the menu page)
      ============================================ */
   .btn {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 md:px-8 md:py-4;
     @apply text-sm tracking-wide;
     @apply relative overflow-hidden;
-    @apply rounded-none;
+    @apply rounded-full;
     font-family: var(--font-body);
     transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
   }
@@ -181,7 +181,7 @@
 
   .btn-primary:hover {
     @apply -translate-y-0.5 shadow-lg;
-    box-shadow: 0 10px 30px rgba(171, 87, 65, 0.3);
+    box-shadow: 0 10px 30px rgba(192, 74, 55, 0.3);
   }
 
   .btn-ghost {

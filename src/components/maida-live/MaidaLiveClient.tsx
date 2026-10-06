@@ -297,7 +297,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
               <p className="text-sand/60 mb-6 text-sm">
                 {privateEvents?.description || 'Host your next celebration, corporate event, or private gathering with us.'}
               </p>
-              <Link href={`/${locale}/contact`} className="inline-block bg-warm-white text-charcoal px-6 py-3 text-sm font-medium hover:bg-sand transition-colors">
+              <Link href={`/${locale}/contact`} className="inline-block rounded-full bg-warm-white text-charcoal px-6 py-3 text-sm font-medium hover:bg-sand transition-colors">
                 {privateEvents?.cta || 'Contact us'}
               </Link>
             </motion.div>
@@ -324,7 +324,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
               </p>
               <button
                 onClick={() => setIsDJModalOpen(true)}
-                className="inline-block bg-terracotta text-warm-white px-6 py-3 text-sm font-medium hover:bg-terracotta/90 transition-colors"
+                className="inline-block rounded-full bg-terracotta text-warm-white px-6 py-3 text-sm font-medium hover:bg-terracotta/90 transition-colors"
               >
                 {djApplication?.cta || 'Apply to play'}
               </button>

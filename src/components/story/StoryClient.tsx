@@ -324,7 +324,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
           ============================================ */}
       <section 
         className="relative py-16 md:py-20 px-6 overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #ab5741 0%, #8a4535 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #C04A37 0%, #9A3B2C 100%)' }}
       >
         {/* Emblem Pattern */}
         <div 
@@ -360,7 +360,7 @@ export default function StoryClient({ translations, locale }: StoryClientProps) 
 
           <motion.button
             onClick={handleReserveClick}
-            className="bg-charcoal text-warm-white px-8 py-4 text-sm font-medium hover:bg-warm-white hover:text-charcoal transition-colors"
+            className="rounded-full bg-charcoal text-warm-white px-8 py-4 text-sm font-medium hover:bg-warm-white hover:text-charcoal transition-colors"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

@@ -281,11 +281,11 @@ export default function ReviewPage() {
                 viewBox="0 0 140 140"
                 fill="none"
               >
-                <path d="M0 140L70 70L0 0" stroke="#ab5741" strokeWidth="1.5" />
-                <path d="M20 140L70 90L20 40" stroke="#ab5741" strokeWidth="1" />
-                <path d="M40 140L70 110L40 80" stroke="#ab5741" strokeWidth="0.8" />
-                <circle cx="70" cy="70" r="35" stroke="#ab5741" strokeWidth="1" />
-                <circle cx="70" cy="70" r="18" stroke="#ab5741" strokeWidth="0.8" />
+                <path d="M0 140L70 70L0 0" stroke="#C04A37" strokeWidth="1.5" />
+                <path d="M20 140L70 90L20 40" stroke="#C04A37" strokeWidth="1" />
+                <path d="M40 140L70 110L40 80" stroke="#C04A37" strokeWidth="0.8" />
+                <circle cx="70" cy="70" r="35" stroke="#C04A37" strokeWidth="1" />
+                <circle cx="70" cy="70" r="18" stroke="#C04A37" strokeWidth="0.8" />
               </svg>
 
               {/* Geometric corner pattern — top right */}
@@ -295,11 +295,11 @@ export default function ReviewPage() {
                 viewBox="0 0 140 140"
                 fill="none"
               >
-                <path d="M0 140L70 70L0 0" stroke="#ab5741" strokeWidth="1.5" />
-                <path d="M20 140L70 90L20 40" stroke="#ab5741" strokeWidth="1" />
-                <path d="M40 140L70 110L40 80" stroke="#ab5741" strokeWidth="0.8" />
-                <circle cx="70" cy="70" r="35" stroke="#ab5741" strokeWidth="1" />
-                <circle cx="70" cy="70" r="18" stroke="#ab5741" strokeWidth="0.8" />
+                <path d="M0 140L70 70L0 0" stroke="#C04A37" strokeWidth="1.5" />
+                <path d="M20 140L70 90L20 40" stroke="#C04A37" strokeWidth="1" />
+                <path d="M40 140L70 110L40 80" stroke="#C04A37" strokeWidth="0.8" />
+                <circle cx="70" cy="70" r="35" stroke="#C04A37" strokeWidth="1" />
+                <circle cx="70" cy="70" r="18" stroke="#C04A37" strokeWidth="0.8" />
               </svg>
 
               {/* Language toggle */}
@@ -308,7 +308,7 @@ export default function ReviewPage() {
                   onClick={() => setLanguage('en')}
                   className="px-4 py-1.5 rounded-full text-xs font-medium transition-all"
                   style={{
-                    backgroundColor: language === 'en' ? '#ab5741' : 'transparent',
+                    backgroundColor: language === 'en' ? '#C04A37' : 'transparent',
                     color: language === 'en' ? '#FEFCF9' : '#043335',
                   }}
                 >
@@ -318,7 +318,7 @@ export default function ReviewPage() {
                   onClick={() => setLanguage('pt')}
                   className="px-4 py-1.5 rounded-full text-xs font-medium transition-all"
                   style={{
-                    backgroundColor: language === 'pt' ? '#ab5741' : 'transparent',
+                    backgroundColor: language === 'pt' ? '#C04A37' : 'transparent',
                     color: language === 'pt' ? '#FEFCF9' : '#043335',
                   }}
                 >
@@ -353,7 +353,7 @@ export default function ReviewPage() {
                   {/* Decorative divider */}
                   <div className="flex items-center gap-3 mt-6 w-20">
                     <div className="flex-1 h-px" style={{ backgroundColor: '#E8E0D5' }} />
-                    <span style={{ color: '#ab5741', fontSize: '11px' }}>✦</span>
+                    <span style={{ color: '#C04A37', fontSize: '11px' }}>✦</span>
                     <div className="flex-1 h-px" style={{ backgroundColor: '#E8E0D5' }} />
                   </div>
                 </div>
@@ -372,9 +372,9 @@ export default function ReviewPage() {
                       fill="none"
                       className="mb-1.5 animate-bounce-gentle"
                     >
-                      <path d="M16 0L4 16h9v24h6V16h9L16 0z" fill="#ab5741" opacity="0.65" />
+                      <path d="M16 0L4 16h9v24h6V16h9L16 0z" fill="#C04A37" opacity="0.65" />
                     </svg>
-                    <span className="text-sm font-medium tracking-wide" style={{ color: '#ab5741' }}>
+                    <span className="text-sm font-medium tracking-wide" style={{ color: '#C04A37' }}>
                       {t.tapPhone}
                     </span>
                     <div className="flex items-center gap-1.5 mt-1.5">
@@ -383,7 +383,7 @@ export default function ReviewPage() {
                         height="14"
                         viewBox="0 0 24 24"
                         fill="none"
-                        stroke="#ab5741"
+                        stroke="#C04A37"
                         strokeWidth="2.2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -394,7 +394,7 @@ export default function ReviewPage() {
                         <path d="M12.91 4.1a15.91 15.91 0 0 1 .01 15.8" />
                         <path d="M16.37 2a20.16 20.16 0 0 1 0 20" />
                       </svg>
-                      <span className="text-xs font-medium" style={{ color: '#ab5741', opacity: 0.6 }}>
+                      <span className="text-xs font-medium" style={{ color: '#C04A37', opacity: 0.6 }}>
                         {t.nfc}
                       </span>
                     </div>

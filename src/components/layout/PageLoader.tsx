@@ -24,16 +24,6 @@ export default function PageLoader() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
         >
-          {/* Arabic Text */}
-          <motion.div
-            className="font-display text-6xl md:text-8xl text-charcoal/10 mb-8 arabic-text select-none"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4 }}
-          >
-            مائدة
-          </motion.div>
-
           {/* Spinning Logo */}
           <motion.div
             className="relative w-20 h-20 md:w-24 md:h-24"

@@ -64,13 +64,13 @@ export default function CookieConsent({ locale = 'en' }: CookieConsentProps) {
                   </button>
                   <button
                     onClick={openPreferences}
-                    className="px-5 py-2.5 text-sm font-medium text-charcoal border border-charcoal/20 hover:border-charcoal/40 hover:bg-sand/30 rounded-lg transition-all order-2"
+                    className="px-5 py-2.5 text-sm font-medium text-charcoal border border-charcoal/20 hover:border-charcoal/40 hover:bg-sand/30 rounded-full transition-all order-2"
                   >
                     {t.managePreferences}
                   </button>
                   <button
                     onClick={acceptAll}
-                    className="px-6 py-2.5 text-sm font-medium bg-terracotta hover:bg-terracotta/90 text-warm-white rounded-lg transition-colors sm:ml-auto order-1 sm:order-3"
+                    className="px-6 py-2.5 text-sm font-medium bg-terracotta hover:bg-terracotta/90 text-warm-white rounded-full transition-colors sm:ml-auto order-1 sm:order-3"
                   >
                     {t.acceptAll}
                   </button>
@@ -204,7 +204,7 @@ export default function CookieConsent({ locale = 'en' }: CookieConsentProps) {
                     </button>
                     <button
                       onClick={savePreferences}
-                      className="px-6 py-2.5 text-sm font-medium bg-charcoal hover:bg-charcoal/90 text-warm-white rounded-lg transition-colors sm:ml-auto"
+                      className="px-6 py-2.5 text-sm font-medium bg-charcoal hover:bg-charcoal/90 text-warm-white rounded-full transition-colors sm:ml-auto"
                     >
                       {t.savePreferences}
                     </button>

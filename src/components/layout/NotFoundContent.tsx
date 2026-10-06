@@ -126,19 +126,19 @@ export default function NotFoundContent() {
         >
           <Link 
             href="/en" 
-            className={`${variation.primaryBtnClass} px-6 py-3 text-base font-medium transition-colors`}
+            className={`${variation.primaryBtnClass} rounded-full px-6 py-3 text-base font-medium transition-colors`}
           >
             Back to home
           </Link>
           <Link 
             href="/en/menu" 
-            className={`${variation.ghostBtnClass} px-6 py-3 text-base font-medium transition-colors`}
+            className={`${variation.ghostBtnClass} rounded-full px-6 py-3 text-base font-medium transition-colors`}
           >
             View Menu
           </Link>
           <button 
             onClick={handleReserveClick}
-            className={`${variation.ghostBtnClass} px-6 py-3 text-base font-medium transition-colors`}
+            className={`${variation.ghostBtnClass} rounded-full px-6 py-3 text-base font-medium transition-colors`}
           >
             Reserve a table
           </button>

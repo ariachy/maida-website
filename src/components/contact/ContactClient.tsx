@@ -343,7 +343,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                   <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="w-full bg-terracotta text-warm-white px-6 py-3 font-medium hover:bg-terracotta/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full rounded-full bg-terracotta text-warm-white px-6 py-3 font-medium hover:bg-terracotta/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {status === 'sending' ? (form?.sending || 'Sending...') : (form?.send || 'Send message')}
                   </button>

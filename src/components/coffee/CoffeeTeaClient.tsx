@@ -298,7 +298,7 @@ export default function CoffeeTeaClient({ translations, locale }: CoffeeTeaClien
             <br />
             <Link
               href={`/${locale}/menu#coffee-tea`}
-              className="inline-block bg-terracotta text-warm-white px-8 py-3 font-medium hover:bg-terracotta/90 transition-colors"
+              className="inline-block rounded-full bg-terracotta text-warm-white px-8 py-3 font-medium hover:bg-terracotta/90 transition-colors"
             >
               View Coffee & Tea Menu
             </Link>
