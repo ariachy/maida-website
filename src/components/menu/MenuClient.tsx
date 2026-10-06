@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, ChevronRight } from 'lucide-react';
 import { track } from '@/lib/analytics';
 import { useBooking } from '@/hooks/useBooking';
 
@@ -330,6 +330,21 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
     link?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
   }, [activeSection]);
 
+  // Right-edge fade on the jump bar while there is more to the right.
+  const [jumpMore, setJumpMore] = useState(false);
+  useEffect(() => {
+    const ul = jumpRef.current?.querySelector('ul');
+    if (!ul) return;
+    const check = () => setJumpMore(ul.scrollWidth - ul.clientWidth - ul.scrollLeft > 8);
+    check();
+    ul.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check);
+    return () => {
+      ul.removeEventListener('scroll', check);
+      window.removeEventListener('resize', check);
+    };
+  }, [activePage, readingOrder.length]);
+
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 600);
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -379,17 +394,22 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
   };
 
   // Wine row: name and region on the left, glass | bottle on the right.
+  const getRegion = (item: MenuItem): string =>
+    (item as any)[locale]?.region || menu?.items?.[item.id]?.region || '';
+
   const renderWineRow = (item: MenuItem) => {
     const [name, note] = splitName(getName(item));
+    const region = getRegion(item);
     const description = getDescription(item);
     const cell = 'w-10 lg:w-12 text-right font-light text-[14px] lg:text-[15.5px] tabular-nums';
     return (
       <div key={item.id} className="flex items-start gap-4 py-[6px]">
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-baseline gap-x-2">
+          <p className="leading-snug">
             <span className="font-semibold text-[13.5px] lg:text-[15px] tracking-[0.14em] uppercase">{name}</span>
-            {note && <span className="italic text-[13px] lg:text-[14px]">{note}</span>}
-          </div>
+            {note && <span className="italic text-[13px] lg:text-[14px] ml-1.5">({note})</span>}
+            {region && <span className="italic text-[13px] lg:text-[14px] ml-2">{region}</span>}
+          </p>
           {description && <p className="font-light text-[14px] lg:text-[15.5px] leading-[1.35] mt-px max-w-[60ch]">{description}</p>}
         </div>
         <div className="flex gap-3 flex-shrink-0 pt-px">
@@ -439,7 +459,26 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         {block.title}
       </h2>
       {block.note && <p className={`font-light italic text-[13px] -mt-1 mb-2 ${T.head}`}>{block.note}</p>}
-      <p className={`font-light text-[14px] lg:text-[15.5px] leading-[1.75] ${T.text}`}>
+      {/* Small screens: one item per row, price on the right */}
+      <div className={`lg:hidden ${T.text}`}>
+        {block.items.map((item) => {
+          const [name, note, rest] = splitName(getName(item));
+          const description = getDescription(item);
+          return (
+            <div key={item.id} className="flex items-baseline justify-between gap-3 py-[3px]">
+              <span className="min-w-0">
+                <span className="font-semibold text-[13px] tracking-[0.14em] uppercase">{name}</span>
+                {note && <span className={`italic text-[12.5px] ml-1 ${noteClass(note)}`}>({note})</span>}
+                {rest && <span className="font-light text-[13px] ml-1">{rest}</span>}
+                {description && <span className="italic text-[12.5px] ml-1">({description})</span>}
+              </span>
+              {hasPrice(item) && <span className="font-light text-[14px] tabular-nums whitespace-nowrap">{formatPrice(item.price!)}</span>}
+            </div>
+          );
+        })}
+      </div>
+      {/* Desktop: the printed one-line strip */}
+      <p className={`hidden lg:block font-light text-[14px] lg:text-[15.5px] leading-[1.75] ${T.text}`}>
         {block.items.map((item, index) => {
           const [name, note, rest] = splitName(getName(item));
           const description = getDescription(item);
@@ -597,8 +636,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           <div
             role="tablist"
             aria-label="Menu"
-            className={`flex gap-1 max-w-full overflow-x-auto scrollbar-hide border-[1.5px] ${T.border} rounded-full p-[3px]`}
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+            className={`flex flex-wrap justify-center gap-2 md:gap-1 md:flex-nowrap md:border-[1.5px] ${T.border} md:rounded-full md:p-[3px]`}
           >
             {pages.map((p) => {
               const on = p.id === activePage;
@@ -608,8 +646,8 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
                   role="tab"
                   aria-selected={on}
                   onClick={() => handlePage(p.id)}
-                  className={`flex-shrink-0 rounded-full px-4 py-1.5 text-[12px] md:text-[13px] font-semibold tracking-[0.14em] uppercase whitespace-nowrap transition-colors ${
-                    on ? 'bg-current' : T.hover
+                  className={`flex-shrink-0 rounded-full px-4 py-1.5 text-[12px] md:text-[13px] font-semibold tracking-[0.14em] uppercase whitespace-nowrap transition-colors border-[1.5px] md:border-0 ${
+                    on ? `bg-current ${T.border}` : `${T.border} ${T.hover}`
                   }`}
                 >
                   <span className={on ? 'text-menu-paper' : ''}>{pageName(p.id)}</span>
@@ -625,7 +663,15 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           className={`${readingOrder.length > 1 ? 'lg:hidden' : 'hidden'} sticky z-30 bg-menu-paper -mx-5 md:-mx-8 px-5 md:px-8 mt-5 border-b ${T.rule}`}
           style={{ top: NAVBAR_OFFSET }}
         >
-          <nav aria-label="Sections">
+          <nav aria-label="Sections" className="relative">
+            <div
+              aria-hidden
+              className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-20 flex items-center justify-end bg-gradient-to-l from-menu-paper via-menu-paper/90 to-transparent transition-opacity ${
+                jumpMore ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <ChevronRight className={`w-4 h-4 ${T.ink}`} />
+            </div>
             <ul
               className="flex gap-6 overflow-x-auto scrollbar-hide"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
@@ -672,11 +718,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
               {current.bottom.map(renderBlock)}
             </>
           )}
-          {activePage === 'wines' && menu?.cellarSignoff && (
-            <p className="font-menu font-black text-menu-red text-[34px] md:text-[48px] lg:text-[56px] tracking-[0.1em] uppercase leading-none text-center mt-14 [text-wrap:balance]">
-              {menu.cellarSignoff}
-            </p>
-          )}
+
         </div>
 
         {/* Allergen / VAT line, as on the printed menu */}

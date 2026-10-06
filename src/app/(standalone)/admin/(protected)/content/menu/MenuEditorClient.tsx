@@ -63,6 +63,7 @@ interface MenuData {
 interface TranslationItem {
   name: string;
   description: string;
+  region?: string;
 }
 
 interface CategoryTranslation {

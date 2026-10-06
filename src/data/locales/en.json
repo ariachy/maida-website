@@ -614,36 +614,44 @@
         "description": "bourbon, lemon, bitters, red wine."
       },
       "wine-2160-white": {
-        "name": "2160 (Douro)",
-        "description": "Fruity, with notes of pear and peach and a slightly herbaceous finish."
+        "name": "2160",
+        "description": "Fruity, with notes of pear and peach and a slightly herbaceous finish.",
+        "region": "Douro"
       },
       "wine-infinitude-white": {
-        "name": "INFINITUDE (Sintra)",
-        "description": "Elegant and delicate, with a subtle saline freshness from the Atlantic coast. Chardonnay and Viognier."
+        "name": "INFINITUDE",
+        "description": "Elegant and delicate, with a subtle saline freshness from the Atlantic coast. Chardonnay and Viognier.",
+        "region": "Sintra"
       },
       "wine-altitudes-white": {
-        "name": "ALTITUDES IXSIR (Lebanon)",
-        "description": "Crisp and aromatic, with grapefruit and a touch of spice."
+        "name": "ALTITUDES IXSIR",
+        "description": "Crisp and aromatic, with grapefruit and a touch of spice.",
+        "region": "Lebanon"
       },
       "wine-cameleao-green": {
-        "name": "CAMALEÃO ALVARINHO (Amarante)",
-        "description": "Aromatic, with citrus and floral notes. Light and refreshing."
+        "name": "CAMALEÃO ALVARINHO",
+        "description": "Aromatic, with citrus and floral notes. Light and refreshing.",
+        "region": "Amarante"
       },
       "wine-memorias-rose": {
-        "name": "MEMÓRIAS (Dão)",
-        "description": "Crisp and elegant, with raspberry and redcurrant."
+        "name": "MEMÓRIAS",
+        "description": "Crisp and elegant, with raspberry and redcurrant.",
+        "region": "Dão"
       },
       "wine-anexo-red": {
-        "name": "ANEXO (Low intervention • Alentejo)",
-        "description": "Full-bodied, fruity and food-friendly. Half of the blend is aged in clay amphorae and the other half in oak barrels."
+        "name": "ANEXO",
+        "description": "Full-bodied, fruity and food-friendly. Half of the blend is aged in clay amphorae and the other half in oak barrels.",
+        "region": "Alentejo"
       },
       "wine-biaia-red": {
-        "name": "BIAIA COLHEITA (Bio • Vegan • Beira Interior)",
-        "description": "Light and fresh, with red fruit, herbaceous notes and a delicate resinous touch."
+        "name": "BIAIA COLHEITA",
+        "description": "Light and fresh, with red fruit, herbaceous notes and a delicate resinous touch.",
+        "region": "Beira Interior"
       },
       "wine-sparkling": {
-        "name": "MAR SALGADO BRUTO (Bairrada)",
-        "description": "Dry, crisp and mineral. Fresh and easy-drinking."
+        "name": "MAR SALGADO BRUTO",
+        "description": "Dry, crisp and mineral. Fresh and easy-drinking.",
+        "region": "Bairrada"
       },
       "beer-clay-cold": {
         "name": "CLAY COLD",
@@ -766,24 +774,29 @@
         "description": "| 22 | 40"
       },
       "wine-piteira-talha": {
-        "name": "JOSÉ PITEIRA TALHA BRANCO — ORANGE WINE (Low intervention • Alentejo)",
-        "description": "Dry, with dried herbs, quince and a hint of peach. Fermented on the skins in traditional clay amphorae (talhas), as the Romans did."
+        "name": "JOSÉ PITEIRA TALHA BRANCO (orange wine)",
+        "description": "Dry, with dried herbs, quince and a hint of peach. Fermented on the skins in traditional clay amphorae (talhas), as the Romans did.",
+        "region": "Alentejo"
       },
       "wine-adegamae-chardonnay": {
-        "name": "ADEGAMÃE CHARDONNAY (Lisbon)",
-        "description": "Apple, peach and a touch of tropical fruit, lightly oaked. Creamy and well balanced, with a long fruity finish."
+        "name": "ADEGAMÃE CHARDONNAY",
+        "description": "Apple, peach and a touch of tropical fruit, lightly oaked. Creamy and well balanced, with a long fruity finish.",
+        "region": "Lisbon"
       },
       "wine-adegamae-sauvignon": {
-        "name": "ADEGAMÃE SAUVIGNON BLANC (Lisbon)",
-        "description": "Crisp and zesty, with citrus, passion fruit and fresh green notes."
+        "name": "ADEGAMÃE SAUVIGNON BLANC",
+        "description": "Crisp and zesty, with citrus, passion fruit and fresh green notes.",
+        "region": "Lisbon"
       },
       "wine-adegamae-castelao": {
-        "name": "ADEGAMÃE CASTELÃO (Lisbon)",
-        "description": "Red berries and a touch of spice, softened by oak. Smooth tannins, fresh and easy to enjoy."
+        "name": "ADEGAMÃE CASTELÃO",
+        "description": "Red berries and a touch of spice, softened by oak. Smooth tannins, fresh and easy to enjoy.",
+        "region": "Lisbon"
       },
       "wine-adegamae-cabernet": {
-        "name": "ADEGAMÃE CABERNET SAUVIGNON (Lisbon)",
-        "description": "Dark fruit, tobacco and a hint of green pepper, aged in oak. Full-bodied with ripe, polished tannins."
+        "name": "ADEGAMÃE CABERNET SAUVIGNON",
+        "description": "Dark fruit, tobacco and a hint of green pepper, aged in oak. Full-bodied with ripe, polished tannins.",
+        "region": "Lisbon"
       }
     },
     "tags": {
@@ -801,8 +814,7 @@
       "wines": "Wines"
     },
     "tagline": "people, plates, playlists.",
-    "backToTop": "Back to top",
-    "cellarSignoff": "FROM THE CELLAR"
+    "backToTop": "Back to top"
   },
   "drinks": {
     "label": "From Our Roots",

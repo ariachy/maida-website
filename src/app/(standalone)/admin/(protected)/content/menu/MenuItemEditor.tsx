@@ -22,6 +22,7 @@ interface MenuItem {
 interface TranslationItem {
   name: string;
   description: string;
+  region?: string; // wines: shown in italics after the name
 }
 
 interface CategoryTranslation {
@@ -75,12 +76,16 @@ export default function MenuItemEditor({
   
   const [enName, setEnName] = useState(enTranslation.name);
   const [enDescription, setEnDescription] = useState(enTranslation.description);
+  const [enRegion, setEnRegion] = useState(enTranslation.region || '');
   const [ptName, setPtName] = useState(ptTranslation.name);
   const [ptDescription, setPtDescription] = useState(ptTranslation.description);
+  const [ptRegion, setPtRegion] = useState(ptTranslation.region || '');
 
   // Track unsaved changes per language
-  const hasEnChanges = enName !== enTranslation.name || enDescription !== enTranslation.description;
-  const hasPtChanges = ptName !== ptTranslation.name || ptDescription !== ptTranslation.description;
+  const hasEnChanges =
+    enName !== enTranslation.name || enDescription !== enTranslation.description || enRegion !== (enTranslation.region || '');
+  const hasPtChanges =
+    ptName !== ptTranslation.name || ptDescription !== ptTranslation.description || ptRegion !== (ptTranslation.region || '');
 
   // Generate ID from name
   const generateId = (name: string) => {
@@ -141,10 +146,10 @@ export default function MenuItemEditor({
     }
 
     if (hasEnChanges || isNew) {
-      updates.en = { name: enName, description: enDescription };
+      updates.en = { name: enName, description: enDescription, region: enRegion.trim() || undefined };
     }
     if (hasPtChanges || isNew) {
-      updates.pt = { name: ptName, description: ptDescription };
+      updates.pt = { name: ptName, description: ptDescription, region: ptRegion.trim() || undefined };
     }
 
     onSave(updates);
@@ -215,6 +220,19 @@ export default function MenuItemEditor({
                 className="w-full px-4 py-2 border border-[#D4C4B5] rounded-md focus:outline-none focus:ring-2 focus:ring-[#C4A484] resize-none"
               />
             </div>
+
+            <div>
+              <label className="block text-sm font-medium text-[#2C2C2C] mb-1">
+                Region (English) <span className="text-[#9CA3AF] font-normal">— wines only</span>
+              </label>
+              <input
+                type="text"
+                value={enRegion}
+                onChange={(e) => setEnRegion(e.target.value)}
+                placeholder="e.g., Alentejo"
+                className="w-full px-4 py-2 border border-[#D4C4B5] rounded-md focus:outline-none focus:ring-2 focus:ring-[#C4A484]"
+              />
+            </div>
           </>
         )}
 
@@ -255,6 +273,19 @@ export default function MenuItemEditor({
                   ⚠️ Portuguese translation missing
                 </p>
               )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-[#2C2C2C] mb-1">
+                Region (Portuguese) <span className="text-[#9CA3AF] font-normal">— wines only</span>
+              </label>
+              <input
+                type="text"
+                value={ptRegion}
+                onChange={(e) => setPtRegion(e.target.value)}
+                placeholder="e.g., Lisboa"
+                className="w-full px-4 py-2 border border-[#D4C4B5] rounded-md focus:outline-none focus:ring-2 focus:ring-[#C4A484]"
+              />
             </div>
           </>
         )}
