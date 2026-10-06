@@ -656,12 +656,18 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         >
           <nav aria-label="Sections" className="relative">
             <div
-              aria-hidden
-              className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-20 flex items-center justify-end bg-gradient-to-l from-menu-paper via-menu-paper/90 to-transparent transition-opacity ${
-                jumpMore ? 'opacity-100' : 'opacity-0'
+              className={`absolute inset-y-0 right-0 z-10 w-20 flex items-center justify-end bg-gradient-to-l from-menu-paper via-menu-paper/90 to-transparent transition-opacity ${
+                jumpMore ? 'opacity-100' : 'opacity-0 pointer-events-none'
               }`}
             >
-              <ChevronRight className={`w-4 h-4 ${T.ink}`} />
+              <button
+                type="button"
+                aria-label={locale === 'pt' ? 'Mais secções' : 'More sections'}
+                onClick={() => jumpRef.current?.querySelector('ul')?.scrollBy({ left: 180, behavior: 'smooth' })}
+                className={`h-full pl-6 pr-1 flex items-center ${T.ink}`}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
             <ul
               className="flex gap-6 overflow-x-auto scrollbar-hide"
