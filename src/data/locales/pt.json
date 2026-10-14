@@ -97,7 +97,6 @@
     "headline2": "-NOS",
     "hours": {
       "monWedThuSun": "Qua – Seg: 18:00 – 23:30",
-      "thursday": "Qui: 18:00 até tarde (01:30)",
       "friday": "Sex – Sáb: 18:00 até tarde (02:00)",
       "saturday": "Sex & Sáb até tarde (02:00)",
       "closed": "Terça: Fechado",
@@ -832,7 +831,7 @@
     },
     "hours": {
       "label": "Horário",
-      "value": "Qua – Seg: 18:00 – 23:30 · Qui até à 01:30 · Sex & Sáb até tarde (02:00)"
+      "value": "Qua – Seg: 18:00 – 23:30 · Sex & Sáb até tarde (02:00)"
     },
     "contact": {
       "label": "Contacto",
@@ -850,7 +849,7 @@
     "navigate": "Navegação",
     "discover": "Descobrir",
     "hours": "Horário",
-    "hoursValue": "Qua – Seg: 18:00 – 23:30 · Qui até à 01:30 · Sex & Sáb até tarde (02:00)",
+    "hoursValue": "Qua – Seg: 18:00 – 23:30 · Sex & Sáb até tarde (02:00)",
     "closed": "Terça: Fechado",
     "contact": "Contacto",
     "reservations": "Reservas",
@@ -923,7 +922,7 @@
       "closed": "Terça: Fechado",
       "midweek": "Qua – Seg: 18:00 – 23:30",
       "midweekKitchen": "Cozinha fecha às 23:00",
-      "thursday": "Qui: 18:00 até tarde (01:30)",
+      "thursday": "",
       "weekend": "Sex – Sáb: 18:00 até tarde (02:00)",
       "weekendKitchen": "Cozinha fecha às 23:30"
     },
@@ -1065,8 +1064,7 @@
     "djPill": "Maída Sessions",
     "phoneBoxLabel": "Grupos de 8+, eventos privados ou reservas para o próprio dia",
     "directions": "Como chegar",
-    "unavailable": "O sistema de reservas demorou a responder. Tente novamente ou ligue-nos.",
-    "hoursThursday": "Qui até tarde (01:30)"
+    "unavailable": "O sistema de reservas demorou a responder. Tente novamente ou ligue-nos."
   },
   "faq": {
     "heroTitle": "Perguntas Frequentes",

@@ -167,7 +167,13 @@ export default async function LocaleRootLayout({
 
         {/* Structured data — now locale-aware. The Menu graph itself is emitted by the
             menu route (MenuJsonLd), not here. */}
-        <RestaurantJsonLd locale={locale} />
+        <RestaurantJsonLd
+          locale={locale}
+          thursdayLate={
+            typeof translations?.contact?.hours?.thursday === 'string' &&
+            translations.contact.hours.thursday.trim() !== ''
+          }
+        />
         <OrganizationJsonLd />
         <WebsiteJsonLd locale={locale} />
 

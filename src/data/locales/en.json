@@ -97,7 +97,6 @@
     "headline2": "US",
     "hours": {
       "monWedThuSun": "Wed – Mon: 18:00 – 23:30",
-      "thursday": "Thu: 18:00 till late (01:30)",
       "friday": "Fri – Sat: 18:00 till late (02:00)",
       "saturday": "Fri & Sat till late (02:00)",
       "closed": "Tuesday: Closed",
@@ -744,7 +743,7 @@
     },
     "hours": {
       "label": "Hours",
-      "value": "Wed – Mon: 18:00 – 23:30 · Thu till 01:30 · Fri & Sat till late (02:00)"
+      "value": "Wed – Mon: 18:00 – 23:30 · Fri & Sat till late (02:00)"
     },
     "contact": {
       "label": "Contact",
@@ -762,7 +761,7 @@
     "navigate": "Navigate",
     "discover": "Discover",
     "hours": "Hours",
-    "hoursValue": "Wed – Mon: 18:00 – 23:30 · Thu till 01:30 · Fri & Sat till late (02:00)",
+    "hoursValue": "Wed – Mon: 18:00 – 23:30 · Fri & Sat till late (02:00)",
     "closed": "Tuesday: Closed",
     "contact": "Contact",
     "reservations": "Reservations",
@@ -835,7 +834,7 @@
       "closed": "Tuesday: Closed",
       "midweek": "Wed – Mon: 18:00 – 23:30",
       "midweekKitchen": "Kitchen closes 23:00",
-      "thursday": "Thu: 18:00 till late (01:30)",
+      "thursday": "",
       "weekend": "Fri – Sat: 18:00 till late (02:00)",
       "weekendKitchen": "Kitchen closes 23:30"
     },
@@ -977,8 +976,7 @@
     "djPill": "Maída Sessions",
     "phoneBoxLabel": "Groups of 8+, private events or same-day requests",
     "directions": "Directions",
-    "unavailable": "The booking system is taking a moment. Try again, or give us a call.",
-    "hoursThursday": "Thu till late (01:30)"
+    "unavailable": "The booking system is taking a moment. Try again, or give us a call."
   },
   "faq": {
     "heroTitle": "Frequently Asked Questions",

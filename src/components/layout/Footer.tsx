@@ -37,7 +37,8 @@ export default function Footer({ translations, locale }: FooterProps) {
   const hours = {
     midweek: getLabel(hoursSrc, 'midweek', 'Wed – Mon: 18:00 – 23:30'),
     midweekKitchen: getLabel(hoursSrc, 'midweekKitchen', 'Kitchen closes 23:00'),
-    thursday: getLabel(hoursSrc, 'thursday', 'Thu: 18:00 till late (01:30)'),
+    // Thursday late night is optional: shown only while the admin field has text.
+    thursday: typeof hoursSrc.thursday === 'string' ? hoursSrc.thursday.trim() : '',
     weekend: getLabel(hoursSrc, 'weekend', 'Fri – Sat: 18:00 till late (02:00)'),
     weekendKitchen: getLabel(hoursSrc, 'weekendKitchen', 'Kitchen closes 23:30'),
     closed: getLabel(hoursSrc, 'closed', 'Tuesday: Closed'),
@@ -192,8 +193,12 @@ export default function Footer({ translations, locale }: FooterProps) {
             <ul className="text-sm">
               <li className="text-warm-white">{hours.midweek}</li>
               <li className="text-warm-white/60 text-xs mt-0.5">{hours.midweekKitchen}</li>
-              <li className="mt-3 text-terracotta-light font-medium">{hours.thursday}</li>
-              <li className="mt-1 text-terracotta-light font-medium">{hours.weekend}</li>
+              {hours.thursday && (
+                <li className="mt-3 text-terracotta-light font-medium">{hours.thursday}</li>
+              )}
+              <li className={`${hours.thursday ? 'mt-1' : 'mt-3'} text-terracotta-light font-medium`}>
+                {hours.weekend}
+              </li>
               <li className="text-warm-white/60 text-xs mt-0.5">{hours.weekendKitchen}</li>
               <li className="mt-1.5">
                 <Link

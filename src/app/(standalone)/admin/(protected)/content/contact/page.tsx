@@ -443,7 +443,9 @@ export default function ContactEditorPage() {
               <>
                 <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
                   <h2 className="text-lg font-medium text-[#2C2C2C]">Opening Hours</h2>
-                  <p className="text-sm text-[#6B6B6B] mt-1">Business hours displayed on contact page</p>
+                  <p className="text-sm text-[#6B6B6B] mt-1">
+                    Opening hours shown on the Reserve page, the Contact page and the footer (one source for all three)
+                  </p>
                 </div>
 
                 <ContentField
@@ -461,32 +463,39 @@ export default function ContactEditorPage() {
                   placeholder="Closed"
                 />
                 <ContentField
-                  label="Monday-Tuesday Hours"
-                  description="Hours for closed days"
+                  label="Closed Day"
+                  description="Printed as its own line (Reserve page prints it as 'Tuesday · Closed')"
                   value={getValue(['contact', 'hours', 'closed'])}
                   onChange={(val) => updateField(['contact', 'hours', 'closed'], val)}
-                  placeholder="Monday - Tuesday: Closed"
+                  placeholder="Tuesday: Closed"
                 />
                 <ContentField
                   label="Midweek Hours"
-                  description="Wed/Thu/Sun hours"
+                  description="Wed – Mon line. Keep the 'Days: hours' shape — the Reserve page prints the colon as ' · '"
                   value={getValue(['contact', 'hours', 'midweek'])}
                   onChange={(val) => updateField(['contact', 'hours', 'midweek'], val)}
-                  placeholder="Wed, Thu, Sun: 12:30 - 23:00"
+                  placeholder="Wed – Mon: 18:00 – 23:30"
                 />
                 <ContentField
                   label="Midweek Kitchen Note"
                   description="Kitchen closing for midweek"
                   value={getValue(['contact', 'hours', 'midweekKitchen'])}
                   onChange={(val) => updateField(['contact', 'hours', 'midweekKitchen'], val)}
-                  placeholder="Kitchen closes 22:30"
+                  placeholder="Kitchen closes 23:00"
+                />
+                <ContentField
+                  label="Thursday Late Night (optional)"
+                  description="Leave EMPTY to hide the Thursday line everywhere (Reserve, Contact, footer, Google opening hours). Fill it in to switch Thursday late nights back on, e.g. 'Thu: 18:00 till late (01:30)'"
+                  value={getValue(['contact', 'hours', 'thursday'])}
+                  onChange={(val) => updateField(['contact', 'hours', 'thursday'], val)}
+                  placeholder="(hidden)"
                 />
                 <ContentField
                   label="Weekend Hours"
-                  description="Fri/Sat hours"
+                  description="Fri – Sat line"
                   value={getValue(['contact', 'hours', 'weekend'])}
                   onChange={(val) => updateField(['contact', 'hours', 'weekend'], val)}
-                  placeholder="Fri - Sat: 12:30 - 01:00"
+                  placeholder="Fri – Sat: 18:00 till late (02:00)"
                 />
                 <ContentField
                   label="Weekend Kitchen Note"

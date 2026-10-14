@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { isValidLocale, loadTranslations } from '@/lib/i18n';
+import { isValidLocale } from '@/lib/i18n';
+import { getServerTranslations } from '@/lib/translations';
 import { generatePageMetadata } from '@/lib/seo';
 import ReserveClient from '@/components/booking/ReserveClient';
 
@@ -40,7 +41,8 @@ export default async function ReservePage({
     notFound();
   }
 
-  const translations = await loadTranslations(locale);
+  // Runtime read (not build-time import) so hours edited in the admin go live on Publish.
+  const translations = await getServerTranslations(locale);
 
   return <ReserveClient translations={translations} locale={locale} />;
 }
