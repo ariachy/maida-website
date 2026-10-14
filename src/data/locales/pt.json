@@ -1095,10 +1095,14 @@
         "q": "Qual é o horário da Maída?",
         "a": [
           {
-            "t": "Quarta a segunda a partir das 18:00 (fechado à terça). Quarta, quinta, domingo e segunda até às 23:30, cozinha fecha às 23:00. Sexta e sábado até tarde, por volta das 02:00 (cozinha fecha às 23:30) - "
+            "t": "",
+            "hours": true
           },
           {
-            "t": "o programa do mês",
+            "t": " "
+          },
+          {
+            "t": "O programa do mês",
             "to": "/maida-sessions"
           },
           {

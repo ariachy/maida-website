@@ -1007,10 +1007,14 @@
         "q": "What are Maída's opening hours?",
         "a": [
           {
-            "t": "Wednesday to Monday from 18:00 (closed Tuesdays). Wednesday, Thursday, Sunday and Monday until 23:30, kitchen closes 23:00. Friday and Saturday until late, around 02:00 (kitchen closes 23:30) - "
+            "t": "",
+            "hours": true
           },
           {
-            "t": "this month's line-up",
+            "t": " "
+          },
+          {
+            "t": "This month's line-up",
             "to": "/maida-sessions"
           },
           {

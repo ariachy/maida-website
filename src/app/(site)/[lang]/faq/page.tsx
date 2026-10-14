@@ -4,21 +4,43 @@
 // server-side and no JS ships for the page. Statically generated per-locale via the
 // [lang] layout's generateStaticParams, exactly like /[lang]/maida-saj.
 //
-// Content is hardcoded in the locale dictionaries under the `faq` key (en.json / pt.json)
-// and is NOT admin-managed — edits go live on the next server build, like the rest of the
-// dictionary-driven copy.
+// Content lives in the locale dictionaries under the `faq` key (en.json / pt.json). There
+// is no admin editor for it, but the dictionaries are read at runtime
+// (getServerTranslations), so a JSON edit + Publish goes live without a build. The
+// opening-hours answer is special: its `{ hours: true }` segment is composed at render
+// time from contact.hours.* — the admin-managed hours (Content → Contact → Opening
+// Hours) — so the FAQ can never contradict the reserve page, the footer or the schema.
 
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { isValidLocale, loadTranslations, Locale } from '@/lib/i18n';
+import { isValidLocale, Locale } from '@/lib/i18n';
+import { getServerTranslations } from '@/lib/translations';
 import { generatePageMetadata } from '@/lib/seo';
 import { FAQPageJsonLd } from '@/components/seo/JsonLd';
 
 // An answer is an array of segments. A segment is plain text, an internal link (`to`,
-// locale-prefixed at render), or an external link (`href`, used as-is: tel:/https:/…).
+// locale-prefixed at render), an external link (`href`, used as-is: tel:/https:/…), or
+// `{ hours: true }`, replaced at render by the opening hours composed from contact.hours.
 // All segments render inline AND contribute to the plain-text schema answer.
-type Segment = { t: string; to?: string; href?: string };
+type Segment = { t: string; to?: string; href?: string; hours?: boolean };
+
+// "Wed – Mon: 18:00 – 23:30, kitchen closes 23:00. [Thu…]. Fri – Sat: …, kitchen closes
+// 23:30. Tuesday: Closed." — built from the same admin fields as every other hours line.
+// The kitchen note is lower-cased at its first letter so it reads as a clause.
+function composeHoursAnswer(hours: Record<string, any>): string {
+  const str = (k: string) => (typeof hours?.[k] === 'string' ? hours[k].trim() : '');
+  const clause = (k: string) => {
+    const v = str(k);
+    return v ? `, ${v.charAt(0).toLowerCase()}${v.slice(1)}` : '';
+  };
+  const parts: string[] = [];
+  if (str('midweek')) parts.push(`${str('midweek')}${clause('midweekKitchen')}`);
+  if (str('thursday')) parts.push(str('thursday'));
+  if (str('weekend')) parts.push(`${str('weekend')}${clause('weekendKitchen')}`);
+  if (str('closed')) parts.push(str('closed'));
+  return parts.map((p) => `${p}.`).join(' ');
+}
 
 // Optional trailing call-to-action (e.g. "Get directions →"). Rendered as an affordance
 // under the answer and intentionally EXCLUDED from the plain-text schema answer.
@@ -73,9 +95,15 @@ export default async function FaqPage({
     notFound();
   }
 
-  const translations = await loadTranslations(locale as Locale);
+  const translations = await getServerTranslations(locale as Locale);
   const faq = (translations as any)?.faq ?? {};
-  const items: FaqItem[] = Array.isArray(faq.items) ? faq.items : [];
+  const hoursAnswer = composeHoursAnswer((translations as any)?.contact?.hours ?? {});
+  const items: FaqItem[] = (Array.isArray(faq.items) ? (faq.items as FaqItem[]) : []).map(
+    (item) => ({
+      ...item,
+      a: item.a.map((seg) => (seg.hours ? { t: hoursAnswer } : seg)),
+    })
+  );
 
   const withLocale = (to: string) =>
     `/${locale}${to.startsWith('/') ? '' : '/'}${to}`;
@@ -163,14 +191,6 @@ export default async function FaqPage({
                 {item.q}
               </dt>
               <dd className="text-charcoal/80 leading-relaxed">
-                {/*
-                  FUTURE (hours): the opening-hours answer is hardcoded in the locale
-                  dictionaries (faq.items → the hours Q), matching how the rest of the
-                  site hardcodes hours today. When the DB-driven hours system lands, wire
-                  this answer — and footer.hoursValue, contact.hours.*, reserve.hours*,
-                  homeVisit/visit hours, JSON-LD OPENING_HOURS, and the meetmeatmaida
-                  footer_hours setting — into that single source so they can't drift.
-                */}
                 <p>{item.a.map(renderSegment)}</p>
                 {item.cta && renderCta(item.cta)}
               </dd>
