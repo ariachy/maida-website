@@ -288,7 +288,10 @@ export default function FooterEditorPage() {
         <div className="bg-white rounded-lg shadow-sm border border-[#E5E5E5] p-6">
           <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
             <h2 className="text-lg font-medium text-[#2C2C2C]">Opening Hours</h2>
-            <p className="text-sm text-[#6B6B6B] mt-1">Hours displayed in footer</p>
+            <p className="text-sm text-[#6B6B6B] mt-1">
+              The footer prints the same opening hours as the Reserve and Contact pages. Edit
+              them once under Content → Contact → Opening Hours. Only the heading is set here.
+            </p>
           </div>
 
           <ContentField 
@@ -299,21 +302,7 @@ export default function FooterEditorPage() {
             placeholder="Hours"
           />
 
-          <ContentField 
-            label="Open Hours" 
-            description="Main opening hours text"
-            value={getValue(['footer', 'hoursValue'])}
-            onChange={createOnChange(['footer', 'hoursValue'])}
-            placeholder="Tue – Sat: 19h – 00h"
-          />
 
-          <ContentField 
-            label="Closed Days" 
-            description="Days when closed"
-            value={getValue(['footer', 'closed'])}
-            onChange={createOnChange(['footer', 'closed'])}
-            placeholder="Sun – Mon: Closed"
-          />
         </div>
 
         {/* Contact Section */}
@@ -360,8 +349,7 @@ export default function FooterEditorPage() {
             </div>
             <div>
               <p className="font-medium mb-2">{getValue(['footer', 'hours'])}</p>
-              <p className="text-[#9CA3AF]">{getValue(['footer', 'hoursValue'])}</p>
-              <p className="text-[#9CA3AF]">{getValue(['footer', 'closed'])}</p>
+              <p className="text-[#9CA3AF]">(hours from Contact → Opening Hours)</p>
             </div>
             <div>
               <p className="font-medium mb-2">{getValue(['footer', 'contact'])}</p>

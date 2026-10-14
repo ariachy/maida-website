@@ -97,7 +97,6 @@
     "headline2": "US",
     "hours": {
       "monWedThuSun": "Wed – Mon: 18:00 – 23:30",
-      "thursday": "Thu: 18:00 till late (01:30)",
       "friday": "Fri – Sat: 18:00 till late (02:00)",
       "saturday": "Fri & Sat till late (02:00)",
       "closed": "Tuesday: Closed",
@@ -834,7 +833,7 @@
     },
     "hours": {
       "label": "Hours",
-      "value": "Wed – Mon: 18:00 – 23:30 · Thu till 01:30 · Fri & Sat till late (02:00)"
+      "value": "Wed – Mon: 18:00 – 23:30 · Fri & Sat till late (02:00)"
     },
     "contact": {
       "label": "Contact",
@@ -852,7 +851,7 @@
     "navigate": "Navigate",
     "discover": "Discover",
     "hours": "Hours",
-    "hoursValue": "Wed – Mon: 18:00 – 23:30 · Thu till 01:30 · Fri & Sat till late (02:00)",
+    "hoursValue": "Wed – Mon: 18:00 – 23:30 · Fri & Sat till late (02:00)",
     "closed": "Tuesday: Closed",
     "contact": "Contact",
     "reservations": "Reservations",
@@ -925,7 +924,7 @@
       "closed": "Tuesday: Closed",
       "midweek": "Wed – Mon: 18:00 – 23:30",
       "midweekKitchen": "Kitchen closes 23:00",
-      "thursday": "Thu: 18:00 till late (01:30)",
+      "thursday": "",
       "weekend": "Fri – Sat: 18:00 till late (02:00)",
       "weekendKitchen": "Kitchen closes 23:30"
     },
@@ -1068,7 +1067,7 @@
     "phoneBoxLabel": "Groups of 8+, private events or same-day requests",
     "directions": "Directions",
     "unavailable": "The booking system is taking a moment. Try again, or give us a call.",
-    "hoursThursday": "Thu till late (01:30)"
+    "policyNote": "Reservations are guaranteed with a card. Nothing is charged at booking: a temporary hold of €12 per person is placed and released as soon as you're seated (your bank may take a few days to show it). Your booking is confirmed once card details are added. Free cancellation up to 24 h before; later cancellations and no-shows are charged €12 per person. Tables are held for 15 minutes. Right of admission reserved."
   },
   "faq": {
     "heroTitle": "Frequently Asked Questions",
@@ -1098,10 +1097,14 @@
         "q": "What are Maída's opening hours?",
         "a": [
           {
-            "t": "Wednesday to Monday from 18:00 (closed Tuesdays). Sunday, Monday and Wednesday until 23:30, kitchen closes 23:00. Thursday is #MeetMeAtMaída night: dinner from 18:00, a DJ from 21:00, open until 01:30 (kitchen closes 23:00). Friday and Saturday until late, around 02:00 (kitchen closes 23:30). On the odd Thursday without an event we close at 23:30 - "
+            "t": "",
+            "hours": true
           },
           {
-            "t": "this month's line-up",
+            "t": " "
+          },
+          {
+            "t": "This month's line-up",
             "to": "/maida-sessions"
           },
           {
@@ -1128,6 +1131,21 @@
           },
           {
             "t": "."
+          }
+        ]
+      },
+      {
+        "q": "Do I need a card to book? Is there a cancellation fee?",
+        "a": [
+          {
+            "t": "Reservations are guaranteed with a credit or debit card. Nothing is charged when you book: a temporary hold of €12 per person is placed on your card and released as soon as you are seated (your bank may take a few days to show it). Your booking is confirmed once the card details are entered. You can cancel free of charge up to 24 hours before your reservation time; later cancellations and no-shows may be charged €12 per person. Tables are held for 15 minutes, so let us know if you are running late. See our "
+          },
+          {
+            "t": "privacy policy",
+            "to": "/privacy"
+          },
+          {
+            "t": " for how card data is handled."
           }
         ]
       },
@@ -1197,7 +1215,7 @@
             "to": "/maida-sessions"
           },
           {
-            "t": " brings DJs on Thursdays, Fridays and Saturdays. Thursdays are #MeetMeAtMaída: dinner from 18:00, a DJ from 21:00, and at 23:00 the lights go down and the night takes over. Follow us on "
+            "t": " brings DJs on Fridays and Saturdays: dinner from 18:00, a DJ from 21:00, and at 23:00 the lights go down and the night takes over. Follow us on "
           },
           {
             "t": "Instagram",

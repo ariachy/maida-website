@@ -172,12 +172,13 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                       {hours?.midweekKitchen || 'Kitchen closes 23:00'}
                     </p>
                   </div>
-                  <div>
-                    <p className="text-charcoal font-medium">
-                      {hours?.thursday || 'Thu: 18:00 till late (01:30)'}
-                    </p>
-                    <p className="text-xs text-stone">#MeetMeAtMaída</p>
-                  </div>
+                  {/* Thursday late night is optional: rendered only while the admin field has text */}
+                  {typeof hours?.thursday === 'string' && hours.thursday.trim() && (
+                    <div>
+                      <p className="text-charcoal font-medium">{hours.thursday}</p>
+                      <p className="text-xs text-stone">#MeetMeAtMaída</p>
+                    </div>
+                  )}
                   <div>
                     <p className="text-charcoal font-medium">
                       {hours?.weekend || 'Fri – Sat: 18:00 till late (02:00)'}

@@ -10,6 +10,12 @@ import type { MenuData } from '@/lib/content';
  *   Wed, Thu, Sun, Mon     18:00 – 23:30   (kitchen closes 23:00)
  *   Fri, Sat               18:00 – 02:00   (kitchen closes 23:30)
  *
+ * Thursday late night (#MeetMeAtMaída, close 01:30) is a switch: it is on only while
+ * the admin field Content → Contact → Opening Hours → "Thursday Late Night" has text
+ * (contact.hours.thursday in the locale dictionary). The layout passes that as
+ * `thursdayLate`, so the schema, the reserve page, the contact page and the footer
+ * all flip together. The 01:30 close itself is fixed here.
+ *
  * Fri/Sat: 02:00 is the SCHEDULED close. The room sometimes empties earlier and they
  * shut early — that is expected, and is not a reason to publish 01:00 here. Structured
  * data describes the schedule, not the outcome; publishing 01:00 would drop Maída out
@@ -17,34 +23,42 @@ import type { MenuData } from '@/lib/content';
  * user-facing copy hedges ("till late (02:00)" / "até tarde (02:00)"); this field
  * cannot, so it states the plan.
  *
- * If these change, they change HERE and in the locale dictionaries (contact.hours.*,
- * footer.hoursValue, homeVisit.hours.*, visit.hours.value, reserve.hoursTime/
- * hoursWeekend), ReserveClient.tsx (hardcoded copy) and lib/meet-hours.ts.
+ * If the base hours change, they change HERE and in the locale dictionaries
+ * (contact.hours.* — read by the reserve page, contact page and footer —, plus the
+ * one-line summaries footer.hoursValue and visit.hours.value) and lib/meet-hours.ts.
  */
-const OPENING_HOURS = [
-  {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Wednesday', 'Sunday', 'Monday'],
-    opens: '18:00',
-    closes: '23:30',
-  },
-  {
-    // #MeetMeAtMaída Thursdays (dinner 18:00, DJ 21:00). On the rare Thursday with no
-    // event we close at 23:30 — set that as a Special Hours date in Google Business
-    // Profile rather than changing this regular schedule.
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Thursday'],
-    opens: '18:00',
-    closes: '01:30',
-  },
-  {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Friday', 'Saturday'],
-    opens: '18:00',
-    closes: '02:00',
-  },
-  // Tuesday absent = closed.
-];
+function openingHours(thursdayLate: boolean) {
+  return [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: thursdayLate
+        ? ['Wednesday', 'Sunday', 'Monday']
+        : ['Wednesday', 'Thursday', 'Sunday', 'Monday'],
+      opens: '18:00',
+      closes: '23:30',
+    },
+    ...(thursdayLate
+      ? [
+          {
+            // #MeetMeAtMaída Thursdays (dinner 18:00, DJ 21:00). On the rare Thursday
+            // with no event we close at 23:30 — set that as a Special Hours date in
+            // Google Business Profile rather than changing this regular schedule.
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: ['Thursday'],
+            opens: '18:00',
+            closes: '01:30',
+          },
+        ]
+      : []),
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Friday', 'Saturday'],
+      opens: '18:00',
+      closes: '02:00',
+    },
+    // Tuesday absent = closed.
+  ];
+}
 
 /**
  * REMOVED: aggregateRating.
@@ -68,7 +82,10 @@ interface LocaleProps {
 }
 
 // Restaurant structured data for Google
-export function RestaurantJsonLd({ locale }: LocaleProps) {
+export function RestaurantJsonLd({
+  locale,
+  thursdayLate = false,
+}: LocaleProps & { thursdayLate?: boolean }) {
   const restaurantData = {
     '@context': 'https://schema.org',
     '@type': 'Restaurant',
@@ -101,7 +118,7 @@ export function RestaurantJsonLd({ locale }: LocaleProps) {
     // Same Google Maps place as the geo pin above and the FAQ "Get directions" link.
     hasMap: 'https://maps.app.goo.gl/mYPmDCBEvfEQq1yz8',
 
-    openingHoursSpecification: OPENING_HOURS,
+    openingHoursSpecification: openingHours(thursdayLate),
 
     servesCuisine: ['Mediterranean', 'Lebanese', 'Middle Eastern'],
     priceRange: '€€',

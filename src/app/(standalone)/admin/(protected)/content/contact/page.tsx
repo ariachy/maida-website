@@ -153,7 +153,8 @@ export default function ContactEditorPage() {
     { id: 'form', label: 'Contact Form', description: 'Form labels and messages' },
     { id: 'subjects', label: 'Subject Options', description: 'Dropdown options for subject' },
     { id: 'info', label: 'Contact Info', description: 'Address, phone, email' },
-    { id: 'hours', label: 'Opening Hours', description: 'Business hours display' },
+    { id: 'hours', label: 'Opening Hours', description: 'Reserve page, contact page and footer' },
+    { id: 'reserve', label: 'Reserve Page', description: 'Booking policy note under the Book button' },
     { id: 'location', label: 'Location', description: 'Map section labels' },
   ];
 
@@ -438,12 +439,38 @@ export default function ContactEditorPage() {
               </>
             )}
 
+            {/* RESERVE PAGE */}
+            {activeSection === 'reserve' && (
+              <>
+                <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
+                  <h2 className="text-lg font-medium text-[#2C2C2C]">Reserve Page</h2>
+                  <p className="text-sm text-[#6B6B6B] mt-1">
+                    Small print shown under the &quot;Book a table&quot; button on /reserve. Keep it in
+                    line with the TheFork settings (hold amount, cancellation deadline) and the widget
+                    texts.
+                  </p>
+                </div>
+
+                <ContentField
+                  label="Booking Policy Note"
+                  description="Card guarantee, cancellation window, 15-minute table hold, right of admission. Leave EMPTY to hide the note."
+                  value={getValue(['reserve', 'policyNote'])}
+                  onChange={(val) => updateField(['reserve', 'policyNote'], val)}
+                  placeholder="(hidden)"
+                  multiline
+                  rows={6}
+                />
+              </>
+            )}
+
             {/* OPENING HOURS */}
             {activeSection === 'hours' && (
               <>
                 <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
                   <h2 className="text-lg font-medium text-[#2C2C2C]">Opening Hours</h2>
-                  <p className="text-sm text-[#6B6B6B] mt-1">Business hours displayed on contact page</p>
+                  <p className="text-sm text-[#6B6B6B] mt-1">
+                    Opening hours shown on the Reserve page, the Contact page and the footer (one source for all three)
+                  </p>
                 </div>
 
                 <ContentField
@@ -461,32 +488,39 @@ export default function ContactEditorPage() {
                   placeholder="Closed"
                 />
                 <ContentField
-                  label="Monday-Tuesday Hours"
-                  description="Hours for closed days"
+                  label="Closed Day"
+                  description="Printed as its own line (Reserve page prints it as 'Tuesday · Closed')"
                   value={getValue(['contact', 'hours', 'closed'])}
                   onChange={(val) => updateField(['contact', 'hours', 'closed'], val)}
-                  placeholder="Monday - Tuesday: Closed"
+                  placeholder="Tuesday: Closed"
                 />
                 <ContentField
                   label="Midweek Hours"
-                  description="Wed/Thu/Sun hours"
+                  description="Wed – Mon line. Keep the 'Days: hours' shape — the Reserve page prints the colon as ' · '"
                   value={getValue(['contact', 'hours', 'midweek'])}
                   onChange={(val) => updateField(['contact', 'hours', 'midweek'], val)}
-                  placeholder="Wed, Thu, Sun: 12:30 - 23:00"
+                  placeholder="Wed – Mon: 18:00 – 23:30"
                 />
                 <ContentField
                   label="Midweek Kitchen Note"
                   description="Kitchen closing for midweek"
                   value={getValue(['contact', 'hours', 'midweekKitchen'])}
                   onChange={(val) => updateField(['contact', 'hours', 'midweekKitchen'], val)}
-                  placeholder="Kitchen closes 22:30"
+                  placeholder="Kitchen closes 23:00"
+                />
+                <ContentField
+                  label="Thursday Late Night (optional)"
+                  description="Leave EMPTY to hide the Thursday line everywhere (Reserve, Contact, footer, Google opening hours). Fill it in to switch Thursday late nights back on, e.g. 'Thu: 18:00 till late (01:30)'"
+                  value={getValue(['contact', 'hours', 'thursday'])}
+                  onChange={(val) => updateField(['contact', 'hours', 'thursday'], val)}
+                  placeholder="(hidden)"
                 />
                 <ContentField
                   label="Weekend Hours"
-                  description="Fri/Sat hours"
+                  description="Fri – Sat line"
                   value={getValue(['contact', 'hours', 'weekend'])}
                   onChange={(val) => updateField(['contact', 'hours', 'weekend'], val)}
-                  placeholder="Fri - Sat: 12:30 - 01:00"
+                  placeholder="Fri – Sat: 18:00 till late (02:00)"
                 />
                 <ContentField
                   label="Weekend Kitchen Note"

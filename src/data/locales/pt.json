@@ -97,7 +97,6 @@
     "headline2": "-NOS",
     "hours": {
       "monWedThuSun": "Qua – Seg: 18:00 – 23:30",
-      "thursday": "Qui: 18:00 até tarde (01:30)",
       "friday": "Sex – Sáb: 18:00 até tarde (02:00)",
       "saturday": "Sex & Sáb até tarde (02:00)",
       "closed": "Terça: Fechado",
@@ -922,7 +921,7 @@
     },
     "hours": {
       "label": "Horário",
-      "value": "Qua – Seg: 18:00 – 23:30 · Qui até à 01:30 · Sex & Sáb até tarde (02:00)"
+      "value": "Qua – Seg: 18:00 – 23:30 · Sex & Sáb até tarde (02:00)"
     },
     "contact": {
       "label": "Contacto",
@@ -940,7 +939,7 @@
     "navigate": "Navegação",
     "discover": "Descobrir",
     "hours": "Horário",
-    "hoursValue": "Qua – Seg: 18:00 – 23:30 · Qui até à 01:30 · Sex & Sáb até tarde (02:00)",
+    "hoursValue": "Qua – Seg: 18:00 – 23:30 · Sex & Sáb até tarde (02:00)",
     "closed": "Terça: Fechado",
     "contact": "Contacto",
     "reservations": "Reservas",
@@ -1013,7 +1012,7 @@
       "closed": "Terça: Fechado",
       "midweek": "Qua – Seg: 18:00 – 23:30",
       "midweekKitchen": "Cozinha fecha às 23:00",
-      "thursday": "Qui: 18:00 até tarde (01:30)",
+      "thursday": "",
       "weekend": "Sex – Sáb: 18:00 até tarde (02:00)",
       "weekendKitchen": "Cozinha fecha às 23:30"
     },
@@ -1156,7 +1155,7 @@
     "phoneBoxLabel": "Grupos de 8+, eventos privados ou reservas para o próprio dia",
     "directions": "Como chegar",
     "unavailable": "O sistema de reservas demorou a responder. Tente novamente ou ligue-nos.",
-    "hoursThursday": "Qui até tarde (01:30)"
+    "policyNote": "As reservas são garantidas com cartão. Nada é cobrado no momento da reserva: é feita uma cativação temporária de 12 € por pessoa, libertada assim que ocupa a mesa (o banco pode demorar alguns dias a refleti-lo). A reserva fica confirmada após a introdução dos dados do cartão. Cancelamento gratuito até 24 h antes; cancelamentos tardios e faltas são cobrados a 12 € por pessoa. As mesas são mantidas durante 15 minutos. Reservado o direito de admissão."
   },
   "faq": {
     "heroTitle": "Perguntas Frequentes",
@@ -1186,10 +1185,14 @@
         "q": "Qual é o horário da Maída?",
         "a": [
           {
-            "t": "Quarta a segunda a partir das 18:00 (fechado à terça). Domingo, segunda e quarta até às 23:30, cozinha fecha às 23:00. Quinta é noite #MeetMeAtMaída: jantar a partir das 18:00, DJ a partir das 21:00, aberto até à 01:30 (cozinha fecha às 23:00). Sexta e sábado até tarde, por volta das 02:00 (cozinha fecha às 23:30). Nas raras quintas sem evento fechamos às 23:30 - "
+            "t": "",
+            "hours": true
           },
           {
-            "t": "o programa do mês",
+            "t": " "
+          },
+          {
+            "t": "O programa do mês",
             "to": "/maida-sessions"
           },
           {
@@ -1216,6 +1219,21 @@
           },
           {
             "t": "."
+          }
+        ]
+      },
+      {
+        "q": "Preciso de cartão para reservar? Há taxa de cancelamento?",
+        "a": [
+          {
+            "t": "As reservas são garantidas com cartão de crédito ou débito. Nada é cobrado no momento da reserva: é feita uma cativação temporária de 12 € por pessoa, libertada assim que ocupa a mesa (o banco pode demorar alguns dias a refleti-lo). A reserva fica confirmada após a introdução dos dados do cartão. Pode cancelar gratuitamente até 24 horas antes da hora da reserva; cancelamentos tardios e faltas podem ser cobrados a 12 € por pessoa. As mesas são mantidas durante 15 minutos, por isso avise-nos se estiver atrasado. Veja a nossa "
+          },
+          {
+            "t": "política de privacidade",
+            "to": "/privacy"
+          },
+          {
+            "t": " sobre o tratamento dos dados do cartão."
           }
         ]
       },
@@ -1285,7 +1303,7 @@
             "to": "/maida-sessions"
           },
           {
-            "t": " traz DJs às quintas, sextas e sábados. As quintas são #MeetMeAtMaída: jantar a partir das 18:00, DJ a partir das 21:00, e às 23:00 as luzes baixam e a noite toma conta. Siga-nos no "
+            "t": " traz DJs às sextas e sábados: jantar a partir das 18:00, DJ a partir das 21:00, e às 23:00 as luzes baixam e a noite toma conta. Siga-nos no "
           },
           {
             "t": "Instagram",

@@ -46,22 +46,43 @@ export default function ReserveClient({
 
   const isPt = locale === 'pt';
 
-  // Copy is hardcoded here (not read from locale JSON) so the page always
-  // shows the latest wording regardless of what an older translation script
-  // wrote into en.json/pt.json.
+  // Opening hours are single-sourced from contact.hours in the locale dictionaries —
+  // the same keys the footer and the contact page render, edited in the admin under
+  // Content → Contact → Opening Hours. The dictionary stores them in "Wed – Mon: 18:00"
+  // form; this page prints the first ": " as " · " to keep its own look.
+  const hoursSrc: Record<string, any> = translations?.contact?.hours || {};
+  const hourLine = (key: string, fallback: string): string => {
+    const v = hoursSrc[key];
+    const s = typeof v === 'string' && v.trim() ? v : fallback;
+    return s.replace(/:\s+/, ' · ');
+  };
+  // Thursday (#MeetMeAtMaída late night) is optional: the line only prints when the
+  // admin field has text. Empty = hidden, no fallback — that is how it is switched off.
+  const thursdayLine =
+    typeof hoursSrc.thursday === 'string' && hoursSrc.thursday.trim()
+      ? hourLine('thursday', '')
+      : '';
+
   const t = {
     title: isPt ? 'RESERVAR' : 'RESERVE',
     cta: isPt ? 'Reservar mesa' : 'Book a table',
     loading: isPt ? 'A abrir…' : 'Opening…',
-    hoursWeekdays: isPt ? 'Qua – Seg · 18:00 – 23:30' : 'Wed – Mon · 18:00 – 23:30',
-    hoursThursday: isPt ? 'Qui · 18:00 até tarde (01:30)' : 'Thu · 18:00 till late (01:30)',
-    hoursWeekend: isPt
-      ? 'Sex & Sáb · 18:00 até tarde (02:00)'
-      : 'Fri & Sat · 18:00 till late (02:00)',
-    kitchenWeekdays: isPt ? 'Cozinha fecha às 23:00' : 'Kitchen closes 23:00',
-    kitchenWeekend: isPt ? 'Cozinha fecha às 23:30' : 'Kitchen closes 23:30',
+    hoursWeekdays: hourLine('midweek', isPt ? 'Qua – Seg: 18:00 – 23:30' : 'Wed – Mon: 18:00 – 23:30'),
+    hoursThursday: thursdayLine,
+    hoursWeekend: hourLine(
+      'weekend',
+      isPt ? 'Sex – Sáb: 18:00 até tarde (02:00)' : 'Fri – Sat: 18:00 till late (02:00)'
+    ),
+    kitchenWeekdays: hourLine('midweekKitchen', isPt ? 'Cozinha fecha às 23:00' : 'Kitchen closes 23:00'),
+    kitchenWeekend: hourLine('weekendKitchen', isPt ? 'Cozinha fecha às 23:30' : 'Kitchen closes 23:30'),
     djPill: 'Maída Sessions',
-    closedChip: isPt ? 'Ter · Fechado' : 'Tue · Closed',
+    // Booking policy (card guarantee, cancellation window, right of admission) printed
+    // under the Book button. Admin: Content → Contact → Reserve Page. Empty = hidden.
+    policyNote:
+      typeof translations?.reserve?.policyNote === 'string'
+        ? translations.reserve.policyNote.trim()
+        : '',
+    closedLine: hourLine('closed', isPt ? 'Terça: Fechado' : 'Tuesday: Closed'),
     // Large-group threshold aligned with the contact form. It disagreed on both sides
     // before: this box said one number, contact.subjects.reservation said another.
     phoneBoxLabel: isPt
@@ -103,16 +124,20 @@ export default function ReserveClient({
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-12 mb-14"
         >
-          <p className="text-sm text-charcoal whitespace-nowrap">
-            {t.hoursWeekdays} <span className="text-stone mx-1">|</span> {t.closedChip}
-          </p>
+          <p className="text-sm text-charcoal">{t.hoursWeekdays}</p>
           <p className="text-xs text-stone mt-0.5">{t.kitchenWeekdays}</p>
-          <p className="text-sm text-charcoal mt-2">{t.hoursThursday}</p>
-          <p className="text-sm text-charcoal mt-1">{t.hoursWeekend}</p>
+          {t.hoursThursday && (
+            <p className="text-sm text-charcoal mt-2">{t.hoursThursday}</p>
+          )}
+          <p className={`text-sm text-charcoal ${t.hoursThursday ? 'mt-1' : 'mt-2'}`}>
+            {t.hoursWeekend}
+          </p>
           <p className="text-xs text-stone mt-0.5">{t.kitchenWeekend}</p>
           <p className="font-display italic text-rust text-xs mt-0.5">
             {t.djPill}
           </p>
+          {/* Closed day on its own line, last and quiet */}
+          <p className="text-sm text-stone mt-3">{t.closedLine}</p>
         </motion.div>
 
         {/* 4 — Booking */}
@@ -143,6 +168,18 @@ export default function ReserveClient({
               <p className="mt-4 text-sm text-terracotta">{t.unavailable}</p>
             )}
           </motion.div>
+        )}
+
+        {/* 5 — Booking policy: card guarantee, cancellation window, admission */}
+        {t.policyNote && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.35 }}
+            className="mb-8 px-2 text-[11px] leading-relaxed text-stone"
+          >
+            {t.policyNote}
+          </motion.p>
         )}
 
         {/* 6 — Groups / same-day phone box (tappable) */}
