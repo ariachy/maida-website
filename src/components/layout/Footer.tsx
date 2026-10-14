@@ -35,11 +35,11 @@ export default function Footer({ translations, locale }: FooterProps) {
   // origin of the contradiction with the JSON-LD.
   const hoursSrc = contact?.hours || {};
   const hours = {
-    midweek: getLabel(hoursSrc, 'midweek', 'Wed – Mon: 18:00 – 23:30'),
+    midweek: getLabel(hoursSrc, 'midweek', 'Wed - Mon: 18:00 - 23:30'),
     midweekKitchen: getLabel(hoursSrc, 'midweekKitchen', 'Kitchen closes 23:00'),
     // Thursday late night is optional: shown only while the admin field has text.
     thursday: typeof hoursSrc.thursday === 'string' ? hoursSrc.thursday.trim() : '',
-    weekend: getLabel(hoursSrc, 'weekend', 'Fri – Sat: 18:00 till late (02:00)'),
+    weekend: getLabel(hoursSrc, 'weekend', 'Fri - Sat: 18:00 till late (02:00)'),
     weekendKitchen: getLabel(hoursSrc, 'weekendKitchen', 'Kitchen closes 23:30'),
     closed: getLabel(hoursSrc, 'closed', 'Tuesday: Closed'),
   };
@@ -172,7 +172,7 @@ export default function Footer({ translations, locale }: FooterProps) {
                   {getLabel(footer, 'faq', 'FAQ')}
                 </Link>
               </li>
-              {/* Join Us — visually separated from the rest with a subtle divider */}
+              {/* Join Us - visually separated from the rest with a subtle divider */}
               <li className="pt-2 mt-2 border-t border-white/10">
                 <Link
                   href={`/${locale}/join-us`}

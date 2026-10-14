@@ -30,8 +30,8 @@ export async function generateMetadata({
 
   return generatePageMetadata({
     title: isPortuguese
-      ? 'Maída – Sabores Mediterrânicos. Alma Libanesa | Lisboa'
-      : 'Maída – Mediterranean Flavours. Lebanese Soul | Lisbon',
+      ? 'Maída - Sabores Mediterrânicos. Alma Libanesa | Lisboa'
+      : 'Maída - Mediterranean Flavours. Lebanese Soul | Lisbon',
     description: isPortuguese
       ? 'Um lugar de encontro para pratos partilhados, vinhos naturais e noites que perduram. Restaurante-bar em Cais do Sodré, Lisboa.'
       : 'A gathering place for shared plates, natural wines, and evenings that linger. Restaurant-bar in Cais do Sodré, Lisbon.',

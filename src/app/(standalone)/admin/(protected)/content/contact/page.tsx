@@ -452,13 +452,20 @@ export default function ContactEditorPage() {
                 </div>
 
                 <ContentField
-                  label="Booking Policy Note"
-                  description="Card guarantee, cancellation window, 15-minute table hold, right of admission. Leave EMPTY to hide the note."
+                  label="Booking Terms Title"
+                  description="Small label above the lines (e.g. Booking terms / Condições de reserva)"
+                  value={getValue(['reserve', 'policyTitle'])}
+                  onChange={(val) => updateField(['reserve', 'policyTitle'], val)}
+                  placeholder="Booking terms"
+                />
+                <ContentField
+                  label="Booking Terms"
+                  description="One line per point - each line prints as its own short line under the Book button. Keep to 3 lines. Leave EMPTY to hide the block."
                   value={getValue(['reserve', 'policyNote'])}
                   onChange={(val) => updateField(['reserve', 'policyNote'], val)}
                   placeholder="(hidden)"
                   multiline
-                  rows={6}
+                  rows={4}
                 />
               </>
             )}
@@ -496,10 +503,10 @@ export default function ContactEditorPage() {
                 />
                 <ContentField
                   label="Midweek Hours"
-                  description="Wed – Mon line. Keep the 'Days: hours' shape — the Reserve page prints the colon as ' · '"
+                  description="Wed - Mon line. Keep the 'Days: hours' shape - the Reserve page prints the colon as ' · '"
                   value={getValue(['contact', 'hours', 'midweek'])}
                   onChange={(val) => updateField(['contact', 'hours', 'midweek'], val)}
-                  placeholder="Wed – Mon: 18:00 – 23:30"
+                  placeholder="Wed - Mon: 18:00 - 23:30"
                 />
                 <ContentField
                   label="Midweek Kitchen Note"
@@ -517,10 +524,10 @@ export default function ContactEditorPage() {
                 />
                 <ContentField
                   label="Weekend Hours"
-                  description="Fri – Sat line"
+                  description="Fri - Sat line"
                   value={getValue(['contact', 'hours', 'weekend'])}
                   onChange={(val) => updateField(['contact', 'hours', 'weekend'], val)}
-                  placeholder="Fri – Sat: 18:00 till late (02:00)"
+                  placeholder="Fri - Sat: 18:00 till late (02:00)"
                 />
                 <ContentField
                   label="Weekend Kitchen Note"

@@ -96,8 +96,8 @@
     "headline1": "ENCONTRE",
     "headline2": "-NOS",
     "hours": {
-      "monWedThuSun": "Qua – Seg: 18:00 – 23:30",
-      "friday": "Sex – Sáb: 18:00 até tarde (02:00)",
+      "monWedThuSun": "Qua - Seg: 18:00 - 23:30",
+      "friday": "Sex - Sáb: 18:00 até tarde (02:00)",
       "saturday": "Sex & Sáb até tarde (02:00)",
       "closed": "Terça: Fechado",
       "kitchenCloses": "Cozinha fecha"
@@ -138,7 +138,7 @@
       },
       {
         "title": "Demorar Mais",
-        "description": "Um espaço para ficar — não para apressar. Para o segundo copo, o mezze extra, a história que não podia esperar."
+        "description": "Um espaço para ficar - não para apressar. Para o segundo copo, o mezze extra, a história que não podia esperar."
       }
     ]
   },
@@ -921,7 +921,7 @@
     },
     "hours": {
       "label": "Horário",
-      "value": "Qua – Seg: 18:00 – 23:30 · Sex & Sáb até tarde (02:00)"
+      "value": "Qua - Seg: 18:00 - 23:30 · Sex & Sáb até tarde (02:00)"
     },
     "contact": {
       "label": "Contacto",
@@ -939,7 +939,7 @@
     "navigate": "Navegação",
     "discover": "Descobrir",
     "hours": "Horário",
-    "hoursValue": "Qua – Seg: 18:00 – 23:30 · Sex & Sáb até tarde (02:00)",
+    "hoursValue": "Qua - Seg: 18:00 - 23:30 · Sex & Sáb até tarde (02:00)",
     "closed": "Terça: Fechado",
     "contact": "Contacto",
     "reservations": "Reservas",
@@ -1010,10 +1010,10 @@
       "title": "Horário de Funcionamento",
       "closedText": "Fechado",
       "closed": "Terça: Fechado",
-      "midweek": "Qua – Seg: 18:00 – 23:30",
+      "midweek": "Qua - Seg: 18:00 - 23:30",
       "midweekKitchen": "Cozinha fecha às 23:00",
       "thursday": "",
-      "weekend": "Sex – Sáb: 18:00 até tarde (02:00)",
+      "weekend": "Sex - Sáb: 18:00 até tarde (02:00)",
       "weekendKitchen": "Cozinha fecha às 23:30"
     },
     "location": {
@@ -1149,13 +1149,14 @@
     "cta": "Reservar agora",
     "loading": "A abrir…",
     "hoursOpen": "Aberto todos os dias exceto terça",
-    "hoursTime": "18:00 – 23:30",
+    "hoursTime": "18:00 - 23:30",
     "hoursWeekend": "Sex & Sáb até tarde (02:00)",
     "djPill": "Maída Sessions",
     "phoneBoxLabel": "Grupos de 8+, eventos privados ou reservas para o próprio dia",
     "directions": "Como chegar",
     "unavailable": "O sistema de reservas demorou a responder. Tente novamente ou ligue-nos.",
-    "policyNote": "As reservas são garantidas com cartão. Nada é cobrado no momento da reserva: é feita uma cativação temporária de 12 € por pessoa, libertada assim que ocupa a mesa (o banco pode demorar alguns dias a refleti-lo). A reserva fica confirmada após a introdução dos dados do cartão. Cancelamento gratuito até 24 h antes; cancelamentos tardios e faltas são cobrados a 12 € por pessoa. As mesas são mantidas durante 15 minutos. Reservado o direito de admissão."
+    "policyNote": "Apenas garantia com cartão - nada é cobrado; a cativação de 12 €/pessoa é libertada assim que ocupa a mesa\nCancelamento gratuito até 24 h antes · cancelamento tardio ou falta: 12 €/pessoa\nMesas mantidas durante 15 minutos · reservado o direito de admissão",
+    "policyTitle": "Condições de reserva"
   },
   "faq": {
     "heroTitle": "Perguntas Frequentes",

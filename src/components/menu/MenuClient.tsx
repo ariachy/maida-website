@@ -21,7 +21,7 @@ import { useBooking } from '@/hooks/useBooking';
  *  - items[].price      : in €, printed as "10,5" like the PDF.
  *
  * Desktop (lg and up): the page's blocks in two columns + a full-width bottom strip, no
- * jump bar — the whole page is visible, as on paper. Below lg: one column in reading
+ * jump bar - the whole page is visible, as on paper. Below lg: one column in reading
  * order, a sticky jump bar that follows the scroll, and a back-to-top button.
  * ---------------------------------------------------------------------------------- */
 
@@ -105,7 +105,7 @@ interface Block {
 
 const NAVBAR_OFFSET = 72; // px, matches the sticky Navbar height on small screens
 
-// "10,5" / "14" — the printed menu's format; the footer says prices are in €.
+// "10,5" / "14" - the printed menu's format; the footer says prices are in €.
 const formatPrice = (price: number) =>
   (Number.isInteger(price) ? String(price) : price.toFixed(1)).replace('.', ',');
 
@@ -120,7 +120,7 @@ const splitName = (name: string): [string, string | undefined, string] => {
 
 const GREEN_PAGES = new Set(['alcoholic', 'non-alcoholic', 'wines']);
 
-// On the drinks sheets only "callout" notes are red — (specialty) — while descriptive
+// On the drinks sheets only "callout" notes are red - (specialty) - while descriptive
 // notes like (30cl) or (0% alcohol) stay in the item colour. On the food sheet every
 // note is red.
 const isCallout = (note: string) => /specialty|especialidade|favourite|favorite|favorito/i.test(note);
@@ -412,7 +412,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           {description && <p className="font-light text-[14px] lg:text-[15.5px] leading-[1.35] mt-px max-w-[60ch]">{description}</p>}
         </div>
         <div className="flex gap-3 flex-shrink-0 pt-px">
-          <span className={cell}>{hasPrice(item) ? formatPrice(item.price!) : '—'}</span>
+          <span className={cell}>{hasPrice(item) ? formatPrice(item.price!) : '-'}</span>
           <span className={cell}>{typeof item.priceBottle === 'number' ? formatPrice(item.priceBottle) : ''}</span>
         </div>
       </div>
@@ -648,7 +648,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
           </div>
         </div>
 
-        {/* Jump bar — small screens only (below lg the two-column page no longer fits) */}
+        {/* Jump bar - small screens only (below lg the two-column page no longer fits) */}
         <div
           ref={jumpRef}
           className={`${readingOrder.length > 1 ? 'lg:hidden' : 'hidden'} sticky z-30 bg-menu-paper -mx-5 md:-mx-8 px-5 md:px-8 mt-5 border-b ${T.rule}`}
@@ -736,7 +736,7 @@ export default function MenuClient({ translations, menuData, locale }: MenuClien
         </div>
       </div>
 
-      {/* Back to top — small screens only */}
+      {/* Back to top - small screens only */}
       <button
         onClick={scrollToTop}
         aria-label={menu?.backToTop || 'Back to top'}

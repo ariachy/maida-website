@@ -19,8 +19,8 @@ export async function generateMetadata({
   
   return generatePageMetadata({
     title: isPortuguese 
-      ? 'Maída – Política de Privacidade'
-      : 'Maída – Privacy Policy',
+      ? 'Maída - Política de Privacidade'
+      : 'Maída - Privacy Policy',
     description: isPortuguese
       ? 'Política de Privacidade do restaurante Maída. Como recolhemos, utilizamos e protegemos os seus dados pessoais.'
       : 'Maída restaurant Privacy Policy. How we collect, use and protect your personal data.',
