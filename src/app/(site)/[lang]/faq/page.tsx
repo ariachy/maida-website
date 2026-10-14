@@ -8,8 +8,8 @@
 // is no admin editor for it, but the dictionaries are read at runtime
 // (getServerTranslations), so a JSON edit + Publish goes live without a build. The
 // opening-hours answer is special: its `{ hours: true }` segment is composed at render
-// time from contact.hours.* — the admin-managed hours (Content → Contact → Opening
-// Hours) — so the FAQ can never contradict the reserve page, the footer or the schema.
+// time from contact.hours.* - the admin-managed hours (Content → Contact → Opening
+// Hours) - so the FAQ can never contradict the reserve page, the footer or the schema.
 
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
@@ -25,8 +25,8 @@ import { FAQPageJsonLd } from '@/components/seo/JsonLd';
 // All segments render inline AND contribute to the plain-text schema answer.
 type Segment = { t: string; to?: string; href?: string; hours?: boolean };
 
-// "Wed – Mon: 18:00 – 23:30, kitchen closes 23:00. [Thu…]. Fri – Sat: …, kitchen closes
-// 23:30. Tuesday: Closed." — built from the same admin fields as every other hours line.
+// "Wed - Mon: 18:00 - 23:30, kitchen closes 23:00. [Thu…]. Fri - Sat: …, kitchen closes
+// 23:30. Tuesday: Closed." - built from the same admin fields as every other hours line.
 // The kitchen note is lower-cased at its first letter so it reads as a clause.
 function composeHoursAnswer(hours: Record<string, any>): string {
   const str = (k: string) => (typeof hours?.[k] === 'string' ? hours[k].trim() : '');
@@ -66,8 +66,8 @@ export async function generateMetadata({
       ? 'Maída - Perguntas Frequentes | Cais do Sodré, Lisboa'
       : 'Maída - Frequently Asked Questions | Cais do Sodré, Lisbon',
     description: isPortuguese
-      ? 'Respostas às perguntas mais comuns sobre a Maída — horário, reservas, localização, opções vegetarianas e mais, em Cais do Sodré, Lisboa.'
-      : 'Answers to the most common questions about Maída — opening hours, reservations, location, vegetarian options and more, in Cais do Sodré, Lisbon.',
+      ? 'Respostas às perguntas mais comuns sobre a Maída - horário, reservas, localização, opções vegetarianas e mais, em Cais do Sodré, Lisboa.'
+      : 'Answers to the most common questions about Maída - opening hours, reservations, location, vegetarian options and more, in Cais do Sodré, Lisbon.',
     path: '/faq',
     locale,
   });

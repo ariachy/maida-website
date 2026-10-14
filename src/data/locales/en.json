@@ -96,8 +96,8 @@
     "headline1": "FIND",
     "headline2": "US",
     "hours": {
-      "monWedThuSun": "Wed – Mon: 18:00 – 23:30",
-      "friday": "Fri – Sat: 18:00 till late (02:00)",
+      "monWedThuSun": "Wed - Mon: 18:00 - 23:30",
+      "friday": "Fri - Sat: 18:00 till late (02:00)",
       "saturday": "Fri & Sat till late (02:00)",
       "closed": "Tuesday: Closed",
       "kitchenCloses": "Kitchen closes"
@@ -833,7 +833,7 @@
     },
     "hours": {
       "label": "Hours",
-      "value": "Wed – Mon: 18:00 – 23:30 · Fri & Sat till late (02:00)"
+      "value": "Wed - Mon: 18:00 - 23:30 · Fri & Sat till late (02:00)"
     },
     "contact": {
       "label": "Contact",
@@ -851,7 +851,7 @@
     "navigate": "Navigate",
     "discover": "Discover",
     "hours": "Hours",
-    "hoursValue": "Wed – Mon: 18:00 – 23:30 · Fri & Sat till late (02:00)",
+    "hoursValue": "Wed - Mon: 18:00 - 23:30 · Fri & Sat till late (02:00)",
     "closed": "Tuesday: Closed",
     "contact": "Contact",
     "reservations": "Reservations",
@@ -922,10 +922,10 @@
       "title": "Opening Hours",
       "closedText": "Closed",
       "closed": "Tuesday: Closed",
-      "midweek": "Wed – Mon: 18:00 – 23:30",
+      "midweek": "Wed - Mon: 18:00 - 23:30",
       "midweekKitchen": "Kitchen closes 23:00",
       "thursday": "",
-      "weekend": "Fri – Sat: 18:00 till late (02:00)",
+      "weekend": "Fri - Sat: 18:00 till late (02:00)",
       "weekendKitchen": "Kitchen closes 23:30"
     },
     "location": {
@@ -1061,13 +1061,14 @@
     "cta": "Reserve now",
     "loading": "Opening…",
     "hoursOpen": "Open daily except Tuesday",
-    "hoursTime": "18:00 – 23:30",
+    "hoursTime": "18:00 - 23:30",
     "hoursWeekend": "Fri & Sat till late (02:00)",
     "djPill": "Maída Sessions",
     "phoneBoxLabel": "Groups of 8+, private events or same-day requests",
     "directions": "Directions",
     "unavailable": "The booking system is taking a moment. Try again, or give us a call.",
-    "policyNote": "Reservations are guaranteed with a card. Nothing is charged at booking: a temporary hold of €12 per person is placed and released as soon as you're seated (your bank may take a few days to show it). Your booking is confirmed once card details are added. Free cancellation up to 24 h before; later cancellations and no-shows are charged €12 per person. Tables are held for 15 minutes. Right of admission reserved."
+    "policyNote": "Card guarantee only - nothing is charged; a €12/person hold is released once you're seated\nFree cancellation up to 24 h before · later cancellation or no-show: €12/person\nTables held for 15 minutes · right of admission reserved",
+    "policyTitle": "Booking terms"
   },
   "faq": {
     "heroTitle": "Frequently Asked Questions",

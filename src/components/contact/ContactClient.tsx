@@ -59,7 +59,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
     }
 
     try {
-      // Get reCAPTCHA token — check window.grecaptcha directly (no state guard).
+      // Get reCAPTCHA token - check window.grecaptcha directly (no state guard).
       // The script may already be cached from another page, so onLoad doesn't always fire.
       let recaptchaToken = '';
       if ((window as any).grecaptcha?.enterprise) {
@@ -166,7 +166,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                 <div className="space-y-3 text-charcoal/70 text-sm">
                   <div>
                     <p className="text-charcoal font-medium">
-                      {hours?.midweek || 'Wed – Mon: 18:00 – 23:30'}
+                      {hours?.midweek || 'Wed - Mon: 18:00 - 23:30'}
                     </p>
                     <p className="text-xs text-stone">
                       {hours?.midweekKitchen || 'Kitchen closes 23:00'}
@@ -181,7 +181,7 @@ export default function ContactClient({ translations, locale }: ContactClientPro
                   )}
                   <div>
                     <p className="text-charcoal font-medium">
-                      {hours?.weekend || 'Fri – Sat: 18:00 till late (02:00)'}
+                      {hours?.weekend || 'Fri - Sat: 18:00 till late (02:00)'}
                     </p>
                     <p className="text-xs text-stone">
                       {hours?.weekendKitchen || 'Kitchen closes 23:30'}

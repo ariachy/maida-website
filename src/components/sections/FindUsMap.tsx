@@ -34,7 +34,7 @@ export default function FindUsMap({
     return (
       <iframe
         src={EMBED_URL}
-        title={isPt ? 'Mapa — Maída, Lisboa' : 'Map — Maída, Lisbon'}
+        title={isPt ? 'Mapa - Maída, Lisboa' : 'Map - Maída, Lisbon'}
         className="w-full h-full border-0"
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
@@ -56,8 +56,8 @@ export default function FindUsMap({
         src="/images/map-maida.webp"
         alt={
           isPt
-            ? 'Mapa — Rua da Boavista 66, Cais do Sodré, Lisboa'
-            : 'Map — Rua da Boavista 66, Cais do Sodré, Lisbon'
+            ? 'Mapa - Rua da Boavista 66, Cais do Sodré, Lisboa'
+            : 'Map - Rua da Boavista 66, Cais do Sodré, Lisbon'
         }
         fill
         sizes="(max-width: 768px) 100vw, 50vw"

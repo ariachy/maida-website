@@ -4,7 +4,7 @@
       "id": "fattoush-salad-case-debate",
       "slug": "fattoush-salad-case-debate",
       "title": "The Great Lebanese Salad Debate (Part 2)",
-      "subtitle": "The case for fattoush — and why ours might just win you over",
+      "subtitle": "The case for fattoush - and why ours might just win you over",
       "excerpt": "If tabbouleh is the salad that demands precision, fattoush is the one that demands you relax. No sacred ratios. No arguments about whether the parsley is chopped fine enough. Fattoush is generous, seasonal, and built on one principle that most salads ignore: texture is everything.",
       "image": "/images/catering/fattouch.webp",
       "date": "2026-02-25",
@@ -21,7 +21,7 @@
         },
         {
           "type": "paragraph",
-          "text": "In <a href=\"/{{locale}}/blog/the-great-lebanese-salad-debate-part-1\">Part 1</a> of this debate, we made the case for tabbouleh — its mountain origins and the purity of a parsley salad done right. Now it is time for the other side."
+          "text": "In <a href=\"/{{locale}}/blog/the-great-lebanese-salad-debate-part-1\">Part 1</a> of this debate, we made the case for tabbouleh - its mountain origins and the purity of a parsley salad done right. Now it is time for the other side."
         },
         {
           "type": "heading",
@@ -147,8 +147,8 @@
         {
           "type": "list",
           "items": [
-            "Aggressively green — parsley is the star, not the sidekick",
-            "Finely chopped by hand — never a food processor, as it bruises the leaves",
+            "Aggressively green - parsley is the star, not the sidekick",
+            "Finely chopped by hand - never a food processor, as it bruises the leaves",
             "Dressed simply with lemon, olive oil, and salt",
             "Scooped and eaten with crisp romaine, young cabbage leaves, or warm Lebanese bread"
           ]

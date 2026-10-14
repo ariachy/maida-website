@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * ReserveClient — the /[lang]/reserve landing page body.
+ * ReserveClient - the /[lang]/reserve landing page body.
  *
  * Purpose-built for Google Ads / Meta Ads traffic. Layout (top to bottom):
  * title → hours (with DJ pill) → Reserve now button → groups phone box →
@@ -46,9 +46,9 @@ export default function ReserveClient({
 
   const isPt = locale === 'pt';
 
-  // Opening hours are single-sourced from contact.hours in the locale dictionaries —
+  // Opening hours are single-sourced from contact.hours in the locale dictionaries - 
   // the same keys the footer and the contact page render, edited in the admin under
-  // Content → Contact → Opening Hours. The dictionary stores them in "Wed – Mon: 18:00"
+  // Content → Contact → Opening Hours. The dictionary stores them in "Wed - Mon: 18:00"
   // form; this page prints the first ": " as " · " to keep its own look.
   const hoursSrc: Record<string, any> = translations?.contact?.hours || {};
   const hourLine = (key: string, fallback: string): string => {
@@ -57,7 +57,7 @@ export default function ReserveClient({
     return s.replace(/:\s+/, ' · ');
   };
   // Thursday (#MeetMeAtMaída late night) is optional: the line only prints when the
-  // admin field has text. Empty = hidden, no fallback — that is how it is switched off.
+  // admin field has text. Empty = hidden, no fallback - that is how it is switched off.
   const thursdayLine =
     typeof hoursSrc.thursday === 'string' && hoursSrc.thursday.trim()
       ? hourLine('thursday', '')
@@ -67,21 +67,30 @@ export default function ReserveClient({
     title: isPt ? 'RESERVAR' : 'RESERVE',
     cta: isPt ? 'Reservar mesa' : 'Book a table',
     loading: isPt ? 'A abrir…' : 'Opening…',
-    hoursWeekdays: hourLine('midweek', isPt ? 'Qua – Seg: 18:00 – 23:30' : 'Wed – Mon: 18:00 – 23:30'),
+    hoursWeekdays: hourLine('midweek', isPt ? 'Qua - Seg: 18:00 - 23:30' : 'Wed - Mon: 18:00 - 23:30'),
     hoursThursday: thursdayLine,
     hoursWeekend: hourLine(
       'weekend',
-      isPt ? 'Sex – Sáb: 18:00 até tarde (02:00)' : 'Fri – Sat: 18:00 till late (02:00)'
+      isPt ? 'Sex - Sáb: 18:00 até tarde (02:00)' : 'Fri - Sat: 18:00 till late (02:00)'
     ),
     kitchenWeekdays: hourLine('midweekKitchen', isPt ? 'Cozinha fecha às 23:00' : 'Kitchen closes 23:00'),
     kitchenWeekend: hourLine('weekendKitchen', isPt ? 'Cozinha fecha às 23:30' : 'Kitchen closes 23:30'),
     djPill: 'Maída Sessions',
-    // Booking policy (card guarantee, cancellation window, right of admission) printed
-    // under the Book button. Admin: Content → Contact → Reserve Page. Empty = hidden.
-    policyNote:
-      typeof translations?.reserve?.policyNote === 'string'
-        ? translations.reserve.policyNote.trim()
-        : '',
+    // Booking terms (card guarantee, cancellation window, admission) printed under the
+    // Book button: a small label plus one short line per bullet. Admin: Content → Contact
+    // → Reserve Page; one line of the field = one line on the page. Empty = hidden.
+    policyTitle:
+      typeof translations?.reserve?.policyTitle === 'string' && translations.reserve.policyTitle.trim()
+        ? translations.reserve.policyTitle.trim()
+        : isPt
+          ? 'Condições de reserva'
+          : 'Booking terms',
+    policyLines: (typeof translations?.reserve?.policyNote === 'string'
+      ? (translations.reserve.policyNote.split('\n') as string[])
+      : []
+    )
+      .map((l) => l.trim())
+      .filter(Boolean) as string[],
     closedLine: hourLine('closed', isPt ? 'Terça: Fechado' : 'Tuesday: Closed'),
     // Large-group threshold aligned with the contact form. It disagreed on both sides
     // before: this box said one number, contact.subjects.reservation said another.
@@ -140,7 +149,7 @@ export default function ReserveClient({
           <p className="text-sm text-stone mt-3">{t.closedLine}</p>
         </motion.div>
 
-        {/* 4 — Booking */}
+        {/* 4 - Booking */}
         {showForkEmbed ? (
           <div className="mb-10 border border-sand bg-white">
             <iframe
@@ -170,19 +179,26 @@ export default function ReserveClient({
           </motion.div>
         )}
 
-        {/* 5 — Booking policy: card guarantee, cancellation window, admission */}
-        {t.policyNote && (
-          <motion.p
+        {/* 5 - Booking terms: card guarantee, cancellation window, admission */}
+        {t.policyLines.length > 0 && (
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.35 }}
-            className="mb-8 px-2 text-[11px] leading-relaxed text-stone"
+            className="mb-8 px-2"
           >
-            {t.policyNote}
-          </motion.p>
+            <p className="text-[10px] tracking-[0.15em] uppercase text-stone mb-1.5">
+              {t.policyTitle}
+            </p>
+            {t.policyLines.map((line: string, i: number) => (
+              <p key={i} className="text-[11px] leading-relaxed text-stone">
+                {line}
+              </p>
+            ))}
+          </motion.div>
         )}
 
-        {/* 6 — Groups / same-day phone box (tappable) */}
+        {/* 6 - Groups / same-day phone box (tappable) */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -203,7 +219,7 @@ export default function ReserveClient({
           </a>
         </motion.div>
 
-        {/* 7 — Directions, last */}
+        {/* 7 - Directions, last */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
