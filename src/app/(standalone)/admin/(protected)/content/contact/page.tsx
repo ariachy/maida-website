@@ -153,7 +153,8 @@ export default function ContactEditorPage() {
     { id: 'form', label: 'Contact Form', description: 'Form labels and messages' },
     { id: 'subjects', label: 'Subject Options', description: 'Dropdown options for subject' },
     { id: 'info', label: 'Contact Info', description: 'Address, phone, email' },
-    { id: 'hours', label: 'Opening Hours', description: 'Business hours display' },
+    { id: 'hours', label: 'Opening Hours', description: 'Reserve page, contact page and footer' },
+    { id: 'reserve', label: 'Reserve Page', description: 'Booking policy note under the Book button' },
     { id: 'location', label: 'Location', description: 'Map section labels' },
   ];
 
@@ -434,6 +435,30 @@ export default function ContactEditorPage() {
                   value={getValue(['contact', 'info', 'email'])}
                   onChange={(val) => updateField(['contact', 'info', 'email'], val)}
                   placeholder="info@maida.pt"
+                />
+              </>
+            )}
+
+            {/* RESERVE PAGE */}
+            {activeSection === 'reserve' && (
+              <>
+                <div className="mb-6 pb-4 border-b border-[#E5E5E5]">
+                  <h2 className="text-lg font-medium text-[#2C2C2C]">Reserve Page</h2>
+                  <p className="text-sm text-[#6B6B6B] mt-1">
+                    Small print shown under the &quot;Book a table&quot; button on /reserve. Keep it in
+                    line with the TheFork settings (hold amount, cancellation deadline) and the widget
+                    texts.
+                  </p>
+                </div>
+
+                <ContentField
+                  label="Booking Policy Note"
+                  description="Card guarantee, cancellation window, 15-minute table hold, right of admission. Leave EMPTY to hide the note."
+                  value={getValue(['reserve', 'policyNote'])}
+                  onChange={(val) => updateField(['reserve', 'policyNote'], val)}
+                  placeholder="(hidden)"
+                  multiline
+                  rows={6}
                 />
               </>
             )}

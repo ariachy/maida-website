@@ -14,7 +14,7 @@ const content = {
   en: {
     title: 'Privacy Policy',
     subtitle: 'Your privacy matters to us',
-    lastUpdated: 'Last updated: February 2026',
+    lastUpdated: 'Last updated: October 2026',
     backToHome: 'Back to Home',
     sections: [
       {
@@ -31,7 +31,8 @@ const content = {
         ],
         list: [
           'Contact information (name, email, phone number) when you submit our contact or catering inquiry forms',
-          'Reservation data processed through our third-party reservation partner, TheFork',
+          'Reservation data (name, contact details, party size, date and time, any notes) processed through our reservation partner, TheFork',
+          'Card details entered when booking, used solely as a reservation guarantee. They are collected and stored by TheFork and its payment provider; a temporary hold of €12 per person may be placed on the card and is released after your visit. Maída never sees your full card number.',
           'Feedback and reviews you voluntarily submit through our review system',
           'Website usage data through cookies and analytics tools (with your consent)',
           'Technical data such as browser type, device information, and IP address for security and performance purposes',
@@ -43,7 +44,8 @@ const content = {
           'We use your personal data for the following purposes:',
         ],
         list: [
-          'To respond to your inquiries and manage reservations',
+          'To respond to your inquiries and manage reservations, including contacting you about your booking',
+          'To apply our reservation policy: a cancellation fee of €12 per person may be charged for cancellations made less than 24 hours before the reservation or for no-shows',
           'To process catering requests',
           'To improve our website and services based on usage patterns',
           'To measure the effectiveness of our advertising campaigns',
@@ -75,7 +77,7 @@ const content = {
           'Google Analytics 4 (GA4) — website analytics and visitor statistics',
           'Google Tag Manager (GTM) — tag management with consent mode integration',
           'Google Ads — advertising campaign measurement and remarketing',
-          'TheFork — online table reservations (thefork.pt)',
+          'TheFork — online table reservations and card guarantees, with its payment provider (thefork.pt)',
           'Google reCAPTCHA — spam protection on our contact and catering forms',
         ],
         paragraphsAfter: [
@@ -85,7 +87,7 @@ const content = {
       {
         title: '6. Data Retention',
         paragraphs: [
-          'We retain your personal data only for as long as necessary to fulfil the purposes for which it was collected. Contact form submissions are retained for up to 12 months. Analytics data is retained according to the default settings of Google Analytics.',
+          'We retain your personal data only for as long as necessary to fulfil the purposes for which it was collected. Contact form submissions are retained for up to 12 months. Reservation data is kept for as long as needed to manage the booking and to meet our legal and accounting obligations; card data is held by TheFork and its payment provider under their own retention rules. Analytics data is retained according to the default settings of Google Analytics.',
         ],
       },
       {
@@ -140,7 +142,7 @@ const content = {
   pt: {
     title: 'Política de Privacidade',
     subtitle: 'A sua privacidade é importante para nós',
-    lastUpdated: 'Última atualização: Fevereiro 2026',
+    lastUpdated: 'Última atualização: Outubro 2026',
     backToHome: 'Voltar ao Início',
     sections: [
       {
@@ -157,7 +159,8 @@ const content = {
         ],
         list: [
           'Informações de contacto (nome, email, telefone) quando submete os nossos formulários de contacto ou de catering',
-          'Dados de reserva processados através do nosso parceiro de reservas, TheFork',
+          'Dados de reserva (nome, contactos, número de pessoas, data e hora, observações) tratados através do nosso parceiro de reservas, TheFork',
+          'Dados do cartão introduzidos ao reservar, usados exclusivamente como garantia da reserva. São recolhidos e guardados pela TheFork e pelo seu prestador de pagamentos; pode ser feita uma cativação temporária de 12 € por pessoa, libertada após a sua visita. A Maída nunca tem acesso ao número completo do cartão.',
           'Feedback e avaliações que submete voluntariamente através do nosso sistema de avaliações',
           'Dados de utilização do website através de cookies e ferramentas de análise (com o seu consentimento)',
           'Dados técnicos como tipo de navegador, informações do dispositivo e endereço IP para fins de segurança e desempenho',
@@ -169,7 +172,8 @@ const content = {
           'Utilizamos os seus dados pessoais para os seguintes fins:',
         ],
         list: [
-          'Para responder às suas questões e gerir reservas',
+          'Para responder às suas questões e gerir reservas, incluindo contactá-lo sobre a sua reserva',
+          'Para aplicar a nossa política de reservas: pode ser cobrada uma taxa de cancelamento de 12 € por pessoa em cancelamentos com menos de 24 horas de antecedência ou em caso de não comparência',
           'Para processar pedidos de catering',
           'Para melhorar o nosso website e serviços com base em padrões de utilização',
           'Para medir a eficácia das nossas campanhas publicitárias',
@@ -201,7 +205,7 @@ const content = {
           'Google Analytics 4 (GA4) — análise do website e estatísticas de visitantes',
           'Google Tag Manager (GTM) — gestão de tags com integração de modo de consentimento',
           'Google Ads — medição de campanhas publicitárias e remarketing',
-          'TheFork — reservas de mesa online (thefork.pt)',
+          'TheFork — reservas de mesa online e garantias por cartão, com o seu prestador de pagamentos (thefork.pt)',
           'Google reCAPTCHA — proteção contra spam nos nossos formulários de contacto e catering',
         ],
         paragraphsAfter: [
@@ -211,7 +215,7 @@ const content = {
       {
         title: '6. Retenção de Dados',
         paragraphs: [
-          'Retemos os seus dados pessoais apenas pelo tempo necessário para cumprir os fins para os quais foram recolhidos. As submissões de formulários de contacto são retidas por até 12 meses. Os dados de análise são retidos de acordo com as configurações padrão do Google Analytics.',
+          'Retemos os seus dados pessoais apenas pelo tempo necessário para cumprir os fins para os quais foram recolhidos. As submissões de formulários de contacto são retidas por até 12 meses. Os dados de reserva são conservados pelo tempo necessário à gestão da reserva e ao cumprimento das nossas obrigações legais e contabilísticas; os dados do cartão são guardados pela TheFork e pelo seu prestador de pagamentos segundo as suas próprias regras de conservação. Os dados de análise são retidos de acordo com as configurações padrão do Google Analytics.',
         ],
       },
       {

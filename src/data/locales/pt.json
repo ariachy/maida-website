@@ -1064,7 +1064,8 @@
     "djPill": "Maída Sessions",
     "phoneBoxLabel": "Grupos de 8+, eventos privados ou reservas para o próprio dia",
     "directions": "Como chegar",
-    "unavailable": "O sistema de reservas demorou a responder. Tente novamente ou ligue-nos."
+    "unavailable": "O sistema de reservas demorou a responder. Tente novamente ou ligue-nos.",
+    "policyNote": "As reservas são garantidas com cartão. Nada é cobrado no momento da reserva: é feita uma cativação temporária de 12 € por pessoa, libertada assim que ocupa a mesa (o banco pode demorar alguns dias a refleti-lo). A reserva fica confirmada após a introdução dos dados do cartão. Cancelamento gratuito até 24 h antes; cancelamentos tardios e faltas são cobrados a 12 € por pessoa. As mesas são mantidas durante 15 minutos. Reservado o direito de admissão."
   },
   "faq": {
     "heroTitle": "Perguntas Frequentes",
@@ -1124,6 +1125,21 @@
           },
           {
             "t": "."
+          }
+        ]
+      },
+      {
+        "q": "Preciso de cartão para reservar? Há taxa de cancelamento?",
+        "a": [
+          {
+            "t": "As reservas são garantidas com cartão de crédito ou débito. Nada é cobrado no momento da reserva: é feita uma cativação temporária de 12 € por pessoa, libertada assim que ocupa a mesa (o banco pode demorar alguns dias a refleti-lo). A reserva fica confirmada após a introdução dos dados do cartão. Pode cancelar gratuitamente até 24 horas antes da hora da reserva; cancelamentos tardios e faltas podem ser cobrados a 12 € por pessoa. As mesas são mantidas durante 15 minutos, por isso avise-nos se estiver atrasado. Veja a nossa "
+          },
+          {
+            "t": "política de privacidade",
+            "to": "/privacy"
+          },
+          {
+            "t": " sobre o tratamento dos dados do cartão."
           }
         ]
       },

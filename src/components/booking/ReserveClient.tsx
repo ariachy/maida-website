@@ -76,6 +76,12 @@ export default function ReserveClient({
     kitchenWeekdays: hourLine('midweekKitchen', isPt ? 'Cozinha fecha às 23:00' : 'Kitchen closes 23:00'),
     kitchenWeekend: hourLine('weekendKitchen', isPt ? 'Cozinha fecha às 23:30' : 'Kitchen closes 23:30'),
     djPill: 'Maída Sessions',
+    // Booking policy (card guarantee, cancellation window, right of admission) printed
+    // under the Book button. Admin: Content → Contact → Reserve Page. Empty = hidden.
+    policyNote:
+      typeof translations?.reserve?.policyNote === 'string'
+        ? translations.reserve.policyNote.trim()
+        : '',
     closedLine: hourLine('closed', isPt ? 'Terça: Fechado' : 'Tuesday: Closed'),
     // Large-group threshold aligned with the contact form. It disagreed on both sides
     // before: this box said one number, contact.subjects.reservation said another.
@@ -162,6 +168,18 @@ export default function ReserveClient({
               <p className="mt-4 text-sm text-terracotta">{t.unavailable}</p>
             )}
           </motion.div>
+        )}
+
+        {/* 5 — Booking policy: card guarantee, cancellation window, admission */}
+        {t.policyNote && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.35 }}
+            className="mb-8 px-2 text-[11px] leading-relaxed text-stone"
+          >
+            {t.policyNote}
+          </motion.p>
         )}
 
         {/* 6 — Groups / same-day phone box (tappable) */}
