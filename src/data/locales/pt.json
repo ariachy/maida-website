@@ -1094,7 +1094,7 @@
         "q": "Qual é o horário da Maída?",
         "a": [
           {
-            "t": "Quarta a segunda a partir das 18:00 (fechado à terça). Domingo, segunda e quarta até às 23:30, cozinha fecha às 23:00. Quinta é noite #MeetMeAtMaída: jantar a partir das 18:00, DJ a partir das 21:00, aberto até à 01:30 (cozinha fecha às 23:00). Sexta e sábado até tarde, por volta das 02:00 (cozinha fecha às 23:30). Nas raras quintas sem evento fechamos às 23:30 - "
+            "t": "Quarta a segunda a partir das 18:00 (fechado à terça). Quarta, quinta, domingo e segunda até às 23:30, cozinha fecha às 23:00. Sexta e sábado até tarde, por volta das 02:00 (cozinha fecha às 23:30) - "
           },
           {
             "t": "o programa do mês",
@@ -1193,7 +1193,7 @@
             "to": "/maida-sessions"
           },
           {
-            "t": " traz DJs às quintas, sextas e sábados. As quintas são #MeetMeAtMaída: jantar a partir das 18:00, DJ a partir das 21:00, e às 23:00 as luzes baixam e a noite toma conta. Siga-nos no "
+            "t": " traz DJs às sextas e sábados: jantar a partir das 18:00, DJ a partir das 21:00, e às 23:00 as luzes baixam e a noite toma conta. Siga-nos no "
           },
           {
             "t": "Instagram",

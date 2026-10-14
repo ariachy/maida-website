@@ -35,7 +35,14 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
     { time: close, name: order.lastCall || 'Last call' },
   ];
 
-  const nightCards = [
+  // Thursday (#MeetMeAtMaída) follows the site-wide switch: the card is shown only while
+  // Admin → Content → Contact → Opening Hours → "Thursday Late Night" has text
+  // (contact.hours.thursday). Same field drives the reserve page, footer and JSON-LD.
+  const thursdayOn =
+    typeof translations?.contact?.hours?.thursday === 'string' &&
+    translations.contact.hours.thursday.trim() !== '';
+
+  const allNightCards = [
     {
       key: 'thursday',
       Icon: Calendar,
@@ -70,6 +77,9 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
       steps: stepsUntil('02:00'),
     },
   ];
+  const nightCards = thursdayOn
+    ? allNightCards
+    : allNightCards.filter((n) => n.key !== 'thursday');
 
   // Genre options for DJ form
   const genreOptions = [
@@ -183,7 +193,7 @@ export default function MaidaLiveClient({ translations, locale }: MaidaLiveClien
           </motion.div>
 
           <motion.div
-            className="grid md:grid-cols-3 gap-6"
+            className={`grid gap-6 ${nightCards.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 max-w-3xl mx-auto'}`}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-50px' }}

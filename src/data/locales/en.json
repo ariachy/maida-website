@@ -1006,7 +1006,7 @@
         "q": "What are Maída's opening hours?",
         "a": [
           {
-            "t": "Wednesday to Monday from 18:00 (closed Tuesdays). Sunday, Monday and Wednesday until 23:30, kitchen closes 23:00. Thursday is #MeetMeAtMaída night: dinner from 18:00, a DJ from 21:00, open until 01:30 (kitchen closes 23:00). Friday and Saturday until late, around 02:00 (kitchen closes 23:30). On the odd Thursday without an event we close at 23:30 - "
+            "t": "Wednesday to Monday from 18:00 (closed Tuesdays). Wednesday, Thursday, Sunday and Monday until 23:30, kitchen closes 23:00. Friday and Saturday until late, around 02:00 (kitchen closes 23:30) - "
           },
           {
             "t": "this month's line-up",
@@ -1105,7 +1105,7 @@
             "to": "/maida-sessions"
           },
           {
-            "t": " brings DJs on Thursdays, Fridays and Saturdays. Thursdays are #MeetMeAtMaída: dinner from 18:00, a DJ from 21:00, and at 23:00 the lights go down and the night takes over. Follow us on "
+            "t": " brings DJs on Fridays and Saturdays: dinner from 18:00, a DJ from 21:00, and at 23:00 the lights go down and the night takes over. Follow us on "
           },
           {
             "t": "Instagram",
